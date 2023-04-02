@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import getNFTs from "../../../lib/alchemy/getNFTs"
 import abi from "../../../lib/abi-cre8ors.json"
-import StakingCard from "../../../components/StakingCard"
+import StakingCard from "../../StakingCard"
 
 const RewardsPage = () => {
   const { address: account } = useAccount()
