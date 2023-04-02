@@ -1,9 +1,9 @@
+import * as _ from "lodash"
 import getParticipants from "./getParticipants"
 
 const isAddressRegistered = async (address: string) => {
   const data = await getParticipants()
-  const twitterHandle = data[address.toLowerCase()]
-  return Boolean(twitterHandle)
+  return _.has(data, address.toLowerCase())
 }
 
 export default isAddressRegistered

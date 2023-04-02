@@ -12,9 +12,11 @@ const LeaderboardPage = () => {
 
   useEffect(() => {
     const fetchTopCollectors = async () => {
-      const { ownerAddresses } = await getOwnersForCollection()
+      const [{ ownerAddresses }, addressToTwitter] = await Promise.all([
+        getOwnersForCollection(),
+        getParticipants(),
+      ])
       const newCollectors = _.orderBy(ownerAddresses, ["tokenBalances[0].balance"], ["desc"])
-      const addressToTwitter = await getParticipants()
       const mappedData = newCollectors.map((collector) => ({
         walletAddress: collector.ownerAddress,
         nftsOwned: collector.tokenBalances[0].balance,
