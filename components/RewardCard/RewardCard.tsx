@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { useState } from "react"
 import { toast } from "react-toastify"
 import { allChains, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
 import getIpfsLink from "../../lib/getIpfsLink"
@@ -14,7 +13,6 @@ const RewardCard = ({ token }) => {
   const { data: signer } = useSigner()
   const { chain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
-  const [isProcessing, setIsProcessing] = useState<boolean>(false)
   const handleClick = async () => {
     if (!signer) {
       toast.error("please connect wallet")
@@ -45,7 +43,7 @@ const RewardCard = ({ token }) => {
            rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600
             dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-25 disabled:cursor-not-allowed`}
           onClick={() => handleClick()}
-          disabled={isProcessing}
+          // disabled={isProcessing}
         >
           Mint
           <span className="px-4">
