@@ -1,10 +1,8 @@
 import { allChains, useAccount, useNetwork, useSigner } from "wagmi"
-import { Contract, ethers } from "ethers"
 import { useCallback, useEffect, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import getNFTs from "../../../lib/alchemy/getNFTs"
-import abi from "../../../lib/abi-cre8ors.json"
-import StakingCard from "../../StakingCard"
+import RewardCard from "../../RewardCard"
 
 const RewardsPage = () => {
   const { address: account } = useAccount()
@@ -12,42 +10,30 @@ const RewardsPage = () => {
   const { data: signer } = useSigner()
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
   const chain = allChains.find((c) => c.id === Number(chainId))
-  const [nftContract, setNftContract] = useState<Contract>(null)
   const [tokens, setTokens] = useState([])
-  const [stakedTokens, setStakedTokens] = useState([])
 
-  const load = useCallback(
-    async (signerOrProvider) => {
-      if (account) {
-        const alchemyTokens = await getNFTs(account, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
-        const contract = new Contract(
-          process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
-          abi,
-          signerOrProvider,
-        )
-        setNftContract(contract)
-        const stakedRaw = await contract.cre8ingTokens()
-        const stakedStrings = stakedRaw.map((token) => token.toString())
-        const stakedFinal = stakedStrings.filter((token) => token !== "0")
-        setStakedTokens(stakedFinal)
-        setTokens(alchemyTokens.ownedNfts)
-      }
-    },
-    [account, setNftContract, setTokens, setStakedTokens],
-  )
-
-  const getSignerOrProvider = useCallback(() => {
-    const goerliRpc = "https://ethereum-goerli-rpc.allthatnode.com"
-    const isCorrectNetwork = chain.id === activeChain.id
-    const provider = chain.id === 1 ? { chainId: chain.id } : ethers.getDefaultProvider(goerliRpc)
-    return isCorrectNetwork ? signer : provider
-  }, [chain, activeChain, signer])
+  const load = useCallback(async () => {
+    if (account) {
+      const PARTICIPATION = process.env.NEXT_PUBLIC_PARTICIPATION_REWARDS_CONTRACT_ADDRESS
+      const SILVER = "0xD300D8CB6003F4F72D37B5c2452e673c02327f5F"
+      const GOLD = "0xeF8e969374C49374d3FD7cf7f3d857CA3638c79e"
+      const DIAMOND = "0x8B0f8D9f67863d28346820Bac2A6b7a038B4C23e"
+      const polygonChainId = 80001
+      const alchemyTokens = await getNFTs(
+        account,
+        [PARTICIPATION, SILVER, GOLD, DIAMOND],
+        polygonChainId,
+      )
+      console.log("alchemyTokens", alchemyTokens)
+      setTokens(alchemyTokens.ownedNfts)
+    }
+  }, [account, setTokens])
 
   useEffect(() => {
     if (!chainId) return
     if (!signer) return
-    load(getSignerOrProvider())
-  }, [account, chainId, signer, activeChain?.id, load, getSignerOrProvider])
+    load()
+  }, [account, chainId, signer, activeChain?.id, load])
 
   return (
     <div className="flex flex-col gap-3">
@@ -96,15 +82,7 @@ const RewardsPage = () => {
                   return (
                     <div className="flex flex-col flex-wrap items-center justify-center min-h-screen gap-2 sm:flex-row">
                       {tokens.length > 0 &&
-                        tokens.map((token) => (
-                          <StakingCard
-                            key={token.id}
-                            token={token}
-                            stakedTokens={stakedTokens}
-                            onSuccess={() => load(signer)}
-                            nftContract={nftContract}
-                          />
-                        ))}
+                        tokens.map((token) => <RewardCard key={token.id} token={token} />)}
                     </div>
                   )
                 })()}

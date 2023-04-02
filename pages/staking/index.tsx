@@ -19,7 +19,7 @@ const Staking = () => {
   const load = useCallback(
     async (signerOrProvider) => {
       if (account) {
-        const alchemyTokens = await getNFTs(account, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
+        const alchemyTokens = await getNFTs(account, [process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS])
         const contract = new Contract(
           process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
           abi,
