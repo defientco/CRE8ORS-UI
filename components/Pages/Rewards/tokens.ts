@@ -8,7 +8,6 @@ const TOKENS = [
       number: null,
       type: "",
     },
-    requirement: "participation",
   },
   {
     title: "Silver Builder Reward",
@@ -19,7 +18,6 @@ const TOKENS = [
       number: 10,
       type: "ERC1155",
     },
-    requirement: "10 Builder Rewards",
   },
   {
     title: "Gold Builder Reward",
@@ -30,7 +28,6 @@ const TOKENS = [
       number: 5,
       type: "ERC721",
     },
-    requirement: "5 Silver Rewards",
   },
   {
     title: "Diamond Builder Reward",
@@ -41,7 +38,6 @@ const TOKENS = [
       number: 2,
       type: "ERC721",
     },
-    requirement: "2 Gold Rewards",
   },
 ]
 
