@@ -1,9 +1,5 @@
-import { useAccount, useNetwork, useSigner } from "wagmi"
-import { useCallback, useEffect, useState } from "react"
+import { useSigner } from "wagmi"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import getNFTs from "../../../lib/alchemy/getNFTs"
-import RewardCard from "../../RewardCard"
-import TOKENS from "./tokens"
 import TokenSection from "./TokenSection"
 
 const RewardsPage = () => {
