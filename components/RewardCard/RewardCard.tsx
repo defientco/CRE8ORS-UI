@@ -3,7 +3,6 @@ import { toast } from "react-toastify"
 import { allChains, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
 import getIpfsLink from "../../lib/getIpfsLink"
 import customLoader from "../../lib/customLoader"
-import TOKENS from "../Pages/Rewards/tokens"
 
 const RewardCard = ({ token, requirement }) => {
   const name = token.title
@@ -33,7 +32,7 @@ const RewardCard = ({ token, requirement }) => {
   }
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-sm min-w-[90vw] sm:min-w-[20vw] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="p-5 flex flex-col text-gray-900 dark:text-white">
         <h5 className="mb-2 text-2xl font-bold tracking-tight">{name}</h5>
         <h3 className="tracking-tight"> balance: {token.balance || 0}</h3>

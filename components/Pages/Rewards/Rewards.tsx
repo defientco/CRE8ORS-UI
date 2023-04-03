@@ -32,7 +32,7 @@ const RewardsPage = () => {
   return (
     <div className="flex flex-col pt-[100px] min-h-screen items-center justify-around pb-10">
       <h1 className="text-gray-900 dark:text-white text-4xl font-bold">Builder Rewards</h1>
-      <h1 className="text-gray-900 dark:text-white text-xl font-bold">
+      <h1 className="text-gray-900 dark:text-white text-xl font-bold text-center">
         earn rewards by participating in the{" "}
         <a
           href="https://twitter.com/Cre8orsNFT"
