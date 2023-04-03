@@ -2,9 +2,13 @@ const TOKENS = [
   {
     title: "Participation Rewards",
     contract: { address: process.env.NEXT_PUBLIC_PARTICIPATION_REWARDS_CONTRACT_ADDRESS },
-    requirementContract: { address: "", name: "", number: 0 },
+    requirementContract: {
+      address: "",
+      name: "participation in CRE8ORS events",
+      number: null,
+      type: "",
+    },
     requirement: "participation",
-    burn: null,
   },
   {
     title: "Silver Builder Reward",
@@ -13,9 +17,9 @@ const TOKENS = [
       address: process.env.NEXT_PUBLIC_PARTICIPATION_REWARDS_CONTRACT_ADDRESS,
       name: "Participation Rewards",
       number: 10,
+      type: "ERC1155",
     },
     requirement: "10 Builder Rewards",
-    burn: "ERC1155",
   },
   {
     title: "Gold Builder Reward",
@@ -24,9 +28,9 @@ const TOKENS = [
       address: "0xD300D8CB6003F4F72D37B5c2452e673c02327f5F",
       name: "Silver Builder Rewards",
       number: 5,
+      type: "ERC721",
     },
     requirement: "5 Silver Rewards",
-    burn: "ERC721",
   },
   {
     title: "Diamond Builder Reward",
@@ -35,9 +39,9 @@ const TOKENS = [
       address: "0xeF8e969374C49374d3FD7cf7f3d857CA3638c79e",
       name: "Gold Builder Reward",
       number: 2,
+      type: "ERC721",
     },
     requirement: "2 Gold Rewards",
-    burn: "ERC721",
   },
 ]
 

@@ -7,7 +7,7 @@ import customLoader from "../../lib/customLoader"
 import purchaseBurn1155Minter from "../../lib/purchaseBurn1155Minter"
 import purchaseBurn721Minter from "../../lib/purchaseBurn721Minter"
 
-const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
+const RewardCard = ({ tokens, requirement, onSuccess, reqToken }) => {
   const token = tokens[0]
   const name = token.title
   const imgHash = token.metadata?.image
@@ -31,7 +31,7 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
       toast.error(`Please connect to ${myChain.name} and try again`)
       return
     }
-    if (burn === "ERC1155") {
+    if (requirement.type === "ERC1155") {
       await purchaseBurn1155Minter(
         token.contract.address,
         parseInt(quantity, 10),
@@ -39,7 +39,7 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
         onSuccess,
         setProcessing,
       )
-    } else if (burn === "ERC721") {
+    } else if (requirement.type === "ERC721") {
       const mapped = reqToken.map((burner) => parseInt(burner.id.tokenId, 16))
       const tokensToBurn = mapped.slice(0, requirement.number * parseInt(quantity, 10))
       await purchaseBurn721Minter(
@@ -81,9 +81,10 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
             type="email"
             name="email"
             id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:opacity-25 disabled:cursor-not-allowed"
             placeholder="quantity"
             value={quantity}
+            disabled={!requirement.type}
             onChange={(e) => setQuantity(e.target.value)}
             required
           />
@@ -93,7 +94,7 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
            rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600
             dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-25 disabled:cursor-not-allowed`}
             onClick={() => handleClick()}
-            disabled={!burn || processing}
+            disabled={!requirement.type || processing}
           >
             Mint
           </button>

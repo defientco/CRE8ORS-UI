@@ -64,7 +64,6 @@ const RewardsPage = () => {
                     tokens={myToken}
                     reqToken={filteredRequirement}
                     requirement={token.requirementContract}
-                    burn={token.burn}
                     onSuccess={load}
                   />
                 )
