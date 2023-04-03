@@ -9,15 +9,13 @@ const RewardsPage = () => {
   const { address: account } = useAccount()
   const { chain: activeChain } = useNetwork()
   const { data: signer } = useSigner()
-  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
-  const chain = allChains.find((c) => c.id === Number(chainId))
+  const chainId = parseInt(process.env.NEXT_PUBLIC_ALLOW_LIST_CHAIN_ID, 10)
   const [tokens, setTokens] = useState([])
 
   const load = useCallback(async () => {
     if (account) {
       const tokenAddresses = TOKENS.map((token) => token.address)
-      const polygonChainId = 80001
-      const alchemyTokens = await getNFTs(account, tokenAddresses, polygonChainId)
+      const alchemyTokens = await getNFTs(account, tokenAddresses, chainId)
       console.log("alchemyTokens", alchemyTokens)
       setTokens(alchemyTokens.ownedNfts)
     }
@@ -31,6 +29,7 @@ const RewardsPage = () => {
 
   return (
     <div className="flex flex-col pt-[100px] min-h-screen items-center justify-around pb-10">
+      <ConnectButton />
       <h1 className="text-gray-900 dark:text-white text-4xl font-bold">Builder Rewards</h1>
       <h1 className="text-gray-900 dark:text-white text-xl font-bold text-center">
         earn rewards by participating in the{" "}
@@ -46,7 +45,7 @@ const RewardsPage = () => {
       </h1>
       <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
         <ConnectButton.Custom>
-          {({ account: account1, chain: chain1, openChainModal, openConnectModal, mounted }) => {
+          {({ account: account1, chain: chain1, openConnectModal, mounted }) => {
             const ready = mounted
             const connected = ready && account1 && chain1
 
@@ -74,34 +73,28 @@ const RewardsPage = () => {
                     )
                   }
 
-                  if (chain.id !== Number(process.env.NEXT_PUBLIC_CHAIN_ID)) {
-                    return (
-                      <button
-                        onClick={openChainModal}
-                        type="button"
-                        className="px-4 py-2 font-bold text-white bg-blue-500 rounded"
-                      >
-                        Wrong network
-                      </button>
-                    )
-                  }
-
                   return (
                     <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
                       {tokens.length > 0 &&
-                        TOKENS.map((token) => (
-                          <RewardCard
-                            key={token.title}
-                            token={
-                              tokens.filter(
-                                (alchemyToken) =>
-                                  alchemyToken.contract.address.toLowerCase() ===
-                                  token.address.toLowerCase(),
-                              )[0] || token
-                            }
-                            requirement={token.requirement}
-                          />
-                        ))}
+                        TOKENS.map((token) => {
+                          const filtered = tokens.filter(
+                            (alchemyToken) =>
+                              alchemyToken.contract.address.toLowerCase() ===
+                              token.address.toLowerCase(),
+                          )
+                          console.log("filtered", filtered)
+                          const myToken = filtered.length > 0 ? filtered : [token]
+                          console.log("myToken", myToken)
+
+                          return (
+                            <RewardCard
+                              key={token.title}
+                              tokens={myToken}
+                              requirement={token.requirement}
+                              onSuccess={load}
+                            />
+                          )
+                        })}
                     </div>
                   )
                 })()}
