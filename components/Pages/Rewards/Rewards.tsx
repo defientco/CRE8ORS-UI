@@ -1,4 +1,4 @@
-import { allChains, useAccount, useNetwork, useSigner } from "wagmi"
+import { useAccount, useNetwork, useSigner } from "wagmi"
 import { useCallback, useEffect, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import getNFTs from "../../../lib/alchemy/getNFTs"
@@ -14,7 +14,7 @@ const RewardsPage = () => {
 
   const load = useCallback(async () => {
     if (account) {
-      const tokenAddresses = TOKENS.map((token) => token.address)
+      const tokenAddresses = TOKENS.map((token) => token.contract.address)
       const alchemyTokens = await getNFTs(account, tokenAddresses, chainId)
       console.log("alchemyTokens", alchemyTokens)
       setTokens(alchemyTokens.ownedNfts)
@@ -43,66 +43,36 @@ const RewardsPage = () => {
         </a>{" "}
         community
       </h1>
-      <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
-        <ConnectButton.Custom>
-          {({ account: account1, chain: chain1, openConnectModal, mounted }) => {
-            const ready = mounted
-            const connected = ready && account1 && chain1
-
-            return (
-              <div
-                {...(!ready && {
-                  "aria-hidden": true,
-                  style: {
-                    opacity: 0,
-                    pointerEvents: "none",
-                    userSelect: "none",
-                  },
-                })}
-              >
-                {(() => {
-                  if (!connected) {
-                    return (
-                      <button
-                        onClick={openConnectModal}
-                        type="button"
-                        className="px-4 py-2 font-bold text-white bg-blue-500 rounded"
-                      >
-                        Connect Wallet
-                      </button>
-                    )
-                  }
-
-                  return (
-                    <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
-                      {tokens.length > 0 &&
-                        TOKENS.map((token) => {
-                          const filtered = tokens.filter(
-                            (alchemyToken) =>
-                              alchemyToken.contract.address.toLowerCase() ===
-                              token.address.toLowerCase(),
-                          )
-                          console.log("filtered", filtered)
-                          const myToken = filtered.length > 0 ? filtered : [token]
-                          console.log("myToken", myToken)
-
-                          return (
-                            <RewardCard
-                              key={token.title}
-                              tokens={myToken}
-                              requirement={token.requirement}
-                              onSuccess={load}
-                            />
-                          )
-                        })}
-                    </div>
-                  )
-                })()}
-              </div>
-            )
-          }}
-        </ConnectButton.Custom>
-      </div>
+      {signer && (
+        <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
+          <div className="flex flex-col flex-wrap items-center justify-center gap-2 sm:flex-row">
+            {tokens.length > 0 &&
+              TOKENS.map((token) => {
+                const filtered = tokens.filter(
+                  (alchemyToken) =>
+                    alchemyToken.contract.address.toLowerCase() ===
+                    token.contract.address.toLowerCase(),
+                )
+                const filteredRequirement = tokens.filter(
+                  (alchemyToken) =>
+                    alchemyToken.contract.address.toLowerCase() ===
+                    token.requirementContract.address.toLowerCase(),
+                )
+                const myToken = filtered.length > 0 ? filtered : [token]
+                return (
+                  <RewardCard
+                    key={token.title}
+                    tokens={myToken}
+                    reqToken={filteredRequirement}
+                    requirement={token.requirementContract}
+                    burn={token.burn}
+                    onSuccess={load}
+                  />
+                )
+              })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -5,15 +5,16 @@ import { allChains, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
 import getIpfsLink from "../../lib/getIpfsLink"
 import customLoader from "../../lib/customLoader"
 import purchaseBurn1155Minter from "../../lib/purchaseBurn1155Minter"
+import purchaseBurn721Minter from "../../lib/purchaseBurn721Minter"
 
-const RewardCard = ({ tokens, requirement, onSuccess }) => {
+const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
   const token = tokens[0]
-  console.log("token", token)
   const name = token.title
   const imgHash = token.metadata?.image
   const isInvalid = imgHash?.includes?.("imgUri") || imgHash?.includes?.("Hello World")
   const imageUrl = isInvalid ? "" : getIpfsLink(imgHash)
   const [processing, setProcessing] = useState(false)
+  const [quantity, setQuantity] = useState("1")
   const { data: signer } = useSigner()
   const { chain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
@@ -31,7 +32,27 @@ const RewardCard = ({ tokens, requirement, onSuccess }) => {
       return
     }
     console.log("SIGNER", signer)
-    await purchaseBurn1155Minter(token.contract.address, signer, onSuccess, setProcessing)
+    if (burn === "ERC1155") {
+      await purchaseBurn1155Minter(
+        token.contract.address,
+        parseInt(quantity, 10),
+        signer,
+        onSuccess,
+        setProcessing,
+      )
+    } else if (burn === "ERC721") {
+      const mapped = reqToken.map((burner) => parseInt(burner.id.tokenId, 16))
+      const tokensToBurn = mapped.slice(0, requirement.number * parseInt(quantity, 10))
+      console.log("tokensToBurn", tokensToBurn)
+      await purchaseBurn721Minter(
+        token.contract.address,
+        parseInt(quantity, 10),
+        tokensToBurn,
+        signer,
+        onSuccess,
+        setProcessing,
+      )
+    }
   }
 
   const hasBalance = Boolean(token.balance)
@@ -53,17 +74,32 @@ const RewardCard = ({ tokens, requirement, onSuccess }) => {
             loader={customLoader}
           />
         </span>
-        <h3 className="tracking-tight"> Cost: {requirement}</h3>
-        <button
-          type="button"
-          className={`inline-flex items-center px-3 py-2 text-m font-medium text-center text-white bg-blue-700
+        <h3 className="tracking-tight">
+          {" "}
+          Cost: {requirement.number} {requirement.name}
+        </h3>
+        <div className="flex justify-around pt-3">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className={`inline-flex items-center px-3 py-2 text-m font-medium text-center text-white bg-blue-700
            rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600
             dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-25 disabled:cursor-not-allowed`}
-          onClick={() => handleClick()}
-          disabled={token.title === "Builder Rewards" || processing}
-        >
-          Mint
-        </button>
+            onClick={() => handleClick()}
+            disabled={!burn || processing}
+          >
+            Mint
+          </button>
+        </div>
       </div>
     </div>
   )
