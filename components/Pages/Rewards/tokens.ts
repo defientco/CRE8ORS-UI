@@ -31,7 +31,7 @@ const TOKENS = [
   {
     title: "Diamond Builder Reward",
     contract: { address: "0x8B0f8D9f67863d28346820Bac2A6b7a038B4C23e" },
-    requirementContract: { 
+    requirementContract: {
       address: "0xeF8e969374C49374d3FD7cf7f3d857CA3638c79e",
       name: "Gold Builder Reward",
       number: 2,

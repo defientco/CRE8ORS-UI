@@ -31,7 +31,6 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
       toast.error(`Please connect to ${myChain.name} and try again`)
       return
     }
-    console.log("SIGNER", signer)
     if (burn === "ERC1155") {
       await purchaseBurn1155Minter(
         token.contract.address,
@@ -43,7 +42,6 @@ const RewardCard = ({ tokens, requirement, onSuccess, burn, reqToken }) => {
     } else if (burn === "ERC721") {
       const mapped = reqToken.map((burner) => parseInt(burner.id.tokenId, 16))
       const tokensToBurn = mapped.slice(0, requirement.number * parseInt(quantity, 10))
-      console.log("tokensToBurn", tokensToBurn)
       await purchaseBurn721Minter(
         token.contract.address,
         parseInt(quantity, 10),

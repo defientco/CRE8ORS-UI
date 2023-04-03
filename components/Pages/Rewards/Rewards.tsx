@@ -16,10 +16,9 @@ const RewardsPage = () => {
     if (account) {
       const tokenAddresses = TOKENS.map((token) => token.contract.address)
       const alchemyTokens = await getNFTs(account, tokenAddresses, chainId)
-      console.log("alchemyTokens", alchemyTokens)
       setTokens(alchemyTokens.ownedNfts)
     }
-  }, [account, setTokens])
+  }, [account, setTokens, chainId])
 
   useEffect(() => {
     if (!chainId) return

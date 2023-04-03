@@ -14,7 +14,6 @@ const purchaseBurn721Minter = async (
   setIsProcessing?: (state: boolean) => void,
 ) => {
   try {
-    console.log("BURNING", tokensToBurn)
     setIsProcessing(true)
     const contract = new Contract(BURN_721_MINTER, abi, signer)
     const tx = await contract.purchase(contractAddress, quantity, tokensToBurn)
