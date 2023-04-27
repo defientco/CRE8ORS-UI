@@ -10,6 +10,9 @@ import getTwitterHandle from "../../lib/getTwitterHandle"
 import getEns from "../../lib/getEns"
 import CollectorName from "./CollectorName"
 import SocialRow from "./SocialRow"
+import RelatedAndClubsRow from "./RelatedAndClubsRow"
+import BadgesAndEmblemsRow from "./BadgesAndEmblemsRow"
+import SkeletonSection from "../SkeletonSection/SkeletonSection"
 
 const NUMBER_OF_TOKENS = "0"
 
@@ -50,6 +53,9 @@ function CollectorPage() {
           anniversary={anniversary}
           location={null}
         />
+        <RelatedAndClubsRow />
+        <BadgesAndEmblemsRow />
+        <SkeletonSection title="Highlights" fullWidth />
         {BigNumber.from(balance).gt(0) && (
           <div className="flex flex-col items-center gap-5">
             <ImageCard
