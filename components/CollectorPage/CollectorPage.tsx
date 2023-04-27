@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
-import { BigNumber } from "ethers"
 import { useRouter } from "next/router"
-import ImageCard from "./ImageCard"
 import balanceOfParticipationRewards from "../../lib/balanceOfParticipationRewards"
 import PFP from "../PFP"
 import getAnniversary from "../../lib/getAnniversary"
@@ -12,8 +10,9 @@ import CollectorName from "./CollectorName"
 import SocialRow from "./SocialRow"
 import RelatedAndClubsRow from "./RelatedAndClubsRow"
 import BadgesAndEmblemsRow from "./BadgesAndEmblemsRow"
-import SkeletonSection from "../SkeletonSection/SkeletonSection"
 import HighlightSection from "./HighlightSection"
+import NavBar from "../NavBar"
+import Header from "../Header"
 
 const NUMBER_OF_TOKENS = "0"
 
@@ -44,19 +43,22 @@ function CollectorPage() {
   }, [collectorIdAsString])
 
   return (
-    <div className="mt-3 flex flex-col">
-      <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 ">
-        <CollectorName ens={ens} collectorId={collectorIdAsString} />
-        <PFP address={collectorIdAsString || "0x0"} />
-        <SocialRow
-          address={collectorIdAsString}
-          handle={twitter}
-          anniversary={anniversary}
-          location={null}
-        />
-        <RelatedAndClubsRow />
-        <BadgesAndEmblemsRow />
-        <HighlightSection balance={balance} />
+    <div className="h-screen overflow-y-auto">
+      <div className="mt-11 flex flex-col">
+        <Header isDark />
+        <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 ">
+          <CollectorName ens={ens} collectorId={collectorIdAsString} />
+          <PFP address={collectorIdAsString || "0x0"} />
+          <SocialRow
+            address={collectorIdAsString}
+            handle={twitter}
+            anniversary={anniversary}
+            location={null}
+          />
+          <RelatedAndClubsRow />
+          <BadgesAndEmblemsRow />
+          <HighlightSection balance={balance} />
+        </div>
       </div>
     </div>
   )

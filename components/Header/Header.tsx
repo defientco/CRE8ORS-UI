@@ -8,9 +8,15 @@ import { Button } from "../../shared/Button"
 interface HeaderProps {
   connect?: boolean
   logout?: boolean
+  isDark?: boolean
 }
-const Header: FC<HeaderProps> = ({ connect, logout }) => (
-  <nav className="fixed top-0 z-50 flex flex-row items-center justify-between w-screen p-2 text-black bg-white font-objektivmk1_bold">
+
+const Header: FC<HeaderProps> = ({ connect, logout, isDark }) => (
+  <nav
+    className={`fixed top-0 z-50 flex flex-row items-center justify-between w-screen p-2 text-${
+      isDark ? "white" : "black"
+    } bg-${isDark ? "black" : "white"} font-objektivmk1_bold`}
+  >
     <span className="relative items-center flex-shrink-0 w-20 mt-6 mr-6 cursor-auto lg:mt-0 lg:md:w-36 lg:flex">
       <Link href="/">
         <Image
