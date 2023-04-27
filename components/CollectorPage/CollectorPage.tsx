@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { BigNumber } from "ethers"
 import { useRouter } from "next/router"
-import { toast } from "react-toastify"
 import ImageCard from "./ImageCard"
 import balanceOfParticipationRewards from "../../lib/balanceOfParticipationRewards"
 import PFP from "../PFP"
@@ -45,7 +44,12 @@ function CollectorPage() {
       <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 ">
         <CollectorName ens={ens} collectorId={collectorIdAsString} />
         <PFP address={collectorIdAsString || "0x0"} />
-        <SocialRow address={collectorIdAsString} handle={twitter} anniversary={anniversary} />
+        <SocialRow
+          address={collectorIdAsString}
+          handle={twitter}
+          anniversary={anniversary}
+          location={null}
+        />
         {BigNumber.from(balance).gt(0) && (
           <div className="flex flex-col items-center gap-5">
             <ImageCard
