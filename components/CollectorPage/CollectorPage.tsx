@@ -11,7 +11,6 @@ import SocialRow from "./SocialRow"
 import RelatedAndClubsRow from "./RelatedAndClubsRow"
 import BadgesAndEmblemsRow from "./BadgesAndEmblemsRow"
 import HighlightSection from "./HighlightSection"
-import NavBar from "../NavBar"
 import Header from "../Header"
 
 const NUMBER_OF_TOKENS = "0"
