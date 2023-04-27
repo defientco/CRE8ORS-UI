@@ -4,8 +4,10 @@ import { useEffect, useState } from "react"
 import retryGetEns from "../../lib/retryGetEns"
 import customLoader from "../../lib/customLoader"
 
+const DEFAULT_AVATAR = "/CRE8ORSLOGO_ICON.png"
+
 const PFP = ({ address, width = 100, height = 100 }: any) => {
-  const [avatar, setAvatar] = useState("/CRE8ORSLOGO_ICON.png")
+  const [avatar, setAvatar] = useState(DEFAULT_AVATAR)
 
   useEffect(() => {
     const init = async () => {
@@ -25,7 +27,9 @@ const PFP = ({ address, width = 100, height = 100 }: any) => {
   }, [address])
 
   return (
-    <div className={`bg-white rounded overflow-hidden inline-block w-[${width}]`}>
+    <div
+      className={`${avatar === DEFAULT_AVATAR && "bg-white"} rounded overflow-hidden inline-block`}
+    >
       <Image
         src={avatar}
         alt="pfp"

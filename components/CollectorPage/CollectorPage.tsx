@@ -45,9 +45,11 @@ function CollectorPage() {
     <div className="h-screen overflow-y-auto">
       <div className="mt-11 flex flex-col">
         <Header isDark />
-        <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 ">
+        <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 md:flex-row-reverse md:justify-between md:w-9/12 md:mx-auto">
           <CollectorName ens={ens} collectorId={collectorIdAsString} />
-          <PFP address={collectorIdAsString || "0x0"} />
+          <PFP address={collectorIdAsString || "0x0"} width={500} height={500} />
+        </div>
+        <div className="flex flex-col items-center gap-5 pt-10">
           <SocialRow
             address={collectorIdAsString}
             handle={twitter}
