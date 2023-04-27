@@ -49,15 +49,22 @@ function CollectorPage() {
           <CollectorName ens={ens} collectorId={collectorIdAsString} />
           <PFP address={collectorIdAsString || "0x0"} width={500} height={500} />
         </div>
-        <div className="flex flex-col items-center gap-5 pt-10">
-          <SocialRow
-            address={collectorIdAsString}
-            handle={twitter}
-            anniversary={anniversary}
-            location={null}
-          />
+        <div className="flex flex-col items-center gap-5 pt-10 md:flex-row md:mx-5">
+          <div className="w-full md:w-1/3">
+            <SocialRow
+              address={collectorIdAsString}
+              handle={twitter}
+              anniversary={anniversary}
+              location={null}
+            />
+          </div>
+          <div className="w-full md:w-2/3 md:pl-4">
+            <BadgesAndEmblemsRow />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start justify-around gap-5 text-4xl pt-10 md:flex-row md:justify-center md:mx-5">
           <RelatedAndClubsRow />
-          <BadgesAndEmblemsRow />
           <HighlightSection balance={balance} />
         </div>
       </div>
