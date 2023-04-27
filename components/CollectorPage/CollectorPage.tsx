@@ -13,6 +13,7 @@ import SocialRow from "./SocialRow"
 import RelatedAndClubsRow from "./RelatedAndClubsRow"
 import BadgesAndEmblemsRow from "./BadgesAndEmblemsRow"
 import SkeletonSection from "../SkeletonSection/SkeletonSection"
+import HighlightSection from "./HighlightSection"
 
 const NUMBER_OF_TOKENS = "0"
 
@@ -55,15 +56,7 @@ function CollectorPage() {
         />
         <RelatedAndClubsRow />
         <BadgesAndEmblemsRow />
-        <SkeletonSection title="Highlights" fullWidth />
-        {BigNumber.from(balance).gt(0) && (
-          <div className="flex flex-col items-center gap-5">
-            <ImageCard
-              imageUrl="https://nftstorage.link/ipfs/bafybeiaoglcj47pklfmwnxp6sd352y4fndr3ojopof7f3ciiaogshcz3au"
-              title={`Participation Rewards: ${balance.toString()}`}
-            />
-          </div>
-        )}
+        <HighlightSection balance={balance} />
       </div>
     </div>
   )
