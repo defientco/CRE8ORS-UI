@@ -43,9 +43,9 @@ function CollectorPage() {
 
   return (
     <div className="h-screen overflow-y-auto">
-      <div className="mt-11 flex flex-col">
+      <div className="mt-11 flex flex-col text-white">
         <Header isDark />
-        <div className="flex flex-col items-center justify-around gap-5 text-4xl text-white pt-10 md:flex-row-reverse md:justify-between md:w-9/12 md:mx-auto">
+        <div className="flex flex-col items-center justify-around gap-5 text-4xl pt-10 md:flex-row-reverse md:justify-between md:w-9/12 md:mx-auto">
           <CollectorName ens={ens} collectorId={collectorIdAsString} />
           <PFP address={collectorIdAsString || "0x0"} width={500} height={500} />
         </div>
