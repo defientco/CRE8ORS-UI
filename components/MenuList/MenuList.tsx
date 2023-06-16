@@ -21,7 +21,10 @@ const MenuList = ({ toggleMenu }) => {
   }, [themeMode])
 
   return (
-    <div className="fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-2 p-4 dark:bg-white bg-[black] to-90% rounded-lg text-lg">
+    <div
+      className="fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-[9.5px] p-4 
+      dark:bg-white bg-[black] to-90% rounded-lg md:text-lg w-[200px]"
+    >
       <div className="dark:bg-[black] bg-white absolute top-0 right-0 w-6 h-6 m-2 rounded-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,28 +38,35 @@ const MenuList = ({ toggleMenu }) => {
         </svg>
       </div>
       <Link href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
-        <div className="font-bold dark:text-[black] text-white">Reserve List</div>
+        <div className="font-bold dark:text-[black] text-white pb-[15px]">Reserve List</div>
       </Link>
 
       <div className="font-bold dark:text-[black] text-white">Explore</div>
-      <div className="ml-4 text-gray-400 cursor-not-allowed">Allowlist</div>
+      <Link href="/manifesto" target="_blank" rel="noreferrer">
+        <div className="ml-4 dark:text-[black] text-white">Manifesto</div>
+      </Link>
       <Link href="/leaderboard" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Leaderboard</div>
       </Link>
       <Link href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Passports</div>
       </Link>
-      <Link href="/teams" target="_blank" rel="noreferrer">
-        <div className="ml-4 dark:text-[black] text-white">Team</div>
-      </Link>
       <Link href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Relics</div>
+      </Link>
+      <Link href="/teams" target="_blank" rel="noreferrer">
+        <div className="ml-4 dark:text-[black] text-white">Team</div>
       </Link>
       <Link href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Blog</div>
       </Link>
-      <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
+      <Link href="/faq" target="_blank" rel="noreferrer">
+        <div className="ml-4 dark:text-[black] text-white">FAQ</div>
+      </Link>
+      <div className="ml-4 text-gray-400 cursor-not-allowed">Roadmap</div>
       <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
+      <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
+      <div className="ml-4 text-gray-400 cursor-not-allowed">Allowlist</div>
       <CustomConnectWallet />
       <div className="flex flex-row justify-around items-center">
         <DiscordIcon />
