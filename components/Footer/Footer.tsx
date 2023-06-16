@@ -103,7 +103,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
               <div className="flex flex-col cursor-[pointer] text-[8px] md:text-[16px]">
                 {item.list.map((row: LinkType) => (
                   <div key={row.link} className="pb-[10px]">
-                    <Link href={row.link}>{row.node}</Link>
+                    {row.link.search("https") >= 0 ? (
+                      <a href={row.link} target="_blank" rel="noreferrer">
+                        {row.node}
+                      </a>
+                    ) : (
+                      <Link href={row.link}>{row.node}</Link>
+                    )}
                   </div>
                 ))}
               </div>

@@ -167,6 +167,280 @@ const PrivacyPage = () => {
           <br />
           information from other sources such as third-party services and organizations, as
           described below.
+          <div>A. Information You Provide to Us Directly</div>
+          <div>
+            We may collect the following personal information that you provide to us.
+            <br />
+            <ul>
+              <li className="list-disc">
+                Account Creation. We may collect information when you create an account with us or
+                our service providers (e.g., Shopify), such
+                <br />
+                as name and email address. We may also require that you provide additional identity
+                and verification information.
+              </li>
+              <li className="list-disc">
+                Purchases, Wallet and Transaction Information. In order to engage in certain
+                transactions or purchases on the Services, you
+                <br />
+                may need to provide us or our third-party payment processors with your payment
+                information and allow us to connect to your
+                <br />
+                digital wallet by providing us with your public wallet address. We will never ask
+                you or collect your private keys. We do not
+                <br />
+                directly collect or store any payment card information entered through our Services
+                or access your digital wallet, but we may
+                <br />
+                receive from our third-party payment processing providers information associated
+                with your payment card information (e.g.,
+                <br />
+                your billing details).
+              </li>
+              <li className="list-disc">
+                Other Transactions. We may collect personal information and details associated with
+                your activities on our Services.
+              </li>
+              <li className="list-disc">
+                Your Communications with Us. We may collect personal information, such as email
+                address, phone number or mailing address
+                <br />
+                when you request information about our Services, register for our newsletter, apply
+                for a job or otherwise communicate with us.
+              </li>
+              <li className="list-disc">
+                Interactive Features. We and others who use our Services may collect personal
+                information that you submit or make available
+                <br />
+                through our interactive features (e.g., via the Defient communities on Discord,
+                messaging and chat features, and social media
+                <br />
+                pages). Any personal information you provide on the public sections of these
+                features will be considered “public,” (the “User
+                <br />
+                Content”) unless otherwise required by applicable law, and is not subject to the
+                privacy protections referenced herein. Please
+                <br />
+                exercise caution before revealing any information that may identify you in the real
+                world to other users.
+              </li>
+              <li className="list-disc">
+                Surveys. We may contact you to participate in surveys. If you decide to participate,
+                you may be asked to provide certain
+                <br />
+                information which may include personal information.
+              </li>
+              <li className="list-disc">
+                Sweepstakes, Giveaways or Contests. We may collect personal information you provide
+                for any sweepstakes, giveaways or
+                <br />
+                contests that we offer. In some jurisdictions, we are required to publicly share
+                information of sweepstakes and contest winners.
+              </li>
+              <li className="list-disc">
+                Conferences, Trade Shows, and Other Events. We may collect personal information from
+                individuals when we attend or host
+                <br />
+                conferences, trade shows, and other events.
+              </li>
+              <li className="list-disc">
+                Business Development and Strategic Partnerships. We may collect personal information
+                from individuals and third parties
+                <br />
+                to assess and pursue potential business opportunities.
+              </li>
+            </ul>
+          </div>
+          <div>B. Information Collected Automatically</div>
+          <div>
+            We may collect personal information automatically when you use our Services such as:
+            <br />
+            <ul>
+              <li className="list-disc">
+                Automatic Data Collection. We may collect certain information automatically when you
+                use our Services, such as your Internet
+                <br />
+                protocol (IP) address, user settings, MAC address, cookie identifiers, mobile
+                carrier and other unique identifiers, browser
+                <br />
+                or device information, location information (including approximate location derived
+                from IP address), Internet service provider,
+                <br />
+                and metadata about the content you provide. We may also automatically collect
+                information regarding your use of our
+                <br />
+                Services, such as pages that you visit before, during and after using our Services,
+                information about the links you click, the
+                <br />
+                types of content you interact with, the frequency and duration of your activities,
+                and other information about how you use our
+                <br />
+                Services.
+              </li>
+              <li className="list-disc">
+                Cookie Policy for Cookies and Other Technologies. We, as well as third parties that
+                provide content or other functionality
+                <br />
+                on our Services, may use cookies, local storage, and other technologies
+                (“Technologies”) to automatically collect information through
+                <br />
+                your use of our Services.
+              </li>
+              <li className="list-disc">
+                Cookies. Cookies are small text files placed in device browsers that store
+                preferences and facilitate and enhance your experience.
+              </li>
+            </ul>
+            Our uses of these Technologies fall into the following general categories:
+            <br />
+            <ul>
+              <li className="list-disc">
+                Operationally Necessary. This includes Technologies that allow you access to our
+                Services, applications, and tools that are
+                <br />
+                required to identify irregular website behavior, prevent fraudulent activity,
+                improve security, or allow you to make use of our
+                <br />
+                functionality;
+              </li>
+              <li className="list-disc">
+                Performance-Related. We may use Technologies to assess the performance of our
+                Services, including as part of our analytic
+                <br />
+                practices to help us understand how individuals use our Services (see Analytics
+                below);
+              </li>
+              <li className="list-disc">
+                Functionality-Related. We may use Technologies that allow us to offer you enhanced
+                functionality when accessing or using our
+                <br />
+                Services. This may include identifying you when you sign into our Services or
+                keeping track of your specified preferences,
+                <br />
+                interests, or past items viewed;
+              </li>
+            </ul>
+            See “Your Privacy Choices and Rights” below to understand your choices regarding these
+            Technologies.
+            <br />
+            <ul>
+              <li className="list-disc">
+                Analytics. We may use our Technologies and other third-party tools to process
+                analytics information on our Services. These
+                <br />
+                technologies allow us to process usage data to better understand how our Services
+                are used, and to continually improve and
+                <br />
+                personalize our Services. Some of our analytics partners include:
+              </li>
+              <li className="list-disc">
+                Plausible. We use Plausible to analyze usage of and traffic to our Services.
+                Plausible does not use cookies to track website
+                <br />
+                visitors. To learn more about Plausible and its use of your information, please
+                review the <span className="underline">Plausible Privacy Policy.</span>
+              </li>
+              <li className="list-disc">
+                Social Media Platforms. Our Services may contain social media buttons, such as
+                Discord, Snapchat, Twitter, and Telegram, which
+                <br />
+                might include widgets such as the “share this” button or other interactive mini
+                programs). These features may collect your IP
+                <br />
+                address and which page you are visiting on our Services and may set a cookie to
+                enable the feature to function properly. Your
+                <br />
+                interactions with these platforms are governed by the privacy policy of the company
+                providing it.
+              </li>
+            </ul>
+          </div>
+          <div>C. Information Collected from Other Sources</div>
+          <div>
+            <ul>
+              <li className="list-disc">
+                Third-Party Sources. We may obtain information about you from other sources,
+                including through third-party services and
+                <br />
+                organizations. For example, if you access our Services through a third-party
+                application, such as an app store, a third-party
+                <br />
+                login service, or a social networking site, we may collect information about you
+                from that third-party application that you have made available via your privacy
+                settings.
+              </li>
+              <li className="list-disc">
+                Purchases, Wallet and Transaction Information. In order to engage in certain
+                transactions or purchases on the Services, you
+                <br />
+                may need to provide us or our third-party payment processors with your payment
+                information and allow us to connect to your
+                <br />
+                digital wallet by providing us with your public wallet address. We will never ask
+                you or collect your private keys. We do not
+                <br />
+                directly collect or store any payment card information entered through our Services
+                or access your digital wallet, but we may
+                <br />
+                receive from our third-party payment processing providers information associated
+                with your payment card information (e.g.,
+                <br />
+                your billing details).
+              </li>
+              <li className="list-disc">
+                Other Transactions. We may collect personal information and details associated with
+                your activities on our Services.
+              </li>
+              <li className="list-disc">
+                Your Communications with Us. We may collect personal information, such as email
+                address, phone number or mailing address
+                <br />
+                when you request information about our Services, register for our newsletter, apply
+                for a job or otherwise communicate with us.
+              </li>
+              <li className="list-disc">
+                Interactive Features. We and others who use our Services may collect personal
+                information that you submit or make available
+                <br />
+                through our interactive features (e.g., via the Defient communities on Discord,
+                messaging and chat features, and social media
+                <br />
+                pages). Any personal information you provide on the public sections of these
+                features will be considered “public,” (the “User
+                <br />
+                Content”) unless otherwise required by applicable law, and is not subject to the
+                privacy protections referenced herein. Please
+                <br />
+                exercise caution before revealing any information that may identify you in the real
+                world to other users.
+              </li>
+              <li className="list-disc">
+                Surveys. We may contact you to participate in surveys. If you decide to participate,
+                you may be asked to provide certain
+                <br />
+                information which may include personal information.
+              </li>
+              <li className="list-disc">
+                Sweepstakes, Giveaways or Contests. We may collect personal information you provide
+                for any sweepstakes, giveaways or
+                <br />
+                contests that we offer. In some jurisdictions, we are required to publicly share
+                information of sweepstakes and contest winners.
+              </li>
+              <li className="list-disc">
+                Conferences, Trade Shows, and Other Events. We may collect personal information from
+                individuals when we attend or host
+                <br />
+                conferences, trade shows, and other events.
+              </li>
+              <li className="list-disc">
+                Business Development and Strategic Partnerships. We may collect personal information
+                from individuals and third parties
+                <br />
+                to assess and pursue potential business opportunities.
+              </li>
+            </ul>
+          </div>
         </>
       ),
       mobile_content: (

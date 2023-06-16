@@ -20,9 +20,9 @@ const DesktopMenu = () => {
   return (
     <div className="flex flex-row text-sm uppercase font-quicksand gap-x-12">
       <div className="flex items-center pr-4">
-        <Link href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
+        <a href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
           <div className="font-bold cursor-pointer dark:text-white text-black">Reserve List</div>
-        </Link>
+        </a>
       </div>
       <div className="flex items-center font-quicksand font-bold">
         <button
@@ -61,26 +61,22 @@ const DesktopMenu = () => {
             <Link href="/leaderboard" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Leaderboard</div>
             </Link>
-            <Link
+            <a
               href="https://opensea.io/collection/cre8ors-passports"
               target="_blank"
               rel="noreferrer"
             >
               <div className="cursor-pointer text-white dark:text-[black]">Passports</div>
-            </Link>
-            <Link
-              href="https://opensea.io/collection/cre8ors-relics"
-              target="_blank"
-              rel="noreferrer"
-            >
+            </a>
+            <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Relics</div>
-            </Link>
+            </a>
             <Link href="/teams" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Team</div>
             </Link>
-            <Link href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
+            <a href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Blog</div>
-            </Link>
+            </a>
             <Link href="/faq" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">FAQ</div>
             </Link>

@@ -37,9 +37,9 @@ const MenuList = ({ toggleMenu }) => {
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
-      <Link href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
+      <a href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
         <div className="font-bold dark:text-[black] text-white pb-[15px]">Reserve List</div>
-      </Link>
+      </a>
 
       <div className="font-bold dark:text-[black] text-white">Explore</div>
       <Link href="/manifesto" target="_blank" rel="noreferrer">
@@ -48,18 +48,18 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/leaderboard" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Leaderboard</div>
       </Link>
-      <Link href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Passports</div>
-      </Link>
-      <Link href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Relics</div>
-      </Link>
+      </a>
       <Link href="/teams" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Team</div>
       </Link>
-      <Link href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
+      <a href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Blog</div>
-      </Link>
+      </a>
       <Link href="/faq" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">FAQ</div>
       </Link>
@@ -70,7 +70,7 @@ const MenuList = ({ toggleMenu }) => {
       <CustomConnectWallet />
       <div className="flex flex-row justify-around items-center">
         <DiscordIcon />
-        <Link href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
+        <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
           <div className="pt-2 cursor-pointer ">
             <Image
               src={`${
@@ -83,7 +83,7 @@ const MenuList = ({ toggleMenu }) => {
               alt="discord"
             />
           </div>
-        </Link>
+        </a>
         <div className="flex items-center font-quicksand font-bold border-[1px] rounded-[20px] border-[gray]">
           <ToggleButton onClick={onToggle} value={isDarkMode} id="light_dark_switch" />
         </div>
