@@ -1506,7 +1506,7 @@ const TermsPage = () => {
 
   return (
     <Layout type="contained">
-      <div className="relative pb-[2rem] h-[100vh] w-[100vw] overflow-y-scroll" ref={containerRef}>
+      <div className="relative pb-[2rem] w-[100vw] overflow-y-scroll" ref={containerRef}>
         {!isScrollEnded && (
           <div
             className="fixed 
