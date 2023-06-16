@@ -51,11 +51,11 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       list: [
         {
           node: "Terms of Service",
-          link: "https://nftstorage.link/ipfs/bafkreiegxb437bnxfga2kd742olmxovl4xs5mkyhqgqwjrxmwmdeygygca",
+          link: "/terms",
         },
         {
           node: "Privacy Policy",
-          link: "https://nftstorage.link/ipfs/bafkreigdbz5ql4kcpsopzrcrdffgxhns6uujrsg4x2evoogh6fzbhypg74",
+          link: "/privacy",
         },
       ],
     },
