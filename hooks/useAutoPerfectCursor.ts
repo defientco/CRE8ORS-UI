@@ -47,7 +47,7 @@ const useAutoPerfectCursor = ({
 
         setTimeout(() => {
             isAnimating = false
-        }, 50)
+        }, 20)
     }
 
     const removeAllEventListener = () => {
