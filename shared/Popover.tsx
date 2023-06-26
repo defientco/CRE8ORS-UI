@@ -6,7 +6,7 @@ interface IPopoverFucChild {
 }
 
 interface PopoverProps {
-id: string
+  id: string
   children?: [ReactNode, (props: IPopoverFucChild) => any]
   className?: string
 }
