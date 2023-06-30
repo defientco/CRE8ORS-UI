@@ -37,8 +37,7 @@ const CustomConnectWallet = () => (
             if (!connected) {
               return (
                 <button
-                  className="font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand pl-[15px] md:pl-[0px]
-                  text-white md:text-black dark:text-[black] md:dark:text-[white]"
+                  className="font-bold uppercase text-[17px] lg:md:text-sm font-quicksand text-[black] dark:text-[white]"
                   onClick={openConnectModal}
                   type="button"
                 >
@@ -52,8 +51,7 @@ const CustomConnectWallet = () => (
                 <button
                   onClick={openChainModal}
                   type="button"
-                  className="font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand pl-[15px] md:pl-[0px]
-                  text-white md:text-black dark:text-[black] md:dark:text-[white]"
+                  className="text-[black] dark:text-[white]"
                 >
                   Wrong network
                 </button>
@@ -61,7 +59,7 @@ const CustomConnectWallet = () => (
             }
 
             return (
-              <div style={{ display: "flex", gap: 12, paddingLeft: 10 }}>
+              <div style={{ display: "flex", gap: 12 }}>
                 <button
                   onClick={openChainModal}
                   style={{ display: "flex", alignItems: "center", paddingLeft: 2 }}
@@ -95,8 +93,7 @@ const CustomConnectWallet = () => (
                 <button
                   onClick={openAccountModal}
                   type="button"
-                  className="font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand 
-                  text-white md:text-black dark:text-[black] md:dark:text-[white]"
+                  className="font-bold uppercase text-[17px] lg:md:text-sm font-quicksand text-[black] dark:text-[white]"
                 >
                   {account.displayName}
                   {account.displayBalance ? ` (${account.displayBalance})` : ""}

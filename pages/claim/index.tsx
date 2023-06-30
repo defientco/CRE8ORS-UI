@@ -1,5 +1,7 @@
 import ClaimPage from "../../components/ClaimPage"
 
-const Claim = () => <ClaimPage />
+function Claim() {
+  return <ClaimPage />
+}
 
 export default Claim
