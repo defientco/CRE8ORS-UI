@@ -1,14 +1,11 @@
 import axios from "axios"
 import AllowlistStatusPage from "../../components/AllowlistStatusPage"
 
-const Status = () => <AllowlistStatusPage quizResult="Engineer" />
+const Status = ({ quizResult }: any) => <AllowlistStatusPage quizResult={quizResult} />
 
 export async function getServerSideProps(context) {
   const { responseId } = context.query
-  // Now you have the responseId
   try {
-    console.log("GET RESULTS", responseId)
-
     const response = await axios.get(
       `http://localhost:3000/api/allowlist/typeform?responseId=${responseId}`,
       {
@@ -17,12 +14,11 @@ export async function getServerSideProps(context) {
         },
       },
     )
-    console.log("SWEETS RESPONSE", response)
+    return { props: { quizResult: response.data.cre8or } }
   } catch (err) {
-    console.error(err)
-  }
-  return {
-    props: {},
+    return {
+      props: {},
+    }
   }
 }
 

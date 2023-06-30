@@ -72,7 +72,7 @@ let's hack everything corp 🧬`)
                 <div className="flex flex-col justify-center">
                   <div ref={titleRef}>
                     <SectionTitle
-                      text={`Congratulations! ${quizResult}`}
+                      text={`Congratulations! You are ${quizResult}`}
                       className="!mx-[0px] !mt-6 !mb-4 xs:!mx-0 sm:!m-6 w-[290px] samsungS8:w-[375px] 
                         !text-[30px] samsungS8:!text-[33px] lg:!text-[64px] lg:w-[550px] md:text-left 
                         md:leading-[106.3%]"
