@@ -9,7 +9,6 @@ import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
-import Newsletter from "../Footer/components/Newsletter"
 import VerifyTweetInput from "../VerifyTweetInput"
 
 const QuizResultPage = ({ quizResult }: any) => {
@@ -25,7 +24,7 @@ const QuizResultPage = ({ quizResult }: any) => {
   const buttonRef = useRef()
 
   const isVerified = false
-  const onVerify = console.log
+  const onVerify = () => null
 
   const text = encodeURIComponent(`I am applying to the cre8ors whitelist for @Cre8orsnft.
 
