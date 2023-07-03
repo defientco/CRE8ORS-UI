@@ -1,5 +1,4 @@
 import _ from "lodash"
-import { error } from "console"
 import { ApplicantDTO } from "../DTO/applicant.dto"
 import { ContactFormDTO } from "../DTO/contactform.dto"
 import AllowList from "../Models/AllowList"
@@ -23,51 +22,18 @@ export const addAllowListApplicant = async (body: ApplicantDTO) => {
     await dbConnect()
     const result = await AllowList.create(body)
     return { sucess: true, result }
-  } catch (e) {
-    error(e)
-    throw new Error(e)
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
-export const getAllowListApplicantByResponseId = async (responseId: string) => {
-  try {
-    await dbConnect()
-    const result = await AllowList.findOne({ responseId }).lean()
-    return result
-  } catch (e) {
-    throw new Error(e)
-  }
-}
-
-export const getAllowListApplicantByWalletAddress = async (walletAddress: string) => {
-  try {
-    await dbConnect()
-    const result = await AllowList.findOne({ walletAddress }).lean()
-    return result
-  } catch (e) {
-    error(e)
-    throw new Error(e)
-  }
-}
-
-export const getAllowListApplicantByTwitterHandle = async (twitterHandle: string) => {
-  try {
-    await dbConnect()
-    const result = await AllowList.findOne({ twitterHandle }).lean()
-    return result
-  } catch (e) {
-    error(e)
-    throw new Error(e)
-  }
-}
 export const addMessage = async (body: ContactFormDTO) => {
   try {
     await dbConnect()
     const result = await ContactForm.create(body)
     return { sucess: true, result }
-  } catch (e) {
-    error(e)
-    throw new Error(e)
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
@@ -76,16 +42,6 @@ export const getAllowListApplicant = async (address: string) => {
     await dbConnect()
     const result = await AllowList.findOne({ walletAddress: address }).lean()
     return result
-  } catch (e) {
-    throw new Error(e)
-  }
-}
-
-export const updateAllowlistApplicant = async (walletAddress: string, status: string) => {
-  try {
-    await dbConnect()
-    const result = await AllowList.findOneAndUpdate({ walletAddress }, { status })
-    return { sucess: true, result }
   } catch (e) {
     throw new Error(e)
   }
@@ -128,7 +84,7 @@ export const updateStatus = async (applicants: string[], status: string) => {
     await dbConnect()
     const [result] = await Promise.all(
       applicants.map(async (applicant) => {
-        await AllowList.findOneAndUpdate({ walletAddress: applicant }, { status })
+        await AllowList.findOneAndUpdate({ tokenId: applicant }, { status })
       }),
     )
     return { sucess: true, result }
@@ -136,21 +92,10 @@ export const updateStatus = async (applicants: string[], status: string) => {
     throw new Error(e)
   }
 }
-
 export const addTokenIdToAllowListApplicant = async (address: string, tokenId: string) => {
   try {
     await dbConnect()
     const result = await AllowList.findOneAndUpdate({ walletAddress: address }, { tokenId })
-    return { sucess: true, result }
-  } catch (e) {
-    throw new Error(e)
-  }
-}
-
-export const verifyAllowListApplicant = async (address: string, isVerified: boolean) => {
-  try {
-    await dbConnect()
-    const result = await AllowList.findOneAndUpdate({ walletAddress: address }, { isVerified })
     return { sucess: true, result }
   } catch (e) {
     throw new Error(e)
@@ -172,8 +117,7 @@ export const addParticipant = async (body: ParticipantDTO) => {
     await dbConnect()
     const result = await Participants.create(body)
     return { sucess: true, result }
-  } catch (e) {
-    error(e)
-    throw new Error(e)
+  } catch (error) {
+    throw new Error(error)
   }
 }

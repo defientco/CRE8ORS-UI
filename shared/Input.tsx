@@ -61,15 +61,13 @@ function Input({
         onMouseOver={ hoverEvent }
         onMouseOut={ leaveEvent }
       >
-        <div className="w-full flex overflow-hidden items-center justify-between">
-            {
-              startAdornment && <div className="px-[15px]">
+        <div className="w-full flex rounded-[10px] overflow-hidden items-center justify-between">
+            <div className="px-[15px]">
                 {startAdornment}
             </div>
-            }
             <div
               className={`${endAdornment ? 'rounded-tr-[0px] rounded-tr-[0px]': ''}
-                ${(startAdornment || endAdornment) ? "w-[45%] xs:w-[100%]" : "!w-[100%]"}
+                w-[45%] xs:w-[100%]
               `}
             >
                 <input
@@ -87,11 +85,9 @@ function Input({
                     onChange={onChange}
                 />
             </div>
-            {
-              endAdornment && <div>
-                  {endAdornment}
-              </div>
-            }
+            <div>
+                {endAdornment}
+            </div>
         </div>
     </div>
   )
