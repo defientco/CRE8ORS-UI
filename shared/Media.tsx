@@ -22,11 +22,6 @@ function Media({
   containerStyle
 }: IMedia) {
   const videoRef = useRef<any>()
-  useEffect(() => {
-    if(videoProps?.autoPlay) {
-      videoRef.current.muted = false
-    }
-  }, [videoRef, videoProps])
 
   return (
     <div
