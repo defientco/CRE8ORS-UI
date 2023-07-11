@@ -8,6 +8,7 @@ import useGradualFadeEffect from "../../hooks/useGradualFade"
 import Title from "./Title"
 import Content from "./Content"
 import { Button } from "../../shared/Button"
+import Media from "../../shared/Media"
 
 const StakingPage = () => {
   const [containerRef, { width }] = useMeasure()
@@ -66,6 +67,23 @@ const StakingPage = () => {
                 : `center`,
             }}
           >
+            <div className="absolute left-0 bottom-0 z-[0] block md:hidden">
+              <div
+                style={{
+                  width: `${width}px`,
+                  height: `${(width / 430) * 397}px`,
+                }}
+              >
+                <Media
+                  link="/assets/Staking/character.svg"
+                  type="image"
+                  containerStyle={{
+                    width: `${width}px`,
+                    height: `${(width / 430) * 397}px`,
+                  }}
+                />
+              </div>
+            </div>
             <div
               className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
             pb-[150px] samsungS8:pb-[200px] xs:pb-[250px] md:pb-0 relative z-[100]"
@@ -109,7 +127,7 @@ const StakingPage = () => {
                 </div>
               </div>
             </div>
-            <Footer className="!pt-0 !pb-0 !bg-transparent" />
+            <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
           </div>
         )}
       </div>
