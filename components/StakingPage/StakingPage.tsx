@@ -1,10 +1,8 @@
 import { useMeasure } from "react-use"
-import { useRef } from "react"
-import { useMediaQuery, useReadLocalStorage } from "usehooks-ts"
+import { useMediaQuery } from "usehooks-ts"
 import Layout from "../Layout"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
-import useGradualFadeEffect from "../../hooks/useGradualFade"
 import Title from "./Title"
 import Content from "./Content"
 import { Button } from "../../shared/Button"
@@ -14,29 +12,7 @@ const StakingPage = () => {
   const [containerRef, { width }] = useMeasure()
   const isResponsive = useMediaQuery("(max-width: 1440px)")
   const isMobile = useMediaQuery("(max-width: 768px)")
-  const isScrollUp = useReadLocalStorage<boolean>("isScrollUp")
   const { themeMode } = useTheme()
-  const titleRef = useRef()
-  const contentRef = useRef()
-  const buttonRef = useRef()
-
-  useGradualFadeEffect({
-    elements: [
-      {
-        domObject: contentRef.current,
-        type: "child",
-      },
-      {
-        domObject: titleRef.current,
-        type: "child",
-      },
-      {
-        domObject: buttonRef.current,
-        type: "child",
-      },
-    ],
-    isScrollUp,
-  })
 
   return (
     <Layout type="base">
@@ -49,7 +25,7 @@ const StakingPage = () => {
             className="relative z-[6] flex flex-col items-center pt-[80px]"
             style={{
               width: `${width}px`,
-              height: isResponsive ? `auto` : `${(958 / 1440) * width}px`,
+              height: isResponsive ? `900px` : `${(991 / 1440) * width}px`,
               minHeight: isResponsive ? "100vh" : "",
               backgroundImage:
                 // eslint-disable-next-line no-nested-ternary
@@ -67,7 +43,7 @@ const StakingPage = () => {
                 : `center`,
             }}
           >
-            <div className="absolute left-0 bottom-0 z-[0] block md:hidden">
+            <div className="absolute left-0 bottom-0 z-[0] hidden dark:block dark:md:hidden">
               <div
                 style={{
                   width: `${width}px`,
@@ -86,20 +62,18 @@ const StakingPage = () => {
             </div>
             <div
               className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
-            pb-[150px] samsungS8:pb-[200px] xs:pb-[250px] md:pb-0 relative z-[100]"
+            pb-[250px] samsungS8:pb-[270px] xs:pb-[290px] md:pb-0 relative z-[100]"
             >
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div className="flex justify-center items-center md:justify-start">
                   <div className="dark:bg-[#00000069] rounded-[20px] py-[40px]">
-                    <div ref={titleRef}>
-                      <Title
-                        text={`The Warehouse\nis Where All the\nCre8ors... Create`}
-                        className="leading-[102.3%]
-                        !px-6 md:!px-12 md:!pb-6
-                        text-center md:text-left"
-                      />
-                    </div>
-                    <div className="flex justify-center" ref={contentRef}>
+                    <Title
+                      text={`The Warehouse\nis Where All the\nCre8ors... Create`}
+                      className="leading-[102.3%]
+                      !px-6 md:!px-12 md:!pb-6
+                      text-center md:text-left fade_in_text"
+                    />
+                    <div className="flex justify-center fade_in_text">
                       <Content
                         content={
                           isMobile
@@ -113,7 +87,7 @@ const StakingPage = () => {
                     </div>
                     <div
                       className="absolute md:relative w-full !p-4 md:!px-12
-                        flex justify-center md:justify-start
+                        flex justify-center md:justify-start fade_in_text
                     "
                     >
                       <Button

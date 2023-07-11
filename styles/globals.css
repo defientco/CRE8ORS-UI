@@ -90,6 +90,23 @@ a {
   transform: none;
 }
 
+.fade_in_text {
+  animation: fade_in_text 0.3s ease-in-out;
+}
+
+/* Fade-in background animation on scroll */
+@keyframes fade_in_text {
+  0% {
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Fade-in background animation on scroll */
 @keyframes fade_in_bg {
   0% {
