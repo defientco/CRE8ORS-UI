@@ -62,11 +62,11 @@ const StakingPage = () => {
             </div>
             <div
               className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
-            pb-[250px] samsungS8:pb-[270px] xs:pb-[290px] md:pb-0 relative z-[100]"
+            pb-[150px] samsungS8:pb-[200px] xs:pb-[290px] md:pb-0 relative z-[100]"
             >
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div className="flex justify-center items-center md:justify-start">
-                  <div className="dark:bg-[#00000069] rounded-[20px] py-[40px]">
+                  <div className="dark:bg-[#00000069] rounded-[20px] pt-[40px] pb-[20px] md:py-[40px]">
                     <Title
                       text={`The Warehouse\nis Where All the\nCre8ors... Create`}
                       className="leading-[102.3%]
@@ -76,17 +76,29 @@ const StakingPage = () => {
                     <div className="flex justify-center fade_in_text">
                       <Content
                         content={
+                          !isMobile
+                            ? `Just outside the Black & White city stands The Warehouse.\nAn abandoned imagination factory that the Cre8ors call\nhome. This is their safe haven and HQ. A place for free-\nthinking, art, ingenuity and experimentation.`
+                            : `Just outside the Black & White city\nstands The Warehouse. An abandoned\nimagination factory that the Cre8ors\ncall home. This is their safe haven and\nHQ. A place for free-thinking, art,\ningenuity and experimentation.`
+                        }
+                        className="leading-[102.3%] 
+                            !p-4 md:!px-12 md:!pb-6
+                            text-center md:text-left"
+                      />
+                    </div>
+                    <div className="flex justify-center fade_in_text">
+                      <Content
+                        content={
                           isMobile
                             ? `Enter the warehouse by soft-staking\nyour Cre8ors to begin unlocking it's AI\ntraining, collecting badges, and earning\nrewards(like access to new dApps,\nmerch, and more.)`
                             : `Enter the warehouse by soft-staking your Cre8or to begin\nunlocking it's AI training, collecting badges, and earning\nrewards(like access to new dApps, merch, and more.)`
                         }
                         className="leading-[102.3%] 
-                            !p-6 md:!px-12 md:!pb-6
+                            !p-4 md:!px-12 md:!pb-6
                             text-center md:text-left"
                       />
                     </div>
                     <div
-                      className="absolute md:relative w-full !p-4 md:!px-12
+                      className="relative w-full !p-4 md:!px-12
                         flex justify-center md:justify-start fade_in_text
                     "
                     >
@@ -94,7 +106,7 @@ const StakingPage = () => {
                         id="stake_btn"
                         className="w-[265px] h-[37px] samsungS8:w-[280px] samsungS8:h-[40px] md:w-[291px] md:h-[46px]"
                       >
-                        Stake your nft
+                        Enter the warehouse
                       </Button>
                     </div>
                   </div>
