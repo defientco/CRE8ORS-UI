@@ -32,8 +32,8 @@ const StakingPage = () => {
                 themeMode === "light"
                   ? "url('/assets/Claim/white_background.svg')"
                   : isMobile
-                  ? "url('/assets/Staking/mobile_background.svg')"
-                  : "url('/assets/Staking/background.svg')",
+                  ? "url('/assets/Staking/mobile_background.png')"
+                  : "url('/assets/Staking/background.png')",
               backgroundSize: "cover",
               // eslint-disable-next-line no-nested-ternary
               backgroundPosition: isResponsive
@@ -51,7 +51,7 @@ const StakingPage = () => {
                 }}
               >
                 <Media
-                  link="/assets/Staking/character.svg"
+                  link="/assets/Staking/character.png"
                   type="image"
                   containerStyle={{
                     width: `${width}px`,
