@@ -52,6 +52,7 @@ const StakingPage = () => {
               >
                 <Media
                   link="/assets/Staking/character.png"
+                  blurLink="/assets/Staking/character.png"
                   type="image"
                   containerStyle={{
                     width: `${width}px`,
