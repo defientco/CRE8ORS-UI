@@ -25,7 +25,7 @@ const StakingPage = () => {
             className="relative z-[6] flex flex-col items-center pt-[80px]"
             style={{
               width: `${width}px`,
-              height: isResponsive ? `900px` : `${(991 / 1440) * width}px`,
+              height: isResponsive ? `1000px` : `${(1000 / 1440) * width}px`,
               minHeight: isResponsive ? "100vh" : "",
               backgroundImage:
                 // eslint-disable-next-line no-nested-ternary
@@ -34,7 +34,7 @@ const StakingPage = () => {
                   : isMobile
                   ? "url('/assets/Staking/mobile_background.svg')"
                   : "url('/assets/Staking/background.svg')",
-              backgroundSize: isResponsive ? "cover" : "cover",
+              backgroundSize: "cover",
               // eslint-disable-next-line no-nested-ternary
               backgroundPosition: isResponsive
                 ? isMobile
@@ -62,7 +62,7 @@ const StakingPage = () => {
             </div>
             <div
               className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
-            pb-[150px] samsungS8:pb-[200px] xs:pb-[290px] md:pb-0 relative z-[100]"
+            pb-[180px] samsungS8:pb-[220px] xs:pb-[290px] md:pb-0 relative z-[100]"
             >
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                 <div className="flex justify-center items-center md:justify-start">
@@ -104,9 +104,17 @@ const StakingPage = () => {
                     >
                       <Button
                         id="stake_btn"
-                        className="w-[265px] h-[37px] samsungS8:w-[280px] samsungS8:h-[40px] md:w-[291px] md:h-[46px]"
+                        className="w-[265px] h-[69px] samsungS8:w-[280px] md:w-[291px] md:h-[46px]"
                       >
-                        Enter the warehouse
+                        {isMobile ? (
+                          <>
+                            Enter the
+                            <br />
+                            warehouse
+                          </>
+                        ) : (
+                          "Enter the warehouse"
+                        )}
                       </Button>
                     </div>
                   </div>
