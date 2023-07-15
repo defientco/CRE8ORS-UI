@@ -21,6 +21,7 @@ import claimTicketAbi from "../../lib/abi-cre8ors.json"
 import claimExchangeAbi from "../../lib/abi-passport-adapter.json"
 import { approveClaimTicket, exchangeClaimTicket, getIsApproved } from "../../lib/exchange"
 import { ModalStatus } from "./contants"
+import { logToServer } from "../../utils/logFx"
 
 const log: Logger<ILogObj> = new Logger({ hideLogPositionForProduction: true })
 const ClaimPage = () => {
@@ -57,6 +58,12 @@ const ClaimPage = () => {
     try {
       if (modalStatus === ModalStatus.CANBURN) {
         setModalStatus(ModalStatus.APPROVING)
+        await logToServer({
+          type: "claim",
+          action: "approve",
+          address,
+          claimTicketId: latestClaimTicketId,
+        })
         await approveClaimTicket(signer, claimTicketAbi, latestClaimTicketId)
       }
 
@@ -155,7 +162,7 @@ const ClaimPage = () => {
                 )}
               </div>
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                <div className="flex flex-col justify-center items-center md:items-start">
+                <div className="flex flex-col items-center justify-center md:items-start">
                   <div ref={titleRef}>
                     <SectionTitle
                       text="Burn Ticket, Mint Passport"

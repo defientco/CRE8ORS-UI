@@ -1,17 +1,21 @@
 import { Contract, ContractInterface, Signer } from "ethers"
 import getDefaultProvider from "./getDefaultProvider"
+import { logToServer } from "../utils/logFx"
 
 export const approveClaimTicket = async (
   signer: Signer,
   abi: ContractInterface,
   claimTicketId: number | string,
 ) => {
+  await logToServer({ claimTicketId, decimalValue: parseInt(claimTicketId.toString(), 16) })
   const contract = new Contract(process.env.NEXT_PUBLIC_CRE8ORS_CLAIM_TICKET_ADDRESS, abi, signer)
   const tx = await contract.approve(
     process.env.NEXT_PUBLIC_CRE8ORS_EXCHANGE_ADDRESS,
     parseInt(claimTicketId.toString(), 16),
   )
+  await logToServer(tx)
   const res = await tx.wait()
+  await logToServer(res)
   return res
 }
 export const getIsApproved = async (abi: ContractInterface, claimTicketId: number | string) => {
