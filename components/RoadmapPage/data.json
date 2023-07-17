@@ -130,9 +130,9 @@
     "mobileBackImg": "/assets/Roadmap/mobile_mint.png",
     "mobileLockBackImg": "/assets/Roadmap/lock_mint.png",
     "label": "Cre8ors mint",
-    "date": "2023-08-08",
+    "date": "2023-07-27",
     "certain": true,
-    "link": "/mint",
+    "link": "/",
     "text": "More info coming soon.",
     "mobile_text": "More info coming soon.",
     "mobile_font_size": 32
