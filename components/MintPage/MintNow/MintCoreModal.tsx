@@ -23,7 +23,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const { width, height } = useWindowSize()
 
-  const hasPassport = true
+  const hasPassport = false
 
   useEffect(() => {
     const init = async () => {
@@ -80,7 +80,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             hasAllowListRole={applicant?.isVerified}
-            isCre8orsDay={isCre8orlistDay}
+            isCre8orsDay={!isCre8orlistDay}
           />
         ))}
 

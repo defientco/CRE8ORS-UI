@@ -70,6 +70,10 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
                 text-[15px] xl:text-[34px] 
                 !rounded-[10px]
                 !text-white"
+            onClick={() => {
+              window.open("https://everythingcorp.cre8ors.com/quiz", "_blank")
+              toggleIsVisible()
+            }}
           >
             Take Allowlist Quiz
           </Button>
