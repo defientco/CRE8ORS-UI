@@ -1,5 +1,4 @@
 import { useState, ReactNode, useEffect } from 'react'
-import { useMediaQuery } from 'usehooks-ts'
 
 interface IPopoverFucChild {
   toggleModal: () => void

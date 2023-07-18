@@ -4,8 +4,12 @@ import Image from "next/image"
 import { FC } from "react"
 import customLoader from "../../lib/customLoader"
 
+interface IWalletConnectFuncChild {
+  openConnectModal: () => void
+}
+
 interface WalletConnectButtonProps {
-  children?: React.ReactNode
+  children?: (props: IWalletConnectFuncChild) => any | React.ReactNode
 }
 const WalletConnectButton: FC<WalletConnectButtonProps> = ({ children }) => (
   <ConnectButton.Custom>
@@ -26,6 +30,7 @@ const WalletConnectButton: FC<WalletConnectButtonProps> = ({ children }) => (
         account &&
         chain &&
         (!authenticationStatus || authenticationStatus === "authenticated")
+
       return (
         <div
           {...(!ready && {
@@ -40,9 +45,17 @@ const WalletConnectButton: FC<WalletConnectButtonProps> = ({ children }) => (
           {(() => {
             if (!connected) {
               return (
-                <button onClick={openConnectModal} type="button">
-                  {children ?? "Connect Wallet"}
-                </button>
+                <div>
+                  {typeof children === "function" ? (
+                    (children as any)({
+                      openConnectModal,
+                    })
+                  ) : (
+                    <button onClick={openConnectModal} type="button">
+                      Connect Wallet
+                    </button>
+                  )}
+                </div>
               )
             }
             if (chain.unsupported) {

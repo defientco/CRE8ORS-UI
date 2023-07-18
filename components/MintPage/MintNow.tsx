@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { useMediaQuery } from "usehooks-ts"
 import { useMeasure } from "react-use"
+import { useState } from "react"
+import { useAccount } from "wagmi"
 import SectionContainer from "./SectionContainer"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
@@ -9,6 +11,8 @@ import Media from "../../shared/Media"
 import Timer from "./MintNow/Timer"
 import MintCard from "./MintNow/MintCard"
 import { Button } from "../../shared/Button"
+import MintCoreModal from "./MintNow/MintCoreModal"
+import WalletConnectButton from "../WalletConnectButton"
 
 const MintNow = () => {
   const canMintNow = new Date().getTime() >= new Date("08 Aug 2023 08:00:00 UTC").getTime()
@@ -17,13 +21,17 @@ const MintNow = () => {
   const [containerRef, containerSizes] = useMeasure()
   const [timerRef, timerSizes] = useMeasure()
 
+  const [openModal, setOpenModal] = useState(false)
+
+  const { address } = useAccount()
+
   return (
     <SectionContainer>
       <div
         className="relative w-full min-h-[100vh] flex justify-center items-start xl:items-center z-[1]"
         ref={containerRef}
       >
-        {canMintNow ? (
+        {!canMintNow ? (
           <div
             className="pt-[90px] pb-[90px]
           flex flex-col items-center
@@ -49,34 +57,54 @@ const MintNow = () => {
             >
               <MintCard
                 label="Tier I"
-                mintPrice={99}
+                mintPrice=".05"
                 desc="8 Month Lockup"
                 className="bg-[#E93F45]"
               />
               <MintCard
                 label="Tier II"
-                mintPrice={199}
+                mintPrice=".10"
                 desc="8 Week Lockup"
                 className="bg-[#F4EE05]"
               />
               <MintCard
                 label="Tier III"
-                mintPrice={299}
+                mintPrice=".15"
                 desc="No Lockup"
                 className="bg-[#08E1E6]"
               />
             </div>
             <div className="flex justify-center">
-              <Button
-                id="mint_btn"
-                className="mt-[40px] 
+              {address ? (
+                <Button
+                  id="mint_btn_mint_page"
+                  className="mt-[40px] 
                 xl:w-[308px] xl:h-[88px] 
                 w-[133px] h-[38px]
                 text-[14px] xl:text-[30px] 
                 rounded-[5px] xl:rounded-[15px]"
-              >
-                Mint now
-              </Button>
+                  onClick={() => setOpenModal(true)}
+                >
+                  Mint now
+                </Button>
+              ) : (
+                <WalletConnectButton>
+                  {({ openConnectModal }) => (
+                    <Button
+                      id="connec_wallet_mint_page"
+                      className="!px-0 !py-0
+                  mt-[40px] 
+                  xl:w-[328px] xl:h-[88px] 
+                  w-[153px] h-[38px]
+                  text-[14px] xl:text-[30px] 
+                  rounded-[5px] xl:rounded-[15px]"
+                      onClick={openConnectModal}
+                    >
+                      Connect Wallet
+                    </Button>
+                  )}
+                </WalletConnectButton>
+              )}
             </div>
             <div className="pt-[27px] flex justify-center items-center gap-x-[10px]">
               <Content className="!text-[18px]" content="Scroll down to learn more" />
@@ -87,6 +115,10 @@ const MintNow = () => {
                 blurLink="/assets/Mint/MintNow/down-arrow.svg"
               />
             </div>
+            <MintCoreModal
+              isVisibleModal={openModal}
+              toggleModal={() => setOpenModal(!openModal)}
+            />
           </div>
         ) : (
           <div className="flex flex-col justify-between items-center mt-[70px] xl:mt-0 xl:h-[470px]">

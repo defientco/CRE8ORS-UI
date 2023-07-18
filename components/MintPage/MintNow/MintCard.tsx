@@ -5,7 +5,7 @@ import Media from "../../../shared/Media"
 interface MintCardProps {
   className?: string
   label: string
-  mintPrice: number
+  mintPrice: string
   desc: string
 }
 
@@ -39,7 +39,7 @@ const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
         className="text-[46px] xl:text-[59px] font-eigerdals font-bold
       text-center xl:text-left leading-[120%] xl:leading-[150%]"
       >
-        ${mintPrice}
+        {mintPrice}
       </div>
     </div>
     <div className="flex items-center gap-x-[10px] justify-center">
