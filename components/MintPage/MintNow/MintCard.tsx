@@ -7,12 +7,25 @@ interface MintCardProps {
   label: string
   mintPrice: string
   desc: string
+  decreaseQuantity: (type: number) => void
+  increaseQuantity: (type: number) => void
+  type: number
+  quantity: number
 }
 
-const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
+const MintCard: FC<MintCardProps> = ({
+  className,
+  label,
+  mintPrice,
+  desc,
+  increaseQuantity,
+  decreaseQuantity,
+  type,
+  quantity,
+}) => (
   <div
     className={`relative 
-            w-[210px] h-[209px]
+            w-[250px] h-[209px]
             xl:w-[336px] xl:h-[334px]
             rounded-[15px] 
             px-[20px] pt-[20px] pb-[20px] xl:pb-[40px]
@@ -30,7 +43,7 @@ const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
     </Link>
     <div>
       <div
-        className="text-[22px] xl:text-[29px] font-bold font-quicksand
+        className="text-[27px] xl:text-[32px] font-bold font-quicksand
       text-center xl:text-left leading-[103.3%] xl:leading-[150%]"
       >
         {label}
@@ -39,7 +52,7 @@ const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
         className="text-[46px] xl:text-[59px] font-eigerdals font-bold
       text-center xl:text-left leading-[120%] xl:leading-[150%]"
       >
-        {mintPrice}
+        {mintPrice} ETH
       </div>
     </div>
     <div className="flex items-center gap-x-[10px] justify-center">
@@ -47,11 +60,11 @@ const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
         link="/assets/Mint/MintNow/MintCard/tick.png"
         type="image"
         containerClasses="xl:w-[33px] xl:h-[33px]
-        w-[20px] h-[20px]"
+        w-[25px] h-[25px]"
       />
       <div
-        className="font-[700] font-quicksand 
-      text-[14px] xl:text-[19px]"
+        className="font-medium font-quicksand 
+      text-[19px]"
       >
         {desc}
       </div>
@@ -59,16 +72,22 @@ const MintCard: FC<MintCardProps> = ({ className, label, mintPrice, desc }) => (
     <div className="flex justify-center">
       <div
         className="hover:scale-[1.1] scale-[1] transition duration-[300ms] font-bold font-quicksand 
-                        uppercase text-white dark:text-[black] rounded bg-[black] dark:bg-[white] 
+                        uppercase text-white dark:text-[black] 
+                        rounded-[10px] 
+                        bg-[black] dark:bg-[white] 
                         shadow-[0px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[0px_4px_4px_rgb(255,255,255,0.25)]
                         flex items-center justify-center gap-[10px]
                         cursor-pointer
-                        w-[102px] h-[27px] xl:w-[170px] xl:h-[45px]"
+                        w-[102px] h-[35px] xl:w-[170px] xl:h-[45px]"
       >
-        <div className="flex gap-x-[10px] xl:gap-x-[20px] text-[9px] xl:text-[15px]">
-          <button type="button">-</button>
-          QUANTITY
-          <button type="button">+</button>
+        <div className="flex gap-x-[20px] xl:gap-x-[30px] text-[13px] xl:text-[15px]">
+          <button type="button" onClick={() => decreaseQuantity(type)}>
+            -
+          </button>
+          {quantity}
+          <button type="button" onClick={() => increaseQuantity(type)}>
+            +
+          </button>
         </div>
       </div>
     </div>

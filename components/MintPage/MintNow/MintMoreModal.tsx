@@ -96,31 +96,29 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             >
               {`You have ${possibleMintCount || "no"} more\nmints available`}
             </pre>
-            {possibleMintCount && (
-              <>
-                <Button
-                  id="mint_now"
-                  className="!px-0 !py-0
+            <div className={`${possibleMintCount ? "block" : "hidden"}`}>
+              <Button
+                id="mint_now"
+                className="!px-0 !py-0
                   xl:!w-[192.3px] xl:!h-[50px] 
                   !w-[150px] !h-[40px]
                   !font-eigerdals font-bold !bg-black 
                   text-[15px] xl:text-[20px] 
                   !rounded-[10px]
                   !text-white"
-                  onClick={mintCre8or}
-                >
-                  Mint More
-                </Button>
-                <pre
-                  className="font-quicksand 
+                onClick={mintCre8or}
+              >
+                Mint More
+              </Button>
+              <pre
+                className="font-quicksand 
                     text-[15px] xl:text-[20px]
                     py-[10px]
                     text-center"
-                >
-                  OR
-                </pre>
-              </>
-            )}
+              >
+                OR
+              </pre>
+            </div>
             {maxOfCre8or === lockedCntOfCre8or ? (
               <Button
                 id="mint_now"
