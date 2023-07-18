@@ -23,7 +23,7 @@ const MintNow = () => {
 
   const [openModal, setOpenModal] = useState(false)
 
-  const { address } = useAccount()
+  const { isConnected } = useAccount()
 
   return (
     <SectionContainer>
@@ -75,7 +75,7 @@ const MintNow = () => {
               />
             </div>
             <div className="flex justify-center">
-              {address ? (
+              {isConnected ? (
                 <Button
                   id="mint_btn_mint_page"
                   className="mt-[40px] 
