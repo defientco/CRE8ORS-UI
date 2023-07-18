@@ -14,18 +14,19 @@ interface MintCoreModalProps {
 }
 
 const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) => {
-  const maxOfNFTs = 4
+  const maxOfCre8ors = 4
 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
-  const [balanceOfNFT, setBalanceOfNFT] = useState(0)
+  const [balanceOfCre8or, setBalanceOfCre8or] = useState(0)
+  const [lockedCntOfCre8tor, setLockecCntOfCre8or] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const { width, height } = useWindowSize()
 
-  const hasPassport = false
-  const hasFrinedFamily = true
+  const hasPassport = true
+  const hasFriendFamily = true
 
   useEffect(() => {
     const init = async () => {
@@ -50,16 +51,17 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
-  const getBalanceOfNFT = () => {
+  const getBalanceOfCre8or = () => {
     setTimeout(() => {
-      setBalanceOfNFT(1)
+      setBalanceOfCre8or(1)
+      setLockecCntOfCre8or(1)
     }, 2000)
   }
 
   const mintCre8or = () => {
     setLoading(true)
     setTimeout(() => {
-      getBalanceOfNFT()
+      getBalanceOfCre8or()
       setTimeout(() => {
         setLoading(false)
         setConfettiEffect()
@@ -69,17 +71,17 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   return (
     <>
-      {!balanceOfNFT &&
+      {!balanceOfCre8or &&
         // eslint-disable-next-line no-nested-ternary
-        (hasPassport ? (
-          <DetectedPassportModal
+        (hasFriendFamily ? (
+          <DetectedFriendFamilyModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             mintCre8or={mintCre8or}
             loading={loading}
           />
-        ) : hasFrinedFamily ? (
-          <DetectedFriendFamilyModal
+        ) : hasPassport ? (
+          <DetectedPassportModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             mintCre8or={mintCre8or}
@@ -94,9 +96,10 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
           />
         ))}
 
-      {balanceOfNFT && (
+      {balanceOfCre8or && (
         <MintMoreModal
-          possibleMintCount={maxOfNFTs - balanceOfNFT}
+          possibleMintCount={maxOfCre8ors - balanceOfCre8or}
+          lockedCntOfCre8or={lockedCntOfCre8tor}
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           mintCre8or={mintCre8or}

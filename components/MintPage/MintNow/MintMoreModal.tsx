@@ -8,6 +8,7 @@ interface MintMoreModalProps {
   isModalVisible: boolean
   toggleIsVisible: () => void
   possibleMintCount: number
+  lockedCntOfCre8or: number
   loading: boolean
   mintCre8or: () => void
 }
@@ -16,9 +17,12 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   isModalVisible,
   toggleIsVisible,
   possibleMintCount,
+  lockedCntOfCre8or,
   loading,
   mintCre8or,
 }) => {
+  const maxOfCre8or = 4
+
   const isXl = useMediaQuery("(max-width: 1150px)")
 
   return (
@@ -92,19 +96,43 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             >
               {`You have ${possibleMintCount || "no"} more\nmints available`}
             </pre>
-            {possibleMintCount ? (
+            {possibleMintCount && (
+              <>
+                <Button
+                  id="mint_now"
+                  className="!px-0 !py-0
+                  xl:!w-[192.3px] xl:!h-[50px] 
+                  !w-[150px] !h-[40px]
+                  !font-eigerdals font-bold !bg-black 
+                  text-[15px] xl:text-[20px] 
+                  !rounded-[10px]
+                  !text-white"
+                  onClick={mintCre8or}
+                >
+                  Mint More
+                </Button>
+                <pre
+                  className="font-quicksand 
+                    text-[15px] xl:text-[20px]
+                    py-[10px]
+                    text-center"
+                >
+                  OR
+                </pre>
+              </>
+            )}
+            {maxOfCre8or === lockedCntOfCre8or ? (
               <Button
                 id="mint_now"
                 className="!px-0 !py-0
-                xl:!w-[192.3px] xl:!h-[50px] 
-                !w-[150px] !h-[40px]
-                !font-eigerdals font-bold !bg-black 
-                text-[15px] xl:text-[20px] 
-                !rounded-[10px]
-                !text-white"
-                onClick={mintCre8or}
+            xl:!w-[260.3px] xl:!h-[50px] 
+            !w-[220px] !h-[40px]
+            !font-eigerdals font-bold !bg-black 
+            text-[15px] xl:text-[20px]  
+            !rounded-[10px]
+            !text-white"
               >
-                Mint More
+                Set up profile
               </Button>
             ) : (
               <Button
@@ -120,26 +148,6 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 Enter warehouse
               </Button>
             )}
-            <pre
-              className="font-quicksand 
-                text-[15px] xl:text-[20px]
-                py-[10px]
-                text-center"
-            >
-              OR
-            </pre>
-            <Button
-              id="mint_now"
-              className="!px-0 !py-0
-                xl:!w-[250.3px] xl:!h-[50px] 
-                !w-[210px] !h-[40px]
-                !font-eigerdals font-bold !bg-black 
-                text-[15px] xl:text-[20px]  
-                !rounded-[10px]
-                !text-white"
-            >
-              Set up profile
-            </Button>
           </>
         )}
       </div>
