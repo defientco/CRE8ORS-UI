@@ -42,7 +42,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                     uppercase text-center
                     leading-[103.3%]"
             >
-              {`Minting\nCre8or`}
+              {`Minting Now`}
             </pre>
             <Media
               type="image"
