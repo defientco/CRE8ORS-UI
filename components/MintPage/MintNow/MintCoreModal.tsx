@@ -6,6 +6,7 @@ import DetectedPassportModal from "./DetectedPassportModal"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import MintMoreModal from "./MintMoreModal"
 import getApplicant from "../../../lib/getApplicant"
+import DetectedFriendFamilyModal from "./DetectedFriendFamilyModal"
 
 interface MintCoreModalProps {
   isVisibleModal: boolean
@@ -23,7 +24,8 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const { width, height } = useWindowSize()
 
-  const hasPassport = true
+  const hasPassport = false
+  const hasFrinedFamily = true
 
   useEffect(() => {
     const init = async () => {
@@ -68,8 +70,16 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
   return (
     <>
       {!balanceOfNFT &&
+        // eslint-disable-next-line no-nested-ternary
         (hasPassport ? (
           <DetectedPassportModal
+            isModalVisible={isVisibleModal}
+            toggleIsVisible={toggleModal}
+            mintCre8or={mintCre8or}
+            loading={loading}
+          />
+        ) : hasFrinedFamily ? (
+          <DetectedFriendFamilyModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             mintCre8or={mintCre8or}
