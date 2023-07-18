@@ -17,13 +17,13 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
-  const [balanceOfNFT, setBalanceOfNFT] = useState(2)
+  const [balanceOfNFT, setBalanceOfNFT] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const { width, height } = useWindowSize()
 
-  const hasPassport = false
+  const hasPassport = true
 
   useEffect(() => {
     const init = async () => {

@@ -40,7 +40,7 @@ const DetectedPassportModal: FC<DetectedPassportModalProps> = ({
                 uppercase text-center
                 leading-[103.3%]"
         >
-          {loading ? `Minting Cre8or` : `Passport detected:\n1 Free Mint!`}
+          {loading ? `Minting Now` : `Passport detected:\n1 Free Mint!`}
         </pre>
         {loading ? (
           <Media
