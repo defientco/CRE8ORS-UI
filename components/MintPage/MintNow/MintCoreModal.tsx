@@ -17,7 +17,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
-  const [balanceOfNFT, setBalanceOfNFT] = useState(0)
+  const [balanceOfNFT, setBalanceOfNFT] = useState(2)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
 

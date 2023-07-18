@@ -137,6 +137,10 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 text-[15px] xl:text-[20px]  
                 !rounded-[10px]
                 !text-white"
+              onClick={() => {
+                window.open("https://opensea.io/collection/cre8ors-passports", "_blank")
+                toggleIsVisible()
+              }}
             >
               View on opensea
             </Button>
