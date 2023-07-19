@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useState, useCallback } from "react"
 import { useAccount } from "wagmi"
 import Confetti from "react-confetti"
 import { useWindowSize } from "usehooks-ts"
@@ -7,6 +7,7 @@ import WaitCre8orsModal from "./WaitCre8orsModal"
 import MintMoreModal from "./MintMoreModal"
 import getApplicant from "../../../lib/getApplicant"
 import DetectedFriendFamilyModal from "./DetectedFriendFamilyModal"
+import balanceOfAddress from "../../../lib/balanceOfAddress"
 
 interface MintCoreModalProps {
   isVisibleModal: boolean
@@ -26,12 +27,12 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
   const { width, height } = useWindowSize()
 
   const isCre8orlistDay =
-  new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
-  new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
+    new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
+    new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
   const hasPassport = true
   const hasFriendFamily = true
- 
+
   const setConfettiEffect = () => {
     setShowConfetti(true)
     setTimeout(() => {
@@ -56,6 +57,17 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
       }, 2000)
     }, 2000)
   }
+
+  const getCre8orInformation = useCallback(async () => {
+    if (!address) return
+    const balanceOf = await balanceOfAddress(address)
+    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
+    setLockedCntOfCre8or(4)
+  }, [address])
+
+  useEffect(() => {
+    getCre8orInformation()
+  }, [getCre8orInformation])
 
   useEffect(() => {
     const init = async () => {
