@@ -25,29 +25,20 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const { width, height } = useWindowSize()
 
+  const isCre8orlistDay =
+  new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
+  new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
+
   const hasPassport = true
   const hasFriendFamily = true
 
-  useEffect(() => {
-    const init = async () => {
-      const response = await getApplicant(address)
-      setApplicant(response)
-    }
-    if (!address) return
-    init()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
-
+ 
   const setConfettiEffect = () => {
     setShowConfetti(true)
     setTimeout(() => {
       setShowConfetti(false)
     }, 8000)
   }
-
-  const isCre8orlistDay =
-    new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
-    new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
   const getBalanceOfCre8or = () => {
     setTimeout(() => {
@@ -66,6 +57,16 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
       }, 2000)
     }, 2000)
   }
+
+  useEffect(() => {
+    const init = async () => {
+      const response = await getApplicant(address)
+      setApplicant(response)
+    }
+    if (!address) return
+    init()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
 
   return (
     <>
