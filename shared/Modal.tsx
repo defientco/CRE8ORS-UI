@@ -19,7 +19,7 @@ function Modal({
   return (
     <div
       className={`fade_modal
-        fixed top-0 left-0 w-screen h-screen items-center justify-center z-40 bg-[rgba(0,0,0,0.4)]
+        fixed top-0 left-0 w-screen h-screen items-center justify-center z-40
         xl:pt-0 pt-[80px]
         ${isVisible ? 'flex' : 'hidden'}
       `}

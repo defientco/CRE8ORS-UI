@@ -7,7 +7,6 @@ import WaitCre8orsModal from "./WaitCre8orsModal"
 import MintMoreModal from "./MintMoreModal"
 import getApplicant from "../../../lib/getApplicant"
 import DetectedFriendFamilyModal from "./DetectedFriendFamilyModal"
-import balanceOfAddress from "../../../lib/balanceOfAddress"
 
 interface MintCoreModalProps {
   isVisibleModal: boolean
@@ -15,7 +14,7 @@ interface MintCoreModalProps {
 }
 
 const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) => {
-  const maxOfCre8ors = 4
+  const maxOfCre8ors = 8
 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
@@ -57,18 +56,6 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
       }, 2000)
     }, 2000)
   }
-
-  const getCre8orInformation = async () => {
-    if (!address) return
-    const balanceOf = await balanceOfAddress(address)
-    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
-    setLockedCntOfCre8or(4)
-  }
-
-  useEffect(() => {
-    getCre8orInformation()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
 
   useEffect(() => {
     const init = async () => {

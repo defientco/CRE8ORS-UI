@@ -3,6 +3,7 @@ import { useMediaQuery } from "usehooks-ts"
 import { Button } from "../../../shared/Button"
 import Modal from "../../../shared/Modal"
 import Media from "../../../shared/Media"
+import MintModalCTAButton from "./MintModalCTAButton"
 
 interface MintMoreModalProps {
   isModalVisible: boolean
@@ -21,7 +22,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   loading,
   mintCre8or,
 }) => {
-  const maxOfCre8or = 4
+  const maxOfCre8or = 8
 
   const isXl = useMediaQuery("(max-width: 1150px)")
 
@@ -126,35 +127,9 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
               </pre>
             </div>
             {maxOfCre8or === lockedCntOfCre8or ? (
-              <Button
-                id="mint_now"
-                className="!px-0 !py-0
-            xl:!w-[260.3px] xl:!h-[50px] 
-            !w-[220px] !h-[40px]
-            !font-eigerdals font-bold !bg-black 
-            text-[15px] xl:text-[20px]  
-            !rounded-[10px]
-            !text-black dark:!text-white
-            dark:!bg-black !bg-white"
-                onClick={() => window.open("/profile", "_blank")}
-              >
-                Set up profile
-              </Button>
+              <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
             ) : (
-              <Button
-                id="mint_now"
-                className="!px-0 !py-0
-            xl:!w-[260.3px] xl:!h-[50px] 
-            !w-[220px] !h-[40px]
-            !font-eigerdals font-bold !bg-black 
-            text-[15px] xl:text-[20px]  
-            !rounded-[10px]
-            !text-black dark:!text-white
-            dark:!bg-black !bg-white"
-                onClick={() => window.open("/stake", "_blank")}
-              >
-                Enter warehouse
-              </Button>
+              <MintModalCTAButton link="/stake" id="stake_link_btn" label="Enter warehouse" />
             )}
           </>
         )}

@@ -82,17 +82,14 @@ const ConnectWallet = ({ handleClose }: ConnectWalletProps) => {
         Connect
       </div>
       <WalletConnectButton>
-        {({ openConnectModal }) => (
-          <Button
-            id="wallet_connect_btn_in_redeem"
-            className="!uppercase w-[270px] 
-          !bg-[white] !text-black dark:!bg-[black] dark:!text-[white]
-          !shadow-[0px_4px_4px_rgb(255,255,255,0.25)] dark:!shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
-            onClick={openConnectModal}
-          >
-            Connect
-          </Button>
-        )}
+        <Button
+          id="wallet_connect_btn_in_redeem"
+          className="!uppercase w-[270px] 
+        !bg-[white] !text-black dark:!bg-[black] dark:!text-[white]
+        !shadow-[0px_4px_4px_rgb(255,255,255,0.25)] dark:!shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
+        >
+          Connect
+        </Button>
       </WalletConnectButton>
     </div>
   )

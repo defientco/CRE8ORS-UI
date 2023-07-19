@@ -139,20 +139,21 @@ const MintNow = () => {
                 </Button>
               ) : (
                 <WalletConnectButton>
-                  {({ openConnectModal }) => (
-                    <Button
-                      id="connec_wallet_mint_page"
-                      className="!px-0 !py-0
-                  mt-[40px] 
+                  <div
+                    className="px-0 py-0
+                  mt-[40px] uppercase
                   xl:w-[328px] xl:h-[88px] 
                   w-[153px] h-[38px]
                   text-[14px] xl:text-[30px] 
-                  rounded-[5px] xl:rounded-[15px]"
-                      onClick={openConnectModal}
-                    >
-                      Connect Wallet
-                    </Button>
-                  )}
+                  rounded-[5px] xl:rounded-[15px]
+                  hover:scale-[1.1] scale-[1] transition duration-[300ms]
+                  bg-[black] dark:bg-[white] 
+                  shadow-[0px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[0px_4px_4px_rgb(255,255,255,0.25)]
+                  flex items-center justify-center gap-[10px]
+                  font-bold font-quicksand"
+                  >
+                    Connect Wallet
+                  </div>
                 </WalletConnectButton>
               )}
             </div>

@@ -25,10 +25,10 @@ const MintCard: FC<MintCardProps> = ({
 }) => (
   <div
     className={`relative 
-            w-[250px] h-[209px]
+            w-[250px] h-[249px]
             xl:w-[336px] xl:h-[334px]
             rounded-[15px] 
-            px-[20px] pt-[20px] pb-[20px] xl:pb-[40px]
+            px-[20px] py-[30px] xl:pb-[40px]
             flex flex-col justify-between ${className}`}
   >
     <Link href="/faq" target="_self">
@@ -80,12 +80,20 @@ const MintCard: FC<MintCardProps> = ({
                         cursor-pointer
                         w-[102px] h-[35px] xl:w-[170px] xl:h-[45px]"
       >
-        <div className="flex gap-x-[20px] xl:gap-x-[30px] text-[18px] xl:text-[25px]">
-          <button type="button" onClick={() => decreaseQuantity(type)}>
+        <div className="flex gap-x-[10px] xl:gap-x-[30px] text-[18px] xl:text-[25px]">
+          <button
+            type="button"
+            className="w-[20px] xl:w-[40px]"
+            onClick={() => decreaseQuantity(type)}
+          >
             -
           </button>
-          {quantity}
-          <button type="button" onClick={() => increaseQuantity(type)}>
+          <div className="w-[20px] xl:w-[30px]">{quantity}</div>
+          <button
+            type="button"
+            className="w-[20px] xl:w-[40px]"
+            onClick={() => increaseQuantity(type)}
+          >
             +
           </button>
         </div>

@@ -62,15 +62,13 @@ function ConnectPage() {
 
         {!address && (
           <WalletConnectButton>
-            {() => (
-              <Image
-                src="/connect_wallet.png"
-                alt="WalletConnect"
-                width={400}
-                height={100}
-                loader={customLoader}
-              />
-            )}
+            <Image
+              src="/connect_wallet.png"
+              alt="WalletConnect"
+              width={400}
+              height={100}
+              loader={customLoader}
+            />
           </WalletConnectButton>
         )}
         {session?.user && (
