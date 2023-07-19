@@ -129,6 +129,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             text-[15px] xl:text-[20px]  
             !rounded-[10px]
             !text-white"
+                onClick={() => window.open("/profile", "_blank")}
               >
                 Set up profile
               </Button>
@@ -142,6 +143,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             text-[15px] xl:text-[20px]  
             !rounded-[10px]
             !text-white"
+                onClick={() => window.open("/stake", "_blank")}
               >
                 Enter warehouse
               </Button>
