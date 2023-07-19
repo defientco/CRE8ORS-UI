@@ -21,13 +21,13 @@ const DetectedFriendFamilyModal: FC<DetectedFriendFamilyModalProps> = ({
       className="p-8 xl:p-14 rounded-lg
                 flex-col flex justify-center items-center
                 bg-[url('/assets/Mint/MintNow/MintCoreModal/friend_family.png')]
-                bg-cover"
+                bg-cover bg-black dark:bg-white"
     >
       <pre
         className="font-eigerdals 
                 text-[22px] samsungS8:text-[25px] xs:text-[28px] xl:text-[55px] 
                 uppercase text-center
-                leading-[103.3%]"
+                leading-[103.3%] dark:text-black text-white"
       >
         {loading ? `Minting Now` : `Friends and family\ndetected:\n\n1 Free Mint!`}
       </pre>
@@ -44,7 +44,8 @@ const DetectedFriendFamilyModal: FC<DetectedFriendFamilyModalProps> = ({
                 text-center 
                 pt-0 xl:pb-[50px]
                 samsungS8:pb-[15px]
-                pb-[10px]"
+                pb-[10px]
+                dark:text-black text-white"
         >
           (with 8-month lockup)
         </pre>
@@ -64,7 +65,8 @@ const DetectedFriendFamilyModal: FC<DetectedFriendFamilyModalProps> = ({
                 !font-eigerdals font-bold !bg-black 
                 text-[15px] xl:text-[44px] 
                 !rounded-[10px]
-                !text-white"
+                !text-black dark:!text-white
+                dark:!bg-black !bg-white"
           onClick={mintCre8or}
         >
           Mint Now

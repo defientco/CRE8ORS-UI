@@ -33,7 +33,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
         } py-8 samsungS8:p-8 xl:py-16 xl:px-0 rounded-lg
         flex-col flex justify-center items-center
         bg-[url('/assets/Mint/MintNow/MintCoreModal/mint_more_bg.png')]
-        bg-cover`}
+        bg-cover bg-black dark:bg-white`}
         style={{
           width: isXl ? "100%" : "500px",
         }}
@@ -44,7 +44,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
               className="font-eigerdals 
                     text-[30px] xs:text-[33px] xl:text-[55px] 
                     uppercase text-center
-                    leading-[103.3%]"
+                    leading-[103.3%]
+                    dark:text-black text-white"
             >
               Minting Now
             </pre>
@@ -55,7 +56,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             />
             <div
               className="uppercase text-white dark:text-black
-          font-quicksand text-[19px] font-bold"
+          font-quicksand text-[19px] font-bold
+          dark:text-black text-white"
             >
               Loading...
             </div>
@@ -66,7 +68,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
               className="font-eigerdals 
                 text-[30px] xs:text-[33px] xl:text-[55px] 
                 uppercase text-center
-                leading-[70.3%]"
+                leading-[70.3%]
+                dark:text-black text-white"
             >
               Congrats!
             </pre>
@@ -75,7 +78,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 text-[15px] xl:text-[25px]
                 text-center 
                 xl:pb-[25px]
-                pb-[5px]"
+                pb-[5px]
+                dark:text-black text-white"
             >
               Cre8or DNA Secured.
             </pre>
@@ -92,7 +96,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 text-center 
                 xl:py-[25px]
                 py-[15px]
-                leading-[90.3%]"
+                leading-[90.3%]
+                dark:text-black text-white"
             >
               {`You have ${possibleMintCount || "no"} more\nmints available`}
             </pre>
@@ -105,7 +110,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                   !font-eigerdals font-bold !bg-black 
                   text-[15px] xl:text-[20px] 
                   !rounded-[10px]
-                  !text-white"
+                  !text-black dark:!text-white
+                  dark:!bg-black !bg-white"
                 onClick={mintCre8or}
               >
                 Mint More
@@ -128,7 +134,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             !font-eigerdals font-bold !bg-black 
             text-[15px] xl:text-[20px]  
             !rounded-[10px]
-            !text-white"
+            !text-black dark:!text-white
+            dark:!bg-black !bg-white"
                 onClick={() => window.open("/profile", "_blank")}
               >
                 Set up profile
@@ -142,7 +149,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             !font-eigerdals font-bold !bg-black 
             text-[15px] xl:text-[20px]  
             !rounded-[10px]
-            !text-white"
+            !text-black dark:!text-white
+            dark:!bg-black !bg-white"
                 onClick={() => window.open("/stake", "_blank")}
               >
                 Enter warehouse

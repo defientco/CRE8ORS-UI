@@ -14,6 +14,8 @@ function Modal({
   children,
   isVisible
 }: IModal) {
+  const { themeMode } = useTheme()
+  
   return (
     <div
       className={`fade_modal
@@ -68,7 +70,7 @@ function Modal({
                     y2="7.2551"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop offset="0.40625" stopColor="white" />
+                    <stop offset="0.40625" stopColor={`${themeMode === 'light' ? 'black' : 'white'}`} />
                     <stop offset="0.578125" stopColor="#8D8DDA" />
                 </linearGradient>
                 <linearGradient
@@ -79,7 +81,7 @@ function Modal({
                     y2="7.25506"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop offset="0.40625" stopColor="white" />
+                    <stop offset="0.40625" stopColor={`${themeMode === 'light' ? 'black' : 'white'}`} />
                     <stop offset="0.578125" stopColor="#8D8DDA" />
                 </linearGradient>
                 </defs>

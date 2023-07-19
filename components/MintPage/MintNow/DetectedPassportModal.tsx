@@ -27,7 +27,7 @@ const DetectedPassportModal: FC<DetectedPassportModalProps> = ({
         className="p-8 xl:p-4 rounded-lg
                 flex-col flex justify-center items-center
                 bg-[url('/assets/Mint/MintNow/MintCoreModal/passport_bg.png')]
-                bg-cover"
+                bg-cover bg-black dark:bg-white"
         ref={modalRef}
         style={{
           width: isXl ? "100%" : "803px",
@@ -38,7 +38,7 @@ const DetectedPassportModal: FC<DetectedPassportModalProps> = ({
           className="font-eigerdals 
                 text-[22px] samsungS8:text-[25px] xs:text-[28px] xl:text-[55px] 
                 uppercase text-center
-                leading-[103.3%]"
+                leading-[103.3%] dark:text-black text-white"
         >
           {loading ? `Minting Now` : `Passport detected:\n1 Free Mint!`}
         </pre>
@@ -55,7 +55,8 @@ const DetectedPassportModal: FC<DetectedPassportModalProps> = ({
                 text-center 
                 xl:pt-[23px] xl:pb-[50px]
                 samsungS8:pt-[8px] samsungS8:pb-[15px]
-                pt-[5px] pb-[10px]"
+                pt-[5px] pb-[10px]
+                dark:text-black text-white"
           >
             (with 8-month lockup)
           </pre>
@@ -75,7 +76,8 @@ const DetectedPassportModal: FC<DetectedPassportModalProps> = ({
                 !font-eigerdals font-bold !bg-black 
                 text-[15px] xl:text-[44px] 
                 !rounded-[10px]
-                !text-white"
+                text-black dark:!text-white
+                dark:!bg-black !bg-white"
             onClick={mintCre8or}
           >
             Mint Now
