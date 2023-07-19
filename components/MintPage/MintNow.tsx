@@ -47,7 +47,7 @@ const MintNow = () => {
   const decreaseQuantity = (type: number) => {
     switch (type) {
       case 1:
-        if (!tierIIIQuantity) return
+        if (!tierIQuantity) return
         setTierIQuantity(tierIQuantity - 1)
         break
       case 2:
