@@ -38,8 +38,6 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
-  // const isPublicDay = new Date().getTime() >= new Date("10 Aug 2023 08:00:00 UTC").getTime()
-
   const setConfettiEffect = () => {
     setShowConfetti(true)
     setTimeout(() => {
