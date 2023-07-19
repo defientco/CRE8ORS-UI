@@ -81,11 +81,11 @@ const MintCard: FC<MintCardProps> = ({
                         w-[102px] h-[35px] xl:w-[170px] xl:h-[45px]"
       >
         <div className="flex gap-x-[20px] xl:gap-x-[30px] text-[18px] xl:text-[25px]">
-          <button type="button" onClick={() => decreaseQuantity(type)} >
+          <button type="button" onClick={() => decreaseQuantity(type)}>
             -
           </button>
           {quantity}
-          <button type="button" onClick={() => increaseQuantity(type)} >
+          <button type="button" onClick={() => increaseQuantity(type)}>
             +
           </button>
         </div>
