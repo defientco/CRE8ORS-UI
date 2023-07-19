@@ -17,7 +17,7 @@ function Layout({ children, type }: ILayoutFactory) {
   const { onChangeThemeConfig } = useTheme()
 
   useEffect(() => {
-    onChangeThemeConfig("black")
+    onChangeThemeConfig("dark")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
