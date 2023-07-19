@@ -19,7 +19,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
   const [balanceOfCre8or, setBalanceOfCre8or] = useState(0)
-  const [lockedCntOfCre8tor, setLockedCntOfCre8or] = useState(0)
+  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(4)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -53,7 +53,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const getBalanceOfCre8or = () => {
     setTimeout(() => {
-      setBalanceOfCre8or(4)
+      setBalanceOfCre8or(2)
       setLockedCntOfCre8or(4)
     }, 2000)
   }
@@ -99,7 +99,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
       {balanceOfCre8or && (
         <MintMoreModal
           possibleMintCount={maxOfCre8ors - balanceOfCre8or}
-          lockedCntOfCre8or={lockedCntOfCre8tor}
+          lockedCntOfCre8or={lockedCntOfCre8or}
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           mintCre8or={mintCre8or}
