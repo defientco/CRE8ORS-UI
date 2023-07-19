@@ -20,7 +20,7 @@ const DetectedFriendFamilyModal: FC<DetectedFriendFamilyModalProps> = ({
     <div
       className="p-8 xl:p-14 rounded-lg
                 flex-col flex justify-center items-center
-                bg-[url('/assets/Mint/MintNow/MintCoreModal/passport_bg.png')]
+                bg-[url('/assets/Mint/MintNow/MintCoreModal/friend_family.png')]
                 bg-cover"
     >
       <pre
