@@ -71,7 +71,7 @@ const MintCard: FC<MintCardProps> = ({
     </div>
     <div className="flex justify-center">
       <div
-        className="hover:scale-[1.1] scale-[1] transition duration-[300ms] font-bold font-quicksand 
+        className="font-bold font-quicksand 
                         uppercase text-white dark:text-[black] 
                         rounded-[10px] 
                         bg-[black] dark:bg-[white] 
@@ -80,12 +80,12 @@ const MintCard: FC<MintCardProps> = ({
                         cursor-pointer
                         w-[102px] h-[35px] xl:w-[170px] xl:h-[45px]"
       >
-        <div className="flex gap-x-[20px] xl:gap-x-[30px] text-[13px] xl:text-[15px]">
-          <button type="button" onClick={() => decreaseQuantity(type)}>
+        <div className="flex gap-x-[20px] xl:gap-x-[30px] text-[18px] xl:text-[25px]">
+          <button type="button" onClick={() => decreaseQuantity(type)} >
             -
           </button>
           {quantity}
-          <button type="button" onClick={() => increaseQuantity(type)}>
+          <button type="button" onClick={() => increaseQuantity(type)} >
             +
           </button>
         </div>
