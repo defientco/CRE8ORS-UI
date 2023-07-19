@@ -80,14 +80,14 @@ const MintNow = () => {
             <Title
               text="Holy Shit, A Fair Mint"
               className="leading-[103.3%] text-center
-             !text-[25px] samsungS8:!text-[28px] xs:!text-[31px] xl:!text-[65px]"
+             !text-[25px] samsungS8:!text-[28px] xs:!text-[31px] xl:!text-[65px] fade_in_text"
             />
             <Content
               content={`You choose how much you pay, depending on how long you plan on holding.\nIf you change your mind, unlock later by paying the difference.\nCre8orsList (Allowlist) can mint up to 8 NFTs per wallet.`}
               className="leading-[103.3%] text-center
               pt-[10px] xl:pt-[27px]
               !text-[8.5px] xs:!text-[10px] xl:!text-[19px]
-              drop-shadow-[0_4px_2px_rgba(0,0,0,0.75)]"
+              drop-shadow-[0_4px_2px_rgba(0,0,0,0.75)] fade_in_text"
             />
             <div
               className="grid grid-cols-1 xl:grid-cols-3 pt-[40px] 
