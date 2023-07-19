@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useCallback } from "react"
+import { FC, useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import Confetti from "react-confetti"
 import { useWindowSize } from "usehooks-ts"
@@ -40,7 +40,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
     }, 8000)
   }
 
-  const getBalanceOfCre8or = () => {
+  const getBalanceOfCre8or = async () => {
     setTimeout(() => {
       setBalanceOfCre8or(2)
       setLockedCntOfCre8or(4)
@@ -58,16 +58,17 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
     }, 2000)
   }
 
-  const getCre8orInformation = useCallback(async () => {
+  const getCre8orInformation = async () => {
     if (!address) return
     const balanceOf = await balanceOfAddress(address)
     setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
     setLockedCntOfCre8or(4)
-  }, [address])
+  }
 
   useEffect(() => {
     getCre8orInformation()
-  }, [getCre8orInformation])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
 
   useEffect(() => {
     const init = async () => {
