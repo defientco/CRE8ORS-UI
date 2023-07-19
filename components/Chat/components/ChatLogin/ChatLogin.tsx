@@ -23,13 +23,14 @@ const ChatLogin = () => {
         Twitter
       </Button>
       <WalletConnectButton>
-        <Button
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+        <div
           id="wallet_connect_btn_in_chat_box"
           onClick={() => setUserType("wallet")}
           className="!capitalize min-w-[150px] !bg-[black] !text-white !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
         >
           Wallet
-        </Button>
+        </div>
       </WalletConnectButton>
       <Button
         id="annoymouse"
