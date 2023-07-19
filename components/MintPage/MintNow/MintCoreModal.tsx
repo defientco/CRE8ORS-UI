@@ -31,7 +31,6 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
 
   const hasPassport = true
   const hasFriendFamily = true
-
  
   const setConfettiEffect = () => {
     setShowConfetti(true)
