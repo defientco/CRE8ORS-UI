@@ -1,9 +1,10 @@
 import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
-import { Button } from "../../../shared/Button"
-import Modal from "../../../shared/Modal"
-import Media from "../../../shared/Media"
-import MintModalCTAButton from "./MintModalCTAButton"
+import { Button } from "../../../../shared/Button"
+import Modal from "../../../../shared/Modal"
+import MintLoading from "../MintLoading"
+import Media from "../../../../shared/Media"
+import MintModalCTAButton from "../MintModalCTAButton"
 
 interface MintMoreModalProps {
   isModalVisible: boolean
@@ -40,29 +41,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
         }}
       >
         {loading ? (
-          <>
-            <pre
-              className="font-eigerdals 
-                    text-[30px] xs:text-[33px] xl:text-[55px] 
-                    uppercase text-center
-                    leading-[103.3%]
-                    dark:text-black text-white"
-            >
-              Minting Now
-            </pre>
-            <Media
-              type="image"
-              link="/assets/Common/loading.svg"
-              containerClasses="w-[230px] h-[200px] samsungS8:w-[260px] xs:w-[300px] md:w-[250px] md:h-[250px] z-[3]"
-            />
-            <div
-              className="uppercase text-white dark:text-black
-          font-quicksand text-[19px] font-bold
-          dark:text-black text-white"
-            >
-              Loading...
-            </div>
-          </>
+          <MintLoading />
         ) : (
           <>
             <pre

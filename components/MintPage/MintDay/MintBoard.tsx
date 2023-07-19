@@ -8,7 +8,7 @@ import Media from "../../../shared/Media"
 import MintCard from "./MintCard"
 import { Button } from "../../../shared/Button"
 import WalletConnectButton from "../../WalletConnectButton"
-import MintCoreModal from "./MintCoreModal"
+import ModalSelector from "./Modals/ModalSelector"
 
 const MintBoard = () => {
   const [openModal, setOpenModal] = useState(false)
@@ -152,7 +152,7 @@ const MintBoard = () => {
               blurLink="/assets/Mint/MintNow/down-arrow.svg"
             />
           </div>
-          <MintCoreModal isVisibleModal={openModal} toggleModal={() => setOpenModal(!openModal)} />
+          <ModalSelector isVisibleModal={openModal} toggleModal={() => setOpenModal(!openModal)} />
         </div>
       </div>
       <div>

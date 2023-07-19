@@ -2,18 +2,18 @@ import { FC, useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import Confetti from "react-confetti"
 import { useWindowSize } from "usehooks-ts"
-import DetectedPassportModal from "./DetectedPassportModal"
-import WaitCre8orsModal from "./WaitCre8orsModal"
+import PassportModal from "./PassportModal"
 import MintMoreModal from "./MintMoreModal"
-import getApplicant from "../../../lib/getApplicant"
-import DetectedFriendFamilyModal from "./DetectedFriendFamilyModal"
+import FriendFamilyModal from "./FriendFamilyModal"
+import getApplicant from "../../../../lib/getApplicant"
+import WaitCre8orsModal from "./WaitCre8orsModal"
 
-interface MintCoreModalProps {
+interface ModalSelectorProps {
   isVisibleModal: boolean
   toggleModal: () => void
 }
 
-const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) => {
+const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const maxOfCre8ors = 8
 
   const { address } = useAccount()
@@ -30,7 +30,7 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
   const hasPassport = true
-  const hasFriendFamily = true
+  const hasFriendFamily = false
 
   const setConfettiEffect = () => {
     setShowConfetti(true)
@@ -72,14 +72,14 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
       {!balanceOfCre8or &&
         // eslint-disable-next-line no-nested-ternary
         (hasFriendFamily ? (
-          <DetectedFriendFamilyModal
+          <FriendFamilyModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             mintCre8or={mintCre8or}
             loading={loading}
           />
         ) : hasPassport ? (
-          <DetectedPassportModal
+          <PassportModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
             mintCre8or={mintCre8or}
@@ -113,4 +113,4 @@ const MintCoreModal: FC<MintCoreModalProps> = ({ isVisibleModal, toggleModal }) 
   )
 }
 
-export default MintCoreModal
+export default ModalSelector

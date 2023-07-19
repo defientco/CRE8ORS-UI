@@ -1,9 +1,9 @@
 import { FC } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
-import ModalTimer from "./ModalTimer"
-import Modal from "../../../shared/Modal"
-import { Button } from "../../../shared/Button"
+import ModalTimer from "../ModalTimer"
+import Modal from "../../../../shared/Modal"
+import { Button } from "../../../../shared/Button"
 
 interface DetectedPassportModalProps {
   isModalVisible: boolean
