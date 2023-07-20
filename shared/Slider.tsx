@@ -2,6 +2,8 @@ import React from "react"
 import { Swiper, SwiperSlide, SwiperProps } from "swiper/react"
 
 import "swiper/css"
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface ISlider {
   children: React.ReactNode[]

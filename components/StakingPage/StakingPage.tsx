@@ -4,7 +4,7 @@ import Layout from "../Layout"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
 import Media from "../../shared/Media"
-import LetsBegin from "./LetsBegin"
+import SaveProfile from "./SaveProfile"
 
 const StakingPage = () => {
   const [containerRef, { width }] = useMeasure()
@@ -59,7 +59,7 @@ const StakingPage = () => {
                 />
               </div>
             </div>
-            <LetsBegin />
+            <SaveProfile />
             <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
           </div>
         )}
