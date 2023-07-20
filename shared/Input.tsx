@@ -56,48 +56,54 @@ function Input({
   }
 
   return (
-    <div
-      id={id}
-      className={`core_input
-          ${id}_all
-          ${containerClassName || ""}
-          w-full 
-          shadow-[0px_2px_2px_rgba(0,0,0,0.25)] dark:shadow-[0px_2px_2px_2px_rgba(255,255,255,0.25)]
-          bg-[#F2F2F2]  rounded-[10px]
-        `}
-      onMouseOver={hoverEvent}
-      onMouseOut={leaveEvent}
-    >
-      <div className="w-full flex overflow-hidden items-center justify-between">
-        {startAdornment && <div className="px-[15px]">{startAdornment}</div>}
-        <div
-          className={`${endAdornment ? "rounded-tr-[0px] rounded-tr-[0px]" : ""}
-                ${startAdornment || endAdornment ? "w-[45%] xs:w-[100%]" : "!w-[100%]"}
-              `}
-        >
-          <input
-            type={type}
-            placeholder={placeholder}
-            className={`border-none
-                      text-black 
-                      bg-[#F2F2F2]
-                      h-full
-                      focus:ring-0
-                      ${className || ""}
-                    `}
-            name={name}
-            value={value}
-            onChange={onChange}
-          />
+    <>
+      <div
+        id={id}
+        className={`core_input
+            ${id}_all
+            ${containerClassName || ""}
+            w-full 
+            shadow-[0px_2px_2px_rgba(0,0,0,0.25)] dark:shadow-[0px_2px_2px_2px_rgba(255,255,255,0.25)]
+            bg-[#F2F2F2]  rounded-[10px]
+          `}
+        onMouseOver={hoverEvent}
+        onMouseOut={leaveEvent}
+      >
+        <div className="w-full flex overflow-hidden items-center justify-between">
+          {startAdornment && <div className="px-[15px]">{startAdornment}</div>}
+          <div
+            className={`${endAdornment ? "rounded-tr-[0px] rounded-tr-[0px]" : ""}
+                  ${startAdornment || endAdornment ? "w-[45%] xs:w-[100%]" : "!w-[100%]"}
+                `}
+          >
+            <input
+              type={type}
+              placeholder={placeholder}
+              className={`border-none
+                        text-black 
+                        bg-[#F2F2F2]
+                        h-full
+                        focus:ring-0
+                        ${className || ""}
+                      `}
+              name={name}
+              {...(isFullyHooked
+                ? formContext.register(name, {
+                    onChange: e => onChange && onChange(e)
+                  })
+                : {})}
+              value={value}
+            />
+          </div>
+          {endAdornment && <div>{endAdornment}</div>}
         </div>
-        {endAdornment && <div>{endAdornment}</div>}
       </div>
       {isFullyHooked && fieldError && fieldError?.message && (
-        <p className='text-red-600'>
-          {fieldError?.message as string}
-        </p>
-      )}
-    </div>
+          <div className='text-red-600 font-quicksand text-[12px] pt-0 md:pt-[10px]'>
+            {fieldError?.message as string}
+          </div>
+        )}
+    </>
   )
 }
 
