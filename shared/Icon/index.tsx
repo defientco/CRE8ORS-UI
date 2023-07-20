@@ -1,11 +1,11 @@
-import { Icons } from './resolver'
+import { Icons } from "./resolver"
 
 export type IconsType = keyof typeof Icons
 
 interface IIcon {
   name: IconsType
   color?: string
-  variant: 'primary' | 'secondary'
+  variant: "primary" | "secondary"
   size: number
   onClick: () => any
   raw: boolean
@@ -15,26 +15,26 @@ interface IIcon {
 }
 
 const styles = {
-  base: 'w-fit h-fit flex items-center justify-center rounded shadow-sm',
+  base: "w-fit h-fit flex items-center justify-center rounded shadow-sm",
   sizes: {
-    mini: 'p-[2px]',
-    small: 'p-1',
-    medium: 'p-3',
-    large: 'p-4'
+    mini: "p-[2px]",
+    small: "p-1",
+    medium: "p-3",
+    large: "p-4",
   },
   variants: {
     primary: {
-      color: 'text-gray-500 bg-white',
-      highlight: 'duration-75 hover:bg-[rgba(0,0,0,0.01)]'
+      color: "text-gray-500 bg-white",
+      highlight: "duration-75 hover:bg-[rgba(0,0,0,0.01)]",
     },
     secondary: {
-      color: 'text-here-purple-900 bg-here-purple-50',
-      highlight: 'duration-75 hover:opacity-75'
-    }
+      color: "text-here-purple-900 bg-here-purple-50",
+      highlight: "duration-75 hover:opacity-75",
+    },
   },
   states: {
-    disabled: 'cursor-not-allowed pointer-events-none'
-  }
+    disabled: "cursor-not-allowed pointer-events-none",
+  },
 }
 
 function Icon({
@@ -46,7 +46,7 @@ function Icon({
   variant,
   noHighlights,
   disabled,
-  className
+  className,
 }: IIcon) {
   const IconSVG = Icons[name]
 
@@ -54,7 +54,7 @@ function Icon({
     <IconSVG size={size} className={className} color={color} />
   ) : (
     <button
-      type='button'
+      type="button"
       disabled={disabled}
       onClick={!disabled ? onClick : () => {}}
       className={`
@@ -84,8 +84,8 @@ const defaultProps: Partial<IIcon> = {
   onClick: () => undefined,
   raw: false,
   noHighlights: false,
-  variant: 'primary',
-  disabled: false
+  variant: "primary",
+  disabled: false,
 }
 
 Icon.defaultProps = defaultProps

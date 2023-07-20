@@ -18,23 +18,30 @@ interface ToggleButtonProps {
   value?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ id, children, className, onClick, hasDoubleAnimation,  ...rest }) => {
+export const Button: FC<ButtonProps> = ({
+  id,
+  children,
+  className,
+  onClick,
+  hasDoubleAnimation,
+  ...rest
+}) => {
   const hoverEvent = () => {
-    if(hasDoubleAnimation) {
-      const element = document.getElementsByClassName(`${id}_all`);
+    if (hasDoubleAnimation) {
+      const element = document.getElementsByClassName(`${id}_all`)
 
-      for(let i = 0; i < element.length ; i++) {
-        element[i].setAttribute('style', 'transform:scale(1.1)')
+      for (let i = 0; i < element.length; i++) {
+        element[i].setAttribute("style", "transform:scale(1.1)")
       }
     }
   }
 
   const leaveEvent = () => {
-    if(hasDoubleAnimation) {
-      const element = document.getElementsByClassName(`${id}_all`);
+    if (hasDoubleAnimation) {
+      const element = document.getElementsByClassName(`${id}_all`)
 
-      for(let i = 0; i < element.length ; i++) {
-        element[i].setAttribute('style', 'transform:scale(1)')
+      for (let i = 0; i < element.length; i++) {
+        element[i].setAttribute("style", "transform:scale(1)")
       }
     }
   }
@@ -47,10 +54,10 @@ export const Button: FC<ButtonProps> = ({ id, children, className, onClick, hasD
         uppercase text-white dark:text-[black] rounded bg-[black] dark:bg-[white] 
         shadow-[0px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[0px_4px_4px_rgb(255,255,255,0.25)]
         flex items-center justify-center gap-[10px]
-        ${className || ''}`}
+        ${className || ""}`}
       onClick={onClick}
-      onMouseOver={ hoverEvent }
-      onMouseOut={ leaveEvent }
+      onMouseOver={hoverEvent}
+      onMouseOut={leaveEvent}
       {...rest}
     >
       {children}
@@ -59,7 +66,7 @@ export const Button: FC<ButtonProps> = ({ id, children, className, onClick, hasD
 }
 
 Button.defaultProps = {
-  hasDoubleAnimation: false
+  hasDoubleAnimation: false,
 }
 
 export const PageButton: FC<ButtonProps> = ({ children, className, ...rest }) => (
@@ -75,7 +82,7 @@ export const PageButton: FC<ButtonProps> = ({ children, className, ...rest }) =>
   </button>
 )
 
-export const ToggleButton: FC<ToggleButtonProps> = ({onClick, value}) => {
+export const ToggleButton: FC<ToggleButtonProps> = ({ onClick, value }) => {
   const [isToggle, setIsToggle] = useState(false)
 
   useEffect(() => {
@@ -84,14 +91,17 @@ export const ToggleButton: FC<ToggleButtonProps> = ({onClick, value}) => {
 
   return (
     <div className="flex justify-center w-16 h-6 cursor-pointer">
-        <div className="flex items-center dark:bg-[white] bg-[black] rounded-full w-full h-6 pl-2" onClick={onClick}>
-          <div className={
-            `${isToggle ? 'translate-x-[calc(100%+11px)]' : 'translate-x-[-5px]'} 
+      <div
+        className="flex items-center dark:bg-[white] bg-[black] rounded-full w-full h-6 pl-2"
+        onClick={onClick}
+      >
+        <div
+          className={`${isToggle ? "translate-x-[calc(100%+11px)]" : "translate-x-[-5px]"} 
             dark:bg-[black]
             bg-[white] w-5 h-5 rounded-full 
-            transition duration-[300ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]`
-          }/> 
-        </div>
+            transition duration-[300ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]`}
+        />
+      </div>
     </div>
   )
 }
