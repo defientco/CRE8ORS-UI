@@ -26,10 +26,9 @@ const MintCard: FC<MintCardProps> = ({
   <div
     className={`relative 
             w-[250px] h-[249px]
-            xl:w-[336px] xl:h-[334px]
+            xl:w-[336px] xl:h-[350px]
             rounded-[15px] 
-            px-[20px] py-[30px] xl:pb-[40px]
-            flex flex-col justify-between ${className}`}
+            flex flex-col justify-center ${className}`}
   >
     <Link href="/faq" target="_self">
       <div className="absolute top-[10px] right-[10px] cursor-pointer">
@@ -43,33 +42,34 @@ const MintCard: FC<MintCardProps> = ({
     </Link>
     <div>
       <div
-        className="text-[27px] xl:text-[32px] font-bold font-quicksand
-      text-center xl:text-left leading-[103.3%] xl:leading-[150%]"
+        className="text-[27px] xl:text-[29px] font-bold font-quicksand
+      text-center leading-[93.3%] xl:leading-[93.3%]
+      pb-[15px]"
       >
         {label}
       </div>
       <div
         className="text-[46px] xl:text-[59px] font-eigerdals font-bold
-      text-center xl:text-left leading-[120%] xl:leading-[150%]"
+      text-center leading-[93.3%] xl:leading-[93.3%] pb-[20px]"
       >
         {mintPrice} ETH
       </div>
-    </div>
-    <div className="flex items-center gap-x-[10px] justify-center">
-      <Media
-        link="/assets/Mint/MintNow/MintCard/tick.png"
-        type="image"
-        containerClasses="xl:w-[33px] xl:h-[33px]
-        w-[25px] h-[25px]"
-      />
-      <div
-        className="font-medium font-quicksand 
-      text-[19px]"
-      >
-        {desc}
+      <div className="flex items-center gap-x-[10px] justify-center">
+        <Media
+          link="/assets/Mint/MintNow/MintCard/tick.png"
+          type="image"
+          containerClasses="xl:w-[33px] xl:h-[33px]
+          w-[25px] h-[25px]"
+        />
+        <div
+          className="font-medium font-quicksand 
+        text-[19px]"
+        >
+          {desc}
+        </div>
       </div>
     </div>
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-[40px]">
       <div
         className="font-bold font-quicksand 
                         uppercase text-white dark:text-[black] 

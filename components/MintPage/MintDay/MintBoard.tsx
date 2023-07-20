@@ -81,7 +81,7 @@ const MintBoard = () => {
           >
             <MintCard
               label="Tier I"
-              mintPrice="0.05"
+              mintPrice=".05"
               desc="8 Month Lockup"
               className="bg-[#E93F45]"
               increaseQuantity={increaseQuantity}
@@ -91,7 +91,7 @@ const MintBoard = () => {
             />
             <MintCard
               label="Tier II"
-              mintPrice="0.10"
+              mintPrice=".10"
               desc="8 Week Lockup"
               className="bg-[#F4EE05]"
               increaseQuantity={increaseQuantity}
@@ -101,7 +101,7 @@ const MintBoard = () => {
             />
             <MintCard
               label="Tier III"
-              mintPrice="0.15"
+              mintPrice=".15"
               desc="No Lockup"
               className="bg-[#08E1E6]"
               increaseQuantity={increaseQuantity}
