@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAccount } from "wagmi"
+import { useMeasure } from "react-use"
 import SectionContainer from "../SectionContainer"
 import Title from "../../Common/Title"
 import Content from "../../Common/Content"
@@ -12,6 +13,7 @@ import ModalSelector from "./Modals/ModalSelector"
 
 const MintBoard = () => {
   const [openModal, setOpenModal] = useState(false)
+  const [boardRef, { height }] = useMeasure()
 
   const { isConnected } = useAccount()
 
@@ -54,14 +56,16 @@ const MintBoard = () => {
 
   return (
     <SectionContainer>
-      <div className="relative w-full min-h-[100vh] flex justify-center items-start xl:items-center z-[1]">
+      <div
+        className="relative w-full !h-[100vh] flex justify-center items-start xl:items-center z-[1]"
+        ref={boardRef}
+      >
         <div
-          className="pt-[90px] pb-[90px]
+          className="
+          pt-[70px]
+          xl:pt-[90px]
           flex flex-col items-center
-          w-[100vw]
-          bg-[url('/assets/Mint/MintNow/mobile_background.png')]
-          bg-cover bg-[bottom_center]
-          xl:bg-none"
+          w-[100vw]"
         >
           <Title
             text="Holy Shit, A Fair Mint"
@@ -76,8 +80,9 @@ const MintBoard = () => {
               drop-shadow-[0_4px_2px_rgba(0,0,0,0.75)] fade_in_text"
           />
           <div
-            className="grid grid-cols-1 xl:grid-cols-3 pt-[40px] 
-            gap-y-[20px] xl:w-[1078px]"
+            className="grid grid-cols-1 xl:grid-cols-3 pt-[20px] xl:pt-[40px] 
+            gap-y-[10px] xs:gap-y-[20px] 
+            xl:w-[1078px]"
           >
             <MintCard
               label="Tier I"
@@ -88,6 +93,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIQuantity}
               type={1}
+              height={(height - 255 - 30) / 3}
             />
             <MintCard
               label="Tier II"
@@ -98,6 +104,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIQuantity}
               type={2}
+              height={(height - 255 - 30) / 3}
             />
             <MintCard
               label="Tier III"
@@ -108,13 +115,14 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIIQuantity}
               type={3}
+              height={(height - 255 - 30) / 3}
             />
           </div>
           <div className="flex justify-center">
             {isConnected ? (
               <Button
                 id="mint_btn_mint_page"
-                className="mt-[40px] 
+                className="mt-[20px] xl:mt-[40px] 
                 xl:w-[308px] xl:h-[88px] 
                 w-[133px] h-[38px]
                 text-[14px] xl:text-[30px] 
@@ -143,8 +151,11 @@ const MintBoard = () => {
               </WalletConnectButton>
             )}
           </div>
-          <div className="pt-[27px] flex justify-center items-center gap-x-[10px]">
-            <Content className="!text-[18px]" content="Scroll down to learn more" />
+          <div
+            className="pt-[15px] xs:pt-[20px] xl:pt-[27px] 
+          flex justify-center items-center gap-x-[10px]"
+          >
+            <Content className="!text-[15px] xl:!text-[18px]" content="Scroll down to learn more" />
             <Media
               link="/assets/Mint/MintNow/down-arrow.svg"
               type="image"
