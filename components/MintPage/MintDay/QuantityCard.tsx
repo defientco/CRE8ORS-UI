@@ -15,7 +15,7 @@ interface MintCardProps {
   height: number
 }
 
-const MintCard: FC<MintCardProps> = ({
+const QuantityCard: FC<MintCardProps> = ({
   className,
   label,
   mintPrice,
@@ -115,4 +115,4 @@ const MintCard: FC<MintCardProps> = ({
   )
 }
 
-export default MintCard
+export default QuantityCard

@@ -6,7 +6,7 @@ import Title from "../../Common/Title"
 import Content from "../../Common/Content"
 import Character from "../Character"
 import Media from "../../../shared/Media"
-import MintCard from "./MintCard"
+import QuantityCard from "./QuantityCard"
 import { Button } from "../../../shared/Button"
 import WalletConnectButton from "../../WalletConnectButton"
 import ModalSelector from "./Modals/ModalSelector"
@@ -84,7 +84,7 @@ const MintBoard = () => {
             gap-y-[10px] xs:gap-y-[20px] 
             xl:w-[1078px]"
           >
-            <MintCard
+            <QuantityCard
               label="Tier I"
               mintPrice=".05"
               desc="8 Month Lockup"
@@ -95,7 +95,7 @@ const MintBoard = () => {
               type={1}
               height={(height - 255 - 30) / 3}
             />
-            <MintCard
+            <QuantityCard
               label="Tier II"
               mintPrice=".10"
               desc="8 Week Lockup"
@@ -106,7 +106,7 @@ const MintBoard = () => {
               type={2}
               height={(height - 255 - 30) / 3}
             />
-            <MintCard
+            <QuantityCard
               label="Tier III"
               mintPrice=".15"
               desc="No Lockup"
