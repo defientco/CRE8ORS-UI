@@ -27,14 +27,17 @@ const MintCard: FC<MintCardProps> = ({
   height,
 }) => {
   const isXl = useMediaQuery("(max-width: 1150px)")
+  const isIphone = useMediaQuery("(max-width: 330px)")
 
   return (
     <div
       className={`relative 
-              rounded-[15px] 
+              rounded-[15px]
+              samsungS8:gap-y-[10px]
               flex flex-col justify-center ${className}`}
       style={{
-        width: isXl ? `220px` : "336px",
+        // eslint-disable-next-line no-nested-ternary
+        width: isXl ? (isIphone ? `180px` : `220px`) : "336px",
         height: isXl ? `${height}px` : "350px",
       }}
     >
@@ -63,19 +66,19 @@ const MintCard: FC<MintCardProps> = ({
         >
           {mintPrice} ETH
         </div>
-        <div className="flex items-center gap-x-[10px] justify-center">
-          <Media
-            link="/assets/Mint/MintNow/MintCard/tick.png"
-            type="image"
-            containerClasses="xl:w-[33px] xl:h-[33px]
+      </div>
+      <div className="flex items-center gap-x-[10px] justify-center">
+        <Media
+          link="/assets/Mint/MintNow/MintCard/tick.png"
+          type="image"
+          containerClasses="xl:w-[33px] xl:h-[33px]
             w-[15px] h-[15px]"
-          />
-          <div
-            className="font-medium font-quicksand 
+        />
+        <div
+          className="font-medium font-quicksand 
           text-[13px] xl:text-[19px]"
-          >
-            {desc}
-          </div>
+        >
+          {desc}
         </div>
       </div>
       <div className="flex justify-center pt-[3px] samsungS8:pt-[5px] xs:pt-[15px] xl:pt-[40px]">
