@@ -19,7 +19,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
   const [balanceOfCre8or, setBalanceOfCre8or] = useState(0)
-  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(4)
+  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -30,7 +30,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
   const hasPassport = true
-  const hasFriendFamily = false
+  const hasFriendFamily = true
 
   const setConfettiEffect = () => {
     setShowConfetti(true)
@@ -42,7 +42,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const getBalanceOfCre8or = async () => {
     setTimeout(() => {
       setBalanceOfCre8or(2)
-      setLockedCntOfCre8or(4)
+      setLockedCntOfCre8or(8)
     }, 2000)
   }
 

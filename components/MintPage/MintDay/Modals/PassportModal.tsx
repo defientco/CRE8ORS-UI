@@ -56,7 +56,7 @@ const PassportModal: FC<PassportModalProps> = ({
                 pt-[5px] pb-[10px]
                 dark:text-black text-white"
             >
-              (with 8-month lockup)
+              (with 8-week lockup)
             </pre>
 
             <Button
