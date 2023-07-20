@@ -1,6 +1,7 @@
 import Content from "../Common/Content"
 import Title from "../Common/Title"
 import { Button } from "../../shared/Button"
+import ProfileForm from "./ProfileForm"
 
 const SaveProfile = () => (
   <div
@@ -22,7 +23,7 @@ const SaveProfile = () => (
                         leading-[103.3%]
                         samsungS8:!text-[18px] md:!text-[26px] !font-bold"
           />
-
+          <ProfileForm />
           <div className="flex justify-center">
             <Button
               id="lets_begin_staking"

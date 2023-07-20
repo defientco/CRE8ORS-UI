@@ -1,4 +1,4 @@
-import { useMediaQuery } from "usehooks-ts"
+import { useFormContext } from 'react-hook-form'
 
 interface IInput {
   id: string
@@ -12,6 +12,7 @@ interface IInput {
   startAdornment?: React.ReactNode
   endAdornment?: React.ReactNode
   hasDoubleAnimation?: boolean
+  hookToForm: boolean
 }
 
 function Input({
@@ -26,7 +27,14 @@ function Input({
   startAdornment,
   containerClassName,
   hasDoubleAnimation,
+  hookToForm
 }: IInput) {
+  const formContext = useFormContext()
+  const isFullyHooked = name && hookToForm && formContext
+
+  const fieldError =
+    isFullyHooked && formContext?.formState?.errors?.[name]
+
   const hoverEvent = () => {
     if (hasDoubleAnimation) {
       const element = document.getElementsByClassName(`${id}_all`)
@@ -84,6 +92,11 @@ function Input({
         </div>
         {endAdornment && <div>{endAdornment}</div>}
       </div>
+      {isFullyHooked && fieldError && fieldError?.message && (
+        <p className='text-red-600'>
+          {fieldError?.message as string}
+        </p>
+      )}
     </div>
   )
 }
