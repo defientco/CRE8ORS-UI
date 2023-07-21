@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-interface IInput {
+interface ITextArea {
   id: string
   name?: string
   value?: string
@@ -18,7 +18,7 @@ function TextArea({
   onChange,
   className,
   hookToForm
-}: IInput) {
+}: ITextArea) {
   const formContext = useFormContext()
   const isFullyHooked = name && hookToForm && formContext
 
