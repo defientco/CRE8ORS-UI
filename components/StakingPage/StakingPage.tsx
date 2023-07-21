@@ -8,7 +8,7 @@ import Media from "../../shared/Media"
 import StartTraining from "./StartTranning"
 import { STATUS } from "./Status"
 import LetsBegin from "./LetsBegin"
-import TrainingLoading from "./TrainingLoading"
+import Loading from "./Loading"
 import SaveProfile from "./SaveProfile"
 
 const StakingPage = () => {
@@ -72,7 +72,12 @@ const StakingPage = () => {
             </div>
             {step === STATUS.START && <StartTraining handleStep={handleStep} />}
             {step === STATUS.SELECT && <LetsBegin handleStep={handleStep} />}
-            {step === STATUS.LOADING && <TrainingLoading />}
+            {step === STATUS.TXLOADING && (
+              <Loading
+                content={`Approve staking transaction\nin wallet to start training\nyour Cre8or.`}
+              />
+            )}
+            {step === STATUS.SAVELOADING && <Loading content="Saving profile." />}
             {step === STATUS.PROFILE && <SaveProfile handleStep={handleStep} />}
             <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
           </div>

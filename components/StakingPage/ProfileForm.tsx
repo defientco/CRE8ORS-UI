@@ -12,8 +12,10 @@ interface ProfileFormProps {
 
 const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
   const saveProfile = () => {
+    handleStep(STATUS.SAVELOADING)
     setTimeout(() => {
       handleStep(STATUS.START)
+      window.open("/profile", "_blank")
     }, 2000)
   }
 

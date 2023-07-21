@@ -34,10 +34,12 @@ const useFadeIntersection = ({
 
     useEffect(() => {
       if(ref?.current) {
-        ref.current.classList.add('no_transition')
-        setTimeout(() => {
-          ref.current.classList.remove('no_transition')
-        }, 1000)
+        if(ref.current?.classList) {
+          ref.current.classList.add('no_transition')
+          setTimeout(() => {
+            if(ref.current?.classList) ref.current.classList.remove('no_transition')
+          }, 1000)
+        }
       }
     }, [themeMode])
 }

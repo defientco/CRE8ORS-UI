@@ -1,6 +1,7 @@
 export enum STATUS {
   START = "start",
   SELECT = "select",
-  LOADING = "loading",
+  TXLOADING = "tx_loading",
   PROFILE = "profile",
+  SAVELOADING = "setting_profile_loading",
 }

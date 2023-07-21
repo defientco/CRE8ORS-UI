@@ -55,7 +55,7 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
   }
 
   const beginTrain = () => {
-    handleStep(STATUS.LOADING)
+    handleStep(STATUS.TXLOADING)
 
     setTimeout(() => {
       handleStep(STATUS.PROFILE)
