@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, FC } from "react"
 import { EffectCreative, Pagination, Navigation } from "swiper"
 import Checkbox from "../../shared/Checkbox"
 import Content from "../Common/Content"
@@ -6,8 +6,13 @@ import Title from "../Common/Title"
 import { Button } from "../../shared/Button"
 import Slider from "../../shared/Slider"
 import Media from "../../shared/Media"
+import { STATUS } from "./Status"
 
-const LetsBegin = () => {
+interface LetsBeginProps {
+  handleStep: (step: string) => void
+}
+
+const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
   const [isSelectedAll, setIsSelectedAll] = useState(true)
   const [swiper, setSwiper] = useState<any>(null)
   const [selectedIndex, setSelectedIndex] = useState(1)
@@ -47,6 +52,14 @@ const LetsBegin = () => {
 
     setSelectedIndex(temp - 1)
     swiper.slideTo(temp - 1)
+  }
+
+  const beginTrain = () => {
+    handleStep(STATUS.LOADING)
+
+    setTimeout(() => {
+      handleStep(STATUS.PROFILE)
+    }, 2000)
   }
 
   return (
@@ -142,6 +155,7 @@ const LetsBegin = () => {
                     !px-0 !py-0
                     w-[166px] h-[55px]
                     !text-[19px]"
+                onClick={beginTrain}
               >
                 {`Let's begin`}
               </Button>

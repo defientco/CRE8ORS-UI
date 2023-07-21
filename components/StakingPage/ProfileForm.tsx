@@ -1,13 +1,21 @@
-import { useState } from "react"
+import { useState, FC } from "react"
 import Form from "../../shared/Form"
 import { profileValidation } from "./validation"
 import Input from "../../shared/Input"
 import { Button } from "../../shared/Button"
 import TextArea from "../../shared/TextArea"
+import { STATUS } from "./Status"
 
-const ProfileForm = () => {
-  // const saveProfile = ({ ...value }) => {
-  // }
+interface ProfileFormProps {
+  handleStep: (step: string) => void
+}
+
+const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
+  const saveProfile = () => {
+    setTimeout(() => {
+      handleStep(STATUS.START)
+    }, 2000)
+  }
 
   const [username, setUserName] = useState("")
   const [twitterHandle, setTwitterHandle] = useState("")
@@ -17,9 +25,9 @@ const ProfileForm = () => {
 
   return (
     <Form
-      // onSubmit={async (values) => {
-      //   saveProfile({ ...values })
-      // }}
+      onSubmit={async () => {
+        saveProfile()
+      }}
       validationSchema={profileValidation}
       className="w-full flex flex-col gap-y-[10px] md:gap-4"
     >

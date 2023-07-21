@@ -1,9 +1,14 @@
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
+import { useState } from "react"
 import Layout from "../Layout"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
 import Media from "../../shared/Media"
+import StartTraining from "./StartTranning"
+import { STATUS } from "./Status"
+import LetsBegin from "./LetsBegin"
+import TrainingLoading from "./TrainingLoading"
 import SaveProfile from "./SaveProfile"
 
 const StakingPage = () => {
@@ -11,6 +16,12 @@ const StakingPage = () => {
   const isResponsive = useMediaQuery("(max-width: 1440px)")
   const isMobile = useMediaQuery("(max-width: 768px)")
   const { themeMode } = useTheme()
+
+  const [step, setStep] = useState<string>(STATUS.START)
+
+  const handleStep = (currentStep: string) => {
+    setStep(currentStep)
+  }
 
   return (
     <Layout type="base">
@@ -59,7 +70,10 @@ const StakingPage = () => {
                 />
               </div>
             </div>
-            <SaveProfile />
+            {step === STATUS.START && <StartTraining handleStep={handleStep} />}
+            {step === STATUS.SELECT && <LetsBegin handleStep={handleStep} />}
+            {step === STATUS.LOADING && <TrainingLoading />}
+            {step === STATUS.PROFILE && <SaveProfile handleStep={handleStep} />}
             <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
           </div>
         )}

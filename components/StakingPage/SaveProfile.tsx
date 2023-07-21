@@ -1,8 +1,13 @@
+import { FC } from "react"
 import Content from "../Common/Content"
 import Title from "../Common/Title"
 import ProfileForm from "./ProfileForm"
 
-const SaveProfile = () => (
+interface SaveProfileProps {
+  handleStep: (step: string) => void
+}
+
+const SaveProfile: FC<SaveProfileProps> = ({ handleStep }) => (
   <div
     className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
           pb-[30px] md:pb-0 relative z-[100]"
@@ -23,7 +28,7 @@ const SaveProfile = () => (
                         samsungS8:!text-[18px] md:!text-[26px] !font-bold"
           />
           <div className="w-full pt-[30px]">
-            <ProfileForm />
+            <ProfileForm handleStep={handleStep} />
           </div>
         </div>
       </div>

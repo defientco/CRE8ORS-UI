@@ -1,9 +1,15 @@
 import { useMediaQuery } from "usehooks-ts"
+import { FC } from "react"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
 import { Button } from "../../shared/Button"
+import { STATUS } from "./Status"
 
-const StartTraining = () => {
+interface StartTrainingProps {
+  handleStep: (step: string) => void
+}
+
+const StartTraining: FC<StartTrainingProps> = ({ handleStep }) => {
   const isMobile = useMediaQuery("(max-width: 768px)")
 
   return (
@@ -48,7 +54,11 @@ const StartTraining = () => {
               className="relative w-full !p-4 md:!px-12
                         flex justify-center md:justify-start fade_in_text"
             >
-              <Button id="stake_btn" className="w-[200px] md:h-[46px]">
+              <Button
+                id="stake_btn"
+                className="w-[200px] md:h-[46px]"
+                onClick={() => handleStep(STATUS.SELECT)}
+              >
                 Start Training
               </Button>
             </div>
