@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useState, useCallback } from "react"
 import { useAccount } from "wagmi"
 import Confetti from "react-confetti"
 import { useWindowSize } from "usehooks-ts"
@@ -7,6 +7,8 @@ import MintMoreModal from "./MintMoreModal"
 import FriendFamilyModal from "./FriendFamilyModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
+import collectiveAbi from "../../../../lib/abi-collective.json"
+import checkPassport from "../../../../lib/checkPassport"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -15,13 +17,13 @@ interface ModalSelectorProps {
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const maxOfCre8ors = 8
-
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
   const [balanceOfCre8or, setBalanceOfCre8or] = useState(0)
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [hasPassport, setHasPassport] = useState(false)
 
   const { width, height } = useWindowSize()
 
@@ -29,8 +31,13 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
-  const hasPassport = true
-  const hasFriendFamily = true
+  const getPassportInformation = useCallback(async () => {
+    if (!address) return
+    const detectedPass = await checkPassport(address, collectiveAbi)
+    setHasPassport(detectedPass)
+  }, [address])
+
+  const hasFriendFamily = false
 
   const setConfettiEffect = () => {
     setShowConfetti(true)
@@ -56,6 +63,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       }, 2000)
     }, 2000)
   }
+
+  useEffect(() => {
+    getPassportInformation()
+  }, [getPassportInformation])
 
   useEffect(() => {
     const init = async () => {
