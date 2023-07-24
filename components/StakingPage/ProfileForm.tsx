@@ -141,8 +141,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           id="lets_begin_staking"
           className="!font-eigerdals !font-bold
                   !px-0 !py-0
-                  w-[166px] 
-                  h-[45px] md:h-[55px]
+                  w-[163px] h-[45px]
                   !text-[19px]"
           type="submit"
         >

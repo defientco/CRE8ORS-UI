@@ -56,7 +56,7 @@ const StartTraining: FC<StartTrainingProps> = ({ handleStep }) => {
             >
               <Button
                 id="stake_btn"
-                className="w-[200px] md:h-[46px]"
+                className="w-[200px] md:h-[46px] rounded-[6px]"
                 onClick={() => handleStep(STATUS.SELECT)}
               >
                 Start Training

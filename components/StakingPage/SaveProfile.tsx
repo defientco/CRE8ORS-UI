@@ -10,7 +10,7 @@ interface SaveProfileProps {
 const SaveProfile: FC<SaveProfileProps> = ({ handleStep }) => (
   <div
     className="max-w-[1280px] flex-grow flex flex-col justify-end md:flex-row items-center 
-          pb-[30px] md:pb-0 relative z-[100]"
+          pb-[160px] md:pb-0 relative z-[100]"
   >
     <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
       <div className="flex justify-center items-center">
