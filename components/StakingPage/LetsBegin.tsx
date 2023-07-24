@@ -19,16 +19,16 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
 
   const nftList = [
     {
-      id: "nft1",
-      media: "/assets/Demo/nft1.png",
+      id: "avatar1",
+      media: "/assets/Mint/Cre8orsWay/avatar1.png",
     },
     {
-      id: "nft2",
-      media: "/assets/Demo/nft2.png",
+      id: "avatar2",
+      media: "/assets/Mint/Cre8orsWay/avatar2.png",
     },
     {
-      id: "nft3",
-      media: "/assets/Demo/nft3.png",
+      id: "avatar3",
+      media: "/assets/Mint/Cre8orsWay/avatar3.png",
     },
   ]
 
