@@ -15,7 +15,7 @@ interface LetsBeginProps {
 const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
   const [isSelectedAll, setIsSelectedAll] = useState(true)
   const [swiper, setSwiper] = useState<any>(null)
-  const [selectedIndex, setSelectedIndex] = useState(1)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const nftList = [
     {
