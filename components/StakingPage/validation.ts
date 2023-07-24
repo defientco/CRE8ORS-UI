@@ -8,7 +8,7 @@ const profileValidation = JoiBase.object({
     "string.empty": `Twitter Handle cannot be an empty field`,
   }),
   location: JoiBase.string().messages({
-    "string.empty": `location cannot be an empty field`,
+    "string.empty": `Location cannot be an empty field`,
   }),
   askmeabout: JoiBase.string().messages({
     "string.empty": `Ask me about cannot be an empty field`,
