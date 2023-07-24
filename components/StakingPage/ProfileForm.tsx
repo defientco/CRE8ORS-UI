@@ -14,8 +14,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
   const saveProfile = () => {
     handleStep(STATUS.SAVELOADING)
     setTimeout(() => {
-      handleStep(STATUS.START)
-      window.open("/profile", "_blank")
+      window.open("/profile", "_self")
     }, 2000)
   }
 
