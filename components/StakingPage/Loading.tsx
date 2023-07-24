@@ -14,7 +14,10 @@ const Loading: FC<LoadingProps> = ({ content }) => (
   >
     <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
       <div className="flex justify-start items-center">
-        <div className="dark:bg-black rounded-[20px] px-[50px] py-[40px] md:py-[80px] md:px-20 min-w-[517px]">
+        <div
+          className="dark:bg-black rounded-[20px] px-[50px] py-[40px] md:py-[80px] md:px-20 
+        w-[280px] samsungS8:w-[320px] xl:min-w-[517px]"
+        >
           <Title
             text="LOADING..."
             className="leading-[102.3%]
