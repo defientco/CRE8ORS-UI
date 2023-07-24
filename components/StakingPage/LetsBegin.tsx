@@ -127,9 +127,8 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
                     key={nft.id}
                     className={`flex justify-center items-center 
                   !w-[150px] !h-[150px] xs:!w-[181px] xs:!h-[181px]
-                  rounded-[10px] overflow-hidden ${
-                    isSelectedAll ? "border-[5px] border-[#FAC103]" : "border-[0px"
-                  }`}
+                  rounded-[10px] overflow-hidden
+                  border-[5px] ${isSelectedAll ? "border-[#FAC103]" : "border-[black]"}`}
                   >
                     <Media
                       link={nft.media}
