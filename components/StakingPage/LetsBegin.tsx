@@ -67,8 +67,10 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
 
   const clickSlide = (index: number) => {
     const temp = [...nftList]
+
     temp[index].selected = !temp[index].selected
 
+    setIsSelectedAll(temp.filter((item) => item.selected).length === temp.length)
     setNftList([...temp])
   }
 
