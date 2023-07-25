@@ -10,6 +10,7 @@ import { STATUS } from "./Status"
 import LetsBegin from "./LetsBegin"
 import Loading from "./Loading"
 import SaveProfile from "./SaveProfile"
+import Character from "./Character"
 
 const StakingPage = () => {
   const [containerRef, { width }] = useMeasure()
@@ -60,8 +61,8 @@ const StakingPage = () => {
                 }}
               >
                 <Media
-                  link="/assets/Staking/character.png"
-                  blurLink="/assets/Staking/character.png"
+                  link="/assets/Staking/mobile_character.svg"
+                  blurLink="/assets/Staking/mobile_character.png"
                   type="image"
                   containerStyle={{
                     width: `${width}px`,
@@ -77,11 +78,19 @@ const StakingPage = () => {
                 content={`Approve staking transaction\nin wallet to start training\nyour Cre8or.`}
               />
             )}
-            {step === STATUS.SAVELOADING && <Loading content="Saving profile." />}
+            {step === STATUS.SAVELOADING && <Loading content="Saving profile..." />}
             {step === STATUS.PROFILE && <SaveProfile handleStep={handleStep} />}
             <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
           </div>
         )}
+        <Character
+          link="/assets/Staking/character.svg"
+          originWidth={691}
+          originHeight={668}
+          className="!absolute bottom-0 right-0 z-[10] hidden md:block"
+          screenWidth={1440}
+          blurLink="/assets/Staking/character.png"
+        />
       </div>
     </Layout>
   )
