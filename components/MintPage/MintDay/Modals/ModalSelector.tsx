@@ -9,6 +9,7 @@ import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import collectiveAbi from "../../../../lib/abi-collective.json"
 import checkPassport from "../../../../lib/checkPassport"
+import balanceOfAddress from "../../../../lib/balanceOfAddress"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -37,6 +38,13 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setHasPassport(detectedPass)
   }, [address])
 
+  const getCre8orBalance = useCallback(async () => {
+    if (!address) return
+    const balanceOf = await balanceOfAddress(address)
+    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
+    setLockedCntOfCre8or(8)
+  }, [address])
+
   const hasFriendFamily = false
 
   const setConfettiEffect = () => {
@@ -46,27 +54,22 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     }, 8000)
   }
 
-  const getBalanceOfCre8or = async () => {
-    setTimeout(() => {
-      setBalanceOfCre8or(2)
-      setLockedCntOfCre8or(8)
-    }, 2000)
-  }
-
-  const mintCre8or = () => {
+  const mintCre8or = async () => {
     setLoading(true)
+    await getCre8orBalance()
     setTimeout(() => {
-      getBalanceOfCre8or()
-      setTimeout(() => {
-        setLoading(false)
-        setConfettiEffect()
-      }, 2000)
+      setLoading(false)
+      setConfettiEffect()
     }, 2000)
   }
 
   useEffect(() => {
     getPassportInformation()
   }, [getPassportInformation])
+
+  useEffect(() => {
+    getCre8orBalance()
+  }, [getCre8orBalance])
 
   useEffect(() => {
     const init = async () => {
