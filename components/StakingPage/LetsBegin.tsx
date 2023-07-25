@@ -13,24 +13,27 @@ interface LetsBeginProps {
 }
 
 const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
-  const [isSelectedAll, setIsSelectedAll] = useState(true)
+  const [isSelectedAll, setIsSelectedAll] = useState(false)
   const [swiper, setSwiper] = useState<any>(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const nftList = [
+  const [nftList, setNftList] = useState<any>([
     {
       id: "avatar1",
       media: "/assets/Mint/Cre8orsWay/avatar1.png",
+      selected: false,
     },
     {
       id: "avatar2",
       media: "/assets/Mint/Cre8orsWay/avatar2.png",
+      selected: false,
     },
     {
       id: "avatar3",
       media: "/assets/Mint/Cre8orsWay/avatar3.png",
+      selected: false,
     },
-  ]
+  ])
 
   const toggleSelected = (activeIndex: number) => {
     setSelectedIndex(activeIndex)
@@ -60,6 +63,15 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
     setTimeout(() => {
       handleStep(STATUS.PROFILE)
     }, 2000)
+  }
+
+  const clickSlide = (index: number) => {
+    const temp = [...nftList]
+
+    temp[index].selected = !temp[index].selected
+
+    setIsSelectedAll(temp.filter((item) => item.selected).length === temp.length)
+    setNftList([...temp])
   }
 
   return (
@@ -122,13 +134,17 @@ const LetsBegin: FC<LetsBeginProps> = ({ handleStep }) => {
                   },
                 }}
               >
-                {nftList.map((nft) => (
+                {nftList.map((nft, index) => (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
                   <div
                     key={nft.id}
                     className={`flex justify-center items-center 
                   !w-[150px] !h-[150px] xs:!w-[181px] xs:!h-[181px]
                   rounded-[10px] overflow-hidden
-                  border-[5px] ${isSelectedAll ? "border-[#FAC103]" : "border-[black]"}`}
+                  border-[5px] ${
+                    isSelectedAll || nft.selected ? "border-[#FAC103]" : "border-[black]"
+                  }`}
+                    onClick={() => clickSlide(index)}
                   >
                     <Media
                       link={nft.media}

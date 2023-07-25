@@ -10,11 +10,13 @@ const profileValidation = JoiBase.object({
   location: JoiBase.string().messages({
     "string.empty": `Location cannot be an empty field`,
   }),
-  askmeabout: JoiBase.string().messages({
+  askmeabout: JoiBase.string().max(60).required().messages({
     "string.empty": `Ask me about cannot be an empty field`,
+    "string.max": `Ask me about should be character limit with 60`,
   }),
-  bio: JoiBase.string().messages({
+  bio: JoiBase.string().max(160).required().messages({
     "string.empty": `Bio cannot be an empty field`,
+    "string.max": `Bio should be character limit 160`,
   }),
 })
 
