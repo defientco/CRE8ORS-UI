@@ -71,6 +71,14 @@ const StakingPage = () => {
                 />
               </div>
             </div>
+            <Character
+              link="/assets/Staking/character.svg"
+              originWidth={691}
+              originHeight={668}
+              className="!absolute bottom-0 right-0 z-[7] hidden md:block"
+              screenWidth={1440}
+              blurLink="/assets/Staking/character.png"
+            />
             {step === STATUS.START && <StartTraining handleStep={handleStep} />}
             {step === STATUS.SELECT && <LetsBegin handleStep={handleStep} />}
             {step === STATUS.TXLOADING && (
@@ -80,17 +88,9 @@ const StakingPage = () => {
             )}
             {step === STATUS.SAVELOADING && <Loading content="Saving profile..." />}
             {step === STATUS.PROFILE && <SaveProfile handleStep={handleStep} />}
-            <Footer className="!pt-0 !pb-0 !bg-transparent relative z-[10]" />
+            <Footer className="!pt-0 !pb-0 !bg-transparent relative !z-[10]" />
           </div>
         )}
-        <Character
-          link="/assets/Staking/character.svg"
-          originWidth={691}
-          originHeight={668}
-          className="!absolute bottom-0 right-0 z-[10] hidden md:block"
-          screenWidth={1440}
-          blurLink="/assets/Staking/character.png"
-        />
       </div>
     </Layout>
   )
