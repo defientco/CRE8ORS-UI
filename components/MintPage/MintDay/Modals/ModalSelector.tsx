@@ -35,7 +35,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
   const getFriendsAndFamilyInformation = useCallback(async () => {
-    if(!address) return
+    if (!address) return
     const detectedDiscount = await hasDiscount(address)
     setHasFriendAndFamily(detectedDiscount)
   }, [address])
