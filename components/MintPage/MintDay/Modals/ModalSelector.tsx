@@ -10,6 +10,7 @@ import WaitCre8orsModal from "./WaitCre8orsModal"
 import collectiveAbi from "../../../../lib/abi-collective.json"
 import checkPassport from "../../../../lib/checkPassport"
 import balanceOfAddress from "../../../../lib/balanceOfAddress"
+import { hasDiscount } from "../../../../lib/friendAndFamily"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -25,12 +26,19 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const [showConfetti, setShowConfetti] = useState(false)
   const [loading, setLoading] = useState(false)
   const [hasPassport, setHasPassport] = useState(false)
+  const [hasFriendAndFamily, setHasFriendAndFamily] = useState(false)
 
   const { width, height } = useWindowSize()
 
   const isCre8orlistDay =
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
+
+  const getFriendsAndFamilyInformation = useCallback(async () => {
+    if(!address) return
+    const detectedDiscount = await hasDiscount(address)
+    setHasFriendAndFamily(detectedDiscount)
+  }, [address])
 
   const getPassportInformation = useCallback(async () => {
     if (!address) return
@@ -44,8 +52,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
     setLockedCntOfCre8or(8)
   }, [address])
-
-  const hasFriendFamily = false
 
   const setConfettiEffect = () => {
     setShowConfetti(true)
@@ -72,6 +78,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [getCre8orBalance])
 
   useEffect(() => {
+    getFriendsAndFamilyInformation()
+  }, [getFriendsAndFamilyInformation])
+
+  useEffect(() => {
     const init = async () => {
       const response = await getApplicant(address)
       setApplicant(response)
@@ -85,7 +95,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     <>
       {!balanceOfCre8or &&
         // eslint-disable-next-line no-nested-ternary
-        (hasFriendFamily ? (
+        (hasFriendAndFamily ? (
           <FriendFamilyModal
             isModalVisible={isVisibleModal}
             toggleIsVisible={toggleModal}
