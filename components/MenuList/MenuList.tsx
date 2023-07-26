@@ -55,7 +55,11 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/roadmap" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Roadmap</div>
       </Link>
-      <Link href="/ERC721H" target="_blank" rel="noreferrer">
+      <Link
+        href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+        target="_blank"
+        rel="noreferrer"
+      >
         <div className="ml-4 dark:text-[black] text-white">ERC721H</div>
       </Link>
       <Link href="/manifesto" target="_blank" rel="noreferrer">
