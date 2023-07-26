@@ -19,7 +19,7 @@ const Collaborate = () => {
               containerClasses="w-[280px] h-[158px] 
               xs:w-[304px] xs:h-[171px]
               cursor-pointer rounded-[10px] overflow-hidden"
-              link="/assets/Mint/Collaborate/protocol_demo.mp4"
+              link="/assets/Mint/Collaborate/protocol_demo.MOV"
             />
           </div>
           <div className="flex flex-col justify-center">
@@ -51,7 +51,7 @@ const Collaborate = () => {
               posterLink="/assets/Mint/Collaborate/thumbnail.png"
               type="video"
               containerClasses="w-[561px] h-[316px] cursor-pointer rounded-[20px] overflow-hidden"
-              link="/assets/Mint/Collaborate/protocol_demo.mp4"
+              link="/assets/Mint/Collaborate/protocol_demo.MOV"
             />
           </div>
         </div>

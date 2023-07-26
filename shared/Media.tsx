@@ -30,7 +30,6 @@ function Media({
 
   const videoAutoPlay = () => {
     if(isMuted) {
-      videoRef.current.playbackRate = 1.5
       videoRef.current.play()
     }
     else videoRef.current.pause()
