@@ -1,8 +1,8 @@
 import { useMediaQuery } from "usehooks-ts"
-import SectionContainer from "./SectionContainer"
-import Title from "../Common/Title"
-import Content from "../Common/Content"
-import Media from "../../shared/Media"
+import SectionContainer from "../SectionContainer"
+import Title from "../../Common/Title"
+import Content from "../../Common/Content"
+import Media from "../../../shared/Media"
 
 const Archetypes = () => {
   const pfpList = [
