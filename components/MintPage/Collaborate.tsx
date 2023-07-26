@@ -52,21 +52,13 @@ const Collaborate = () => {
             />
             <ApplyAllowListButton id="apply_now_paas" position="start" />
           </div>
-          <div className="hidden xl:block relative">
+          <div className="hidden xl:flex relative items-center">
             <Media
-              link="/assets/Mint/Collaborate/circle.svg"
-              blurLink="/assets/Mint/Collaborate/circle.png"
-              type="image"
-              containerClasses="w-[548px] h-[548px]"
+              posterLink="/assets/Mint/Collaborate/thumbnail.png"
+              type="video"
+              containerClasses="w-[561px] h-[316px] cursor-pointer rounded-[20px] overflow-hidden"
+              link="/assets/Mint/Collaborate/protocol_demo.mp4"
             />
-            <div className="absolute z-[1] left-0 top-0 w-full h-full">
-              <Media
-                link="/assets/Mint/Collaborate/character.svg"
-                blurLink="/assets/Mint/Collaborate/character.png"
-                type="image"
-                containerClasses="w-[548px] h-[548px]"
-              />
-            </div>
           </div>
         </div>
       </div>
