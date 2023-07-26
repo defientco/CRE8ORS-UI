@@ -78,7 +78,11 @@ const DesktopMenu = () => {
             <Link href="/roadmap" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Roadmap</div>
             </Link>
-            <Link href="/ERC721H" target="_blank" rel="noreferrer">
+            <Link
+              href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+              target="_blank"
+              rel="noreferrer"
+            >
               <div className="cursor-pointer text-white dark:text-[black]">ERC721H</div>
             </Link>
             <Link href="/leaderboard" target="_blank" rel="noreferrer">
