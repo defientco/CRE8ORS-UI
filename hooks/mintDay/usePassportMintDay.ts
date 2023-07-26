@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { freeMintClaimed, getLastPassportId, mintCollectionHolder } from "../../lib/mint/collectionHolder"
-import { hasDiscount, mintFriendsAndFamily } from "../../lib/mint/friendAndFamily"
+import { freeMintClaimed, getLastPassportId, mintByCollectionHolder } from "../../lib/mint/collectionHolder"
+import { hasDiscount, mintByFriendsAndFamily } from "../../lib/mint/friendAndFamily"
 import { Signer } from "ethers"
 import purchase from "../../lib/purchase"
 import cre8orAbi from '../../lib/abi-cre8ors.json'
@@ -53,7 +53,7 @@ const usePassportMintDay = ({
     const freeMintFamilyAndFriend = async () => {
       if(!signer) return
       setLoading(true)
-      const receipt = await mintFriendsAndFamily(signer)
+      const receipt = await mintByFriendsAndFamily(signer)
       if (!receipt.error) {
         await getFriendsAndFamilyInformation()
         await getCre8orInformation()
@@ -66,7 +66,7 @@ const usePassportMintDay = ({
       if(!signer) return
       if (!isClaimedFree) {
         setLoading(true)
-        const receipt = await mintCollectionHolder(signer, passportId)
+        const receipt = await mintByCollectionHolder(signer, passportId)
         if (!receipt.error) {
           await getPassportInformation()
           await getCre8orInformation()

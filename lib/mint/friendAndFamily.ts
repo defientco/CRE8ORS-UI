@@ -19,7 +19,7 @@ export const hasDiscount = async (address: string) => {
   }
 }
 
-export const mintFriendsAndFamily = async (signer: Signer) => {
+export const mintByFriendsAndFamily = async (signer: Signer) => {
   const address = await signer.getAddress()
 
   const contract = new ethers.Contract(

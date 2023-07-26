@@ -37,7 +37,7 @@ export const freeMintClaimed = async (passportId: number) => {
   }
 }
 
-export const mintCollectionHolder = async (signer: Signer, passportId: string) => {
+export const mintByCollectionHolder = async (signer: Signer, passportId: string) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
