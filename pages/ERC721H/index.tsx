@@ -13,7 +13,7 @@ const ERC721H = () => {
     <SeoHead
       title="ERC721H: A Standard for Programmable Hooks in NFTs"
       description="ERC721H is an implementation of IERC721 that introduces 'Hooks', bringing additional flexibility and control to creators and collections."
-      image="/SEO_LOGO_ICON.png"
+      image="/ERC721H.jpeg"
     />
   )
 }
