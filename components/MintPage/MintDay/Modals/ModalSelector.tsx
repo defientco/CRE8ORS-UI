@@ -8,8 +8,7 @@ import FriendFamilyModal from "./FriendFamilyModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import balanceOfAddress from "../../../../lib/balanceOfAddress"
-import { freeMint, hasDiscount } from "../../../../lib/friendAndFamily"
-import { checkPassport } from "../../../../lib/collective"
+import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -18,45 +17,21 @@ interface ModalSelectorProps {
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const maxOfCre8ors = 8
+
   const { address } = useAccount()
   const { data: signer } = useSigner()
+
+  const [loading, setLoading] = useState(false)
   const [applicant, setApplicant] = useState({} as any)
   const [balanceOfCre8or, setBalanceOfCre8or] = useState(-1)
-  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [hasPassport, setHasPassport] = useState(null)
-  const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
+  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
 
   const { width, height } = useWindowSize()
 
   const isCre8orlistDay =
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
-
-  const canOpenModal = useMemo(() => {
-    if (hasPassport !== null && hasFriendAndFamily !== null && balanceOfCre8or !== -1) return true
-    return false
-  }, [hasPassport, hasFriendAndFamily, balanceOfCre8or])
-
-  const getFriendsAndFamilyInformation = useCallback(async () => {
-    if (!address) return
-    const detectedDiscount = await hasDiscount(address)
-    setHasFriendAndFamily(detectedDiscount)
-  }, [address])
-
-  const getPassportInformation = useCallback(async () => {
-    if (!address) return
-    const detectedPass = await checkPassport(address)
-    setHasPassport(detectedPass)
-  }, [address])
-
-  const getCre8orBalance = useCallback(async () => {
-    if (!address) return
-    const balanceOf = await balanceOfAddress(address)
-    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
-    setLockedCntOfCre8or(8)
-  }, [address])
 
   const setConfettiEffect = () => {
     setShowConfetti(true)
@@ -65,33 +40,37 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     }, 8000)
   }
 
-  const freeMintFamilyAndFriend = async () => {
-    setLoading(true)
-    const response = await freeMint(signer)
-
-    setLoading(false)
-
-    if (response) {
-      await getCre8orBalance()
-      setConfettiEffect()
-    }
+  const handleLoading = (isLoading: boolean) => {
+    setLoading(isLoading)
   }
 
-  const freeMintHolder = async () => {
-    setLoading(true)
-  }
+  const getCre8orBalance = useCallback(async () => {
+    if (!address) return
+    const balanceOf = await balanceOfAddress(address)
+    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
+    setLockedCntOfCre8or(8)
+  }, [address])
 
-  useEffect(() => {
-    getPassportInformation()
-  }, [getPassportInformation])
+  const {
+    hasPassport,
+    hasFriendAndFamily,
+    isClaimedFree,
+    mintCre8ors,
+    freeMintPassportHolder,
+    freeMintFamilyAndFriend,
+  } = usePassportMintDay({
+    address,
+    signer,
+    setConfettiEffect,
+    getCre8orBalance,
+    setLoading: handleLoading,
+  })
 
-  useEffect(() => {
-    getCre8orBalance()
-  }, [getCre8orBalance])
-
-  useEffect(() => {
-    getFriendsAndFamilyInformation()
-  }, [getFriendsAndFamilyInformation])
+  const canOpenModal = useMemo(() => {
+    if (hasPassport !== undefined && hasFriendAndFamily !== null && balanceOfCre8or !== -1)
+      return true
+    return false
+  }, [hasPassport, hasFriendAndFamily, balanceOfCre8or])
 
   useEffect(() => {
     const init = async () => {
@@ -103,46 +82,53 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
+  const selectModal = () => {
+    if (!balanceOfCre8or) {
+      if (hasFriendAndFamily)
+        return (
+          <FriendFamilyModal
+            isModalVisible={isVisibleModal}
+            toggleIsVisible={toggleModal}
+            freeMint={freeMintFamilyAndFriend}
+            loading={loading}
+          />
+        )
+      if (hasPassport && !isClaimedFree)
+        return (
+          <PassportModal
+            isModalVisible={isVisibleModal}
+            toggleIsVisible={toggleModal}
+            freeMint={freeMintPassportHolder}
+            loading={loading}
+          />
+        )
+      return (
+        <WaitCre8orsModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          hasAllowListRole={applicant?.isVerified}
+          isCre8orsDay={!isCre8orlistDay}
+        />
+      )
+    }
+    return (
+      <MintMoreModal
+        possibleMintCount={maxOfCre8ors - balanceOfCre8or}
+        lockedCntOfCre8or={lockedCntOfCre8or}
+        isModalVisible={isVisibleModal}
+        toggleIsVisible={toggleModal}
+        mintCre8or={mintCre8ors}
+        loading={loading}
+      />
+    )
+  }
+
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
       {canOpenModal && (
         <>
-          {!balanceOfCre8or &&
-            // eslint-disable-next-line no-nested-ternary
-            (hasFriendAndFamily ? (
-              <FriendFamilyModal
-                isModalVisible={isVisibleModal}
-                toggleIsVisible={toggleModal}
-                freeMint={freeMintFamilyAndFriend}
-                loading={loading}
-              />
-            ) : !hasPassport ? (
-              <PassportModal
-                isModalVisible={isVisibleModal}
-                toggleIsVisible={toggleModal}
-                freeMint={freeMintHolder}
-                loading={loading}
-              />
-            ) : (
-              <WaitCre8orsModal
-                isModalVisible={isVisibleModal}
-                toggleIsVisible={toggleModal}
-                hasAllowListRole={applicant?.isVerified}
-                isCre8orsDay={!isCre8orlistDay}
-              />
-            ))}
-
-          {balanceOfCre8or && (
-            <MintMoreModal
-              possibleMintCount={maxOfCre8ors - balanceOfCre8or}
-              lockedCntOfCre8or={lockedCntOfCre8or}
-              isModalVisible={isVisibleModal}
-              toggleIsVisible={toggleModal}
-              mintCre8or={freeMintHolder}
-              loading={loading}
-            />
-          )}
+          {selectModal()}
           {showConfetti && (
             <div className="fixed w-full h-screen top-0 left-0 z-[80] pointer-events-none">
               <Confetti width={width} height={height} />

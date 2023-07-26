@@ -1,7 +1,7 @@
 import { ethers, Signer } from "ethers"
-import friendAndFamilyAbi from "./abi-friend-family.json"
-import handleTxError from "./handleTxError"
-import getDefaultProvider from "./getDefaultProvider"
+import friendAndFamilyAbi from "../abi-friend-family.json"
+import handleTxError from "../handleTxError"
+import getDefaultProvider from "../getDefaultProvider"
 
 export const hasDiscount = async (address: string) => {
   const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
@@ -19,7 +19,7 @@ export const hasDiscount = async (address: string) => {
   }
 }
 
-export const freeMint = async (signer: Signer) => {
+export const mintFriendsAndFamily = async (signer: Signer) => {
   const address = await signer.getAddress()
 
   const contract = new ethers.Contract(
@@ -30,11 +30,11 @@ export const freeMint = async (signer: Signer) => {
 
   try {
     const tx = await contract.mint(address)
-    await tx.wait()
+    const receipt = await tx.wait()
 
-    return true
+    return receipt
   } catch (err) {
     handleTxError(err)
-    return false
+    return { error: err }
   }
 }
