@@ -54,11 +54,12 @@ const usePassportMintDay = ({
       if(!signer) return
       setLoading(true)
       const receipt = await mintFriendsAndFamily(signer)
-      setLoading(false)
       if (!receipt.error) {
+        await getFriendsAndFamilyInformation()
         await getCre8orBalance()
         setConfettiEffect()
       }
+      setLoading(false)
     }
     
     const freeMintPassportHolder = async () => {
@@ -66,11 +67,12 @@ const usePassportMintDay = ({
       if (!isClaimedFree) {
         setLoading(true)
         const receipt = await mintCollectionHolder(signer, passportId)
-        setLoading(false)
         if (!receipt.error) {
+          await getPassportInformation()
           await getCre8orBalance()
           setConfettiEffect()
         }
+        setLoading(false)
       }
     }
 
