@@ -25,7 +25,7 @@ const usePassportMintDay = ({
     const [passportCount, setPassportCount] = useState(0)
     const [isClaimedFree, setIsClaimedFree] = useState(null)
 
-    const hasPassport = useMemo(
+    const hasPassportAndNotFreeMinted = useMemo(
         () => address && passportId !== null && passportCount !== 0 && isClaimedFree === false,
         [passportId, address, passportCount],
     )
@@ -100,7 +100,7 @@ const usePassportMintDay = ({
     }, [getFriendsAndFamilyInformation])
 
     return {
-      hasPassport,
+      hasPassportAndNotFreeMinted,
       hasFriendAndFamily,
       freeMintPassportHolder,
       freeMintFamilyAndFriend,

@@ -54,7 +54,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   const {
-    hasPassport,
+    hasPassportAndNotFreeMinted,
     hasFriendAndFamily,
     mintCre8ors,
     freeMintPassportHolder,
@@ -68,10 +68,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   })
 
   const canOpenModal = useMemo(() => {
-    if (hasPassport !== undefined && hasFriendAndFamily !== null && balanceOfCre8or !== -1)
+    if (
+      hasPassportAndNotFreeMinted !== undefined &&
+      hasFriendAndFamily !== null &&
+      balanceOfCre8or !== -1
+    )
       return true
     return false
-  }, [hasPassport, hasFriendAndFamily, balanceOfCre8or])
+  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily, balanceOfCre8or])
 
   useEffect(() => {
     const init = async () => {
@@ -98,7 +102,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
             loading={loading}
           />
         )
-      if (hasPassport)
+      if (hasPassportAndNotFreeMinted)
         return (
           <PassportModal
             isModalVisible={isVisibleModal}
