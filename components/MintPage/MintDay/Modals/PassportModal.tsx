@@ -8,14 +8,14 @@ import MintLoading from "../MintLoading"
 interface PassportModalProps {
   isModalVisible: boolean
   toggleIsVisible: () => void
-  mintCre8or: () => void
+  freeMint: () => void
   loading: boolean
 }
 
 const PassportModal: FC<PassportModalProps> = ({
   isModalVisible,
   toggleIsVisible,
-  mintCre8or,
+  freeMint,
   loading,
 }) => {
   const [modalRef, { width }] = useMeasure()
@@ -68,7 +68,7 @@ const PassportModal: FC<PassportModalProps> = ({
                 !rounded-[10px]
                 text-black dark:!text-white
                 dark:!bg-black !bg-white"
-              onClick={mintCre8or}
+              onClick={freeMint}
             >
               Mint Now
             </Button>

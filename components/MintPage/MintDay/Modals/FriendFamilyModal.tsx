@@ -6,14 +6,14 @@ import MintLoading from "../MintLoading"
 interface FriendFamilyModalProps {
   isModalVisible: boolean
   toggleIsVisible: () => void
-  mintCre8or: () => void
+  freeMint: () => void
   loading: boolean
 }
 
 const FriendFamilyModal: FC<FriendFamilyModalProps> = ({
   isModalVisible,
   toggleIsVisible,
-  mintCre8or,
+  freeMint,
   loading,
 }) => (
   <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -57,7 +57,7 @@ const FriendFamilyModal: FC<FriendFamilyModalProps> = ({
                 !rounded-[10px]
                 !text-black dark:!text-white
                 dark:!bg-black !bg-white"
-            onClick={mintCre8or}
+            onClick={freeMint}
           >
             Mint Now
           </Button>
