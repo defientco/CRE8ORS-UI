@@ -9,6 +9,7 @@ import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import balanceOfAddress from "../../../../lib/balanceOfAddress"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
+import { getLockedCount } from "../../../../lib/cre8or"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -44,11 +45,12 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setLoading(isLoading)
   }
 
-  const getCre8orBalance = useCallback(async () => {
+  const getCre8orInformation = useCallback(async () => {
     if (!address) return
     const balanceOf = await balanceOfAddress(address)
+    const lockedCnt = await getLockedCount(address)
     setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
-    setLockedCntOfCre8or(8)
+    setLockedCntOfCre8or(lockedCnt)
   }, [address])
 
   const {
@@ -61,7 +63,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     address,
     signer,
     setConfettiEffect,
-    getCre8orBalance,
+    getCre8orInformation,
     setLoading: handleLoading,
   })
 
@@ -82,8 +84,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   useEffect(() => {
-    getCre8orBalance()
-  }, [getCre8orBalance])
+    getCre8orInformation()
+  }, [getCre8orInformation])
 
   const selectModal = () => {
     if (!balanceOfCre8or) {

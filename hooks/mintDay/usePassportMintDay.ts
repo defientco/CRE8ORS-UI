@@ -8,7 +8,7 @@ import cre8orAbi from '../../lib/abi-cre8ors.json'
 interface Props {
     address: string
     signer: Signer
-    getCre8orBalance: () => Promise<void>
+    getCre8orInformation: () => Promise<void>
     setConfettiEffect: () => void
     setLoading: (loading: boolean) => void
 }
@@ -16,7 +16,7 @@ interface Props {
 const usePassportMintDay = ({
     address,
     signer,
-    getCre8orBalance,
+    getCre8orInformation,
     setConfettiEffect,
     setLoading
 }: Props) => {
@@ -56,7 +56,7 @@ const usePassportMintDay = ({
       const receipt = await mintFriendsAndFamily(signer)
       if (!receipt.error) {
         await getFriendsAndFamilyInformation()
-        await getCre8orBalance()
+        await getCre8orInformation()
         setConfettiEffect()
       }
       setLoading(false)
@@ -69,7 +69,7 @@ const usePassportMintDay = ({
         const receipt = await mintCollectionHolder(signer, passportId)
         if (!receipt.error) {
           await getPassportInformation()
-          await getCre8orBalance()
+          await getCre8orInformation()
           setConfettiEffect()
         }
         setLoading(false)
@@ -82,7 +82,7 @@ const usePassportMintDay = ({
       const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
       setLoading(false)
       if(!receipt.error) {
-        await getCre8orBalance()
+        await getCre8orInformation()
         setConfettiEffect()
       }
     }
