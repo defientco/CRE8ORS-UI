@@ -82,6 +82,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
+  useEffect(() => {
+    getCre8orBalance()
+  }, [getCre8orBalance])
+
   const selectModal = () => {
     if (!balanceOfCre8or) {
       if (hasFriendAndFamily)

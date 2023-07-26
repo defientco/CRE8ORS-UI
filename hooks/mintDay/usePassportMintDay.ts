@@ -26,85 +26,85 @@ const usePassportMintDay = ({
     const [isClaimedFree, setIsClaimedFree] = useState(null)
 
     const hasPassport = useMemo(
-        () => address && passportId !== null && passportCount !== 0,
+        () => address && passportId !== null && passportCount !== 0 && isClaimedFree === false,
         [passportId, address, passportCount],
     )
 
     const getClaimedFree = useCallback(async () => {
-        if (passportId === null) return
+      if (passportId === null) return
+  
+      const isClaimed = await freeMintClaimed(passportId)
+      setIsClaimedFree(isClaimed)
+    }, [passportId])
     
-        const isClaimed = await freeMintClaimed(passportId)
-        setIsClaimedFree(isClaimed)
-      }, [passportId])
+    const getFriendsAndFamilyInformation = useCallback(async () => {
+      if (!address) return
+      const detectedDiscount = await hasDiscount(address)
+      setHasFriendAndFamily(detectedDiscount)
+    }, [address])
+  
+    const getPassportInformation = useCallback(async () => {
+      if (!address) return
+      const { id: lastPassportId, noOfPassports } = await getLastPassportId(address)
+      setPassportId(lastPassportId?.id?.tokenId || null)
+      setPassportCount(noOfPassports)
+    }, [address])
     
-      const getFriendsAndFamilyInformation = useCallback(async () => {
-        if (!address) return
-        const detectedDiscount = await hasDiscount(address)
-        setHasFriendAndFamily(detectedDiscount)
-      }, [address])
+    const freeMintFamilyAndFriend = async () => {
+      if(!signer) return
+      setLoading(true)
+      const receipt = await mintFriendsAndFamily(signer)
+      setLoading(false)
+      if (!receipt.error) {
+        await getCre8orBalance()
+        setConfettiEffect()
+      }
+    }
     
-      const getPassportInformation = useCallback(async () => {
-        if (!address) return
-        const { id: lastPassportId, noOfPassports } = await getLastPassportId(address)
-        setPassportId(lastPassportId?.id?.tokenId || null)
-        setPassportCount(noOfPassports)
-      }, [address])
-    
-      const freeMintFamilyAndFriend = async () => {
-        if(!signer) return
+    const freeMintPassportHolder = async () => {
+      if(!signer) return
+      if (!isClaimedFree) {
         setLoading(true)
-        const receipt = await mintFriendsAndFamily(signer)
+        const receipt = await mintCollectionHolder(signer, passportId)
         setLoading(false)
         if (!receipt.error) {
           await getCre8orBalance()
           setConfettiEffect()
         }
       }
-    
-      const freeMintPassportHolder = async () => {
-        if(!signer) return
-        if (!isClaimedFree) {
-          setLoading(true)
-          const receipt = await mintCollectionHolder(signer, passportId)
-          setLoading(false)
-          if (!receipt.error) {
-            await getCre8orBalance()
-            setConfettiEffect()
-          }
-        }
-      }
+    }
 
-      const mintCre8ors = async () => {
-        if(!signer) return
-        setLoading(true)
-        const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
-        setLoading(false)
-        if(!receipt.error) {
-          await getCre8orBalance()
-          setConfettiEffect()
-        }
+    const mintCre8ors = async () => {
+      if(!signer) return
+      setLoading(true)
+      const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
+      setLoading(false)
+      if(!receipt.error) {
+        await getCre8orBalance()
+        setConfettiEffect()
       }
-    
-      useEffect(() => {
-        getClaimedFree()
-      }, [getClaimedFree])
-    
-      useEffect(() => {
-        getPassportInformation()
-      }, [getPassportInformation])
-    
-      useEffect(() => {
-        getFriendsAndFamilyInformation()
-      }, [getFriendsAndFamilyInformation])
+    }
+  
+    useEffect(() => {
+      getClaimedFree()
+    }, [getClaimedFree])
+  
+    useEffect(() => {
+      getPassportInformation()
+    }, [getPassportInformation])
+  
+    useEffect(() => {
+      getFriendsAndFamilyInformation()
+    }, [getFriendsAndFamilyInformation])
 
-      return {
-        hasPassport,
-        hasFriendAndFamily,
-        isClaimedFree,
-        freeMintPassportHolder,
-        freeMintFamilyAndFriend,
-        mintCre8ors
-      }
+    return {
+      hasPassport,
+      hasFriendAndFamily,
+      isClaimedFree,
+      freeMintPassportHolder,
+      freeMintFamilyAndFriend,
+      mintCre8ors
+    }
 }
 
 export default usePassportMintDay
