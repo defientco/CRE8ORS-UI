@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { freeMintClaimed, getLastPassportId, mintByCollectionHolder } from "../../lib/collectionHolder"
 import { hasDiscount, mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import { Signer } from "ethers"
