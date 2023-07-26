@@ -1,8 +1,8 @@
 import { Signer, ethers } from "ethers"
-import collectionHolderAbi from "../abi-collection-holder.json"
-import handleTxError from "../handleTxError"
-import getDefaultProvider from "../getDefaultProvider"
-import getNFTs from "../alchemy/getNFTs"
+import collectionHolderAbi from "./abi-collection-holder.json"
+import handleTxError from "./handleTxError"
+import getDefaultProvider from "./getDefaultProvider"
+import getNFTs from "./alchemy/getNFTs"
 
 export const getPassports = async (address: string) => {
   const res = await getNFTs(

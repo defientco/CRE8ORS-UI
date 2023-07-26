@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { freeMintClaimed, getLastPassportId, mintByCollectionHolder } from "../../lib/mint/collectionHolder"
-import { hasDiscount, mintByFriendsAndFamily } from "../../lib/mint/friendAndFamily"
+import { freeMintClaimed, getLastPassportId, mintByCollectionHolder } from "../../lib/collectionHolder"
+import { hasDiscount, mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import { Signer } from "ethers"
 import purchase from "../../lib/purchase"
 import cre8orAbi from '../../lib/abi-cre8ors.json'
