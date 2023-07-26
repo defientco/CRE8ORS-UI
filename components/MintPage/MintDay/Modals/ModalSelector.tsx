@@ -69,7 +69,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const canOpenModal = useMemo(() => {
     if (
-      hasPassportAndNotFreeMinted !== undefined &&
+      hasPassportAndNotFreeMinted !== null &&
       hasFriendAndFamily !== null &&
       balanceOfCre8or !== -1
     )

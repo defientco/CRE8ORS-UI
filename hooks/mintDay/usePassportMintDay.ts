@@ -21,21 +21,17 @@ const usePassportMintDay = ({
     setLoading
 }: Props) => {
     const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
+    const [hasPassportAndNotFreeMinted, setHasPassportAndNotFreeMinted] = useState(null)
     const [passportId, setPassportId] = useState(null)
     const [passportCount, setPassportCount] = useState(0)
-    const [isClaimedFree, setIsClaimedFree] = useState(null)
-
-    const hasPassportAndNotFreeMinted = useMemo(
-        () => address && passportId !== null && passportCount !== 0 && isClaimedFree === false,
-        [passportId, address, passportCount],
-    )
 
     const getClaimedFree = useCallback(async () => {
-      if (passportId === null) return
+      if (!passportId || !passportCount) return
   
       const isClaimed = await freeMintClaimed(passportId)
-      setIsClaimedFree(isClaimed)
-    }, [passportId])
+      
+      setHasPassportAndNotFreeMinted(!isClaimed)
+    }, [passportId, passportCount])
     
     const getFriendsAndFamilyInformation = useCallback(async () => {
       if (!address) return
@@ -64,16 +60,15 @@ const usePassportMintDay = ({
     
     const freeMintPassportHolder = async () => {
       if(!signer) return
-      if (!isClaimedFree) {
-        setLoading(true)
-        const receipt = await mintByCollectionHolder(signer, passportId)
-        if (!receipt.error) {
-          await getPassportInformation()
-          await getCre8orInformation()
-          setConfettiEffect()
-        }
-        setLoading(false)
+
+      setLoading(true)
+      const receipt = await mintByCollectionHolder(signer, passportId)
+      if (!receipt.error) {
+        await getPassportInformation()
+        await getCre8orInformation()
+        setConfettiEffect()
       }
+      setLoading(false)
     }
 
     const mintCre8ors = async () => {
