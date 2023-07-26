@@ -38,7 +38,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setShowConfetti(true)
     setTimeout(() => {
       setShowConfetti(false)
-    }, 8000)
+    }, 3000)
   }
 
   const handleLoading = (isLoading: boolean) => {
