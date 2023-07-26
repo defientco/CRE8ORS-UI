@@ -14,19 +14,13 @@ const Collaborate = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-[50px]">
           <div className="block xl:hidden pb-[33px] flex justify-center relative">
             <Media
-              link="/assets/Mint/Collaborate/mobile_circle.svg"
-              blurLink="/assets/Mint/Collaborate/mobile_circle.png"
-              type="image"
-              containerClasses="w-[280px] h-[280px] xs:w-[304px] xs:h-[304px]"
+              posterLink="/assets/Mint/Collaborate/thumbnail.png"
+              type="video"
+              containerClasses="w-[280px] h-[158px] 
+              xs:w-[304px] xs:h-[171px]
+              cursor-pointer rounded-[10px] overflow-hidden"
+              link="/assets/Mint/Collaborate/protocol_demo.mp4"
             />
-            <div className="absolute z-[1] left-0 top-0 flex justify-center w-full h-full">
-              <Media
-                link="/assets/Mint/Collaborate/mobile_character.svg"
-                blurLink="/assets/Mint/Collaborate/mobile_character.png"
-                type="image"
-                containerClasses="w-[280px] h-[280px] xs:w-[304px] xs:h-[304px]"
-              />
-            </div>
           </div>
           <div className="flex flex-col justify-center">
             <Title
