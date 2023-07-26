@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { DetailedHTMLProps, VideoHTMLAttributes, useEffect, useRef } from 'react'
+import { DetailedHTMLProps, VideoHTMLAttributes, useEffect, useRef, useState } from 'react'
 
 interface IMedia {
   type: 'video' | 'image'
   link?: string
+  posterLink?: string
   containerStyle?: any
   containerClasses?: string
   className?: string
@@ -21,26 +22,34 @@ function Media({
   videoProps,
   containerClasses,
   containerStyle,
-  blurLink
+  blurLink,
+  posterLink
 }: IMedia) {
   const videoRef = useRef<any>()
-  useEffect(() => {
-    if(videoProps?.autoPlay) {
-      videoRef.current.muted = false
+  const [isMuted, setIsMuted] = useState(true)
+
+  const videoAutoPlay = () => {
+    if(isMuted) {
+      videoRef.current.play()
     }
-  }, [videoRef, videoProps])
+    else videoRef.current.pause()
+
+    setIsMuted(!isMuted)
+  }
 
   return (
     <div
       className={`relative ${containerClasses || ''}`}
       style={containerStyle || {}}
+      onClick={type === 'video' ? videoAutoPlay : () => {}}
     >
       {type === 'video' && link && (
         <video
-          muted
+          muted={isMuted}
           className={`${className || ''}`}
           {...videoProps}
           ref={videoRef}
+          poster={posterLink}
         >
           <source src={link}></source>
         </video>
