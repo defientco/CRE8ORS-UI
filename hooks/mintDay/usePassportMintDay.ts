@@ -100,7 +100,6 @@ const usePassportMintDay = ({
     return {
       hasPassport,
       hasFriendAndFamily,
-      isClaimedFree,
       freeMintPassportHolder,
       freeMintFamilyAndFriend,
       mintCre8ors

@@ -54,7 +54,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const {
     hasPassport,
     hasFriendAndFamily,
-    isClaimedFree,
     mintCre8ors,
     freeMintPassportHolder,
     freeMintFamilyAndFriend,
@@ -97,7 +96,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
             loading={loading}
           />
         )
-      if (hasPassport && !isClaimedFree)
+      if (hasPassport)
         return (
           <PassportModal
             isModalVisible={isVisibleModal}
