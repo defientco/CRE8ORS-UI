@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { freeMintClaimed, getLastPassportId, mintByCollectionHolder } from "../../lib/collectionHolder"
+import { freeMintClaimed, getPassportIds, mintByCollectionHolder } from "../../lib/collectionHolder"
 import { hasDiscount, mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import { Signer } from "ethers"
 import purchase from "../../lib/purchase"
@@ -8,7 +8,7 @@ import cre8orAbi from '../../lib/abi-cre8ors.json'
 interface Props {
     address: string
     signer: Signer
-    getCre8orInformation: () => Promise<void>
+    getLockedAndQuantityInformation: () => Promise<void>
     setConfettiEffect: () => void
     setLoading: (loading: boolean) => void
 }
@@ -16,22 +16,29 @@ interface Props {
 const usePassportMintDay = ({
     address,
     signer,
-    getCre8orInformation,
+    getLockedAndQuantityInformation,
     setConfettiEffect,
     setLoading
 }: Props) => {
     const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
     const [hasPassportAndNotFreeMinted, setHasPassportAndNotFreeMinted] = useState(null)
-    const [passportId, setPassportId] = useState(null)
-    const [passportCount, setPassportCount] = useState(0)
+    const [passportIds, setPassportIds] = useState(null)
+    const [canFreeMintPassportId, setCanFreeMintPassportId] = useState(null)
 
     const getClaimedFree = useCallback(async () => {
-      if (!passportId || !passportCount) return
+      if (!passportIds) return
   
-      const isClaimed = await freeMintClaimed(passportId)
-      
-      setHasPassportAndNotFreeMinted(!isClaimed)
-    }, [passportId, passportCount])
+      let detectedNotFreeMintedPassport = false
+
+      for(let i = 0 ; i < passportIds?.length ; i++) {
+        const isClaimed = await freeMintClaimed(passportIds[i]?.id?.tokenId)
+        if(!isClaimed && !detectedNotFreeMintedPassport) {
+          detectedNotFreeMintedPassport = true
+          setHasPassportAndNotFreeMinted(!isClaimed)
+          setCanFreeMintPassportId(passportIds[i]?.id?.tokenId)
+        }
+      }
+    }, [passportIds])
     
     const getFriendsAndFamilyInformation = useCallback(async () => {
       if (!address) return
@@ -41,34 +48,33 @@ const usePassportMintDay = ({
   
     const getPassportInformation = useCallback(async () => {
       if (!address) return
-      const { id: lastPassportId, noOfPassports } = await getLastPassportId(address)
-      setPassportId(lastPassportId?.id?.tokenId || null)
-      setPassportCount(noOfPassports)
+      const allPassportIds = await getPassportIds(address)
+
+      setPassportIds(allPassportIds || null)
     }, [address])
     
     const freeMintFamilyAndFriend = async () => {
       if(!signer) return
       setLoading(true)
       const receipt = await mintByFriendsAndFamily(signer)
+      setLoading(false)
       if (!receipt.error) {
         await getFriendsAndFamilyInformation()
-        await getCre8orInformation()
+        await getLockedAndQuantityInformation()
         setConfettiEffect()
       }
-      setLoading(false)
     }
     
     const freeMintPassportHolder = async () => {
       if(!signer) return
-
       setLoading(true)
-      const receipt = await mintByCollectionHolder(signer, passportId)
+      const receipt = await mintByCollectionHolder(signer, canFreeMintPassportId)
+      setLoading(false)
       if (!receipt.error) {
         await getPassportInformation()
-        await getCre8orInformation()
+        await getLockedAndQuantityInformation()
         setConfettiEffect()
       }
-      setLoading(false)
     }
 
     const mintCre8ors = async () => {
@@ -77,7 +83,7 @@ const usePassportMintDay = ({
       const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
       setLoading(false)
       if(!receipt.error) {
-        await getCre8orInformation()
+        await getLockedAndQuantityInformation()
         setConfettiEffect()
       }
     }

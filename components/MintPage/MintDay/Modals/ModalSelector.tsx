@@ -7,9 +7,9 @@ import MintMoreModal from "./MintMoreModal"
 import FriendFamilyModal from "./FriendFamilyModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
-import balanceOfAddress from "../../../../lib/balanceOfAddress"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { getLockedCount } from "../../../../lib/cre8or"
+import { getQuantityLeft } from "../../../../lib/minterUtility"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -17,16 +17,14 @@ interface ModalSelectorProps {
 }
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
-  const maxOfCre8ors = 8
-
   const { address } = useAccount()
   const { data: signer } = useSigner()
 
   const [loading, setLoading] = useState(false)
   const [applicant, setApplicant] = useState({} as any)
-  const [balanceOfCre8or, setBalanceOfCre8or] = useState(-1)
   const [showConfetti, setShowConfetti] = useState(false)
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
+  const [leftQuantityCount, setLeftQuantityCount] = useState(null)
 
   const { width, height } = useWindowSize()
 
@@ -45,12 +43,12 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setLoading(isLoading)
   }
 
-  const getCre8orInformation = useCallback(async () => {
+  const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
-    const balanceOf = await balanceOfAddress(address)
     const lockedCnt = await getLockedCount(address)
-    setBalanceOfCre8or(parseInt(balanceOf.toString(), 10))
+    const response = await getQuantityLeft(address)
     setLockedCntOfCre8or(lockedCnt)
+    if (!response.error) setLeftQuantityCount(response)
   }, [address])
 
   const {
@@ -63,19 +61,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     address,
     signer,
     setConfettiEffect,
-    getCre8orInformation,
+    getLockedAndQuantityInformation,
     setLoading: handleLoading,
   })
 
   const canOpenModal = useMemo(() => {
-    if (
-      hasPassportAndNotFreeMinted !== null &&
-      hasFriendAndFamily !== null &&
-      balanceOfCre8or !== -1
-    )
-      return true
+    if (hasPassportAndNotFreeMinted !== null && hasFriendAndFamily !== null) return true
     return false
-  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily, balanceOfCre8or])
+  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily])
 
   useEffect(() => {
     const init = async () => {
@@ -88,46 +81,47 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   useEffect(() => {
-    getCre8orInformation()
-  }, [getCre8orInformation])
+    getLockedAndQuantityInformation()
+  }, [getLockedAndQuantityInformation])
 
   const selectModal = () => {
-    if (!balanceOfCre8or) {
-      if (hasFriendAndFamily)
-        return (
-          <FriendFamilyModal
-            isModalVisible={isVisibleModal}
-            toggleIsVisible={toggleModal}
-            freeMint={freeMintFamilyAndFriend}
-            loading={loading}
-          />
-        )
-      if (hasPassportAndNotFreeMinted)
-        return (
-          <PassportModal
-            isModalVisible={isVisibleModal}
-            toggleIsVisible={toggleModal}
-            freeMint={freeMintPassportHolder}
-            loading={loading}
-          />
-        )
+    if (hasFriendAndFamily)
       return (
-        <WaitCre8orsModal
+        <FriendFamilyModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          hasAllowListRole={applicant?.isVerified}
-          isCre8orsDay={!isCre8orlistDay}
+          freeMint={freeMintFamilyAndFriend}
+          loading={loading}
         />
       )
-    }
+    if (hasPassportAndNotFreeMinted)
+      return (
+        <PassportModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          freeMint={freeMintPassportHolder}
+          loading={loading}
+        />
+      )
+
+    if (leftQuantityCount)
+      return (
+        <MintMoreModal
+          possibleMintCount={leftQuantityCount}
+          lockedCntOfCre8or={lockedCntOfCre8or}
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          mintCre8or={mintCre8ors}
+          loading={loading}
+        />
+      )
+
     return (
-      <MintMoreModal
-        possibleMintCount={maxOfCre8ors - balanceOfCre8or}
-        lockedCntOfCre8or={lockedCntOfCre8or}
+      <WaitCre8orsModal
         isModalVisible={isVisibleModal}
         toggleIsVisible={toggleModal}
-        mintCre8or={mintCre8ors}
-        loading={loading}
+        hasAllowListRole={applicant?.isVerified}
+        isCre8orsDay={!isCre8orlistDay}
       />
     )
   }

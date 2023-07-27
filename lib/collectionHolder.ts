@@ -13,11 +13,10 @@ export const getPassports = async (address: string) => {
   return res?.ownedNfts
 }
 
-export const getLastPassportId = async (address: string) => {
+export const getPassportIds = async (address: string) => {
   const response = await getPassports(address)
-  const count = response?.length
-  const lastPassportId = response?.pop() || null
-  return { id: lastPassportId, noOfPassports: count }
+
+  return response
 }
 
 export const freeMintClaimed = async (passportId: number) => {

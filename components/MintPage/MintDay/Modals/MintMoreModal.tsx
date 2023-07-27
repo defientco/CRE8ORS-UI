@@ -79,7 +79,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 leading-[90.3%]
                 dark:text-black text-white"
             >
-              {`You have ${8} more\nmints available`}
+              {`You have ${possibleMintCount} more\nmints available`}
             </pre>
             <div className={`${possibleMintCount ? "block" : "hidden"}`}>
               <Button
