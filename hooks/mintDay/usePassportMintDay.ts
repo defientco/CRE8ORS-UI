@@ -9,6 +9,7 @@ interface Props {
     address: string
     signer: Signer
     getLockedAndQuantityInformation: () => Promise<void>
+    checkNetwork: () => boolean
     setConfettiEffect: () => void
     handleLoading: (loading: boolean) => void
     handleGettingModalStatus: (loading: boolean) => void
@@ -18,6 +19,7 @@ const usePassportMintDay = ({
     address,
     signer,
     getLockedAndQuantityInformation,
+    checkNetwork,
     setConfettiEffect,
     handleLoading,
     handleGettingModalStatus
@@ -62,6 +64,8 @@ const usePassportMintDay = ({
   
     const freeMintFamilyAndFriend = async () => {
       if(!signer) return
+      if(!checkNetwork()) return
+
       handleLoading(true)
       const receipt = await mintByFriendsAndFamily(signer)
       handleLoading(false)
@@ -74,6 +78,8 @@ const usePassportMintDay = ({
     
     const freeMintPassportHolder = async () => {
       if(!signer) return
+      if(!checkNetwork()) return
+
       handleLoading(true)
       const receipt = await mintByCollectionHolder(signer, canFreeMintPassportId)
       handleLoading(false)
@@ -86,6 +92,8 @@ const usePassportMintDay = ({
 
     const mintCre8ors = async () => {
       if(!signer) return
+      if(!checkNetwork()) return
+      
       handleLoading(true)
       const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
       handleLoading(false)

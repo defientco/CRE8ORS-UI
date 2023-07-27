@@ -51,16 +51,20 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setGettingModalStatus(isLoading)
   }
 
-  const checkNetwork = useCallback(async () => {
+  const checkNetwork = () => {
     if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
-      await switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10))
+      switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10))
       const allChains = [mainnet, goerli, polygon, polygonMumbai]
       const myChain = allChains.find(
         (blockchain) => blockchain.id === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10),
       )
       toast.error(`Please connect to ${myChain.name} and try again`)
+
+      return false
     }
-  }, [activeChain, switchNetwork])
+
+    return true
+  }
 
   const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
@@ -82,6 +86,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     signer,
     setConfettiEffect,
     getLockedAndQuantityInformation,
+    checkNetwork,
     handleLoading,
     handleGettingModalStatus,
   })
@@ -111,10 +116,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   useEffect(() => {
     getLockedAndQuantityInformation()
   }, [getLockedAndQuantityInformation])
-
-  useEffect(() => {
-    checkNetwork()
-  }, [checkNetwork])
 
   const selectModal = () => {
     if (hasFriendAndFamily)
