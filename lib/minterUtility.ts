@@ -6,7 +6,7 @@ import getDefaultProvider from "./getDefaultProvider"
 export const getQuantityLeft = async (address: string) => {
   const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   const contract = new ethers.Contract(
-    process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
+    process.env.NEXT_PUBLIC_MINTER_UTILITY,
     minterUtilitiesAbi,
     provider,
   )
