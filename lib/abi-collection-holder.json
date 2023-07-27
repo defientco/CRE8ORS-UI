@@ -1,84 +1,157 @@
 [
   {
+    "type": "constructor",
+    "name": "",
     "inputs": [
       {
-        "internalType": "address",
-        "name": "collectionContractAddress",
-        "type": "address"
+        "type": "address",
+        "name": "_collectionContractAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_minterUtility",
+        "internalType": "address"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
+    "type": "error",
+    "name": "Access_OnlyAdmin",
     "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
     "name": "AlreadyClaimedFreeMint",
-    "type": "error"
+    "inputs": [],
+    "outputs": []
   },
   {
+    "type": "error",
+    "name": "ApprovalCallerNotOwnerNorApproved",
     "inputs": [],
-    "name": "NotOwnerOfToken",
-    "type": "error"
+    "outputs": []
   },
   {
+    "type": "function",
+    "name": "collectionContractAddress",
     "inputs": [],
-    "name": "_collectionContractAddress",
     "outputs": [
       {
-        "internalType": "address",
+        "type": "address",
         "name": "",
-        "type": "address"
+        "internalType": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
+    "stateMutability": "view"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "type": "function",
     "name": "freeMintClaimed",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "target",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
       }
     ],
-    "name": "mint",
     "outputs": [
       {
-        "internalType": "uint256",
+        "type": "bool",
         "name": "",
-        "type": "uint256"
+        "internalType": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "maxClaimedFree",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "mint",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "internalType": "uint256"
+      },
+      {
+        "type": "address",
+        "name": "passportContract",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "minterUtilityContractAddress",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "setNewMinterUtilityContractAddress",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newMinterUtilityContractAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "unlockPriceInWei",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
   }
 ]

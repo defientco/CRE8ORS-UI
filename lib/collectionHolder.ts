@@ -43,13 +43,11 @@ export const mintByCollectionHolder = async (signer: Signer, passportId: string)
     collectionHolderAbi,
     signer,
   )
-
   try {
     const address = await signer.getAddress()
-
-    const tx = contract.mint(
-      parseInt(passportId, 10),
-      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+    const tx = await contract.mint(
+      passportId,
+      process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
       address,
     )
     const receipt = await tx.wait()
