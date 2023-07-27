@@ -28,6 +28,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [getttingModalStatus, setGettingModalStatus] = useState(false)
 
   const { width, height } = useWindowSize()
 
@@ -44,6 +45,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const handleLoading = (isLoading: boolean) => {
     setLoading(isLoading)
+  }
+
+  const handleGettingModalStatus = (isLoading: boolean) => {
+    setGettingModalStatus(isLoading)
   }
 
   const checkNetwork = useCallback(async () => {
@@ -78,6 +83,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setConfettiEffect,
     getLockedAndQuantityInformation,
     handleLoading,
+    handleGettingModalStatus,
   })
 
   const canOpenModal = useMemo(() => {
@@ -155,7 +161,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {canOpenModal && (
+      {canOpenModal && !getttingModalStatus && (
         <>
           {selectModal()}
           {showConfetti && (

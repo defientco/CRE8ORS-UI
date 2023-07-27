@@ -11,6 +11,7 @@ interface Props {
     getLockedAndQuantityInformation: () => Promise<void>
     setConfettiEffect: () => void
     handleLoading: (loading: boolean) => void
+    handleGettingModalStatus: (loading: boolean) => void
 }
 
 const usePassportMintDay = ({
@@ -18,7 +19,8 @@ const usePassportMintDay = ({
     signer,
     getLockedAndQuantityInformation,
     setConfettiEffect,
-    handleLoading
+    handleLoading,
+    handleGettingModalStatus
 }: Props) => {
     const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
     const [hasPassport, setHasPassport] = useState(null)
@@ -49,11 +51,13 @@ const usePassportMintDay = ({
     
     const getFFAndPassportsInformation = useCallback(async () => {
       if (!address) return
+      handleGettingModalStatus(true)
       const detectedDiscount = await hasDiscount(address)
-      setHasFriendAndFamily(detectedDiscount)
-
       const allPassportIds = await getPassportIds(address)
       await getClaimedFree(allPassportIds)
+
+      setHasFriendAndFamily(detectedDiscount)
+      handleGettingModalStatus(false)
     }, [address])
   
     const freeMintFamilyAndFriend = async () => {
