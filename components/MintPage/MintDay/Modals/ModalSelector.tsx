@@ -23,7 +23,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const [loading, setLoading] = useState(false)
   const [applicant, setApplicant] = useState({} as any)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(8)
+  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState(null)
 
   const { width, height } = useWindowSize()
@@ -66,9 +66,15 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   })
 
   const canOpenModal = useMemo(() => {
-    if (hasPassportAndNotFreeMinted !== null && hasFriendAndFamily !== null) return true
+    if (
+      hasPassportAndNotFreeMinted !== null &&
+      hasFriendAndFamily !== null &&
+      leftQuantityCount !== null &&
+      lockedCntOfCre8or !== null
+    )
+      return true
     return false
-  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily])
+  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily, lockedCntOfCre8or, leftQuantityCount])
 
   useEffect(() => {
     const init = async () => {

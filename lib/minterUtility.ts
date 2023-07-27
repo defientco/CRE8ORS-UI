@@ -14,7 +14,7 @@ export const getQuantityLeft = async (address: string) => {
   try {
     const quantityLeftAmount = await contract.quantityLeft(
       process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
-      process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRES,
+      process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
       process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
       address,
     )

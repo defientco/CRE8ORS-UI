@@ -6,7 +6,7 @@ import getDefaultProvider from "./getDefaultProvider"
 export const hasDiscount = async (address: string) => {
   const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   const contract = new ethers.Contract(
-    process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRES,
+    process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
     friendAndFamilyAbi,
     provider,
   )
@@ -23,7 +23,7 @@ export const mintByFriendsAndFamily = async (signer: Signer) => {
   const address = await signer.getAddress()
 
   const contract = new ethers.Contract(
-    process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRES,
+    process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
     friendAndFamilyAbi,
     signer,
   )
