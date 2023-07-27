@@ -1,7 +1,9 @@
 import { FC, useEffect, useState, useCallback, useMemo } from "react"
-import { useAccount, useSigner } from "wagmi"
+import { useAccount, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
 import Confetti from "react-confetti"
 import { useWindowSize } from "usehooks-ts"
+import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
+import { toast } from "react-toastify"
 import PassportModal from "./PassportModal"
 import MintMoreModal from "./MintMoreModal"
 import FriendFamilyModal from "./FriendFamilyModal"
@@ -19,12 +21,13 @@ interface ModalSelectorProps {
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-
-  const [loading, setLoading] = useState(false)
+  const { chain: activeChain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
   const [applicant, setApplicant] = useState({} as any)
   const [showConfetti, setShowConfetti] = useState(false)
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const { width, height } = useWindowSize()
 
@@ -43,6 +46,17 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setLoading(isLoading)
   }
 
+  const checkNetwork = useCallback(async () => {
+    if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
+      await switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10))
+      const allChains = [mainnet, goerli, polygon, polygonMumbai]
+      const myChain = allChains.find(
+        (blockchain) => blockchain.id === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10),
+      )
+      toast.error(`Please connect to ${myChain.name} and try again`)
+    }
+  }, [activeChain, switchNetwork])
+
   const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
     const lockedCnt = await getLockedCount(address)
@@ -52,7 +66,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   const {
-    hasPassportAndNotFreeMinted,
+    hasPassport,
+    hasNotFreeMintClaimed,
     hasFriendAndFamily,
     mintCre8ors,
     freeMintPassportHolder,
@@ -62,19 +77,20 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     signer,
     setConfettiEffect,
     getLockedAndQuantityInformation,
-    setLoading: handleLoading,
+    handleLoading,
   })
 
   const canOpenModal = useMemo(() => {
     if (
-      hasPassportAndNotFreeMinted !== null &&
+      hasPassport !== null &&
+      hasNotFreeMintClaimed !== null &&
       hasFriendAndFamily !== null &&
       leftQuantityCount !== null &&
       lockedCntOfCre8or !== null
     )
       return true
     return false
-  }, [hasPassportAndNotFreeMinted, hasFriendAndFamily, lockedCntOfCre8or, leftQuantityCount])
+  }, [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, lockedCntOfCre8or, leftQuantityCount])
 
   useEffect(() => {
     const init = async () => {
@@ -90,6 +106,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     getLockedAndQuantityInformation()
   }, [getLockedAndQuantityInformation])
 
+  useEffect(() => {
+    checkNetwork()
+  }, [checkNetwork])
+
   const selectModal = () => {
     if (hasFriendAndFamily)
       return (
@@ -100,7 +120,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           loading={loading}
         />
       )
-    if (hasPassportAndNotFreeMinted)
+    if (hasPassport && hasNotFreeMintClaimed)
       return (
         <PassportModal
           isModalVisible={isVisibleModal}
@@ -110,24 +130,24 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount)
+    if (!hasPassport || (hasPassport && hasNotFreeMintClaimed === false))
       return (
-        <MintMoreModal
-          possibleMintCount={leftQuantityCount}
-          lockedCntOfCre8or={lockedCntOfCre8or}
+        <WaitCre8orsModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          mintCre8or={mintCre8ors}
-          loading={loading}
+          hasAllowListRole={applicant?.isVerified}
+          isCre8orsDay={!isCre8orlistDay}
         />
       )
 
     return (
-      <WaitCre8orsModal
+      <MintMoreModal
+        possibleMintCount={leftQuantityCount}
+        lockedCntOfCre8or={lockedCntOfCre8or}
         isModalVisible={isVisibleModal}
         toggleIsVisible={toggleModal}
-        hasAllowListRole={applicant?.isVerified}
-        isCre8orsDay={!isCre8orlistDay}
+        mintCre8or={mintCre8ors}
+        loading={loading}
       />
     )
   }

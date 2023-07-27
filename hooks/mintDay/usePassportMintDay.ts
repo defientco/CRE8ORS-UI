@@ -10,7 +10,7 @@ interface Props {
     signer: Signer
     getLockedAndQuantityInformation: () => Promise<void>
     setConfettiEffect: () => void
-    setLoading: (loading: boolean) => void
+    handleLoading: (loading: boolean) => void
 }
 
 const usePassportMintDay = ({
@@ -18,48 +18,51 @@ const usePassportMintDay = ({
     signer,
     getLockedAndQuantityInformation,
     setConfettiEffect,
-    setLoading
+    handleLoading
 }: Props) => {
     const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
-    const [hasPassportAndNotFreeMinted, setHasPassportAndNotFreeMinted] = useState(null)
-    const [passportIds, setPassportIds] = useState(null)
+    const [hasPassport, setHasPassport] = useState(null)
+    const [hasNotFreeMintClaimed, setHasNotFreeMintClaimed] = useState(null)
     const [canFreeMintPassportId, setCanFreeMintPassportId] = useState(null)
 
-    const getClaimedFree = useCallback(async () => {
-      if (!passportIds) return
-  
+    const getClaimedFree = async (passportsArray: any) => {
+      if (!passportsArray) return
+
+      if (!passportsArray?.length) {
+        setHasPassport(false)
+        setHasNotFreeMintClaimed(false)
+        return
+      }
+
+      setHasPassport(true)
       let detectedNotFreeMintedPassport = false
 
-      for(let i = 0 ; i < passportIds?.length ; i++) {
-        const isClaimed = await freeMintClaimed(passportIds[i]?.id?.tokenId)
+      for(let i = 0 ; i < passportsArray?.length ; i++) {
+        const isClaimed = await freeMintClaimed(passportsArray[i]?.id?.tokenId)
         if(!isClaimed && !detectedNotFreeMintedPassport) {
           detectedNotFreeMintedPassport = true
-          setHasPassportAndNotFreeMinted(!isClaimed)
-          setCanFreeMintPassportId(passportIds[i]?.id?.tokenId)
+          setHasNotFreeMintClaimed(!isClaimed)
+          setCanFreeMintPassportId(passportsArray[i]?.id?.tokenId)
         }
       }
-    }, [passportIds])
+    }
     
-    const getFriendsAndFamilyInformation = useCallback(async () => {
+    const getFFAndPassportsInformation = useCallback(async () => {
       if (!address) return
       const detectedDiscount = await hasDiscount(address)
       setHasFriendAndFamily(detectedDiscount)
+
+      const allPassportIds = await getPassportIds(address)
+      await getClaimedFree(allPassportIds)
     }, [address])
   
-    const getPassportInformation = useCallback(async () => {
-      if (!address) return
-      const allPassportIds = await getPassportIds(address)
-
-      setPassportIds(allPassportIds || null)
-    }, [address])
-    
     const freeMintFamilyAndFriend = async () => {
       if(!signer) return
-      setLoading(true)
+      handleLoading(true)
       const receipt = await mintByFriendsAndFamily(signer)
-      setLoading(false)
+      handleLoading(false)
       if (!receipt.error) {
-        await getFriendsAndFamilyInformation()
+        await getFFAndPassportsInformation()
         await getLockedAndQuantityInformation()
         setConfettiEffect()
       }
@@ -67,11 +70,11 @@ const usePassportMintDay = ({
     
     const freeMintPassportHolder = async () => {
       if(!signer) return
-      setLoading(true)
+      handleLoading(true)
       const receipt = await mintByCollectionHolder(signer, canFreeMintPassportId)
-      setLoading(false)
+      handleLoading(false)
       if (!receipt.error) {
-        await getPassportInformation()
+        await getFFAndPassportsInformation()
         await getLockedAndQuantityInformation()
         setConfettiEffect()
       }
@@ -79,9 +82,9 @@ const usePassportMintDay = ({
 
     const mintCre8ors = async () => {
       if(!signer) return
-      setLoading(true)
+      handleLoading(true)
       const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
-      setLoading(false)
+      handleLoading(false)
       if(!receipt.error) {
         await getLockedAndQuantityInformation()
         setConfettiEffect()
@@ -89,19 +92,12 @@ const usePassportMintDay = ({
     }
   
     useEffect(() => {
-      getClaimedFree()
-    }, [getClaimedFree])
-  
-    useEffect(() => {
-      getPassportInformation()
-    }, [getPassportInformation])
-  
-    useEffect(() => {
-      getFriendsAndFamilyInformation()
-    }, [getFriendsAndFamilyInformation])
+      getFFAndPassportsInformation()
+    }, [getFFAndPassportsInformation])
 
     return {
-      hasPassportAndNotFreeMinted,
+      hasPassport,
+      hasNotFreeMintClaimed,
       hasFriendAndFamily,
       freeMintPassportHolder,
       freeMintFamilyAndFriend,
