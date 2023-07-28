@@ -1,116 +1,41 @@
-import { useCallback, useEffect, useState } from "react"
-import { freeMintClaimed, getPassportIds, mintByCollectionHolder } from "../../lib/collectionHolder"
-import { hasDiscount, mintByFriendsAndFamily } from "../../lib/friendAndFamily"
+import { mintByCollectionHolder } from "../../lib/collectionHolder"
+import { mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import { Signer } from "ethers"
 import purchase from "../../lib/purchase"
 import cre8orAbi from '../../lib/abi-cre8ors.json'
+import { useMintProvider } from "../../providers/MintProvider"
 
 interface Props {
-    address: string
     signer: Signer
-    getLockedAndQuantityInformation: () => Promise<void>
-    checkNetwork: () => boolean
-    setConfettiEffect: () => void
-    handleLoading: (loading: boolean) => void
-    handleGettingModalStatus: (loading: boolean) => void
 }
 
 const usePassportMintDay = ({
-    address,
     signer,
-    getLockedAndQuantityInformation,
-    checkNetwork,
-    setConfettiEffect,
-    handleLoading,
-    handleGettingModalStatus
 }: Props) => {
-    const [hasFriendAndFamily, setHasFriendAndFamily] = useState(null)
-    const [hasPassport, setHasPassport] = useState(null)
-    const [hasNotFreeMintClaimed, setHasNotFreeMintClaimed] = useState(null)
-    const [canFreeMintPassportId, setCanFreeMintPassportId] = useState(null)
-
-    const getClaimedFree = async (passportsArray: any) => {
-      if (!passportsArray) return
-
-      if (!passportsArray?.length) {
-        setHasPassport(false)
-        setHasNotFreeMintClaimed(false)
-        return
-      }
-
-      setHasPassport(true)
-      let detectedNotFreeMintedPassport = false
-
-      for(let i = 0 ; i < passportsArray?.length ; i++) {
-        const isClaimed = await freeMintClaimed(passportsArray[i]?.id?.tokenId)
-        if(!isClaimed && !detectedNotFreeMintedPassport) {
-          detectedNotFreeMintedPassport = true
-          setHasNotFreeMintClaimed(!isClaimed)
-          setCanFreeMintPassportId(passportsArray[i]?.id?.tokenId)
-        }
-      }
-    }
+    const {
+      passportIds,
+      
+    } = useMintProvider()
     
-    const getFFAndPassportsInformation = useCallback(async () => {
-      if (!address) return
-      handleGettingModalStatus(true)
-      const detectedDiscount = await hasDiscount(address)
-      const allPassportIds = await getPassportIds(address)
-      await getClaimedFree(allPassportIds)
-
-      setHasFriendAndFamily(detectedDiscount)
-      handleGettingModalStatus(false)
-    }, [address])
-  
     const freeMintFamilyAndFriend = async () => {
       if(!signer) return
-      if(!checkNetwork()) return
 
-      handleLoading(true)
-      const receipt = await mintByFriendsAndFamily(signer)
-      handleLoading(false)
-      if (!receipt.error) {
-        await getFFAndPassportsInformation()
-        await getLockedAndQuantityInformation()
-        setConfettiEffect()
-      }
+      await mintByFriendsAndFamily(signer)
     }
     
     const freeMintPassportHolder = async () => {
       if(!signer) return
-      if(!checkNetwork()) return
 
-      handleLoading(true)
-      const receipt = await mintByCollectionHolder(signer, canFreeMintPassportId)
-      handleLoading(false)
-      if (!receipt.error) {
-        await getFFAndPassportsInformation()
-        await getLockedAndQuantityInformation()
-        setConfettiEffect()
-      }
+      await mintByCollectionHolder(signer, passportIds)
     }
 
     const mintCre8ors = async () => {
       if(!signer) return
-      if(!checkNetwork()) return
       
-      handleLoading(true)
-      const receipt = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
-      handleLoading(false)
-      if(!receipt.error) {
-        await getLockedAndQuantityInformation()
-        setConfettiEffect()
-      }
+      await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
     }
-  
-    useEffect(() => {
-      getFFAndPassportsInformation()
-    }, [getFFAndPassportsInformation])
 
     return {
-      hasPassport,
-      hasNotFreeMintClaimed,
-      hasFriendAndFamily,
       freeMintPassportHolder,
       freeMintFamilyAndFriend,
       mintCre8ors

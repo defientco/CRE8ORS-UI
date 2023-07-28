@@ -5,14 +5,11 @@ import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
+import IMintModal from "./IMintModal"
 
-interface MintMoreModalProps {
-  isModalVisible: boolean
-  toggleIsVisible: () => void
+interface MintMoreModalProps extends IMintModal {
   possibleMintCount: number
   lockedCntOfCre8or: number
-  loading: boolean
-  mintCre8or: () => void
 }
 
 const MintMoreModal: FC<MintMoreModalProps> = ({
@@ -21,11 +18,23 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   possibleMintCount,
   lockedCntOfCre8or,
   loading,
-  mintCre8or,
+  coreMintFunc,
+  handleLoading,
+  handleRefetch,
+  checkNetwork,
 }) => {
   const maxOfCre8or = 8
 
   const isXl = useMediaQuery("(max-width: 1150px)")
+
+  const handleClick = async () => {
+    if (!checkNetwork()) return
+    handleLoading(true)
+    await coreMintFunc()
+    handleLoading(false)
+
+    await handleRefetch()
+  }
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -92,7 +101,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                   !rounded-[10px]
                   !text-black dark:!text-white
                   dark:!bg-black !bg-white"
-                onClick={mintCre8or}
+                onClick={handleClick}
               >
                 Mint More
               </Button>

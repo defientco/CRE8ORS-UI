@@ -4,22 +4,31 @@ import { useMediaQuery } from "usehooks-ts"
 import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
+import IMintModal from "./IMintModal"
 
-interface PassportModalProps {
-  isModalVisible: boolean
-  toggleIsVisible: () => void
-  freeMint: () => void
-  loading: boolean
-}
+interface PassportModalProps extends IMintModal {}
 
 const PassportModal: FC<PassportModalProps> = ({
   isModalVisible,
   toggleIsVisible,
-  freeMint,
+  coreMintFunc,
   loading,
+  handleLoading,
+  handleRefetch,
+  checkNetwork,
 }) => {
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
+
+  const handleClick = async () => {
+    if (!checkNetwork()) return
+
+    handleLoading(true)
+    await coreMintFunc()
+    handleLoading(false)
+
+    await handleRefetch()
+  }
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -68,7 +77,7 @@ const PassportModal: FC<PassportModalProps> = ({
                 !rounded-[10px]
                 text-black dark:!text-white
                 dark:!bg-black !bg-white"
-              onClick={freeMint}
+              onClick={handleClick}
             >
               Mint Now
             </Button>

@@ -15,6 +15,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { ChatProvider } from "../providers/ChatProvider"
 import { ThemeProvider } from "../providers/ThemeProvider"
 import { AdminProvider } from "../providers/AdminProvider"
+import { MintProvider } from "../providers/MintProvider"
 
 const isMainnet = !process.env.NEXT_PUBLIC_TESTNET
 const myChains = [isMainnet ? mainnet : goerli, isMainnet ? polygon : polygonMumbai]
@@ -41,15 +42,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider modalSize="compact" chains={chains}>
         <ThemeProvider>
-          <SessionProvider>
-            <AdminProvider>
-              <ChatProvider>
-                <Component {...pageProps} />
-                <ToastContainer />
-                <Analytics />
-              </ChatProvider>
-            </AdminProvider>
-          </SessionProvider>
+          <MintProvider>
+            <SessionProvider>
+              <AdminProvider>
+                <ChatProvider>
+                  <Component {...pageProps} />
+                  <ToastContainer />
+                  <Analytics />
+                </ChatProvider>
+              </AdminProvider>
+            </SessionProvider>
+          </MintProvider>
         </ThemeProvider>
       </RainbowKitProvider>
     </WagmiConfig>

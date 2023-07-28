@@ -95,7 +95,7 @@ const CustomConnectWallet = () => (
                 <button
                   onClick={openAccountModal}
                   type="button"
-                  className="font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand 
+                  className="font-bold uppercase text-[11px] md:text-[17px] lg:md:text-sm font-quicksand 
                   text-white md:text-black dark:text-[black] md:dark:text-[white]"
                 >
                   {account.displayName}

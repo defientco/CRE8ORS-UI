@@ -49,7 +49,7 @@ const Cre8orsWay = () => {
 
   return (
     <SectionContainer>
-      <div className="relative w-full pt-[85px] samsungS8:pt-0 xl:h-[calc(100vh+100px)] flex justify-center items-center">
+      <div className="relative w-full pt-[85px] xl:h-[calc(100vh+100px)] flex justify-center items-center">
         <div
           className="grid 
                 grid-cols-1 xl:grid-cols-2 

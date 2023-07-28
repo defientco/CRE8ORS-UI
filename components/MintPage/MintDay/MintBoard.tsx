@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useAccount } from "wagmi"
 import { useMeasure } from "react-use"
+import { useMediaQuery } from "usehooks-ts"
 import SectionContainer from "../SectionContainer"
 import Title from "../../Common/Title"
 import Content from "../../Common/Content"
@@ -10,16 +11,34 @@ import QuantityCard from "./QuantityCard"
 import { Button } from "../../../shared/Button"
 import WalletConnectButton from "../../WalletConnectButton"
 import ModalSelector from "./Modals/ModalSelector"
+import { useMintProvider } from "../../../providers/MintProvider"
 
 const MintBoard = () => {
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount } =
+    useMintProvider()
   const [openModal, setOpenModal] = useState(false)
+
   const [boardRef, { height }] = useMeasure()
+  const isXs = useMediaQuery("max-width: 393px")
 
   const { isConnected } = useAccount()
 
   const [tierIQuantity, setTierIQuantity] = useState(0)
   const [tierIIQuantity, setTierIIQuantity] = useState(0)
   const [tierIIIQuantity, setTierIIIQuantity] = useState(0)
+
+  const automaticOpenModal = useMemo(
+    () =>
+      hasPassport !== null &&
+      hasNotFreeMintClaimed != null &&
+      freeMintCount !== null &&
+      hasFriendAndFamily != null,
+    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount],
+  )
+
+  useEffect(() => {
+    setOpenModal(automaticOpenModal)
+  }, [automaticOpenModal])
 
   const increaseQuantity = (type: number) => {
     switch (type) {
@@ -93,7 +112,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIQuantity}
               type={1}
-              height={(height - 255 - 30) / 3}
+              height={(height - (isXs ? 285 : 320)) / 3}
             />
             <QuantityCard
               label="Tier II"
@@ -104,7 +123,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIQuantity}
               type={2}
-              height={(height - 255 - 30) / 3}
+              height={(height - (isXs ? 285 : 320)) / 3}
             />
             <QuantityCard
               label="Tier III"
@@ -115,7 +134,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIIQuantity}
               type={3}
-              height={(height - 255 - 30) / 3}
+              height={(height - (isXs ? 285 : 320)) / 3}
             />
           </div>
           <div className="flex justify-center">

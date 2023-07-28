@@ -36,7 +36,7 @@ export const freeMintClaimed = async (passportId: number) => {
   }
 }
 
-export const mintByCollectionHolder = async (signer: Signer, passportId: string) => {
+export const mintByCollectionHolder = async (signer: Signer, passportIds: any) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
@@ -45,13 +45,14 @@ export const mintByCollectionHolder = async (signer: Signer, passportId: string)
   try {
     const address = await signer.getAddress()
     const tx = await contract.mint(
-      passportId,
+      passportIds,
       process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
       address,
     )
-    const receipt = await tx.wait()
 
-    return receipt
+    await tx.wait()
+
+    return { error: false }
   } catch (err) {
     handleTxError(err)
     return { error: err }

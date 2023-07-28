@@ -1,7 +1,5 @@
-import { FC, useEffect, useState, useCallback, useMemo } from "react"
+import { FC, useEffect, useState, useMemo } from "react"
 import { useAccount, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
-import Confetti from "react-confetti"
-import { useWindowSize } from "usehooks-ts"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
 import PassportModal from "./PassportModal"
@@ -10,8 +8,8 @@ import FriendFamilyModal from "./FriendFamilyModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
-import { getLockedCount } from "../../../../lib/cre8or"
-import { getQuantityLeft } from "../../../../lib/minterUtility"
+import { useMintProvider } from "../../../../providers/MintProvider"
+import CombinationModal from "./CombinationModal"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -24,31 +22,36 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
   const [applicant, setApplicant] = useState({} as any)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState(null)
-  const [leftQuantityCount, setLeftQuantityCount] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [getttingModalStatus, setGettingModalStatus] = useState(false)
 
-  const { width, height } = useWindowSize()
+  const {
+    hasPassport,
+    hasNotFreeMintClaimed,
+    hasFriendAndFamily,
+    lockedCntOfCre8or,
+    leftQuantityCount,
+    freeMintCount,
+    getFFAndPassportsInformation,
+    getLockedAndQuantityInformation,
+  } = useMintProvider()
+
+  const [mintLoading, setMintLoading] = useState(false)
+  const [refetchDataLoading, setRefetchDataLoading] = useState(false)
 
   const isCre8orlistDay =
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
     new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
 
-  const setConfettiEffect = () => {
-    setShowConfetti(true)
-    setTimeout(() => {
-      setShowConfetti(false)
-    }, 3000)
+  const handleMintLoading = (isMintLoading: boolean) => {
+    setMintLoading(isMintLoading)
   }
 
-  const handleLoading = (isLoading: boolean) => {
-    setLoading(isLoading)
-  }
+  const handleRefetch = async () => {
+    setRefetchDataLoading(true)
 
-  const handleGettingModalStatus = (isLoading: boolean) => {
-    setGettingModalStatus(isLoading)
+    await getFFAndPassportsInformation()
+    await getLockedAndQuantityInformation()
+
+    setRefetchDataLoading(false)
   }
 
   const checkNetwork = () => {
@@ -66,42 +69,18 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     return true
   }
 
-  const getLockedAndQuantityInformation = useCallback(async () => {
-    if (!address) return
-    const lockedCnt = await getLockedCount(address)
-    const response = await getQuantityLeft(address)
-    setLockedCntOfCre8or(lockedCnt)
-    if (!response.error) setLeftQuantityCount(response)
-  }, [address])
-
-  const {
-    hasPassport,
-    hasNotFreeMintClaimed,
-    hasFriendAndFamily,
-    mintCre8ors,
-    freeMintPassportHolder,
-    freeMintFamilyAndFriend,
-  } = usePassportMintDay({
-    address,
+  const { mintCre8ors, freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay({
     signer,
-    setConfettiEffect,
-    getLockedAndQuantityInformation,
-    checkNetwork,
-    handleLoading,
-    handleGettingModalStatus,
   })
 
-  const canOpenModal = useMemo(() => {
-    if (
+  const canOpenModal = useMemo(
+    () =>
       hasPassport !== null &&
-      hasNotFreeMintClaimed !== null &&
-      hasFriendAndFamily !== null &&
-      leftQuantityCount !== null &&
-      lockedCntOfCre8or !== null
-    )
-      return true
-    return false
-  }, [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, lockedCntOfCre8or, leftQuantityCount])
+      hasNotFreeMintClaimed != null &&
+      freeMintCount !== null &&
+      hasFriendAndFamily != null,
+    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount],
+  )
 
   useEffect(() => {
     const init = async () => {
@@ -113,18 +92,34 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
-  useEffect(() => {
-    getLockedAndQuantityInformation()
-  }, [getLockedAndQuantityInformation])
-
   const selectModal = () => {
+    if (hasFriendAndFamily && hasPassport && hasNotFreeMintClaimed)
+      return (
+        <CombinationModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          coreMintFunc={async () => {
+            freeMintFamilyAndFriend()
+            freeMintPassportHolder()
+          }}
+          loading={mintLoading}
+          freeMintCount={freeMintCount}
+          handleLoading={handleMintLoading}
+          handleRefetch={handleRefetch}
+          checkNetwork={checkNetwork}
+        />
+      )
+
     if (hasFriendAndFamily)
       return (
         <FriendFamilyModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          freeMint={freeMintFamilyAndFriend}
-          loading={loading}
+          coreMintFunc={freeMintFamilyAndFriend}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          checkNetwork={checkNetwork}
+          handleRefetch={handleRefetch}
         />
       )
     if (hasPassport && hasNotFreeMintClaimed)
@@ -132,12 +127,29 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         <PassportModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          freeMint={freeMintPassportHolder}
-          loading={loading}
+          coreMintFunc={freeMintPassportHolder}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          checkNetwork={checkNetwork}
+          handleRefetch={handleRefetch}
+        />
+      )
+    if (leftQuantityCount)
+      return (
+        <MintMoreModal
+          possibleMintCount={leftQuantityCount}
+          lockedCntOfCre8or={lockedCntOfCre8or}
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          coreMintFunc={mintCre8ors}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          handleRefetch={handleRefetch}
+          checkNetwork={checkNetwork}
         />
       )
 
-    if (!hasPassport || (hasPassport && hasNotFreeMintClaimed === false))
+    if (!hasPassport)
       return (
         <WaitCre8orsModal
           isModalVisible={isVisibleModal}
@@ -146,32 +158,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           isCre8orsDay={!isCre8orlistDay}
         />
       )
-
-    return (
-      <MintMoreModal
-        possibleMintCount={leftQuantityCount}
-        lockedCntOfCre8or={lockedCntOfCre8or}
-        isModalVisible={isVisibleModal}
-        toggleIsVisible={toggleModal}
-        mintCre8or={mintCre8ors}
-        loading={loading}
-      />
-    )
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    return <></>
   }
 
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {canOpenModal && !getttingModalStatus && (
-        <>
-          {selectModal()}
-          {showConfetti && (
-            <div className="fixed w-full h-screen top-0 left-0 z-[80] pointer-events-none">
-              <Confetti width={width} height={height} />
-            </div>
-          )}
-        </>
-      )}
+      {canOpenModal && !refetchDataLoading && <>{selectModal()}</>}
     </>
   )
 }
