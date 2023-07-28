@@ -98,10 +98,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={async () => {
-            freeMintFamilyAndFriend()
-            freeMintPassportHolder()
-          }}
+          coreMintFunc={freeMintPassportHolder}
           loading={mintLoading}
           freeMintCount={freeMintCount}
           handleLoading={handleMintLoading}

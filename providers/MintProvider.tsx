@@ -54,10 +54,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
     setHasPassport(true)
 
-    let freeMintClaimedCnt = 0
-
     let detectedFreeMintClaimed = false
-
+    const claimedCount = []
     for (let i = 0; i < passportsArray?.length; i++) {
       const isClaimed = await freeMintClaimed(passportsArray[i]?.id?.tokenId)
       if (!isClaimed) {
@@ -65,18 +63,21 @@ export const MintProvider: FC<Props> = ({ children }) => {
           detectedFreeMintClaimed = true
           setHasNotFreeMintClaimed(!isClaimed)
         }
-        freeMintClaimedCnt++
+
+        claimedCount.push(parseInt(passportsArray[i]?.id?.tokenId, 16))
       }
     }
-
-    setFreeMintClaimedCount(freeMintClaimedCnt)
+    if (!detectedFreeMintClaimed) {
+      setHasNotFreeMintClaimed(false)
+    }
+    setFreeMintClaimedCount(claimedCount.length)
+    setPassportIds(claimedCount)
   }
 
   const getFFAndPassportsInformation = useCallback(async () => {
     if (!address) return
     const detectedDiscount = await hasDiscount(address)
     const allPassportIds = await getPassportIds(address)
-    setPassportIds(passportIds)
     await getClaimedFree(allPassportIds)
 
     setHasFriendAndFamily(detectedDiscount)

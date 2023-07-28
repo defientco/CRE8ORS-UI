@@ -1,45 +1,40 @@
+import { Signer } from "ethers"
 import { mintByCollectionHolder } from "../../lib/collectionHolder"
 import { mintByFriendsAndFamily } from "../../lib/friendAndFamily"
-import { Signer } from "ethers"
 import purchase from "../../lib/purchase"
-import cre8orAbi from '../../lib/abi-cre8ors.json'
+import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useMintProvider } from "../../providers/MintProvider"
 
 interface Props {
-    signer: Signer
+  signer: Signer
 }
 
-const usePassportMintDay = ({
-    signer,
-}: Props) => {
-    const {
-      passportIds,
-      
-    } = useMintProvider()
-    
-    const freeMintFamilyAndFriend = async () => {
-      if(!signer) return
+const usePassportMintDay = ({ signer }: Props) => {
+  const { passportIds } = useMintProvider()
 
-      await mintByFriendsAndFamily(signer)
-    }
-    
-    const freeMintPassportHolder = async () => {
-      if(!signer) return
+  const freeMintFamilyAndFriend = async () => {
+    if (!signer) return
 
-      await mintByCollectionHolder(signer, passportIds)
-    }
+    await mintByFriendsAndFamily(signer)
+  }
 
-    const mintCre8ors = async () => {
-      if(!signer) return
-      
-      await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
-    }
+  const freeMintPassportHolder = async () => {
+    if (!signer) return
 
-    return {
-      freeMintPassportHolder,
-      freeMintFamilyAndFriend,
-      mintCre8ors
-    }
+    await mintByCollectionHolder(signer, passportIds)
+  }
+
+  const mintCre8ors = async () => {
+    if (!signer) return
+
+    await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
+  }
+
+  return {
+    freeMintPassportHolder,
+    freeMintFamilyAndFriend,
+    mintCre8ors,
+  }
 }
 
 export default usePassportMintDay
