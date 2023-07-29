@@ -186,7 +186,7 @@ const MintBoard = () => {
         </div>
       </div>
       <div>
-        <div className="xl:block hidden">
+        <div className="hidden xl:block">
           <Character
             link="/assets/Mint/MintNow/character_woman.png"
             originWidth={358}

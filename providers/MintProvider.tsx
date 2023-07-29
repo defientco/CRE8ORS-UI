@@ -9,8 +9,7 @@ import {
   useMemo,
 } from "react"
 import { useAccount } from "wagmi"
-import { hasDiscount } from "../lib/friendAndFamily"
-import { freeMintClaimed, getPassportIds } from "../lib/collectionHolder"
+import { getAvailableFreeMints, getPassportIds } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import { getQuantityLeft } from "../lib/minterUtility"
 
@@ -42,46 +41,11 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
-
-  const getClaimedFree = async (passportsArray: any) => {
-    if (!passportsArray) return
-
-    if (!passportsArray?.length) {
-      setHasPassport(false)
-      setHasNotFreeMintClaimed(false)
-      return
-    }
-
-    setHasPassport(true)
-
-    let detectedFreeMintClaimed = false
-    const canFreeClaimedMintPassportIds = []
-    for (let i = 0; i < passportsArray?.length; i++) {
-      const isClaimed = await freeMintClaimed(passportsArray[i]?.id?.tokenId)
-      if (!isClaimed) {
-        if (!detectedFreeMintClaimed) {
-          detectedFreeMintClaimed = true
-          setHasNotFreeMintClaimed(!isClaimed)
-        }
-
-        canFreeClaimedMintPassportIds.push(parseInt(passportsArray[i]?.id?.tokenId, 16))
-      }
-    }
-    if (!detectedFreeMintClaimed) {
-      setHasNotFreeMintClaimed(false)
-    }
-    setFreeMintClaimedCount(canFreeClaimedMintPassportIds.length)
-    setPassportIds(canFreeClaimedMintPassportIds)
-  }
-
-  const getFFAndPassportsInformation = useCallback(async () => {
-    if (!address) return
-    const detectedDiscount = await hasDiscount(address)
-    const allPassportIds = await getPassportIds(address)
-    await getClaimedFree(allPassportIds)
-
-    setHasFriendAndFamily(detectedDiscount)
-  }, [address])
+  const [initialData, setInitialData] = useState<{
+    passports: Array<number | string>
+    discount: boolean
+    quantityLeft: number
+  } | null>(null)
 
   const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
@@ -91,31 +55,60 @@ export const MintProvider: FC<Props> = ({ children }) => {
     if (!response.error) setLeftQuantityCount(parseInt(response, 10))
   }, [address])
 
+  const getInitialData = useCallback(async () => {
+    const passportsArray = await getPassportIds(address)
+    setHasPassport(passportsArray?.length > 0)
+    const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
+    if (tokenIds?.length > 0) setPassportIds(tokenIds)
+    const results = await getAvailableFreeMints(tokenIds, address)
+    setInitialData(results)
+  }, [address])
+
   const freeMintCount = useMemo(() => {
     if (hasFriendAndFamily === null || hasPassport === null || hasNotFreeMintClaimed === null)
       return null
     return (hasFriendAndFamily ? 1 : 0) + (freeMintClaimedCount || 0)
-  }, [freeMintClaimedCount, hasFriendAndFamily])
+  }, [freeMintClaimedCount, hasFriendAndFamily, hasNotFreeMintClaimed, hasPassport])
 
   useEffect(() => {
-    getFFAndPassportsInformation()
-  }, [getFFAndPassportsInformation])
+    if (!address) return
+    getInitialData()
+  }, [address, getInitialData])
+
+  useEffect(() => {
+    if (!initialData) return
+    setFreeMintClaimedCount(initialData?.passports?.length)
+    setHasNotFreeMintClaimed(initialData?.passports?.length > 0 || initialData?.discount)
+    setHasFriendAndFamily(initialData?.discount)
+    setLeftQuantityCount(initialData?.quantityLeft)
+  }, [initialData])
 
   useEffect(() => {
     getLockedAndQuantityInformation()
   }, [getLockedAndQuantityInformation])
 
-  const provider = {
-    freeMintCount,
-    lockedCntOfCre8or,
-    leftQuantityCount,
-    passportIds,
-    hasPassport,
-    hasNotFreeMintClaimed,
-    hasFriendAndFamily,
-    getFFAndPassportsInformation,
-    getLockedAndQuantityInformation,
-  }
+  const provider = useMemo(
+    () => ({
+      freeMintCount,
+      lockedCntOfCre8or,
+      leftQuantityCount,
+      passportIds,
+      hasPassport,
+      hasNotFreeMintClaimed,
+      hasFriendAndFamily,
+      getLockedAndQuantityInformation,
+    }),
+    [
+      freeMintCount,
+      lockedCntOfCre8or,
+      leftQuantityCount,
+      passportIds,
+      hasPassport,
+      hasNotFreeMintClaimed,
+      hasFriendAndFamily,
+      getLockedAndQuantityInformation,
+    ],
+  )
 
   return <MintContext.Provider value={provider}>{children}</MintContext.Provider>
 }
