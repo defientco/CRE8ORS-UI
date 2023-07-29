@@ -25,7 +25,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     hasPassport,
     hasNotFreeMintClaimed,
     hasFriendAndFamily,
-    lockedCntOfCre8or,
     leftQuantityCount,
     freeMintCount,
     getFFAndPassportsInformation,
@@ -115,7 +114,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       return (
         <MintMoreModal
           possibleMintCount={leftQuantityCount}
-          lockedCntOfCre8or={lockedCntOfCre8or}
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           coreMintFunc={mintCre8ors}
