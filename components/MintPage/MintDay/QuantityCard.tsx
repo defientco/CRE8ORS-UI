@@ -33,7 +33,7 @@ const QuantityCard: FC<MintCardProps> = ({
     <div
       className={`relative 
               rounded-[15px]
-              samsungS8:gap-y-[10px]
+              gap-y-[0px]
               flex flex-col justify-center ${className}`}
       style={{
         // eslint-disable-next-line no-nested-ternary
