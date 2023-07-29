@@ -14,8 +14,7 @@ import ModalSelector from "./Modals/ModalSelector"
 import { useMintProvider } from "../../../providers/MintProvider"
 
 const MintBoard = () => {
-  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount } =
-    useMintProvider()
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
 
   const [boardRef, { height }] = useMeasure()
@@ -28,10 +27,7 @@ const MintBoard = () => {
   const [tierIIIQuantity, setTierIIIQuantity] = useState(0)
 
   const automaticOpenModal = useMemo(
-    () =>
-      hasPassport  &&
-      hasNotFreeMintClaimed  &&
-      hasFriendAndFamily,
+    () => hasPassport && hasNotFreeMintClaimed && hasFriendAndFamily,
     [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily],
   )
 

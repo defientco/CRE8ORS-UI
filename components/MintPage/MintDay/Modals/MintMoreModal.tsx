@@ -9,14 +9,12 @@ import IMintModal from "./IMintModal"
 
 interface MintMoreModalProps extends IMintModal {
   possibleMintCount: number
-  lockedCntOfCre8or: number
 }
 
 const MintMoreModal: FC<MintMoreModalProps> = ({
   isModalVisible,
   toggleIsVisible,
   possibleMintCount,
-  lockedCntOfCre8or,
   loading,
   coreMintFunc,
   handleLoading,

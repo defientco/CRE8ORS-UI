@@ -86,12 +86,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   const selectModal = () => {
-    if (hasPassport && hasNotFreeMintClaimed || hasFriendAndFamily)
+    if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={(hasPassport && hasNotFreeMintClaimed) ? freeMintPassportHolder : freeMintFamilyAndFriend}
+          coreMintFunc={
+            hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
+          }
           loading={mintLoading}
           freeMintCount={freeMintCount}
           handleLoading={handleMintLoading}
