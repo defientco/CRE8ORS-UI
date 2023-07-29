@@ -4,4 +4,5 @@ export default interface IMintModal {
   toggleIsVisible: () => void
   loading: boolean
   coreMintFunc: () => Promise<void>
+  openSuccessModal: () => void
 }

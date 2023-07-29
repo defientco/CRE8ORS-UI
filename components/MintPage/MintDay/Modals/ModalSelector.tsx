@@ -23,11 +23,12 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     hasPassport,
     hasNotFreeMintClaimed,
     hasFriendAndFamily,
-    leftQuantityCount,
     freeMintCount,
+    leftQuantityCount,
   } = useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
+  const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
 
   const isCre8orlistDay =
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
@@ -60,17 +61,32 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
+  useEffect(() => {
+    if (!isVisibleModal) setShouldOpenSuccessModal(false)
+  }, [isVisibleModal])
+
   const selectModal = () => {
     if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={
-            hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
-          }
+          coreMintFunc={hasFriendAndFamily ? freeMintFamilyAndFriend : freeMintPassportHolder}
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
           loading={mintLoading}
           handleLoading={handleMintLoading}
+        />
+      )
+
+    if (shouldOpenSuccessModal || leftQuantityCount)
+      return (
+        <MintMoreModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          coreMintFunc={mintCre8ors}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
         />
       )
 
@@ -81,16 +97,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           toggleIsVisible={toggleModal}
           hasAllowListRole={applicant?.isVerified}
           isCre8orsDay={!isCre8orlistDay}
-        />
-      )
-    if (leftQuantityCount)
-      return (
-        <MintMoreModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          coreMintFunc={mintCre8ors}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
         />
       )
 

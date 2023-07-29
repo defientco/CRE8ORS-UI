@@ -13,6 +13,7 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
   coreMintFunc,
   handleLoading,
   loading,
+  openSuccessModal,
 }) => {
   const { checkNetwork, refetchInformation, freeMintCount } = useMintProvider()
 
@@ -21,6 +22,7 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
     handleLoading(true)
     await coreMintFunc()
     await refetchInformation()
+    openSuccessModal()
     handleLoading(false)
   }
 
