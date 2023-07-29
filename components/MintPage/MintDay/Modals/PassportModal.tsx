@@ -5,6 +5,7 @@ import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import IMintModal from "./IMintModal"
+import { useMintProvider } from "../../../../providers/MintProvider"
 
 interface PassportModalProps extends IMintModal {}
 
@@ -14,9 +15,12 @@ const PassportModal: FC<PassportModalProps> = ({
   coreMintFunc,
   loading,
   handleLoading,
-  handleRefetch,
-  checkNetwork,
 }) => {
+  const {
+    checkNetwork,
+    refetchInformation
+  } = useMintProvider()
+
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
 
@@ -27,7 +31,7 @@ const PassportModal: FC<PassportModalProps> = ({
     await coreMintFunc()
     handleLoading(false)
 
-    await handleRefetch()
+    await refetchInformation()
   }
 
   return (
