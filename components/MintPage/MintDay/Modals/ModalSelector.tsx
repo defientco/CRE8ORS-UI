@@ -2,9 +2,7 @@ import { FC, useEffect, useState, useMemo } from "react"
 import { useAccount, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
-import PassportModal from "./PassportModal"
 import MintMoreModal from "./MintMoreModal"
-import FriendFamilyModal from "./FriendFamilyModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
@@ -35,7 +33,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   } = useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
-  const [refetchDataLoading, setRefetchDataLoading] = useState(false)
 
   const isCre8orlistDay =
     new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
@@ -46,12 +43,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }
 
   const handleRefetch = async () => {
-    setRefetchDataLoading(true)
-
     await getFFAndPassportsInformation()
     await getLockedAndQuantityInformation()
-
-    setRefetchDataLoading(false)
   }
 
   const checkNetwork = () => {
@@ -93,42 +86,27 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   const selectModal = () => {
-    if (hasFriendAndFamily && hasPassport && hasNotFreeMintClaimed)
+    if (hasPassport && hasNotFreeMintClaimed || hasFriendAndFamily)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={freeMintPassportHolder}
+          coreMintFunc={(hasPassport && hasNotFreeMintClaimed) ? freeMintPassportHolder : freeMintFamilyAndFriend}
           loading={mintLoading}
           freeMintCount={freeMintCount}
           handleLoading={handleMintLoading}
-          handleRefetch={handleRefetch}
           checkNetwork={checkNetwork}
+          handleRefetch={handleRefetch}
         />
       )
 
-    if (hasFriendAndFamily)
+    if (!(hasPassport && hasNotFreeMintClaimed) && !hasFriendAndFamily)
       return (
-        <FriendFamilyModal
+        <WaitCre8orsModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={freeMintFamilyAndFriend}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
-          checkNetwork={checkNetwork}
-          handleRefetch={handleRefetch}
-        />
-      )
-    if (hasPassport && hasNotFreeMintClaimed)
-      return (
-        <PassportModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          coreMintFunc={freeMintPassportHolder}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
-          checkNetwork={checkNetwork}
-          handleRefetch={handleRefetch}
+          hasAllowListRole={applicant?.isVerified}
+          isCre8orsDay={!isCre8orlistDay}
         />
       )
     if (leftQuantityCount)
@@ -146,15 +124,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (!hasPassport)
-      return (
-        <WaitCre8orsModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          hasAllowListRole={applicant?.isVerified}
-          isCre8orsDay={!isCre8orlistDay}
-        />
-      )
     // eslint-disable-next-line react/jsx-no-useless-fragment
     return <></>
   }
@@ -162,7 +131,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {canOpenModal && !refetchDataLoading && <>{selectModal()}</>}
+      {canOpenModal && <>{selectModal()}</>}
     </>
   )
 }

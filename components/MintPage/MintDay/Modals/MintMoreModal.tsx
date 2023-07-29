@@ -23,7 +23,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   handleRefetch,
   checkNetwork,
 }) => {
-  const maxOfCre8or = 8
+  const detectedStakedPfp = true
 
   const isXl = useMediaQuery("(max-width: 1150px)")
 
@@ -114,7 +114,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 OR
               </pre>
             </div>
-            {maxOfCre8or === lockedCntOfCre8or ? (
+            {detectedStakedPfp ? (
               <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
             ) : (
               <MintModalCTAButton link="/stake" id="stake_link_btn" label="Enter warehouse" />

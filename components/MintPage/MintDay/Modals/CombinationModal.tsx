@@ -22,9 +22,8 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
     if (!checkNetwork()) return
     handleLoading(true)
     await coreMintFunc()
-    handleLoading(false)
-
     await handleRefetch()
+    handleLoading(false)
   }
 
   return (
@@ -46,7 +45,7 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
                       uppercase text-center
                       leading-[103.3%] dark:text-black text-white"
             >
-              {`You have ${freeMintCount || 0}\nfree mints`}
+              {`You have ${freeMintCount || 0}\nfree mint${freeMintCount > 1 ? 's' : ''}`}
             </pre>
 
             <pre
