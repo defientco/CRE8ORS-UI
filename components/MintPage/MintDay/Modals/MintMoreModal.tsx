@@ -86,10 +86,11 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
             >
               {`You have ${leftQuantityCount} more\nmints available`}
             </pre>
-            <div className={`${leftQuantityCount ? "block" : "hidden"}`}>
-              <Button
-                id="mint_now"
-                className="!px-0 !py-0
+            {leftQuantityCount ? (
+              <div>
+                <Button
+                  id="mint_now"
+                  className="!px-0 !py-0
                   xl:!w-[192.3px] xl:!h-[50px] 
                   !w-[150px] !h-[40px]
                   !font-eigerdals font-bold !bg-black 
@@ -97,19 +98,23 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                   !rounded-[10px]
                   !text-black dark:!text-white
                   dark:!bg-black !bg-white"
-                onClick={handleClick}
-              >
-                Mint More
-              </Button>
-              <pre
-                className="font-quicksand 
+                  onClick={handleClick}
+                >
+                  Mint More
+                </Button>
+                <pre
+                  className="font-quicksand 
                     text-[15px] xl:text-[20px]
                     py-[10px]
                     text-center"
-              >
-                OR
-              </pre>
-            </div>
+                >
+                  OR
+                </pre>
+              </div>
+            ) : (
+              // eslint-disable-next-line react/jsx-no-useless-fragment
+              <></>
+            )}
             {detectedStakedPfp ? (
               <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
             ) : (
