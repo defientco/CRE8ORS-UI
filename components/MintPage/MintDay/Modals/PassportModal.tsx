@@ -16,10 +16,7 @@ const PassportModal: FC<PassportModalProps> = ({
   loading,
   handleLoading,
 }) => {
-  const {
-    checkNetwork,
-    refetchInformation
-  } = useMintProvider()
+  const { checkNetwork, refetchInformation } = useMintProvider()
 
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")

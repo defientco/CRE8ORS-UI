@@ -19,6 +19,22 @@ export const hasDiscount = async (address: string) => {
   }
 }
 
+export const maxClaimedFree = async (address: string) => {
+  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const contract = new ethers.Contract(
+    process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
+    friendAndFamilyAbi,
+    provider,
+  )
+  try {
+    const response = await contract.maxClaimedFree(address)
+    return parseInt(response.toString(), 10)
+  } catch (err) {
+    handleTxError(err)
+    return 0
+  }
+}
+
 export const mintByFriendsAndFamily = async (signer: Signer) => {
   const address = await signer.getAddress()
 
