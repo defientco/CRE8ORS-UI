@@ -3,6 +3,7 @@ import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import IMintModal from "./IMintModal"
+import { useMintProvider } from "../../../../providers/MintProvider"
 
 interface FriendFamilyModalProps extends IMintModal {}
 
@@ -12,16 +13,16 @@ const FriendFamilyModal: FC<FriendFamilyModalProps> = ({
   loading,
   handleLoading,
   coreMintFunc,
-  checkNetwork,
-  handleRefetch,
 }) => {
+  const { checkNetwork, refetchInformation } = useMintProvider()
+
   const handleClick = async () => {
     if (!checkNetwork()) return
     handleLoading(true)
     await coreMintFunc()
     handleLoading(false)
 
-    await handleRefetch()
+    await refetchInformation()
   }
 
   return (
