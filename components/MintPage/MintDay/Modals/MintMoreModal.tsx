@@ -16,6 +16,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   loading,
   coreMintFunc,
   handleLoading,
+  openSuccessModal
 }) => {
   const detectedStakedPfp = true
 
@@ -27,9 +28,9 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
     if (!checkNetwork()) return
     handleLoading(true)
     await coreMintFunc()
-    handleLoading(false)
-
     await refetchInformation()
+    openSuccessModal()
+    handleLoading(false)
   }
 
   return (
