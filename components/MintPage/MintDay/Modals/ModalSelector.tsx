@@ -1,7 +1,6 @@
 import { FC, useEffect, useState, useMemo } from "react"
-import { useAccount, useNetwork, useSigner, useSwitchNetwork } from "wagmi"
-import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
-import { toast } from "react-toastify"
+import { useAccount, useSigner } from "wagmi"
+
 import MintMoreModal from "./MintMoreModal"
 import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
@@ -17,8 +16,7 @@ interface ModalSelectorProps {
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const { address } = useAccount()
   const { data: signer } = useSigner()
-  const { chain: activeChain } = useNetwork()
-  const { switchNetwork } = useSwitchNetwork()
+
   const [applicant, setApplicant] = useState({} as any)
 
   const {
@@ -27,8 +25,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     hasFriendAndFamily,
     leftQuantityCount,
     freeMintCount,
-    getFFAndPassportsInformation,
-    getLockedAndQuantityInformation,
   } = useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
@@ -39,26 +35,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
-  }
-
-  const handleRefetch = async () => {
-    await getFFAndPassportsInformation()
-    await getLockedAndQuantityInformation()
-  }
-
-  const checkNetwork = () => {
-    if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
-      switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10))
-      const allChains = [mainnet, goerli, polygon, polygonMumbai]
-      const myChain = allChains.find(
-        (blockchain) => blockchain.id === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10),
-      )
-      toast.error(`Please connect to ${myChain.name} and try again`)
-
-      return false
-    }
-
-    return true
   }
 
   const { mintCre8ors, freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay({
@@ -94,10 +70,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
             hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
           }
           loading={mintLoading}
-          freeMintCount={freeMintCount}
           handleLoading={handleMintLoading}
-          checkNetwork={checkNetwork}
-          handleRefetch={handleRefetch}
         />
       )
 
@@ -113,14 +86,11 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     if (leftQuantityCount)
       return (
         <MintMoreModal
-          possibleMintCount={leftQuantityCount}
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           coreMintFunc={mintCre8ors}
           loading={mintLoading}
           handleLoading={handleMintLoading}
-          handleRefetch={handleRefetch}
-          checkNetwork={checkNetwork}
         />
       )
 

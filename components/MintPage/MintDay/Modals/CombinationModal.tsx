@@ -3,26 +3,24 @@ import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import IMintModal from "./IMintModal"
+import { useMintProvider } from "../../../../providers/MintProvider"
 
-interface CombinationModalModalProps extends IMintModal {
-  freeMintCount: number | null
-}
+interface CombinationModalModalProps extends IMintModal {}
 
 const CombinationModal: FC<CombinationModalModalProps> = ({
   isModalVisible,
   toggleIsVisible,
   coreMintFunc,
   handleLoading,
-  handleRefetch,
   loading,
-  freeMintCount,
-  checkNetwork,
 }) => {
+  const { checkNetwork, refetchInformation, freeMintCount } = useMintProvider()
+
   const handleMint = async () => {
     if (!checkNetwork()) return
     handleLoading(true)
     await coreMintFunc()
-    await handleRefetch()
+    await refetchInformation()
     handleLoading(false)
   }
 

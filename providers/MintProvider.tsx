@@ -8,11 +8,13 @@ import {
   useEffect,
   useMemo,
 } from "react"
-import { useAccount } from "wagmi"
+import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { hasDiscount } from "../lib/friendAndFamily"
 import { freeMintClaimed, getPassportIds } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import { getQuantityLeft } from "../lib/minterUtility"
+import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
+import { toast } from "react-toastify"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
@@ -24,6 +26,8 @@ interface mintProps {
   freeMintCount: number | null
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
+  checkNetwork: () => boolean
+  refetchInformation: () => Promise<void>
 }
 
 interface Props {
@@ -42,6 +46,9 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
+
+  const { chain: activeChain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
 
   const getClaimedFree = async (passportsArray: any) => {
     if (!passportsArray) return
@@ -97,6 +104,26 @@ export const MintProvider: FC<Props> = ({ children }) => {
     return (hasFriendAndFamily ? 1 : 0) + (freeMintClaimedCount || 0)
   }, [freeMintClaimedCount, hasFriendAndFamily])
 
+  const checkNetwork = () => {
+    if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
+      switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10))
+      const allChains = [mainnet, goerli, polygon, polygonMumbai]
+      const myChain = allChains.find(
+        (blockchain) => blockchain.id === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10),
+      )
+      toast.error(`Please connect to ${myChain.name} and try again`)
+
+      return false
+    }
+
+    return true
+  }
+
+  const refetchInformation = async () => {
+    await getFFAndPassportsInformation()
+    await getLockedAndQuantityInformation()
+  }
+
   useEffect(() => {
     getFFAndPassportsInformation()
   }, [getFFAndPassportsInformation])
@@ -115,6 +142,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
     hasFriendAndFamily,
     getFFAndPassportsInformation,
     getLockedAndQuantityInformation,
+    checkNetwork,
+    refetchInformation,
   }
 
   return <MintContext.Provider value={provider}>{children}</MintContext.Provider>

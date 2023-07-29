@@ -6,24 +6,22 @@ import MintLoading from "../MintLoading"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
 import IMintModal from "./IMintModal"
+import { useMintProvider } from "../../../../providers/MintProvider"
 
-interface MintMoreModalProps extends IMintModal {
-  possibleMintCount: number
-}
+interface MintMoreModalProps extends IMintModal {}
 
 const MintMoreModal: FC<MintMoreModalProps> = ({
   isModalVisible,
   toggleIsVisible,
-  possibleMintCount,
   loading,
   coreMintFunc,
   handleLoading,
-  handleRefetch,
-  checkNetwork,
 }) => {
   const detectedStakedPfp = true
 
   const isXl = useMediaQuery("(max-width: 1150px)")
+
+  const { checkNetwork, refetchInformation, leftQuantityCount } = useMintProvider()
 
   const handleClick = async () => {
     if (!checkNetwork()) return
@@ -31,14 +29,14 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
     await coreMintFunc()
     handleLoading(false)
 
-    await handleRefetch()
+    await refetchInformation()
   }
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
       <div
         className={`${
-          possibleMintCount ? "px-8" : "px-4"
+          leftQuantityCount ? "px-8" : "px-4"
         } py-8 samsungS8:p-8 xl:py-16 xl:px-0 rounded-lg
         flex-col flex justify-center items-center
         bg-[url('/assets/Mint/MintNow/MintCoreModal/mint_more_bg.png')]
@@ -86,9 +84,9 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
                 leading-[90.3%]
                 dark:text-black text-white"
             >
-              {`You have ${possibleMintCount} more\nmints available`}
+              {`You have ${leftQuantityCount} more\nmints available`}
             </pre>
-            <div className={`${possibleMintCount ? "block" : "hidden"}`}>
+            <div className={`${leftQuantityCount ? "block" : "hidden"}`}>
               <Button
                 id="mint_now"
                 className="!px-0 !py-0

@@ -27,7 +27,7 @@ const MintBoard = () => {
   const [tierIIIQuantity, setTierIIIQuantity] = useState(0)
 
   const automaticOpenModal = useMemo(
-    () => hasPassport && hasNotFreeMintClaimed && hasFriendAndFamily,
+    () => (hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily,
     [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily],
   )
 
