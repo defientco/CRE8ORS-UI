@@ -7,16 +7,25 @@
         "type": "address",
         "name": "_collectionAddress",
         "internalType": "address"
+      },
+      {
+        "type": "uint256",
+        "name": "_tier1Price",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "_tier2Price",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "_tier3Price",
+        "internalType": "uint256"
       }
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "error",
-    "name": "Access_OnlyAdmin",
-    "inputs": [],
-    "outputs": []
   },
   {
     "type": "event",
@@ -120,7 +129,7 @@
             "internalType": "uint256"
           }
         ],
-        "internalType": "struct MinterUtilities.Cart[]"
+        "internalType": "struct IMinterUtilities.Cart[]"
       }
     ],
     "outputs": [
@@ -151,7 +160,7 @@
             "internalType": "uint256"
           }
         ],
-        "internalType": "struct MinterUtilities.Cart[]"
+        "internalType": "struct IMinterUtilities.Cart[]"
       }
     ],
     "outputs": [
@@ -202,25 +211,6 @@
   },
   {
     "type": "function",
-    "name": "etherToGwei",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "pure"
-  },
-  {
-    "type": "function",
     "name": "getTierInfo",
     "inputs": [
       {
@@ -245,7 +235,20 @@
             "internalType": "uint256"
           }
         ],
-        "internalType": "struct MinterUtilities.TierInfo"
+        "internalType": "struct IMinterUtilities.TierInfo"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getTierInfo",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes",
+        "name": "",
+        "internalType": "bytes"
       }
     ],
     "stateMutability": "view"
@@ -342,19 +345,6 @@
       {
         "type": "uint256",
         "name": "lockup",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "timeBeforePublicMint",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
         "internalType": "uint256"
       }
     ],

@@ -9,17 +9,18 @@ import {
   useMemo,
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
+import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
+import { toast } from "react-toastify"
 import { hasDiscount, maxClaimedFree } from "../lib/friendAndFamily"
 import { freeMintClaimed, getPassportIds } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import { getQuantityLeft } from "../lib/minterUtility"
-import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
-import { toast } from "react-toastify"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
   leftQuantityCount: number | null
   passportIds: any
+  cart: any
   hasFriendAndFamily: boolean | null
   hasPassport: boolean | null
   hasNotFreeMintClaimed: boolean | null
@@ -28,6 +29,7 @@ interface mintProps {
   getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>
+  setCart: (cart: []) => void
 }
 
 interface Props {
@@ -46,7 +48,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
-
+  const [cart, setCart] = useState([])
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
 
@@ -145,6 +147,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
     getLockedAndQuantityInformation,
     checkNetwork,
     refetchInformation,
+    cart,
+    setCart,
   }
 
   return <MintContext.Provider value={provider}>{children}</MintContext.Provider>

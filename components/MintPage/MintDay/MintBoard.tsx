@@ -14,7 +14,7 @@ import ModalSelector from "./Modals/ModalSelector"
 import { useMintProvider } from "../../../providers/MintProvider"
 
 const MintBoard = () => {
-  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, setCart } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
 
   const [boardRef, { height }] = useMeasure()
@@ -49,7 +49,19 @@ const MintBoard = () => {
       default:
     }
   }
-
+  const updateCart = () => {
+    const bag = []
+    if (tierIQuantity > 0) {
+      bag.push({ tier: "1", quantity: tierIQuantity.toString() })
+    }
+    if (tierIIQuantity > 0) {
+      bag.push({ tier: "2", quantity: tierIIQuantity.toString() })
+    }
+    if (tierIIIQuantity > 0) {
+      bag.push({ tier: "3", quantity: tierIIIQuantity.toString() })
+    }
+    setCart(bag)
+  }
   const decreaseQuantity = (type: number) => {
     switch (type) {
       case 1:
@@ -107,7 +119,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIQuantity}
               type={1}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
             <QuantityCard
               label="Tier II"
@@ -118,7 +130,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIQuantity}
               type={2}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
             <QuantityCard
               label="Tier III"
@@ -129,7 +141,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIIQuantity}
               type={3}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
           </div>
           <div className="flex justify-center">
@@ -141,7 +153,10 @@ const MintBoard = () => {
                 w-[133px] h-[38px]
                 text-[14px] xl:text-[30px] 
                 rounded-[5px] xl:rounded-[15px]"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  updateCart()
+                  setOpenModal(true)
+                }}
               >
                 Mint now
               </Button>
@@ -181,7 +196,7 @@ const MintBoard = () => {
         </div>
       </div>
       <div>
-        <div className="xl:block hidden">
+        <div className="hidden xl:block">
           <Character
             link="/assets/Mint/MintNow/character_woman.png"
             originWidth={358}

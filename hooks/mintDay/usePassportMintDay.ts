@@ -2,7 +2,7 @@ import { Signer } from "ethers"
 import { mintByCollectionHolder } from "../../lib/collectionHolder"
 import { mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import purchase from "../../lib/purchase"
-import cre8orAbi from "../../lib/abi-cre8ors.json"
+import publicMintAbi from "../../lib/abi-public-minter.json"
 import { useMintProvider } from "../../providers/MintProvider"
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const usePassportMintDay = ({ signer }: Props) => {
-  const { passportIds } = useMintProvider()
+  const { passportIds, cart } = useMintProvider()
 
   const freeMintFamilyAndFriend = async () => {
     if (!signer) return
@@ -26,8 +26,18 @@ const usePassportMintDay = ({ signer }: Props) => {
 
   const mintCre8ors = async () => {
     if (!signer) return
-
-    await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
+    const params = {
+      recipient: await signer.getAddress(),
+      cart,
+      passportHolderMinterAddress: process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
+      familyAndFriendsMinterAddress: process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
+    }
+    await purchase(
+      process.env.NEXT_PUBLIC_GENERAL_PUBLIC_MINTER_ADDRESS,
+      signer,
+      publicMintAbi,
+      params,
+    )
   }
 
   return {
