@@ -74,6 +74,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
         canFreeClaimedMintPassportIds.push(parseInt(passportsArray[i]?.id?.tokenId, 16))
       }
     }
+
     if (!detectedFreeMintClaimed) {
       setHasNotFreeMintClaimed(false)
     }

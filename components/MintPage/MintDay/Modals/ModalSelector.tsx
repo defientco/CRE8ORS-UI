@@ -66,6 +66,18 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [isVisibleModal])
 
   const selectModal = () => {
+    if (shouldOpenSuccessModal)
+      return (
+        <MintMoreModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          coreMintFunc={mintCre8ors}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
+        />
+      )
+
     if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
       return (
         <CombinationModal
@@ -78,7 +90,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (shouldOpenSuccessModal || leftQuantityCount)
+    if (leftQuantityCount)
       return (
         <MintMoreModal
           isModalVisible={isVisibleModal}

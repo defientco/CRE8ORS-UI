@@ -26,10 +26,10 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   const handleClick = async () => {
     if (!checkNetwork()) return
     handleLoading(true)
-    await coreMintFunc()
+    const response: any = await coreMintFunc()
     await refetchInformation()
-    openSuccessModal()
     handleLoading(false)
+    if (!response?.error) openSuccessModal()
   }
 
   return (
