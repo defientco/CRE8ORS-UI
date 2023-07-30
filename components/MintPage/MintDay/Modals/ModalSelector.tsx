@@ -107,7 +107,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {canOpenModal && <>{selectModal()}</>}
+      {(canOpenModal || shouldOpenSuccessModal) && <>{selectModal()}</>}
     </>
   )
 }

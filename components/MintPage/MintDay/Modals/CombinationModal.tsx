@@ -22,8 +22,8 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
     handleLoading(true)
     await coreMintFunc()
     await refetchInformation()
-    openSuccessModal()
     handleLoading(false)
+    openSuccessModal()
   }
 
   return (

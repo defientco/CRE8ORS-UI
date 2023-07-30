@@ -16,13 +16,12 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
   loading,
   coreMintFunc,
   handleLoading,
-  openSuccessModal
+  openSuccessModal,
 }) => {
-  const detectedStakedPfp = true
-
   const isXl = useMediaQuery("(max-width: 1150px)")
 
-  const { checkNetwork, refetchInformation, leftQuantityCount } = useMintProvider()
+  const { checkNetwork, refetchInformation, leftQuantityCount, lockedCntOfCre8or } =
+    useMintProvider()
 
   const handleClick = async () => {
     if (!checkNetwork()) return
@@ -116,7 +115,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
               // eslint-disable-next-line react/jsx-no-useless-fragment
               <></>
             )}
-            {detectedStakedPfp ? (
+            {lockedCntOfCre8or ? (
               <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
             ) : (
               <MintModalCTAButton link="/stake" id="stake_link_btn" label="Enter warehouse" />

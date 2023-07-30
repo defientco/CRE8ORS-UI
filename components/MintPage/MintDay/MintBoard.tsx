@@ -107,7 +107,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIQuantity}
               type={1}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
             <QuantityCard
               label="Tier II"
@@ -118,7 +118,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIQuantity}
               type={2}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
             <QuantityCard
               label="Tier III"
@@ -129,7 +129,7 @@ const MintBoard = () => {
               decreaseQuantity={decreaseQuantity}
               quantity={tierIIIQuantity}
               type={3}
-              height={(height - (isXs ? 320  : 285)) / 3}
+              height={(height - (isXs ? 320 : 285)) / 3}
             />
           </div>
           <div className="flex justify-center">
