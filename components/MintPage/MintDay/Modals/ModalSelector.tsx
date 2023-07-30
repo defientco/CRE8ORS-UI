@@ -62,8 +62,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   useEffect(() => {
-    if (!isVisibleModal) setShouldOpenSuccessModal(false)
-  }, [isVisibleModal])
+    if (!isVisibleModal || address) setShouldOpenSuccessModal(false)
+  }, [isVisibleModal, address])
 
   const selectModal = () => {
     if (shouldOpenSuccessModal)
