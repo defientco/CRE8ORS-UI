@@ -28,7 +28,7 @@ export const maxClaimedFree = async (address: string) => {
   )
   try {
     const response = await contract.maxClaimedFree(address)
-    return parseInt(response.toString(), 10)
+    return parseInt(response.toString(), 16)
   } catch (err) {
     handleTxError(err)
     return 0
