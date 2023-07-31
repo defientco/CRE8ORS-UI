@@ -89,18 +89,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount)
-      return (
-        <MintMoreModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          coreMintFunc={mintCre8ors}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
-          openSuccessModal={() => setShouldOpenSuccessModal(true)}
-        />
-      )
-
     if (!(hasPassport && hasNotFreeMintClaimed) && !hasFriendAndFamily)
       return (
         <WaitCre8orsModal
