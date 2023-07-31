@@ -29,7 +29,8 @@ const usePassportMintDay = ({ signer }: Props) => {
   const mintCre8ors = async () => {
     if (!signer) return
 
-    await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
+    let response = await purchase(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, signer, cre8orAbi)
+    return response
   }
 
   return {
