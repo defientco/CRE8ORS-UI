@@ -9,10 +9,8 @@ import {
   useMemo,
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
-import { hasDiscount } from "../lib/friendAndFamily"
-import { freeMintClaimed, getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
+import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
-import { getQuantityLeft } from "../lib/minterUtility"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
 
@@ -105,7 +103,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!initialData) return
     setFreeMintClaimedCount(initialData?.passports?.length)
-    setHasNotFreeMintClaimed(initialData?.passports?.length > 0 || initialData?.discount)
+    setHasNotFreeMintClaimed(initialData?.passports?.length > 0)
     setHasFriendAndFamily(initialData?.discount)
     setLeftQuantityCount(initialData?.quantityLeft)
   }, [initialData])
