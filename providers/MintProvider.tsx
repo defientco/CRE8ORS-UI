@@ -86,11 +86,12 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const getFFAndPassportsInformation = useCallback(async () => {
     if (!address) return
     const detectedDiscount = await hasDiscount(address)
+    console.log("detectedDiscount", detectedDiscount)
     const maxClaimedFreeCnt = await maxClaimedFree(address)
     const allPassportIds = await getPassportIds(address)
     await getClaimedFree(allPassportIds)
 
-    setHasFriendAndFamily(detectedDiscount || maxClaimedFreeCnt > 0)
+    setHasFriendAndFamily(detectedDiscount)
   }, [address])
 
   const getLockedAndQuantityInformation = useCallback(async () => {

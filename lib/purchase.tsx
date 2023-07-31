@@ -1,5 +1,5 @@
 import { ContractInterface, ethers, Signer } from "ethers"
-import { parseEther } from "ethers/lib/utils.js"
+import { defaultAbiCoder, parseEther } from "ethers/lib/utils.js"
 import minterUtility from "./abi-minter-utilities.json"
 import handleTxError from "./handleTxError"
 
@@ -17,13 +17,13 @@ const purchase = async (
   const contract = new ethers.Contract(contractAddress, abi, signer)
   const { address, cart, passportHolderMinterAddress, familyAndFriendsMinterAddress } = params
   const totalCost = await minterUtilityContract.calculateTotalCost(cart)
-  console.log("totalCost", parseInt(totalCost._hex, 16))
   try {
     const tx = await contract.mintPfp(
       address,
-      cart,
-      passportHolderMinterAddress,
-      familyAndFriendsMinterAddress,
+      defaultAbiCoder.encode(
+        ["tuple[]", "address", "address"],
+        [cart, passportHolderMinterAddress, familyAndFriendsMinterAddress],
+      ),
       {
         value: totalCost,
       },

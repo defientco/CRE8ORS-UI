@@ -50,7 +50,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       hasFriendAndFamily != null,
     [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount],
   )
-
+  console.log(hasFriendAndFamily)
   useEffect(() => {
     const init = async () => {
       const response = await getApplicant(address)
