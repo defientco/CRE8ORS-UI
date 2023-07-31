@@ -28,8 +28,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({
     handleLoading(true)
     const response: any = await coreMintFunc()
     await refetchInformation()
-    handleLoading(false)
     if (!response?.error) openSuccessModal()
+    handleLoading(false)
   }
 
   return (

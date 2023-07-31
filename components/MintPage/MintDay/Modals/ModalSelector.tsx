@@ -19,13 +19,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const [applicant, setApplicant] = useState({} as any)
 
-  const {
-    hasPassport,
-    hasNotFreeMintClaimed,
-    hasFriendAndFamily,
-    freeMintCount,
-    leftQuantityCount,
-  } = useMintProvider()
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount } =
+    useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
