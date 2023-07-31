@@ -78,7 +78,9 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={(hasPassport && hasNotFreeMintClaimed) ? freeMintPassportHolder : freeMintFamilyAndFriend}
+          coreMintFunc={
+            hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
+          }
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
           loading={mintLoading}
           handleLoading={handleMintLoading}
