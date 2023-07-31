@@ -1,12 +1,12 @@
 import Layout from "../Layout"
-import ProfileView from "./ProfileView"
+import DesktopProfileView from "./DesktopProfileView"
 
 const ProfilePage = () => {
     return (
         <Layout type="contained">
             <div className="relative pt-[8rem]
             w-full ">
-                <ProfileView />
+                <DesktopProfileView />
             </div>
         </Layout>
     )
