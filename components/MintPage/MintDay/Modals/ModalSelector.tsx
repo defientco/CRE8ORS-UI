@@ -39,8 +39,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const canOpenModal = useMemo(
     () =>
       (hasPassport !== null && hasNotFreeMintClaimed != null && hasFriendAndFamily != null) ||
-      shouldOpenSuccessModal,
-    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, shouldOpenSuccessModal],
+      shouldOpenSuccessModal || mintLoading,
+    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, shouldOpenSuccessModal, mintLoading],
   )
 
   useEffect(() => {
