@@ -101,7 +101,7 @@ export const getAvailableFreeMints = async (
   })
   const discount = results?.results?.discount?.callsReturnContext[0]?.returnValues[0]
   const quantityLeft = results?.results?.quantityLeft?.callsReturnContext[0]?.returnValues[0].hex
-  
+
   return {
     passports: availablePassportIds?.filter((id) => id !== null),
     discount,
