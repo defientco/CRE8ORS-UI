@@ -53,6 +53,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
+  useEffect(() => {
+    if (address) setShouldOpenSuccessModal(false)
+  }, [address])
+
   const selectModal = () => {
     if (shouldOpenSuccessModal)
       return (
