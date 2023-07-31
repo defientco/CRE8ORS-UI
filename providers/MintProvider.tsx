@@ -10,7 +10,7 @@ import {
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { hasDiscount } from "../lib/friendAndFamily"
-import { freeMintClaimed, getPassportIds } from "../lib/collectionHolder"
+import { freeMintClaimed, getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import { getQuantityLeft } from "../lib/minterUtility"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
@@ -90,6 +90,11 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
     setHasFriendAndFamily(detectedDiscount)
   }, [address])
+  const [initialData, setInitialData] = useState<{
+    passports: Array<number | string>
+    discount: boolean
+    quantityLeft: number
+  } | null>(null)
 
   const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
@@ -99,11 +104,20 @@ export const MintProvider: FC<Props> = ({ children }) => {
     if (!response.error) setLeftQuantityCount(parseInt(response, 10))
   }, [address])
 
+  const getInitialData = useCallback(async () => {
+    const passportsArray = await getPassportIds(address)
+    setHasPassport(passportsArray?.length > 0)
+    const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
+    if (tokenIds?.length > 0) setPassportIds(tokenIds)
+    const results = await getAvailableFreeMints(tokenIds, address)
+    setInitialData(results)
+  }, [address])
+
   const freeMintCount = useMemo(() => {
     if (hasFriendAndFamily === null || hasPassport === null || hasNotFreeMintClaimed === null)
       return null
     return (hasFriendAndFamily ? 1 : 0) + (freeMintClaimedCount || 0)
-  }, [freeMintClaimedCount, hasFriendAndFamily])
+  }, [freeMintClaimedCount, hasFriendAndFamily, hasNotFreeMintClaimed, hasPassport])
 
   const checkNetwork = () => {
     if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
@@ -126,26 +140,50 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    getFFAndPassportsInformation()
-  }, [getFFAndPassportsInformation])
+    if (!address) return
+    getInitialData()
+  }, [address, getInitialData])
+
+  useEffect(() => {
+    if (!initialData) return
+    setFreeMintClaimedCount(initialData?.passports?.length)
+    setHasNotFreeMintClaimed(initialData?.passports?.length > 0 || initialData?.discount)
+    setHasFriendAndFamily(initialData?.discount)
+    setLeftQuantityCount(initialData?.quantityLeft)
+  }, [initialData])
 
   useEffect(() => {
     getLockedAndQuantityInformation()
   }, [getLockedAndQuantityInformation])
 
-  const provider = {
-    freeMintCount,
-    lockedCntOfCre8or,
-    leftQuantityCount,
-    passportIds,
-    hasPassport,
-    hasNotFreeMintClaimed,
-    hasFriendAndFamily,
-    getFFAndPassportsInformation,
-    getLockedAndQuantityInformation,
-    checkNetwork,
-    refetchInformation,
-  }
+  const provider = useMemo(
+    () => ({
+      freeMintCount,
+      lockedCntOfCre8or,
+      leftQuantityCount,
+      passportIds,
+      hasPassport,
+      hasNotFreeMintClaimed,
+      hasFriendAndFamily,
+      getFFAndPassportsInformation,
+      getLockedAndQuantityInformation,
+      checkNetwork,
+      refetchInformation,
+    }),
+    [
+      freeMintCount,
+      lockedCntOfCre8or,
+      leftQuantityCount,
+      passportIds,
+      hasPassport,
+      hasNotFreeMintClaimed,
+      hasFriendAndFamily,
+      getFFAndPassportsInformation,
+      getLockedAndQuantityInformation,
+      checkNetwork,
+      refetchInformation,
+    ],
+  )
 
   return <MintContext.Provider value={provider}>{children}</MintContext.Provider>
 }
