@@ -19,8 +19,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const [applicant, setApplicant] = useState({} as any)
 
-  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount } =
-    useMintProvider()
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -39,11 +38,9 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const canOpenModal = useMemo(
     () =>
-      hasPassport !== null &&
-      hasNotFreeMintClaimed != null &&
-      freeMintCount !== null &&
-      hasFriendAndFamily != null,
-    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount],
+      (hasPassport !== null && hasNotFreeMintClaimed != null && hasFriendAndFamily != null) ||
+      shouldOpenSuccessModal,
+    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, shouldOpenSuccessModal],
   )
 
   useEffect(() => {
@@ -56,16 +53,12 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
-  useEffect(() => {
-    if (!isVisibleModal || address) setShouldOpenSuccessModal(false)
-  }, [isVisibleModal, address])
-
   const selectModal = () => {
     if (shouldOpenSuccessModal)
       return (
         <MintMoreModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
+          isModalVisible={shouldOpenSuccessModal}
+          toggleIsVisible={() => setShouldOpenSuccessModal(!shouldOpenSuccessModal)}
           coreMintFunc={mintCre8ors}
           loading={mintLoading}
           handleLoading={handleMintLoading}
@@ -101,7 +94,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   return (
     <>
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {(canOpenModal || shouldOpenSuccessModal) && <>{selectModal()}</>}
+      {canOpenModal && <>{selectModal()}</>}
     </>
   )
 }
