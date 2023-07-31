@@ -101,12 +101,14 @@ export const getAvailableFreeMints = async (
   })
   const discount = results?.results?.discount?.callsReturnContext[0]?.returnValues[0]
   const quantityLeft = results?.results?.quantityLeft?.callsReturnContext[0]?.returnValues[0].hex
+  
   return {
     passports: availablePassportIds?.filter((id) => id !== null),
     discount,
     quantityLeft: parseInt(quantityLeft, 16),
   }
 }
+
 export const mintByCollectionHolder = async (signer: Signer, passportIds: any) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,

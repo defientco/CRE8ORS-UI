@@ -50,46 +50,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
 
-  const getClaimedFree = async (passportsArray: any) => {
-    if (!passportsArray) return
-
-    if (!passportsArray?.length) {
-      setHasPassport(false)
-      setHasNotFreeMintClaimed(false)
-      return
-    }
-
-    setHasPassport(true)
-
-    let detectedFreeMintClaimed = false
-    const canFreeClaimedMintPassportIds = []
-    for (let i = 0; i < passportsArray?.length; i++) {
-      const isClaimed = await freeMintClaimed(passportsArray[i]?.id?.tokenId)
-      if (!isClaimed) {
-        if (!detectedFreeMintClaimed) {
-          detectedFreeMintClaimed = true
-          setHasNotFreeMintClaimed(!isClaimed)
-        }
-
-        canFreeClaimedMintPassportIds.push(parseInt(passportsArray[i]?.id?.tokenId, 16))
-      }
-    }
-
-    if (!detectedFreeMintClaimed) {
-      setHasNotFreeMintClaimed(false)
-    }
-    setFreeMintClaimedCount(canFreeClaimedMintPassportIds.length)
-    setPassportIds(canFreeClaimedMintPassportIds)
-  }
-
-  const getFFAndPassportsInformation = useCallback(async () => {
-    if (!address) return
-    const detectedDiscount = await hasDiscount(address)
-    const allPassportIds = await getPassportIds(address)
-    await getClaimedFree(allPassportIds)
-
-    setHasFriendAndFamily(detectedDiscount)
-  }, [address])
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
     discount: boolean
@@ -99,9 +59,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const getLockedAndQuantityInformation = useCallback(async () => {
     if (!address) return
     const lockedCnt = await getLockedCount(address)
-    const response = await getQuantityLeft(address)
     setLockedCntOfCre8or(lockedCnt)
-    if (!response.error) setLeftQuantityCount(parseInt(response, 10))
   }, [address])
 
   const getInitialData = useCallback(async () => {
@@ -135,7 +93,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }
 
   const refetchInformation = async () => {
-    await getFFAndPassportsInformation()
+    await getInitialData()
     await getLockedAndQuantityInformation()
   }
 
@@ -165,7 +123,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       hasPassport,
       hasNotFreeMintClaimed,
       hasFriendAndFamily,
-      getFFAndPassportsInformation,
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
@@ -178,7 +135,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       hasPassport,
       hasNotFreeMintClaimed,
       hasFriendAndFamily,
-      getFFAndPassportsInformation,
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
