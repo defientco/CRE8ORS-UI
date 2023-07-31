@@ -9,7 +9,7 @@ import {
   useMemo,
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
-import { hasDiscount, maxClaimedFree } from "../lib/friendAndFamily"
+import { hasDiscount } from "../lib/friendAndFamily"
 import { freeMintClaimed, getPassportIds } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import { getQuantityLeft } from "../lib/minterUtility"
@@ -85,11 +85,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const getFFAndPassportsInformation = useCallback(async () => {
     if (!address) return
     const detectedDiscount = await hasDiscount(address)
-    const maxClaimedFreeCnt = await maxClaimedFree(address)
     const allPassportIds = await getPassportIds(address)
     await getClaimedFree(allPassportIds)
 
-    setHasFriendAndFamily(detectedDiscount || maxClaimedFreeCnt > 0)
+    setHasFriendAndFamily(detectedDiscount)
   }, [address])
 
   const getLockedAndQuantityInformation = useCallback(async () => {

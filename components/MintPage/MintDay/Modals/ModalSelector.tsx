@@ -77,8 +77,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
         />
       )
-
-    if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
+    if (!(hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
