@@ -19,13 +19,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const [applicant, setApplicant] = useState({} as any)
 
-  const {
-    hasPassport,
-    hasNotFreeMintClaimed,
-    hasFriendAndFamily,
-    freeMintCount,
-    leftQuantityCount,
-  } = useMintProvider()
+  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
 
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -44,11 +38,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
   const canOpenModal = useMemo(
     () =>
-      hasPassport !== null &&
-      hasNotFreeMintClaimed != null &&
-      freeMintCount !== null &&
-      hasFriendAndFamily != null,
-    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, freeMintCount],
+      (hasPassport !== null && hasNotFreeMintClaimed != null && hasFriendAndFamily != null) ||
+      shouldOpenSuccessModal ||
+      mintLoading,
+    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, shouldOpenSuccessModal, mintLoading],
   )
   console.log(hasFriendAndFamily)
   useEffect(() => {
@@ -62,31 +55,35 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   useEffect(() => {
-    if (!isVisibleModal) setShouldOpenSuccessModal(false)
-  }, [isVisibleModal])
+    if (address) setShouldOpenSuccessModal(false)
+  }, [address])
 
   const selectModal = () => {
+    if (shouldOpenSuccessModal)
+      return (
+        <MintMoreModal
+          isModalVisible={shouldOpenSuccessModal}
+          toggleIsVisible={() => {
+            setShouldOpenSuccessModal(!shouldOpenSuccessModal)
+            if (isVisibleModal) toggleModal()
+          }}
+          coreMintFunc={mintCre8ors}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
+        />
+      )
     if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          coreMintFunc={hasFriendAndFamily ? freeMintFamilyAndFriend : freeMintPassportHolder}
+          coreMintFunc={
+            hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
+          }
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
           loading={mintLoading}
           handleLoading={handleMintLoading}
-        />
-      )
-
-    if (shouldOpenSuccessModal || leftQuantityCount)
-      return (
-        <MintMoreModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          coreMintFunc={mintCre8ors}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
-          openSuccessModal={() => setShouldOpenSuccessModal(true)}
         />
       )
 

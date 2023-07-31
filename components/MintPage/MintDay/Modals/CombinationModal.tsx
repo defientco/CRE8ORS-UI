@@ -20,9 +20,9 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
   const handleMint = async () => {
     if (!checkNetwork()) return
     handleLoading(true)
-    await coreMintFunc()
+    const response: any = await coreMintFunc()
     await refetchInformation()
-    openSuccessModal()
+    if (!response?.error) openSuccessModal()
     handleLoading(false)
   }
 

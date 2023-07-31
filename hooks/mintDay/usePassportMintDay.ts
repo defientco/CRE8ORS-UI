@@ -15,13 +15,15 @@ const usePassportMintDay = ({ signer }: Props) => {
   const freeMintFamilyAndFriend = async () => {
     if (!signer) return
 
-    await mintByFriendsAndFamily(signer)
+    const response = await mintByFriendsAndFamily(signer)
+    return response
   }
 
   const freeMintPassportHolder = async () => {
     if (!signer) return
 
-    await mintByCollectionHolder(signer, passportIds)
+    const response = await mintByCollectionHolder(signer, passportIds)
+    return response
   }
 
   const mintCre8ors = async () => {
