@@ -37,7 +37,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
           width: isXl ? "100%" : "803px",
           height: isXl
             ? `${(width / 803) * (!hasAllowListRole && isCre8orsDay ? 794 : 633)}px`
-            : `${!hasAllowListRole && isCre8orsDay ? "794px" : "633px"}`,
+            : `${!hasAllowListRole && isCre8orsDay ? "700px" : "633px"}`,
         }}
       >
         <pre
@@ -53,7 +53,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
                 text-[15px] xl:text-[42px]
                 text-center 
                 uppercase underline
-                xl:pt-[75px] xl:pb-[35px]
+                xl:pt-[35px] xl:pb-[35px]
                 samsungS8:pt-[8px] samsungS8:pb-[15px]
                 pt-[5px] pb-[10px]"
         >
@@ -64,7 +64,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
           <Button
             id="mint_now"
             className="xl:!w-[461px] xl:!h-[107px] 
-                mt-[10px] xl:mt-[87px]
+                mt-[10px] xl:mt-[40px]
                 !w-[230px] !h-[50px]
                 !font-eigerdals font-bold !bg-black 
                 text-[15px] xl:text-[34px] 
