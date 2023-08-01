@@ -1,43 +1,20 @@
 import { useEffect } from "react"
-import { Contract } from "ethers"
-import { useAccount, useSigner } from "wagmi"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import abi from "../../../../lib/abi-cre8orlist-minter.json"
-import minterUtilityAbi from "../../../../lib/abi-minter-utilities.json"
 import handleTxError from "../../../../lib/handleTxError"
-import generateMerkleProof from "../../../../lib/merkle/generateMerkleProof"
+import useCre8orlistMint from "../../../../hooks/mintDay/useCre8orlistMint"
 
 const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openSuccessModal }) => {
-  const { data: signer } = useSigner()
-  const { address } = useAccount()
   const { checkNetwork, refetchInformation, cart } = useMintProvider()
-
-  const getPrice = async () => {
-    const contract = new Contract(process.env.NEXT_PUBLIC_MINTER_UTILITY, minterUtilityAbi, signer)
-    const cost = await contract.calculateTotalCost(cart)
-    return cost.toString()
-  }
+  const { mint } = useCre8orlistMint()
 
   useEffect(() => {
     const handleMint = async () => {
       if (!checkNetwork()) return
       handleLoading(true)
       try {
-        const proof = generateMerkleProof(address)
-        const value = await getPrice()
-        console.log("SWEETS PRICE", value)
-        const contract = new Contract(process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS, abi, signer)
-        const tx = await contract.mintPfp(
-          address,
-          cart,
-          process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
-          process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
-          proof,
-          { value },
-        )
-        await tx.wait()
+        await mint(cart)
         await refetchInformation()
         openSuccessModal()
         handleLoading(false)
@@ -48,6 +25,7 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
 
     if (!isModalVisible) return
     handleMint()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalVisible])
 
   return (
