@@ -23,10 +23,13 @@ const DesktopMenu = () => {
   }
 
   return (
-    <div className="flex flex-row text-sm uppercase font-quicksand gap-x-12">
+    <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
         <>
-          <div className="flex items-center pr-4">
+          <div className="flex items-center pr-4 gap-x-8">
+            <Link href="/premint" target="_blank" rel="noreferrer">
+              <div className="font-bold cursor-pointer dark:text-white text-black">Mint</div>
+            </Link>
             <Link href="/status" target="_blank" rel="noreferrer">
               <div className="font-bold cursor-pointer dark:text-white text-black">
                 Allowlist Status
