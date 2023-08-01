@@ -1,7 +1,9 @@
-import React from 'react'
-import { Swiper, SwiperSlide, SwiperProps } from 'swiper/react'
+import React from "react"
+import { Swiper, SwiperSlide, SwiperProps } from "swiper/react"
 
-import 'swiper/css'
+import "swiper/css"
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 interface ISlider {
   children: React.ReactNode[]
@@ -12,23 +14,13 @@ interface ISlider {
   sliderStyle?: any
 }
 
-function Slider({
-  children,
-  sliderProps,
-  className,
-  slideClassName,
-  style,
-  sliderStyle
-}: ISlider) {
-
+function Slider({ children, sliderProps, className, slideClassName, style, sliderStyle }: ISlider) {
   return (
-    <Swiper {...sliderProps} className={className}
-      style={style || {}}
-    >
+    <Swiper {...sliderProps} className={className} style={style || {}}>
       {children.map((item, i) => (
         <SwiperSlide
           key={i}
-          className={slideClassName ? slideClassName : ''}
+          className={slideClassName ? slideClassName : ""}
           style={sliderStyle || {}}
         >
           {item}

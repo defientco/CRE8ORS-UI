@@ -11,7 +11,7 @@ const MenuList = ({ toggleMenu }) => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const router = useRouter()
-  const isHidden = router.pathname.includes("/mint")
+  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
   const [isDarkMode, setIsDarkMode] = useState(false)
 
@@ -41,9 +41,12 @@ const MenuList = ({ toggleMenu }) => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
-      <div className="pt-[20px]">
+      <div className="pt-6">
         <CustomConnectWallet />
       </div>
+      <Link href="/premint" target="_blank" rel="noreferrer">
+        <div className="ml-4 cursor-pointer text-white dark:text-[black]">Mint</div>
+      </Link>
       <div className="font-bold dark:text-[black] text-white">Explore</div>
       <a href="https://everythingcorp.cre8ors.com/quiz" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Allowlist</div>
@@ -53,6 +56,13 @@ const MenuList = ({ toggleMenu }) => {
       </Link>
       <Link href="/roadmap" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Roadmap</div>
+      </Link>
+      <Link
+        href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div className="ml-4 dark:text-[black] text-white">ERC721H</div>
       </Link>
       <Link href="/manifesto" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Manifesto</div>
