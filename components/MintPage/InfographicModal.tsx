@@ -1,6 +1,6 @@
 import { FC } from "react"
-import Modal from "../../../shared/Modal"
-import Media from "../../../shared/Media"
+import Modal from "../../shared/Modal"
+import Media from "../../shared/Media"
 
 interface InfographicModalProps {
   isModalVisible: boolean

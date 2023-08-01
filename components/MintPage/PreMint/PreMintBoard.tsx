@@ -9,7 +9,7 @@ import Character from "../Character"
 import Media from "../../../shared/Media"
 import Timer from "./Timer"
 import { Button } from "../../../shared/Button"
-import InfographicModal from "./InfographicModal"
+import InfographicModal from "../InfographicModal"
 
 const PreMintBoard = () => {
   const isXl = useMediaQuery("(max-width: 1150px")
