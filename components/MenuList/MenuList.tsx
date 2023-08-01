@@ -41,10 +41,12 @@ const MenuList = ({ toggleMenu }) => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
-      <a href="https://reserve.cre8ors.com/" target="_blank" rel="noreferrer">
-        <div className="font-bold dark:text-[black] text-white pb-[15px]">Reserve List</div>
-      </a>
-
+      <div className="pt-6">
+        <CustomConnectWallet />
+      </div>
+      <Link href="/premint" target="_blank" rel="noreferrer">
+        <div className="ml-4 cursor-pointer text-white dark:text-[black]">Mint</div>
+      </Link>
       <div className="font-bold dark:text-[black] text-white">Explore</div>
       <a href="https://everythingcorp.cre8ors.com/quiz" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Allowlist</div>
@@ -54,6 +56,13 @@ const MenuList = ({ toggleMenu }) => {
       </Link>
       <Link href="/roadmap" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Roadmap</div>
+      </Link>
+      <Link
+        href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div className="ml-4 dark:text-[black] text-white">ERC721H</div>
       </Link>
       <Link href="/manifesto" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Manifesto</div>
@@ -81,7 +90,6 @@ const MenuList = ({ toggleMenu }) => {
       </Link>
       <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
       <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
-      <CustomConnectWallet />
       <div className="flex flex-row items-center justify-around">
         <DiscordIcon />
         <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
