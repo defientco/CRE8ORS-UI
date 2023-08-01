@@ -1,32 +1,36 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 
-import { useTheme } from "../providers/ThemeProvider"
+import { useTheme } from '../providers/ThemeProvider'
 
 interface Props {
-  ref: React.RefObject<HTMLDivElement>
+    ref: React.RefObject<HTMLDivElement>
 }
 
-const useFadeIntersection = ({ ref }: Props) => {
-  const { themeMode } = useTheme()
+const useFadeIntersection = ({
+    ref
+}: Props) => {
+    const {
+      themeMode
+    } = useTheme()
 
-  const [injected, setInjected] = useState(false)
+    const [injected, setInjected] = useState(false)
 
-  useEffect(() => {
-    if (ref?.current && !injected) {
-      const cb = (entries) => {
-        entries.map((entry: any) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("inview")
-          } else {
-            entry.target.classList.remove("inview")
-          }
-        })
+    useEffect(() => {
+      if(ref?.current && !injected) {
+        const cb = (entries) => {
+          entries.map((entry: any) => {
+            if(entry.isIntersecting){
+              entry.target.classList.add('inview');
+            }else{
+              entry.target.classList.remove('inview');
+            }
+          })
+        }
+        const io = new IntersectionObserver(cb);
+        io.observe(ref.current)
+        setInjected(true)
       }
-      const io = new IntersectionObserver(cb)
-      io.observe(ref.current)
-      setInjected(true)
-    }
-  }, [ref])
+    }, [ref])
 
     useEffect(() => {
       if(ref?.current) {
