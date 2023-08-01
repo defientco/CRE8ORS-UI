@@ -1,29 +1,21 @@
 import { useState } from "react"
 import Media from "../../shared/Media"
-import ProfileInformation from "./Desktop/Reveal/ProfileInformation"
-import SimilarProfiles from "./Mobile/Reveal/SimilarProfiles"
-import WalletCollection from "./WalletCollection"
+import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
 import PFPImage from "./Mobile/Reveal/PFPImage"
+import PreSimilarProfiles from "./Mobile/PreReveal/PreSimilarProfiles"
+import PreWalletCollection from "./PreWalletCollection"
 
-const MobileProfileView = () => {
+const PreMobileProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
 
   return (
     <div
       className="relative w-full
-        bg-[url('/assets/Profile/background.png')] bg-cover
+        bg-[white]
         rounded-[10px]
         overflow-hidden"
     >
-      <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-l from-[#000000db] via-[transparent] to-[transparent]"
-      />
-      <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-t from-[#000000db] via-[transparent] to-[transparent]"
-      />
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
@@ -72,10 +64,10 @@ const MobileProfileView = () => {
         </div>
         <PFPImage />
 
-        <ProfileInformation />
-        <SimilarProfiles />
+        <PreProfileInformation />
+        <PreSimilarProfiles />
 
-        <WalletCollection
+        <PreWalletCollection
           handleExpandMore={(expanded: boolean) => setExpandedMore(expanded)}
           expandMore={expandedMore}
         />
@@ -84,4 +76,4 @@ const MobileProfileView = () => {
   )
 }
 
-export default MobileProfileView
+export default PreMobileProfileView

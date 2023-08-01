@@ -1,6 +1,6 @@
-import Media from "../../../shared/Media"
+import Media from "../../../../shared/Media"
 
-const TwitterLocation = () => (
+const PreTwitterLocation = () => (
   <div className="flex items-center gap-x-[15px]">
     <div className="flex items-center gap-x-[5px]">
       <Media
@@ -21,8 +21,9 @@ const TwitterLocation = () => (
       <p className="font-quicksand font-bold text-[22px] leading-[99.3%]">Denver, CO</p>
     </div>
     <button
-      className="w-[26px] h-[26px] bg-[#d7d7d7d6]
+      className="w-[26px] h-[26px] bg-[white]
             flex items-center justify-center
+            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
             rounded-[2px] cursor-pointer"
       type="button"
     >
@@ -36,4 +37,4 @@ const TwitterLocation = () => (
   </div>
 )
 
-export default TwitterLocation
+export default PreTwitterLocation

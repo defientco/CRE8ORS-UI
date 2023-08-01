@@ -1,4 +1,4 @@
-import Media from "../../../shared/Media"
+import Media from "../../../../shared/Media"
 
 const TwitterLocation = () => (
   <div className="flex items-center justify-center gap-x-[15px] pt-[5px]">
