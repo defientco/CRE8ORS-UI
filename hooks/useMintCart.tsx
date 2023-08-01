@@ -1,10 +1,7 @@
 import { useState } from "react"
 
 const useMintCart = () => {
-  const [cart, setCart] = useState([
-    { tier: "1", quantity: "1" },
-    { tier: "3", quantity: "5" },
-  ] as any)
+  const [cart, setCart] = useState([] as any)
 
   const addToCart = (type: number) => {
     const tierExists = cart.some((item) => item.tier === type.toString())
