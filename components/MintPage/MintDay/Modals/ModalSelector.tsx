@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useMemo } from "react"
+import { FC, useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 
 import MintMoreModal from "./MintMoreModal"
@@ -12,6 +12,7 @@ import Cre8orlistModal from "./Cre8orlistModal"
 interface ModalSelectorProps {
   isVisibleModal: boolean
   toggleModal: () => void
+  quantities: any
 }
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal, quantities }) => {
@@ -77,7 +78,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal, qu
         />
       )
 
-    if (leftQuantityCount > 0) {
+    if (leftQuantityCount > 0 && quantities.tierIQuantity > 0) {
       return (
         <Cre8orlistModal
           isModalVisible={isVisibleModal}

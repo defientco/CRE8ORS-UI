@@ -1,12 +1,9 @@
 import { useEffect } from "react"
 import { Contract } from "ethers"
 import { useAccount, useSigner } from "wagmi"
-
-import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import utilityAbi from "../../../../lib/abi-minter-utilities.json"
 import abi from "../../../../lib/abi-cre8orlist-minter.json"
 import handleTxError from "../../../../lib/handleTxError"
 import generateMerkleProof from "../../../../lib/merkle/generateMerkleProof"
