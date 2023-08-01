@@ -1,12 +1,12 @@
 import { useState } from "react"
 import Media from "../../shared/Media"
-import PFPImage from "./Desktop/Reveal/PFPImage"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
 import PrePFPInformation from "./Desktop/PreReveal/PrePFPInformation"
 import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
+import DNALoading from "./DNALoading"
 
 const PreDesktopProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
@@ -18,7 +18,7 @@ const PreDesktopProfileView = () => {
         rounded-[10px]
         overflow-hidden"
     >
-      <PFPImage />
+      <DNALoading />
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
@@ -76,7 +76,7 @@ const PreDesktopProfileView = () => {
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
               } pt-[70px]`}
             >
-              <PrePFPInformation expandMore={expandedMore} />
+              <PrePFPInformation />
             </div>
           </div>
           <div className="flex flex-col gap-y-[40px]">

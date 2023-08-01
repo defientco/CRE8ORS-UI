@@ -41,11 +41,10 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
           ? `${
               isMobile ? "mobile_un_expand_more" : "un_expand_more"
             } h-[55px] lg:h-[70px] overflow-hidden`
-          : `${
-              isMobile ? "mobile_expand_more" : "expand_more"
-            } h-[220px] lg:h-[415px] rounded-t-[10px] lg:rounded-t-[20px] 
+          : `${isMobile ? "mobile_expand_more" : "expand_more"} h-[220px] lg:h-[415px]
             bg-black`
       } 
+        rounded-t-[10px] lg:rounded-t-[20px]
         w-full flex justify-between items-start mt-[20px] pt-[20px]
         gap-x-[10px]
         lg:px-10 lg:pb-10
@@ -85,7 +84,7 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
         <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
           <div
             className="mt-[35px]
-                  bg-[url('/assets/Profile/mini_pfp.png')]
+                  bg-[url('/assets/Profile/dna_animation.gif')]
                   bg-cover relative
                   flex items-center justify-center
                   lg:px-4 lg:py-6
@@ -96,7 +95,7 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
                   samsungS8:w-[130px] samsungS8:h-[130px]
                   w-[120px] h-[120px]"
           >
-            <div className="absolute w-full h-full bg-[white] left-0 top-0 opacity-[0.2] z-[1]" />
+            <div className="absolute w-full h-full bg-[black] left-0 top-0 opacity-[0.6] z-[1]" />
             <div
               className="grid grid-cols-3 w-full relative z-[2]
                       gap-y-[5px] lg:gap-y-[15px]"
