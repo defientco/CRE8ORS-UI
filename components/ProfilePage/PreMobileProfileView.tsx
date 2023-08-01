@@ -2,9 +2,9 @@ import { useState } from "react"
 import Media from "../../shared/Media"
 import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
-import PFPImage from "./Mobile/Reveal/PFPImage"
 import PreSimilarProfiles from "./Mobile/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
+import DNALoading from "./DNALoading"
 
 const PreMobileProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
@@ -62,7 +62,7 @@ const PreMobileProfileView = () => {
             />
           </button>
         </div>
-        <PFPImage />
+        <DNALoading />
 
         <PreProfileInformation />
         <PreSimilarProfiles />
