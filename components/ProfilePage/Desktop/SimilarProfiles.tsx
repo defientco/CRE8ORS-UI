@@ -12,7 +12,7 @@ const SimilarProfiles = () => (
       {[...Array(8)].map((_, i) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={i} className="flex justify-end">
-          <div className="w-[39px] h-[39px] rounded-full bg-[white]"/>
+          <div className="w-[39px] h-[39px] rounded-full bg-[white]" />
         </div>
       ))}
     </div>
