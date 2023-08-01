@@ -12,15 +12,18 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 import MintBoardButtons from "./ActionButtons"
 
 const MintBoard = () => {
-  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } = useMintProvider()
+  const {
+    hasPassport,
+    hasUnclaimedFreeMint,
+    hasFriendAndFamily,
+    addToCart,
+    removeFromCart,
+    getCartTier,
+  } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
 
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
-
-  const [tierIQuantity, setTierIQuantity] = useState(0)
-  const [tierIIQuantity, setTierIIQuantity] = useState(0)
-  const [tierIIIQuantity, setTierIIIQuantity] = useState(0)
 
   const automaticOpenModal = useMemo(
     () => (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily,
@@ -32,36 +35,11 @@ const MintBoard = () => {
   }, [automaticOpenModal])
 
   const increaseQuantity = (type: number) => {
-    switch (type) {
-      case 1:
-        setTierIQuantity(tierIQuantity + 1)
-        break
-      case 2:
-        setTierIIQuantity(tierIIQuantity + 1)
-        break
-      case 3:
-        setTierIIIQuantity(tierIIIQuantity + 1)
-        break
-      default:
-    }
+    addToCart(type)
   }
 
   const decreaseQuantity = (type: number) => {
-    switch (type) {
-      case 1:
-        if (!tierIQuantity) return
-        setTierIQuantity(tierIQuantity - 1)
-        break
-      case 2:
-        if (!tierIIQuantity) return
-        setTierIIQuantity(tierIIQuantity - 1)
-        break
-      case 3:
-        if (!tierIIIQuantity) return
-        setTierIIIQuantity(tierIIIQuantity - 1)
-        break
-      default:
-    }
+    removeFromCart(type)
   }
 
   return (
@@ -101,7 +79,7 @@ const MintBoard = () => {
               className="bg-[#E93F45]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIQuantity}
+              quantity={getCartTier(1)}
               type={1}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
@@ -112,7 +90,7 @@ const MintBoard = () => {
               className="bg-[#F4EE05]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIIQuantity}
+              quantity={getCartTier(2)}
               type={2}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
@@ -123,7 +101,7 @@ const MintBoard = () => {
               className="bg-[#08E1E6]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIIIQuantity}
+              quantity={getCartTier(3)}
               type={3}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
@@ -141,11 +119,7 @@ const MintBoard = () => {
               blurLink="/assets/Mint/MintNow/down-arrow.svg"
             />
           </div>
-          <ModalSelector
-            isVisibleModal={openModal}
-            toggleModal={() => setOpenModal(!openModal)}
-            quantities={{ tierIQuantity, tierIIQuantity, tierIIIQuantity }}
-          />
+          <ModalSelector isVisibleModal={openModal} toggleModal={() => setOpenModal(!openModal)} />
         </div>
       </div>
       <div>

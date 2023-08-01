@@ -13,6 +13,7 @@ import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
 import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
+import useMintCart from "../hooks/useMintCart"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
@@ -22,10 +23,14 @@ interface mintProps {
   hasPassport: boolean | null
   hasUnclaimedFreeMint: boolean | null
   freeMintCount: number | null
+  cart: any[]
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>
+  addToCart: (tier: number) => void
+  removeFromCart: (tier: number) => void
+  getCartTier: (tier: number) => number
 }
 
 interface Props {
@@ -44,9 +49,9 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
-
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
+  const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
 
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
@@ -114,6 +119,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      cart,
       freeMintCount,
       lockedCntOfCre8or,
       leftQuantityCount,
@@ -124,8 +130,12 @@ export const MintProvider: FC<Props> = ({ children }) => {
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
+      addToCart,
+      removeFromCart,
+      getCartTier,
     }),
     [
+      cart,
       freeMintCount,
       lockedCntOfCre8or,
       leftQuantityCount,
@@ -136,6 +146,9 @@ export const MintProvider: FC<Props> = ({ children }) => {
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
+      addToCart,
+      removeFromCart,
+      getCartTier,
     ],
   )
 

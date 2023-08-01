@@ -8,24 +8,16 @@ import abi from "../../../../lib/abi-cre8orlist-minter.json"
 import handleTxError from "../../../../lib/handleTxError"
 import generateMerkleProof from "../../../../lib/merkle/generateMerkleProof"
 
-const Cre8orlistModal = ({
-  isModalVisible,
-  toggleIsVisible,
-  handleLoading,
-  openSuccessModal,
-  quantities,
-}) => {
+const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openSuccessModal }) => {
   const { data: signer } = useSigner()
   const { address } = useAccount()
-  const { checkNetwork, refetchInformation } = useMintProvider()
+  const { checkNetwork, refetchInformation, cart } = useMintProvider()
 
   useEffect(() => {
     const handleMint = async () => {
-      console.log("SWEETS ALLOWLIST MINT", quantities)
       if (!checkNetwork()) return
       handleLoading(true)
       try {
-        const cart = [{ tier: "1", quantity: "1" }]
         console.log("SWEETS cart", cart)
         console.log("SWEETS generateMerkleProof", address)
 

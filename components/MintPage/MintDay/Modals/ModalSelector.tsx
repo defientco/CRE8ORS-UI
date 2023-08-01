@@ -12,13 +12,12 @@ import Cre8orlistModal from "./Cre8orlistModal"
 interface ModalSelectorProps {
   isVisibleModal: boolean
   toggleModal: () => void
-  quantities: any
 }
 
-const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal, quantities }) => {
+const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const { address } = useAccount()
   const [applicant, setApplicant] = useState({} as any)
-  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, leftQuantityCount } =
+  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, leftQuantityCount, cart } =
     useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -78,14 +77,13 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal, qu
         />
       )
 
-    if (leftQuantityCount > 0 && quantities.tierIQuantity > 0) {
+    if (leftQuantityCount > 0 && cart.length > 0) {
       return (
         <Cre8orlistModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
           handleLoading={handleMintLoading}
-          quantities={quantities}
         />
       )
     }
