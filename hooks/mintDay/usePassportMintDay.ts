@@ -5,7 +5,6 @@ import purchase from "../../lib/purchase"
 import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useMintProvider } from "../../providers/MintProvider"
 
-
 const usePassportMintDay = () => {
   const { passportIds } = useMintProvider()
   const { data: signer } = useSigner()

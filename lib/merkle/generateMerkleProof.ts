@@ -4,7 +4,7 @@ import { hexValue } from "ethers/lib/utils.js"
 import hashMerkleEntry from "./hashMerkleEntry"
 import whitelistedUsers from "./whitelistedUsers"
 
-const generateMerkleProof = (minter) => {  
+const generateMerkleProof = (minter) => {
   let entries = whitelistedUsers.map((entry) => {
     const newEntry = entry as any
     newEntry.hash = hashMerkleEntry(entry)
