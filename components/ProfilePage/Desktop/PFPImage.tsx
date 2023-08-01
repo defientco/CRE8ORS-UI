@@ -3,7 +3,7 @@ import Media from "../../../shared/Media"
 const PFPImage = () => (
   <div
     className="absolute w-full flex justify-center
-        pt-[65px]
+        pt-[105px]
         z-[2]"
   >
     <Media
