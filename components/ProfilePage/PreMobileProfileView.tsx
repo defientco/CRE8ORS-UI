@@ -4,7 +4,7 @@ import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
 import PreSimilarProfiles from "./Mobile/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
-import DNALoading from "./Mobile/PreReveal/DNALoading"
+import DNALoading from "./DNALoading"
 
 const PreMobileProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)

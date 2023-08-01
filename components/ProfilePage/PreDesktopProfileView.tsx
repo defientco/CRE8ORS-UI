@@ -6,7 +6,7 @@ import PrePFPInformation from "./Desktop/PreReveal/PrePFPInformation"
 import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
-import DNALoading from "./Desktop/PreReveal/DNALoading"
+import DNALoading from "./DNALoading"
 
 const PreDesktopProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
