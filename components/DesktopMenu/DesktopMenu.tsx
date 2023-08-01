@@ -13,7 +13,7 @@ const DesktopMenu = () => {
 
   const router = useRouter()
 
-  const isHidden = router.pathname.includes("/mint")
+  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -23,10 +23,13 @@ const DesktopMenu = () => {
   }
 
   return (
-    <div className="flex flex-row text-sm uppercase font-quicksand gap-x-12">
+    <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
         <>
-          <div className="flex items-center pr-4">
+          <div className="flex items-center pr-4 gap-x-8">
+            <Link href="/premint" target="_blank" rel="noreferrer">
+              <div className="font-bold cursor-pointer dark:text-white text-black">Mint</div>
+            </Link>
             <Link href="/status" target="_blank" rel="noreferrer">
               <div className="font-bold cursor-pointer dark:text-white text-black">
                 Allowlist Status
@@ -77,6 +80,13 @@ const DesktopMenu = () => {
             </Link>
             <Link href="/roadmap" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Roadmap</div>
+            </Link>
+            <Link
+              href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="cursor-pointer text-white dark:text-[black]">ERC721H</div>
             </Link>
             <Link href="/leaderboard" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Leaderboard</div>
