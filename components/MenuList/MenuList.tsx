@@ -11,7 +11,7 @@ const MenuList = ({ toggleMenu }) => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const router = useRouter()
-  const isHidden = router.pathname.includes("/mint")
+  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
   const [isDarkMode, setIsDarkMode] = useState(false)
 

@@ -13,7 +13,7 @@ const DesktopMenu = () => {
 
   const router = useRouter()
 
-  const isHidden = router.pathname.includes("/mint")
+  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
