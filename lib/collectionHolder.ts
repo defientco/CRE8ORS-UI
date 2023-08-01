@@ -100,7 +100,7 @@ export const getAvailableFreeMints = async (
     return null
   })
   const discount = results?.results?.discount?.callsReturnContext[0]?.returnValues[0]
-  const quantityLeft = results?.results?.quantityLeft?.callsReturnContext[0]?.returnValues[0].hex
+  const quantityLeft = results?.results?.quantityLeft?.callsReturnContext[0]?.returnValues?.[0]?.hex
 
   return {
     passports: availablePassportIds?.filter((id) => id !== null),
@@ -109,20 +109,14 @@ export const getAvailableFreeMints = async (
   }
 }
 
-export const mintByCollectionHolder = async (signer: Signer, passportIds: any) => {
+export const mintByCollectionHolder = async (signer: Signer, passportIds: any, to: string) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
     signer,
   )
   try {
-    const address = await signer.getAddress()
-    const tx = await contract.mint(
-      passportIds,
-      process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
-      address,
-    )
-
+    const tx = await contract.mint([passportIds[passportIds.length - 1]], process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS, to)
     await tx.wait()
 
     return { error: false }

@@ -10,26 +10,13 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 
 interface MintMoreModalProps extends IMintModal {}
 
-const MintMoreModal: FC<MintMoreModalProps> = ({
-  isModalVisible,
-  toggleIsVisible,
-  loading,
-  coreMintFunc,
-  handleLoading,
-  openSuccessModal,
-}) => {
+const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible, loading }) => {
   const isXl = useMediaQuery("(max-width: 1150px)")
 
-  const { checkNetwork, refetchInformation, leftQuantityCount, lockedCntOfCre8or } =
-    useMintProvider()
+  const { leftQuantityCount, lockedCntOfCre8or } = useMintProvider()
 
   const handleClick = async () => {
-    if (!checkNetwork()) return
-    handleLoading(true)
-    const response: any = await coreMintFunc()
-    await refetchInformation()
-    if (!response?.error) openSuccessModal()
-    handleLoading(false)
+    toggleIsVisible()
   }
 
   return (

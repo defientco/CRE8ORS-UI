@@ -9,10 +9,10 @@ import {
   useMemo,
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
-import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
-import { getLockedCount } from "../lib/cre8or"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
+import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
+import { getLockedCount } from "../lib/cre8or"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
@@ -20,7 +20,7 @@ interface mintProps {
   passportIds: any
   hasFriendAndFamily: boolean | null
   hasPassport: boolean | null
-  hasNotFreeMintClaimed: boolean | null
+  hasUnclaimedFreeMint: boolean | null
   freeMintCount: number | null
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
@@ -39,7 +39,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const [hasFriendAndFamily, setHasFriendAndFamily] = useState<boolean | null>(null)
   const [hasPassport, setHasPassport] = useState<boolean | null>(null)
-  const [hasNotFreeMintClaimed, setHasNotFreeMintClaimed] = useState<boolean | null>(null)
+  const [hasUnclaimedFreeMint, setHasUnclaimedFreeMint] = useState<boolean | null>(null)
   const [passportIds, setPassportIds] = useState(null)
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
@@ -70,10 +70,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }, [address])
 
   const freeMintCount = useMemo(() => {
-    if (hasFriendAndFamily === null || hasPassport === null || hasNotFreeMintClaimed === null)
+    if (hasFriendAndFamily === null || hasPassport === null || hasUnclaimedFreeMint === null)
       return null
     return (hasFriendAndFamily ? 1 : 0) + (freeMintClaimedCount || 0)
-  }, [freeMintClaimedCount, hasFriendAndFamily, hasNotFreeMintClaimed, hasPassport])
+  }, [freeMintClaimedCount, hasFriendAndFamily, hasUnclaimedFreeMint, hasPassport])
 
   const checkNetwork = () => {
     if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
@@ -103,7 +103,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!initialData) return
     setFreeMintClaimedCount(initialData?.passports?.length)
-    setHasNotFreeMintClaimed(initialData?.passports?.length > 0)
+    setHasUnclaimedFreeMint(initialData?.passports?.length > 0)
     setHasFriendAndFamily(initialData?.discount)
     setLeftQuantityCount(initialData?.quantityLeft)
   }, [initialData])
@@ -119,7 +119,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       leftQuantityCount,
       passportIds,
       hasPassport,
-      hasNotFreeMintClaimed,
+      hasUnclaimedFreeMint,
       hasFriendAndFamily,
       getLockedAndQuantityInformation,
       checkNetwork,
@@ -131,7 +131,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       leftQuantityCount,
       passportIds,
       hasPassport,
-      hasNotFreeMintClaimed,
+      hasUnclaimedFreeMint,
       hasFriendAndFamily,
       getLockedAndQuantityInformation,
       checkNetwork,
