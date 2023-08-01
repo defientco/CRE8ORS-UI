@@ -117,10 +117,21 @@ a {
   }
 }
 
-@keyframes fade_in_modal {
+@keyframes fade_in_popover {
   0% {
     opacity: 0;
     transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fade_in_modal {
+  0% {
+    opacity: 0.5;
+    transform: translateY(70px);
   }
   100% {
     opacity: 1;
@@ -133,7 +144,11 @@ a {
 }
 
 .fade_modal {
-  animation: fade_in_modal 1.5s ease-in-out;
+  animation: fade_in_modal 1s ease-in-out;
+}
+
+.fade_popover {
+  animation: fade_in_popover 1.5s ease-in-out;
 }
 
 .no_transition {
