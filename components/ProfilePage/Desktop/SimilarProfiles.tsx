@@ -11,7 +11,9 @@ const SimilarProfiles = () => (
     <div className="grid grid-cols-4 gap-x-[10px] gap-y-[10px]">
       {[...Array(8)].map((_, i) => (
         // eslint-disable-next-line react/no-array-index-key
-        <div className="w-[39px] h-[39px] rounded-full bg-[white]" key={i} />
+        <div key={i} className="flex justify-end">
+          <div className="w-[39px] h-[39px] rounded-full bg-[white]"/>
+        </div>
       ))}
     </div>
   </div>
