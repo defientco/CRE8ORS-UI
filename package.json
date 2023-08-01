@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "lint:fix": "next lint --fix",
-    "prettier:fix": "npx prettier --write components lib pages utils",
+    "prettier:fix": "npx prettier --write components lib pages utils providers",
     "format": "yarn run prettier:fix && yarn run lint:fix"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "class-validator": "^0.14.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-prettier": "^4.2.1",
+    "ethereum-multicall": "^2.19.0",
     "ethers": "^5.0.0",
     "express": "^4.18.2",
     "framer-motion": "^9.0.2",

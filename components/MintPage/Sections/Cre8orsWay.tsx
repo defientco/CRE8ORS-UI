@@ -1,9 +1,9 @@
 import { useMediaQuery } from "usehooks-ts"
-import SectionContainer from "./SectionContainer"
-import Title from "../Common/Title"
-import Content from "../Common/Content"
-import Media from "../../shared/Media"
-import ApplyAllowListButton from "./ApplyAllowListButton"
+import SectionContainer from "../SectionContainer"
+import Title from "../../Common/Title"
+import Content from "../../Common/Content"
+import Media from "../../../shared/Media"
+import ApplyAllowListButton from "../ApplyAllowListButton"
 
 const Cre8orsWay = () => {
   const avatarList = [
@@ -49,7 +49,7 @@ const Cre8orsWay = () => {
 
   return (
     <SectionContainer>
-      <div className="relative w-full pt-[85px] samsungS8:pt-0 xl:h-[calc(100vh+100px)] flex justify-center items-center">
+      <div className="relative w-full pt-[85px] xl:h-[calc(100vh+100px)] flex justify-center items-center">
         <div
           className="grid 
                 grid-cols-1 xl:grid-cols-2 

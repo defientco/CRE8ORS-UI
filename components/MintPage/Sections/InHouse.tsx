@@ -1,9 +1,9 @@
 import { useMediaQuery } from "usehooks-ts"
-import SectionContainer from "./SectionContainer"
-import Title from "../Common/Title"
-import Content from "../Common/Content"
-import Media from "../../shared/Media"
-import ApplyAllowListButton from "./ApplyAllowListButton"
+import SectionContainer from "../SectionContainer"
+import Title from "../../Common/Title"
+import Content from "../../Common/Content"
+import Media from "../../../shared/Media"
+import ApplyAllowListButton from "../ApplyAllowListButton"
 
 const InHouse = () => {
   const isXl = useMediaQuery("(max-width: 1150px)")
