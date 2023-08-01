@@ -5,6 +5,7 @@ import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import abi from "../../../../lib/abi-cre8orlist-minter.json"
+import minterUtilityAbi from "../../../../lib/abi-minter-utilities.json"
 import handleTxError from "../../../../lib/handleTxError"
 import generateMerkleProof from "../../../../lib/merkle/generateMerkleProof"
 
@@ -13,16 +14,20 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
   const { address } = useAccount()
   const { checkNetwork, refetchInformation, cart } = useMintProvider()
 
+  const getPrice = async () => {
+    const contract = new Contract(process.env.NEXT_PUBLIC_MINTER_UTILITY, minterUtilityAbi, signer)
+    const cost = await contract.calculateTotalCost(cart)
+    return cost.toString()
+  }
+
   useEffect(() => {
     const handleMint = async () => {
       if (!checkNetwork()) return
       handleLoading(true)
       try {
-        console.log("SWEETS cart", cart)
-        console.log("SWEETS generateMerkleProof", address)
-
         const proof = generateMerkleProof(address)
-        console.log("SWEETS MERKLE PROOF", proof)
+        const value = await getPrice()
+        console.log("SWEETS PRICE", value)
         const contract = new Contract(process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS, abi, signer)
         const tx = await contract.mintPfp(
           address,
@@ -30,9 +35,7 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
           process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
           process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
           proof,
-          {
-            value: 500000000000000,
-          },
+          { value },
         )
         await tx.wait()
         await refetchInformation()
