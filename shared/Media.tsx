@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { DetailedHTMLProps, VideoHTMLAttributes, useEffect, useRef, useState } from 'react'
+import { DetailedHTMLProps, VideoHTMLAttributes, useRef, useState } from 'react'
 
 interface IMedia {
   type: "video" | "image"
