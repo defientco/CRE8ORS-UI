@@ -1,5 +1,4 @@
 import { FC, useState } from "react"
-import Link from "next/link"
 import { useMediaQuery } from "usehooks-ts"
 import Media from "../../../shared/Media"
 import InfographicModal from "../InfographicModal"
