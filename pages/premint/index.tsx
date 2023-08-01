@@ -1,5 +1,5 @@
 import MintPage from "../../components/MintPage"
 
-const Mint = () => <MintPage type="premint" />
+const PreMint = () => <MintPage type="premint" />
 
-export default Mint
+export default PreMint

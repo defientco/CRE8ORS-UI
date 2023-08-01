@@ -1,4 +1,5 @@
 import { useTheme } from "../../providers/ThemeProvider"
+import { Button } from "../../shared/Button"
 import WalletConnectButton from "../WalletConnectButton"
 
 interface ConnectWalletProps {
@@ -81,7 +82,8 @@ const ConnectWallet = ({ handleClose }: ConnectWalletProps) => {
         Connect
       </div>
       <WalletConnectButton>
-        <div
+        <Button
+          id="connect_wallet_in_claim"
           className="w-[270px]
           rounded
         bg-[white] text-black dark:bg-[black] dark:text-[white]
@@ -90,7 +92,7 @@ const ConnectWallet = ({ handleClose }: ConnectWalletProps) => {
         flex items-center justify-center gap-[10px]"
         >
           Connect
-        </div>
+        </Button>
       </WalletConnectButton>
     </div>
   )
