@@ -6,7 +6,7 @@ import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useMintProvider } from "../../providers/MintProvider"
 
 const usePassportMintDay = () => {
-  const { passportIds } = useMintProvider()
+  const { availablePassportIds } = useMintProvider()
   const { data: signer } = useSigner()
   const { address } = useAccount()
 
@@ -20,7 +20,7 @@ const usePassportMintDay = () => {
   const freeMintPassportHolder = async () => {
     if (!signer) return null
 
-    const response = await mintByCollectionHolder(signer, passportIds, address)
+    const response = await mintByCollectionHolder(signer, availablePassportIds, address)
     return response
   }
 
