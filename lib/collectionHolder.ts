@@ -87,9 +87,18 @@ export const aggregateReads = async (passportIds: Array<number | string>, addres
   const results: ContractCallResults = await multicall.call(contractCallContext)
   return results
 }
-
-export const getAvailableFreeMints = async (
+const getAvailablePassportIds = async (results: ContractCallResults) => {
+  const availablePassportIds = results?.results?.freeMintClaimed?.callsReturnContext.map((call) => {
+    if (call.returnValues[0] === false) {
+      return parseInt(call.methodParameters[0], 16)
+    }
+    return null
+  })
+  return availablePassportIds?.filter((id) => id !== null)
+}
+export const getOnChainData = async (
   passportIds: Array<number | string>,
+  mintedPfps: Array<number | string>,
   address: string,
 ) => {
   const results = await aggregateReads(passportIds, address)

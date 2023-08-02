@@ -10,7 +10,14 @@ export const getCre8ors = async (address: string) => {
   )
   return res?.ownedNfts
 }
-
+export const getMintedPfpIds = async (address: string) => {
+  const response = await getCre8ors(address)
+  const ids: number[] = []
+  for (let i = 0; i < response.length; i++) {
+    if (response?.id?.tokenId) ids.push(response?.id?.tokenId)
+  }
+  return ids
+}
 export const getLockedCount = async (address: string) => {
   const response = await getCre8ors(address)
   let count: number = 0

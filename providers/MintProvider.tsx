@@ -11,8 +11,8 @@ import {
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
-import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
-import { getLockedCount } from "../lib/cre8or"
+import { getPassportIds, getAvailableFreeMints, getOnChainData } from "../lib/collectionHolder"
+import { getLockedCount, getMintedPfpIds } from "../lib/cre8or"
 import useMintCart from "../hooks/useMintCart"
 
 interface mintProps {
@@ -68,11 +68,14 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }, [address])
 
   const getInitialData = useCallback(async () => {
-    const passportsArray = await getPassportIds(address)
+    const [passportsArray, mintedPfps] = await Promise.all([
+      getPassportIds(address),
+      getMintedPfpIds(address),
+    ])
     setHasPassport(passportsArray?.length > 0)
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
-    const results = await getAvailableFreeMints(tokenIds, address)
+    const results = await getOnChainData(tokenIds, mintedPfps address)
     setInitialData(results)
   }, [address])
 
