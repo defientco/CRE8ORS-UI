@@ -116,11 +116,7 @@ export const mintByCollectionHolder = async (signer: Signer, passportIds: any, t
     signer,
   )
   try {
-    const tx = await contract.mint(
-      [passportIds[passportIds.length - 1]],
-      process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
-      to,
-    )
+    const tx = await contract.mint(passportIds, process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS, to)
     await tx.wait()
 
     return { error: false }
