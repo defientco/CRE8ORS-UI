@@ -97,8 +97,10 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
                   after:absolute
                   after:left-0 after:top-0 after:z-[1]"
           >
-            <div className="absolute w-full h-full left-0 top-0 z-[2]
-            bg-[url('/assets/Profile/dna_animation.gif')] bg-cover" />
+            <div
+              className="absolute w-full h-full left-0 top-0 z-[2]
+            bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"
+            />
             <div
               className="grid grid-cols-3 w-full relative z-[2]
                       gap-y-[5px] lg:gap-y-[15px]"
