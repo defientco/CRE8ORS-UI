@@ -20,6 +20,7 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
         handleLoading(false)
       } catch (err) {
         handleTxError(err)
+        toggleIsVisible()
       }
     }
 

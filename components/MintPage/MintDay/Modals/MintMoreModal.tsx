@@ -71,7 +71,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
                 leading-[90.3%]
                 dark:text-black text-white"
             >
-              {`You have ${leftQuantityCount} more\nmints available`}
+              {`You have ${leftQuantityCount || 0} more\nmints available`}
             </pre>
             {leftQuantityCount ? (
               <div>
@@ -103,9 +103,9 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
               <></>
             )}
             {lockedCntOfCre8or ? (
-              <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
+              <MintModalCTAButton link="/staking" id="stake_link_btn" label="Enter warehouse" />
             ) : (
-              <MintModalCTAButton link="/stake" id="stake_link_btn" label="Enter warehouse" />
+              <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
             )}
           </>
         )}
