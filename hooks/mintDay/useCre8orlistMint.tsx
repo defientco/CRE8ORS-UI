@@ -1,8 +1,8 @@
 import { Contract } from "ethers"
 import { useAccount, useSigner } from "wagmi"
+import axios from "axios"
 import minterUtilityAbi from "../../lib/abi-minter-utilities.json"
 import cre8orlistMinterAbi from "../../lib/abi-cre8orlist-minter.json"
-import generateMerkleProof from "../../lib/merkle/generateMerkleProof"
 
 const useCre8orlistMint = () => {
   const { data: signer } = useSigner()
@@ -15,7 +15,8 @@ const useCre8orlistMint = () => {
   }
 
   const mint = async (cart) => {
-    const proof = generateMerkleProof(address)
+    const response = await axios.get(`/api/merkle?address=${address}`)
+    const proof = response.data
     const value = await getPrice(cart)
     const contract = new Contract(
       process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,
