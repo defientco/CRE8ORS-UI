@@ -1,34 +1,33 @@
 import { useState, useMemo, useEffect } from "react"
-import { useAccount } from "wagmi"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
-import SectionContainer from "../SectionContainer"
-import Title from "../../Common/Title"
-import Content from "../../Common/Content"
-import Character from "../Character"
-import Media from "../../../shared/Media"
-import QuantityCard from "./QuantityCard"
-import { Button } from "../../../shared/Button"
-import WalletConnectButton from "../../WalletConnectButton"
-import ModalSelector from "./Modals/ModalSelector"
-import { useMintProvider } from "../../../providers/MintProvider"
+import SectionContainer from "../../SectionContainer"
+import Title from "../../../Common/Title"
+import Content from "../../../Common/Content"
+import Character from "../../Character"
+import Media from "../../../../shared/Media"
+import QuantityCard from "../QuantityCard"
+import ModalSelector from "../Modals/ModalSelector"
+import { useMintProvider } from "../../../../providers/MintProvider"
+import MintBoardButtons from "./ActionButtons"
 
 const MintBoard = () => {
-  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
+  const {
+    hasPassport,
+    hasUnclaimedFreeMint,
+    hasFriendAndFamily,
+    addToCart,
+    removeFromCart,
+    getCartTier,
+  } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
 
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
 
-  const { isConnected } = useAccount()
-
-  const [tierIQuantity, setTierIQuantity] = useState(0)
-  const [tierIIQuantity, setTierIIQuantity] = useState(0)
-  const [tierIIIQuantity, setTierIIIQuantity] = useState(0)
-
   const automaticOpenModal = useMemo(
-    () => (hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily,
-    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily],
+    () => (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily,
+    [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily],
   )
 
   useEffect(() => {
@@ -36,36 +35,11 @@ const MintBoard = () => {
   }, [automaticOpenModal])
 
   const increaseQuantity = (type: number) => {
-    switch (type) {
-      case 1:
-        setTierIQuantity(tierIQuantity + 1)
-        break
-      case 2:
-        setTierIIQuantity(tierIIQuantity + 1)
-        break
-      case 3:
-        setTierIIIQuantity(tierIIIQuantity + 1)
-        break
-      default:
-    }
+    addToCart(type)
   }
 
   const decreaseQuantity = (type: number) => {
-    switch (type) {
-      case 1:
-        if (!tierIQuantity) return
-        setTierIQuantity(tierIQuantity - 1)
-        break
-      case 2:
-        if (!tierIIQuantity) return
-        setTierIIQuantity(tierIIQuantity - 1)
-        break
-      case 3:
-        if (!tierIIIQuantity) return
-        setTierIIIQuantity(tierIIIQuantity - 1)
-        break
-      default:
-    }
+    removeFromCart(type)
   }
 
   return (
@@ -105,7 +79,7 @@ const MintBoard = () => {
               className="bg-[#E93F45]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIQuantity}
+              quantity={getCartTier(1)}
               type={1}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
@@ -116,7 +90,7 @@ const MintBoard = () => {
               className="bg-[#F4EE05]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIIQuantity}
+              quantity={getCartTier(2)}
               type={2}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
@@ -127,44 +101,12 @@ const MintBoard = () => {
               className="bg-[#08E1E6]"
               increaseQuantity={increaseQuantity}
               decreaseQuantity={decreaseQuantity}
-              quantity={tierIIIQuantity}
+              quantity={getCartTier(3)}
               type={3}
               height={(height - (isXs ? 320 : 285)) / 3}
             />
           </div>
-          <div className="flex justify-center">
-            {isConnected ? (
-              <Button
-                id="mint_btn_mint_page"
-                className="mt-[20px] xl:mt-[40px] 
-                xl:w-[308px] xl:h-[88px] 
-                w-[133px] h-[38px]
-                text-[14px] xl:text-[30px] 
-                rounded-[5px] xl:rounded-[15px]"
-                onClick={() => setOpenModal(true)}
-              >
-                Mint now
-              </Button>
-            ) : (
-              <WalletConnectButton>
-                <div
-                  className="px-0 py-0
-                  mt-[40px] uppercase
-                  xl:w-[328px] xl:h-[88px] 
-                  w-[153px] h-[38px]
-                  text-[14px] xl:text-[30px] 
-                  rounded-[5px] xl:rounded-[15px]
-                  hover:scale-[1.1] scale-[1] transition duration-[300ms]
-                  bg-[black] dark:bg-[white] 
-                  shadow-[0px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[0px_4px_4px_rgb(255,255,255,0.25)]
-                  flex items-center justify-center gap-[10px]
-                  font-bold font-quicksand"
-                >
-                  Connect Wallet
-                </div>
-              </WalletConnectButton>
-            )}
-          </div>
+          <MintBoardButtons setOpenModal={setOpenModal} />
           <div
             className="pt-[15px] xs:pt-[20px] xl:pt-[27px] 
           flex justify-center items-center gap-x-[10px]"

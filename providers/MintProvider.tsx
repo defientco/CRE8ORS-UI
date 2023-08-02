@@ -9,23 +9,29 @@ import {
   useMemo,
 } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
-import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
-import { getLockedCount } from "../lib/cre8or"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
+import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
+import { getLockedCount } from "../lib/cre8or"
+import useMintCart from "../hooks/useMintCart"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
   leftQuantityCount: number | null
   passportIds: any
+  availablePassportIds: any
   hasFriendAndFamily: boolean | null
   hasPassport: boolean | null
-  hasNotFreeMintClaimed: boolean | null
+  hasUnclaimedFreeMint: boolean | null
   freeMintCount: number | null
+  cart: any[]
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>
+  addToCart: (tier: number) => void
+  removeFromCart: (tier: number) => void
+  getCartTier: (tier: number) => number
 }
 
 interface Props {
@@ -39,14 +45,15 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const [hasFriendAndFamily, setHasFriendAndFamily] = useState<boolean | null>(null)
   const [hasPassport, setHasPassport] = useState<boolean | null>(null)
-  const [hasNotFreeMintClaimed, setHasNotFreeMintClaimed] = useState<boolean | null>(null)
+  const [hasUnclaimedFreeMint, setHasUnclaimedFreeMint] = useState<boolean | null>(null)
   const [passportIds, setPassportIds] = useState(null)
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
-
+  const [availablePassportIds, setAvailablePassportIds] = useState([] as any)
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
+  const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
 
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
@@ -70,10 +77,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }, [address])
 
   const freeMintCount = useMemo(() => {
-    if (hasFriendAndFamily === null || hasPassport === null || hasNotFreeMintClaimed === null)
+    if (hasFriendAndFamily === null || hasPassport === null || hasUnclaimedFreeMint === null)
       return null
     return (hasFriendAndFamily ? 1 : 0) + (freeMintClaimedCount || 0)
-  }, [freeMintClaimedCount, hasFriendAndFamily, hasNotFreeMintClaimed, hasPassport])
+  }, [freeMintClaimedCount, hasFriendAndFamily, hasUnclaimedFreeMint, hasPassport])
 
   const checkNetwork = () => {
     if (activeChain?.id !== parseInt(process.env.NEXT_PUBLIC_CHAIN_ID, 10)) {
@@ -103,9 +110,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!initialData) return
     setFreeMintClaimedCount(initialData?.passports?.length)
-    setHasNotFreeMintClaimed(initialData?.passports?.length > 0)
+    setHasUnclaimedFreeMint(initialData?.passports?.length > 0)
     setHasFriendAndFamily(initialData?.discount)
     setLeftQuantityCount(initialData?.quantityLeft)
+    setAvailablePassportIds(initialData?.passports)
   }, [initialData])
 
   useEffect(() => {
@@ -114,28 +122,38 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      availablePassportIds,
+      cart,
       freeMintCount,
       lockedCntOfCre8or,
       leftQuantityCount,
       passportIds,
       hasPassport,
-      hasNotFreeMintClaimed,
+      hasUnclaimedFreeMint,
       hasFriendAndFamily,
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
+      addToCart,
+      removeFromCart,
+      getCartTier,
     }),
     [
+      availablePassportIds,
+      cart,
       freeMintCount,
       lockedCntOfCre8or,
       leftQuantityCount,
       passportIds,
       hasPassport,
-      hasNotFreeMintClaimed,
+      hasUnclaimedFreeMint,
       hasFriendAndFamily,
       getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
+      addToCart,
+      removeFromCart,
+      getCartTier,
     ],
   )
 

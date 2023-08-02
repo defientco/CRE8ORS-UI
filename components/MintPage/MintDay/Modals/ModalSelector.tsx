@@ -1,5 +1,5 @@
-import { FC, useEffect, useState, useMemo } from "react"
-import { useAccount, useSigner } from "wagmi"
+import { FC, useEffect, useState } from "react"
+import { useAccount } from "wagmi"
 
 import MintMoreModal from "./MintMoreModal"
 import getApplicant from "../../../../lib/getApplicant"
@@ -7,6 +7,7 @@ import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
+import Cre8orlistModal from "./Cre8orlistModal"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -15,12 +16,9 @@ interface ModalSelectorProps {
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const { address } = useAccount()
-  const { data: signer } = useSigner()
-
   const [applicant, setApplicant] = useState({} as any)
-
-  const { hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily } = useMintProvider()
-
+  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, leftQuantityCount, cart } =
+    useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
 
@@ -32,17 +30,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     setMintLoading(isMintLoading)
   }
 
-  const { mintCre8ors, freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay({
-    signer,
-  })
-
-  const canOpenModal = useMemo(
-    () =>
-      (hasPassport !== null && hasNotFreeMintClaimed != null && hasFriendAndFamily != null) ||
-      shouldOpenSuccessModal ||
-      mintLoading,
-    [hasPassport, hasNotFreeMintClaimed, hasFriendAndFamily, shouldOpenSuccessModal, mintLoading],
-  )
+  const { mintCre8ors, freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay()
 
   useEffect(() => {
     const init = async () => {
@@ -57,6 +45,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   useEffect(() => {
     if (address) setShouldOpenSuccessModal(false)
   }, [address])
+
+  const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const selectModal = () => {
     if (shouldOpenSuccessModal)
@@ -73,13 +63,13 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
         />
       )
-    if ((hasPassport && hasNotFreeMintClaimed) || hasFriendAndFamily)
+    if (isFreeMintModal)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           coreMintFunc={
-            hasPassport && hasNotFreeMintClaimed ? freeMintPassportHolder : freeMintFamilyAndFriend
+            hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
           }
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
           loading={mintLoading}
@@ -87,26 +77,28 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (!(hasPassport && hasNotFreeMintClaimed) && !hasFriendAndFamily)
+    if (leftQuantityCount > 0 && cart.length > 0) {
       return (
-        <WaitCre8orsModal
+        <Cre8orlistModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
-          hasAllowListRole={applicant?.isVerified}
-          isCre8orsDay={!isCre8orlistDay}
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
+          handleLoading={handleMintLoading}
         />
       )
+    }
 
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    return <></>
+    return (
+      <WaitCre8orsModal
+        isModalVisible={isVisibleModal}
+        toggleIsVisible={toggleModal}
+        hasAllowListRole={applicant?.isVerified}
+        isCre8orsDay={!isCre8orlistDay}
+      />
+    )
   }
 
-  return (
-    <>
-      {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      {canOpenModal && <>{selectModal()}</>}
-    </>
-  )
+  return selectModal()
 }
 
 export default ModalSelector
