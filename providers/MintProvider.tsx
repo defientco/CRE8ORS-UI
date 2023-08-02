@@ -19,6 +19,7 @@ interface mintProps {
   lockedCntOfCre8or: number | null
   leftQuantityCount: number | null
   passportIds: any
+  availablePassportIds: any
   hasFriendAndFamily: boolean | null
   hasPassport: boolean | null
   hasUnclaimedFreeMint: boolean | null
@@ -49,6 +50,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
+  const [availablePassportIds, setAvailablePassportIds] = useState([] as any)
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
@@ -111,6 +113,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setHasUnclaimedFreeMint(initialData?.passports?.length > 0)
     setHasFriendAndFamily(initialData?.discount)
     setLeftQuantityCount(initialData?.quantityLeft)
+    setAvailablePassportIds(initialData?.passports)
   }, [initialData])
 
   useEffect(() => {
@@ -119,6 +122,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      availablePassportIds,
       cart,
       freeMintCount,
       lockedCntOfCre8or,
@@ -135,6 +139,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       getCartTier,
     }),
     [
+      availablePassportIds,
       cart,
       freeMintCount,
       lockedCntOfCre8or,
