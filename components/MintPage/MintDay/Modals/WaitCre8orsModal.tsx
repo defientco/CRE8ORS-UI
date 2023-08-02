@@ -59,7 +59,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
         >
           Mint starts in:
         </pre>
-        <ModalTimer endDay="09 Aug 2023 08:00:00 UTC" />
+        <ModalTimer endDay="10 Aug 2023 08:00:00 EDT" />
         {!hasAllowListRole && isCre8orsDay && (
           <Button
             id="mint_now"
