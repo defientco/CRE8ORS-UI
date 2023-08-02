@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -10,6 +10,7 @@ import DNALoading from "./DNALoading"
 
 const PreDesktopProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
+  const [isEditable, setIsEditable ] = useState(false)
 
   return (
     <div
@@ -25,7 +26,9 @@ const PreDesktopProfileView = () => {
             pt-6`}
       >
         <div className="w-full flex justify-between items-center px-10">
-          <div className="font-eigerdals text-[75px]">Stargirl</div>
+          {isEditable ? <input 
+          className="font-eigerdals text-[75px] w-[285px]"/>
+          : <div className="font-eigerdals text-[75px]">Stargirl</div>}
           <div className="flex items-center gap-x-[10px]">
             <div
               className="w-[26px] h-[26px] bg-[black] 
@@ -70,7 +73,9 @@ const PreDesktopProfileView = () => {
         </div>
         <div className="w-full flex justify-between items-start px-10">
           <div className="flex flex-col">
-            <PreTwitterLocation />
+            <PreTwitterLocation 
+              handleEditable={() => setIsEditable(true)}
+            />
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
