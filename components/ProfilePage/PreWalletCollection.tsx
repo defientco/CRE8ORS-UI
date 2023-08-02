@@ -84,18 +84,21 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
         <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
           <div
             className="mt-[35px]
-                  bg-[url('/assets/Profile/dna_animation.gif')]
-                  bg-cover relative
+                  relative
                   flex items-center justify-center
-                  lg:px-4 lg:py-6
-                  p-2
+                  lg:px-4 lg:py-6 p-2
                   rounded-[8px] lg:rounded-[15px]
                   overflow-hidden
                   lg:w-[287px] lg:h-[287px]
                   samsungS8:w-[130px] samsungS8:h-[130px]
-                  w-[120px] h-[120px]"
+                  w-[120px] h-[120px]
+                  after:content-[''] after:bg-[white] after:opacity-[0.3]
+                  after:w-full after:h-full
+                  after:absolute
+                  after:left-0 after:top-0 after:z-[1]"
           >
-            <div className="absolute w-full h-full bg-[black] left-0 top-0 opacity-[0.6] z-[1]" />
+            <div className="absolute w-full h-full left-0 top-0 z-[2]
+            bg-[url('/assets/Profile/dna_animation.gif')] bg-cover" />
             <div
               className="grid grid-cols-3 w-full relative z-[2]
                       gap-y-[5px] lg:gap-y-[15px]"

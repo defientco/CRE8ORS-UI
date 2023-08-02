@@ -16,15 +16,8 @@ const PreProfileInformation = () => (
       {`Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor\nincididunt ut labore et dolore\nmagna aliqua. Ut enim ad\nminim veniam, quis nostrud\nexercitation.`}
     </pre>
     <div
-      className="text-[22px] font-bold font-quicksand
-              leading-[99.3%] pt-[20px]
-              lg:text-right"
-    >
-      PROMPTS
-    </div>
-    <div
       className="text-[16px] font-medium font-quicksand
-              pt-[10px]
+              pt-[40px]
               leading-[99.3%]
               lg:text-right"
     >
