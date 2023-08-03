@@ -23,6 +23,19 @@ export const userNameExists = async (username: string) => {
     throw new Error(e)
   }
 }
+
+export const userProfileExists = async (walletAddress: string) => {
+  try {
+    await dbConnect()
+    const doc = await UserProfile.countDocuments({ walletAddress })
+    if (doc > 0) {
+      return true
+    }
+    return false
+  } catch (e) {
+    throw new Error(e)
+  }
+}
 export const addUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
