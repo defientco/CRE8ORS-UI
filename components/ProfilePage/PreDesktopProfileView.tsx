@@ -61,7 +61,7 @@ const PreDesktopProfileView = () => {
               </Button>
               <div
                 className="absolute w-full h-full
-            left-0 top-0 backdrop-blur-[2px] z-[80]"
+            left-0 top-0 backdrop-blur-[4px] z-[80]"
               />
             </>
           ) : (
