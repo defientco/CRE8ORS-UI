@@ -105,7 +105,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
             {lockedCntOfCre8or ? (
               <MintModalCTAButton link="/staking" id="stake_link_btn" label="Enter warehouse" />
             ) : (
-              <MintModalCTAButton link="/profile" id="profile_link_btn" label="set up profile" />
+              <MintModalCTAButton link="/save-profile" id="profile_link_btn" label="set up profile" />
             )}
           </>
         )}
