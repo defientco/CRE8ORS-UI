@@ -3,6 +3,10 @@ import { IsString, IsOptional, IsNotEmpty } from "class-validator"
 export class UserProfileDTO {
   @IsNotEmpty()
   @IsString()
+  walletAddress: string
+
+  @IsOptional()
+  @IsString()
   username: string
 
   @IsOptional()

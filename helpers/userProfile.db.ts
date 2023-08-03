@@ -2,7 +2,8 @@ import UserProfile from "../Models/UserProfile"
 import dbConnect from "../utils/db"
 
 export interface UserProfile {
-  username: string
+  walletAddress: string
+  username?: string
   bio?: string
   twitterHandle?: string
   location?: string
@@ -22,11 +23,20 @@ export const userNameExists = async (username: string) => {
     throw new Error(e)
   }
 }
-export const addUserProfile = async (body: UserProfile) => {
-  const userAlreadyExists = await userNameExists(body.username)
-  if (userAlreadyExists) {
-    return { success: false, message: "User already exists" }
+
+export const userProfileExists = async (walletAddress: string) => {
+  try {
+    await dbConnect()
+    const doc = await UserProfile.countDocuments({ walletAddress })
+    if (doc > 0) {
+      return true
+    }
+    return false
+  } catch (e) {
+    throw new Error(e)
   }
+}
+export const addUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
     const result = await UserProfile.create(body)
@@ -39,7 +49,7 @@ export const addUserProfile = async (body: UserProfile) => {
 export const updateUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ username: body.username }).lean()
+    const doc = await UserProfile.findOne({ walletAddress: body.walletAddress }).lean()
     if (!doc) {
       throw new Error("No user found")
     }
@@ -50,10 +60,10 @@ export const updateUserProfile = async (body: UserProfile) => {
   }
 }
 
-export const getUserProfile = async (username: string) => {
+export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ username }).lean()
+    const doc = await UserProfile.findOne({ walletAddress }).lean()
     return { success: true, doc }
   } catch (e) {
     throw new Error(e)
