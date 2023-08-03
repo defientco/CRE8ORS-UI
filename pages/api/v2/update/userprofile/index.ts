@@ -5,7 +5,6 @@ import { updateUserProfile } from "../../../../../helpers/userProfile.db"
 class UpdateUserProfile {
   @Put()
   async update(@Body() body: UserProfileDTO) {
-    console.log(body)
     const result = await updateUserProfile(body)
     return result
   }
