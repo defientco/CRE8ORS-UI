@@ -12,7 +12,7 @@ const errorMessages = [
 ]
 
 const handleTxError = (error: any) => {
-  const primaryError = error?.data?.message
+  const primaryError = error?.reason || error?.data?.message
   const nestedError = error?.error?.message
   const fallbackError = error.message
   let customToastMessage

@@ -3,7 +3,7 @@ import abi from "./abi-cre8ors.json"
 import getDefaultProvider from "./getDefaultProvider"
 
 const balanceOfAddress = async (address: string) => {
-  const provider = getDefaultProvider(5)
+  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, abi, provider)
 
   try {
