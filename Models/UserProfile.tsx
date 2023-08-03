@@ -1,8 +1,8 @@
 import { Schema, model, models, Model } from "mongoose"
 
 interface UserProfile {
-  username: string
   walletAddress: string
+  username?: string
   bio?: string
   twitterHandle?: string
   location?: string
