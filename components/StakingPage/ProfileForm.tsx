@@ -99,7 +99,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[30px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[15px] md:gap-x-[30px]">
         <div className="flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
@@ -162,7 +162,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-[20px]">
         <div className="col-span-2 flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
