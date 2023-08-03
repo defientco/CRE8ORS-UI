@@ -56,6 +56,7 @@ export const getUserProfile = async (username: string) => {
     const doc = await UserProfile.findOne({ username }).lean()
     return { success: true, doc }
   } catch (e) {
+    console.log('here')
     throw new Error(e)
   }
 }
