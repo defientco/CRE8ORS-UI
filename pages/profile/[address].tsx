@@ -25,11 +25,11 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
     }
 
   try {
-    const userInfo: any = await axios.get(
+    const res: any = await axios.get(
       `${domain}/api/v2/get/userprofile?walletAddress=${address}`,
     )
 
-    if (!userInfo?.doc) {
+    if (!res.data?.doc) {
       return {
         redirect: {
           destination: "/save-profile",
