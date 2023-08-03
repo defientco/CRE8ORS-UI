@@ -1,0 +1,160 @@
+[
+  {
+    "type": "constructor",
+    "name": "",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_cre8orsNFT",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_minterUtilityContractAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "error",
+    "name": "Access_OnlyAdmin",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "ExistingDiscount",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "MissingDiscount",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "addDiscount",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "cre8orsNFT",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hasDiscount",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "mint",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "minterUtilityContractAddress",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "removeDiscount",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "recipient",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setNewMinterUtilityContractAddress",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newMinterUtilityContractAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "totalClaimed",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

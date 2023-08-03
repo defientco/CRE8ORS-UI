@@ -1,0 +1,194 @@
+[
+  {
+    "type": "constructor",
+    "name": "",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_collectionContractAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_minterUtility",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "_friendsAndFamilyMinter",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "error",
+    "name": "Access_OnlyAdmin",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "AlreadyClaimedFreeMint",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "ApprovalCallerNotOwnerNorApproved",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "NoTokensProvided",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "collectionContractAddress",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "freeMintClaimed",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "friendsAndFamilyMinter",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "mint",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "tokenIds",
+        "internalType": "uint256[]"
+      },
+      {
+        "type": "address",
+        "name": "passportContract",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "recipient",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "minterUtilityContractAddress",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "setFriendsAndFamilyMinter",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newfriendsAndFamilyMinterAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setNewMinterUtilityContractAddress",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_newMinterUtilityContractAddress",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "toggleHasClaimedFreeMint",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "totalClaimed",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]

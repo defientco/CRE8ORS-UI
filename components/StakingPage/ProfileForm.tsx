@@ -11,7 +11,9 @@ interface ProfileFormProps {
 }
 
 const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
-  const saveProfile = () => {
+  const saveProfile = (values: any) => {
+    // eslint-disable-next-line  no-console
+    console.log("ZIAD: USE THIS VALUES FOR REUQUEST BODY: ", values)
     handleStep(STATUS.SAVELOADING)
     setTimeout(() => {
       window.open("/profile", "_self")
@@ -23,35 +25,17 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
   const [location, setLocation] = useState("")
   const [askmeabout, setAskMeAbout] = useState("")
   const [bio, setBio] = useState("")
+  const [needhelpwith, setNeedHelpWith] = useState("")
 
   return (
     <Form
-      onSubmit={async () => {
-        saveProfile()
+      onSubmit={async ({ ...values }) => {
+        saveProfile(values)
       }}
       validationSchema={profileValidation}
       className="w-full flex flex-col gap-y-[10px] md:gap-4"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[10px] md:gap-x-[30px]">
-        <div className="flex flex-col gap-[5px]">
-          <p
-            className="font-quicksand font-bold
-          text-white 
-          text-[16px] md:text-[20px]"
-          >
-            User Name:{" "}
-          </p>
-          <Input
-            id="username"
-            name="username"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
-            placeholder="Username"
-            hookToForm
-          />
-        </div>
         <div className="flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
@@ -71,8 +55,6 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             hookToForm
           />
         </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[30px]">
         <div className="flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
@@ -89,6 +71,27 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
             containerClassName="h-[33px] w-[235px]"
             placeholder="Location"
+            hookToForm
+          />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[30px]">
+        <div className="flex flex-col gap-[5px]">
+          <p
+            className="font-quicksand font-bold
+            text-white 
+            text-[16px] md:text-[20px]"
+          >
+            I need help with:{" "}
+          </p>
+          <Input
+            id="needhelpwith"
+            name="needhelpwith"
+            value={needhelpwith}
+            onChange={(e) => setNeedHelpWith(e.target.value)}
+            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="h-[33px] w-[235px]"
+            placeholder="I need help with..."
             hookToForm
           />
         </div>
@@ -135,17 +138,38 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           />
         </div>
       </div>
-      <div className="flex justify-center w-full">
-        <Button
-          id="lets_begin_staking"
-          className="!font-eigerdals !font-bold
-                  !px-0 !py-0
-                  w-[163px] h-[45px]
-                  !text-[19px]"
-          type="submit"
-        >
-          SAVE PROFILE
-        </Button>
+      <div className="grid grid-cols-3">
+        <div className="col-span-2 flex flex-col gap-[5px]">
+          <p
+            className="font-quicksand font-bold
+            text-white 
+            text-[16px] md:text-[20px]"
+          >
+            User Name:{" "}
+          </p>
+          <Input
+            id="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
+            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="h-[33px] w-[235px]"
+            placeholder="Username"
+            hookToForm
+          />
+        </div>
+        <div className="col-span-1 flex justify-center items-end">
+          <Button
+            id="lets_begin_staking"
+            className="!font-eigerdals !font-bold
+                    !px-0 !py-0
+                    w-[163px] h-[45px]
+                    !text-[19px]"
+            type="submit"
+          >
+            SAVE PROFILE
+          </Button>
+        </div>
       </div>
     </Form>
   )

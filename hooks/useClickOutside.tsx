@@ -1,16 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react"
 
 interface IClickOutsideHook {
-    id: string
+  id: string
   shouldRegister: boolean
   onOutsideClick: () => any
 }
 
-function useClickOutside({
-    id,
-  shouldRegister,
-  onOutsideClick
-}: IClickOutsideHook) {
+function useClickOutside({ id, shouldRegister, onOutsideClick }: IClickOutsideHook) {
   const ref = useRef<HTMLDivElement | null>(null)
 
   const handleMouseClick = async (e: MouseEvent) => {
@@ -23,14 +19,14 @@ function useClickOutside({
 
   useEffect(() => {
     if (!shouldRegister) {
-      document.removeEventListener('mousedown', handleMouseClick)
+      document.removeEventListener("mousedown", handleMouseClick)
       return
     }
 
-    document.addEventListener('mousedown', handleMouseClick)
+    document.addEventListener("mousedown", handleMouseClick)
 
     return () => {
-      document.removeEventListener('mousedown', handleMouseClick)
+      document.removeEventListener("mousedown", handleMouseClick)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldRegister])
