@@ -1,6 +1,6 @@
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
-import { useState } from "react"
+import { FC, useState } from "react"
 import Layout from "../Layout"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
@@ -12,13 +12,17 @@ import Loading from "./Loading"
 import SaveProfile from "./SaveProfile"
 import Character from "./Character"
 
-const StakingPage = () => {
+interface StakingPageProps {
+  type: "fully" | "only-profile"
+}
+
+const StakingPage: FC<StakingPageProps> = ({ type }) => {
   const [containerRef, { width }] = useMeasure()
   const isResponsive = useMediaQuery("(max-width: 1440px)")
   const isMobile = useMediaQuery("(max-width: 768px)")
   const { themeMode } = useTheme()
 
-  const [step, setStep] = useState<string>(STATUS.START)
+  const [step, setStep] = useState<string>(type === "fully" ? STATUS.START : STATUS.MISSTAKING)
 
   const handleStep = (currentStep: string) => {
     setStep(currentStep)
@@ -87,7 +91,9 @@ const StakingPage = () => {
               />
             )}
             {step === STATUS.SAVELOADING && <Loading content="Saving profile..." />}
-            {step === STATUS.PROFILE && <SaveProfile handleStep={handleStep} />}
+            {(step === STATUS.PROFILE || step === STATUS.MISSTAKING) && (
+              <SaveProfile handleStep={handleStep} />
+            )}
             <Footer className="!pt-0 !pb-0 !bg-transparent relative !z-[10]" />
           </div>
         )}
