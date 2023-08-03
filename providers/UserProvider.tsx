@@ -32,7 +32,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
     const info = await getUserInfo(address)
 
-    setUserInfo(info)
+    if (!info?.doc) setUserInfo(null)
+
+    setUserInfo(info.doc)
   }, [address])
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -8,10 +8,20 @@ import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
 import { Button } from "../../shared/Button"
+import { useUserProvider } from "../../providers/UserProvider"
 
 const PreDesktopProfileView = () => {
+  const { userInfo } = useUserProvider()
+
   const [expandedMore, setExpandedMore] = useState(false)
   const [isEditable, setIsEditable] = useState(false)
+  const [editedUserName, setEditedUserName] = useState("")
+
+  useEffect(() => {
+    if (userInfo) {
+      setEditedUserName(userInfo.username)
+    }
+  }, [isEditable, userInfo])
 
   return (
     <div
@@ -39,6 +49,9 @@ const PreDesktopProfileView = () => {
             px-[10px] py-[5px]
             leading-[110.3%]
             rounded-[10px]"
+                value={editedUserName}
+                onChange={(e) => setEditedUserName(e.target.value)}
+                type="text"
               />
               <Button
                 id="save_profile_button"
@@ -52,7 +65,7 @@ const PreDesktopProfileView = () => {
               />
             </>
           ) : (
-            <div className="font-eigerdals text-[75px]">Stargirl</div>
+            <div className="font-eigerdals text-[75px]">{userInfo?.username}</div>
           )}
           <div className="flex items-center gap-x-[10px]">
             <div

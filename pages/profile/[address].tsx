@@ -25,9 +25,7 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
     }
 
   try {
-    const res: any = await axios.get(
-      `${domain}/api/v2/get/userprofile?walletAddress=${address}`,
-    )
+    const res: any = await axios.get(`${domain}/api/v2/get/userprofile?walletAddress=${address}`)
 
     if (!res.data?.doc) {
       return {
