@@ -12,7 +12,10 @@ import {
 import { useAccount } from "wagmi"
 import { getUserInfo } from "../lib/userInfo"
 
-interface userProps {}
+interface userProps {
+  getUserData: () => Promise<void>
+  userInfo: any
+}
 
 interface Props {
   children: ReactNode
@@ -39,8 +42,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const provider = useMemo(
     () => ({
       userInfo,
+      getUserData,
     }),
-    [userInfo],
+    [userInfo, getUserData],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>
