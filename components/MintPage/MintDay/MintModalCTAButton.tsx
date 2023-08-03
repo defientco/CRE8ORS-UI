@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { useRouter } from "next/router"
 import { Button } from "../../../shared/Button"
 
 interface MintModalCTAButtonProps {
@@ -8,21 +9,25 @@ interface MintModalCTAButtonProps {
   className?: string
 }
 
-const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({ id, link, label, className }) => (
-  <Button
-    id={id}
-    className={`!px-0 !py-0
-            xl:!w-[260.3px] xl:!h-[50px] 
-            !w-[220px] !h-[40px]
-            !font-eigerdals font-bold !bg-black 
-            text-[15px] xl:text-[20px]  
-            !rounded-[10px]
-            !text-black dark:!text-white
-            dark:!bg-black !bg-white ${className || ""}`}
-    onClick={() => window.open(link, "_blank")}
-  >
-    {label}
-  </Button>
-)
+const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({ id, link, label, className }) => {
+  const router = useRouter()
+
+  return (
+    <Button
+      id={id}
+      className={`!px-0 !py-0
+              xl:!w-[260.3px] xl:!h-[50px] 
+              !w-[220px] !h-[40px]
+              !font-eigerdals font-bold !bg-black 
+              text-[15px] xl:text-[20px]  
+              !rounded-[10px]
+              !text-black dark:!text-white
+              dark:!bg-black !bg-white ${className || ""}`}
+      onClick={() => router.push(link)}
+    >
+      {label}
+    </Button>
+  )
+}
 
 export default MintModalCTAButton

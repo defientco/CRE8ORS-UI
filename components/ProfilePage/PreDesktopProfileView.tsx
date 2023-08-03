@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { FC } from "react"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -7,9 +7,31 @@ import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
+import EditPanel from "./EditPanel"
+import { useUserProvider } from "../../providers/UserProvider"
+import { ProfileViewProps } from "./interface"
 
-const PreDesktopProfileView = () => {
-  const [expandedMore, setExpandedMore] = useState(false)
+const PreDesktopProfileView: FC<ProfileViewProps> = ({
+  saveProfile,
+  editedUserName,
+  handleEditedUserName,
+  handleEditable,
+  editedTwitterHandle,
+  handleEditedTwitterHandle,
+  editedLocation,
+  handleEditedLocation,
+  editedBio,
+  handleEditedBio,
+  editedAskedMeAbout,
+  handleEditedAskedMeAbout,
+  editedINeedHelpWith,
+  handleINeedHelpWith,
+  isEditable,
+  handleExpandMore,
+  expandedMore,
+  loading,
+}) => {
+  const { userInfo } = useUserProvider()
 
   return (
     <div
@@ -25,7 +47,31 @@ const PreDesktopProfileView = () => {
             pt-6`}
       >
         <div className="w-full flex justify-between items-center px-10">
-          <div className="font-eigerdals text-[75px]">Stargirl</div>
+          {isEditable ? (
+            <>
+              <input
+                className="relative z-[105] 
+            font-eigerdals text-[75px] w-[320px]
+            ring-0 outline-none
+            border-[lightgray] border-[1px]
+            mb-[20px] bg-[#D9D9D9]
+            px-[10px] py-[2px]
+            leading-[110.3%]
+            rounded-[4px]"
+                value={editedUserName}
+                onChange={handleEditedUserName}
+                type="text"
+              />
+
+              <EditPanel
+                handleCloseEditingMode={() => handleEditable(false)}
+                isExpanded={expandedMore}
+                saveProfile={!loading ? saveProfile : async () => {}}
+              />
+            </>
+          ) : (
+            <div className="font-eigerdals text-[75px]">{userInfo?.username}</div>
+          )}
           <div className="flex items-center gap-x-[10px]">
             <div
               className="w-[26px] h-[26px] bg-[black] 
@@ -70,7 +116,14 @@ const PreDesktopProfileView = () => {
         </div>
         <div className="w-full flex justify-between items-start px-10">
           <div className="flex flex-col">
-            <PreTwitterLocation />
+            <PreTwitterLocation
+              handleEditable={() => handleEditable(true)}
+              isEditable={isEditable}
+              editedTwitterHandle={editedTwitterHandle}
+              handleEditedTwitterHandle={handleEditedTwitterHandle}
+              editedLocation={editedLocation}
+              handleEditedLocation={handleEditedLocation}
+            />
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
@@ -80,14 +133,19 @@ const PreDesktopProfileView = () => {
             </div>
           </div>
           <div className="flex flex-col gap-y-[40px]">
-            <PreProfileInformation />
+            <PreProfileInformation
+              editedAskedMeAbout={editedAskedMeAbout}
+              editedINeedHelpWith={editedINeedHelpWith}
+              editedBio={editedBio}
+              handleEditedAskedMeAbout={handleEditedAskedMeAbout}
+              handleINeedHelpWith={handleINeedHelpWith}
+              handleEditedBio={handleEditedBio}
+              isEditable={isEditable}
+            />
             <PreSimilarProfiles />
           </div>
         </div>
-        <PreWalletCollection
-          handleExpandMore={(expanded: boolean) => setExpandedMore(expanded)}
-          expandMore={expandedMore}
-        />
+        <PreWalletCollection handleExpandMore={handleExpandMore} expandMore={expandedMore} />
       </div>
     </div>
   )

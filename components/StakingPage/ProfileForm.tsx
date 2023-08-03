@@ -1,23 +1,47 @@
 import { useState, FC } from "react"
+import { useAccount } from "wagmi"
+import { toast } from "react-toastify"
+import { useRouter } from "next/router"
 import Form from "../../shared/Form"
 import { profileValidation } from "./validation"
 import Input from "../../shared/Input"
 import { Button } from "../../shared/Button"
 import TextArea from "../../shared/TextArea"
 import { STATUS } from "./Status"
+import { saveUserInfo } from "../../lib/userInfo"
+import { useUserProvider } from "../../providers/UserProvider"
 
 interface ProfileFormProps {
   handleStep: (step: string) => void
 }
 
 const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
-  const saveProfile = (values: any) => {
-    // eslint-disable-next-line  no-console
-    console.log("ZIAD: USE THIS VALUES FOR REUQUEST BODY: ", values)
+  const router = useRouter()
+
+  const { address } = useAccount()
+  const { getUserData } = useUserProvider()
+
+  const saveProfile = async (values: any) => {
+    if (!address) {
+      toast.error("Please, connect wallet")
+      return
+    }
+
     handleStep(STATUS.SAVELOADING)
-    setTimeout(() => {
-      window.open("/profile", "_self")
-    }, 2000)
+    const response = await saveUserInfo({
+      address,
+      ...values,
+    })
+
+    if (!response) {
+      toast.error("profile saved failed!")
+      handleStep(STATUS.PROFILE)
+      return
+    }
+
+    await getUserData()
+
+    router.push(`/profile/${address}`)
   }
 
   const [username, setUserName] = useState("")
@@ -75,7 +99,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[30px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[15px] md:gap-x-[30px]">
         <div className="flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
@@ -138,7 +162,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-y-[20px]">
         <div className="col-span-2 flex flex-col gap-[5px]">
           <p
             className="font-quicksand font-bold
