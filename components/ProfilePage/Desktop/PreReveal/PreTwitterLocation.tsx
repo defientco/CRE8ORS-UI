@@ -2,17 +2,9 @@ import { FC } from "react"
 import Media from "../../../../shared/Media"
 import Tooltip from "../../../../shared/Tooltip"
 import { useUserProvider } from "../../../../providers/UserProvider"
+import { TwitterLocationProps } from "../../interface"
 
-interface PreDesktopProfileViewProps {
-  handleEditable: () => void
-  isEditable: boolean
-  editedTwitterHandle: string
-  handleEditedTwitterHandle: (e: any) => void
-  editedLocation: string
-  handleEditedLocation: (e: any) => void
-}
-
-const PreTwitterLocation: FC<PreDesktopProfileViewProps> = ({
+const PreTwitterLocation: FC<TwitterLocationProps> = ({
   handleEditable,
   isEditable,
   handleEditedTwitterHandle,

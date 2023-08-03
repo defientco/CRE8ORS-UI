@@ -1,17 +1,8 @@
 import { FC } from "react"
 import { useUserProvider } from "../../../../providers/UserProvider"
+import { ProfileInformationProps } from "../../interface"
 
-interface PreProfileInformationProps {
-  editedBio: string
-  handleEditedBio: (e: any) => void
-  editedAskedMeAbout: string
-  handleEditedAskedMeAbout: (e: any) => void
-  editedINeedHelpWith: string
-  handleINeedHelpWith: (e: any) => void
-  isEditable: boolean
-}
-
-const PreProfileInformation: FC<PreProfileInformationProps> = ({
+const PreProfileInformation: FC<ProfileInformationProps> = ({
   editedBio,
   handleEditedBio,
   editedAskedMeAbout,
@@ -35,9 +26,10 @@ const PreProfileInformation: FC<PreProfileInformationProps> = ({
         <textarea
           className="relative z-[105]
          mt-[15px] 
-         text-right text-[16px] leading-[99.3%] 
+         text-center md:text-right 
+         text-[16px] leading-[99.3%] 
          font-quicksand font-medium
-         w-[220px] h-[112px]
+         w-[220px] h-[80px] md:h-[112px]
          ring-0 outline-none
          border-[lightgray] border-[1px]
          bg-[#D9D9D9]
@@ -69,7 +61,8 @@ const PreProfileInformation: FC<PreProfileInformationProps> = ({
         <input
           className="relative z-[105]
          mt-[15px] 
-         text-right text-[16px] leading-[99.3%] 
+         text-center md:text-right 
+         text-[16px] leading-[99.3%] 
          font-quicksand font-medium
          w-[220px] h-[36px]
          ring-0 outline-none
@@ -102,7 +95,8 @@ const PreProfileInformation: FC<PreProfileInformationProps> = ({
         <input
           className="relative z-[105]
          mt-[15px] 
-         text-right text-[16px] leading-[99.3%] 
+         text-center md:text-right 
+         text-[16px] leading-[99.3%] 
          font-quicksand font-medium
          w-[220px] h-[36px]
          ring-0 outline-none

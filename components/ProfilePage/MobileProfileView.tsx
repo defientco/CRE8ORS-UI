@@ -3,7 +3,7 @@ import Media from "../../shared/Media"
 import ProfileInformation from "./Desktop/Reveal/ProfileInformation"
 import SimilarProfiles from "./Mobile/Reveal/SimilarProfiles"
 import WalletCollection from "./WalletCollection"
-import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
+// import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
 import PFPImage from "./Mobile/Reveal/PFPImage"
 
 const MobileProfileView = () => {
@@ -30,7 +30,7 @@ const MobileProfileView = () => {
             pt-6`}
       >
         <div className="font-eigerdals text-[40px] text-center">Stargirl</div>
-        <TwitterLocation />
+        {/* <TwitterLocation /> */}
         <div className="w-full flex justify-center items-center px-10 gap-x-[10px] pt-[15px]">
           <div
             className="w-[26px] h-[26px] bg-[#DBDBDB] 
