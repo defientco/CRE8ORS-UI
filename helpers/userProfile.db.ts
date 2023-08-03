@@ -3,6 +3,7 @@ import dbConnect from "../utils/db"
 
 export interface UserProfile {
   username: string
+  walletAddress: string
   bio?: string
   twitterHandle?: string
   location?: string
@@ -39,7 +40,7 @@ export const addUserProfile = async (body: UserProfile) => {
 export const updateUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ username: body.username }).lean()
+    const doc = await UserProfile.findOne({ walletAddress: body.walletAddress }).lean()
     if (!doc) {
       throw new Error("No user found")
     }
@@ -50,10 +51,10 @@ export const updateUserProfile = async (body: UserProfile) => {
   }
 }
 
-export const getUserProfile = async (username: string) => {
+export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ username }).lean()
+    const doc = await UserProfile.findOne({ walletAddress }).lean()
     return { success: true, doc }
   } catch (e) {
     throw new Error(e)

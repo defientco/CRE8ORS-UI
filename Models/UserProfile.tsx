@@ -2,6 +2,7 @@ import { Schema, model, models, Model } from "mongoose"
 
 interface UserProfile {
   username: string
+  walletAddress: string
   bio?: string
   twitterHandle?: string
   location?: string
@@ -10,6 +11,11 @@ interface UserProfile {
 }
 
 const UserProfileSchema = new Schema<UserProfile>({
+  walletAddress: {
+    type: String,
+    unique: true,
+    required: [true, "Please add a wallet address"],
+  },
   username: {
     type: String,
     unique: true,

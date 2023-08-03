@@ -3,8 +3,8 @@ import { getUserProfile } from "../../../../../helpers/userProfile.db"
 
 class GetUserProfile {
   @Get()
-  async get(@Query("username") username: string) {
-    const doc = await getUserProfile(username)
+  async get(@Query("walletAddress") walletAddress: string) {
+    const doc = await getUserProfile(walletAddress)
     return doc
   }
 }

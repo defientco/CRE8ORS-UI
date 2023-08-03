@@ -5,6 +5,10 @@ export class UserProfileDTO {
   @IsString()
   username: string
 
+  @IsNotEmpty()
+  @IsString()
+  walletAddress: string
+
   @IsOptional()
   @IsString()
   bio?: string
