@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -7,10 +7,11 @@ import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
+import { Button } from "../../shared/Button"
 
 const PreDesktopProfileView = () => {
   const [expandedMore, setExpandedMore] = useState(false)
-  const [isEditable, setIsEditable ] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
 
   return (
     <div
@@ -19,16 +20,40 @@ const PreDesktopProfileView = () => {
         rounded-[10px]
         overflow-hidden"
     >
-      <DNALoading />
+      {!isEditable && <DNALoading />}
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
             pt-6`}
       >
+        {isEditable && <DNALoading className="!z-[104]" />}
         <div className="w-full flex justify-between items-center px-10">
-          {isEditable ? <input 
-          className="font-eigerdals text-[75px] w-[285px]"/>
-          : <div className="font-eigerdals text-[75px]">Stargirl</div>}
+          {isEditable ? (
+            <>
+              <input
+                className="relative z-[105] 
+            font-eigerdals text-[75px] w-[320px]
+            ring-0 outline-none
+            border-[lightgray] border-[1px]
+            mb-[20px]
+            px-[10px] py-[5px]
+            leading-[110.3%]
+            rounded-[10px]"
+              />
+              <Button
+                id="save_profile_button"
+                className="!z-[105] !relative !bg-[black] !text-[white]"
+              >
+                save profile
+              </Button>
+              <div
+                className="absolute w-full h-full
+            left-0 top-0 backdrop-blur-[2px] z-[80]"
+              />
+            </>
+          ) : (
+            <div className="font-eigerdals text-[75px]">Stargirl</div>
+          )}
           <div className="flex items-center gap-x-[10px]">
             <div
               className="w-[26px] h-[26px] bg-[black] 
@@ -73,9 +98,7 @@ const PreDesktopProfileView = () => {
         </div>
         <div className="w-full flex justify-between items-start px-10">
           <div className="flex flex-col">
-            <PreTwitterLocation 
-              handleEditable={() => setIsEditable(true)}
-            />
+            <PreTwitterLocation handleEditable={() => setIsEditable(true)} />
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"

@@ -1,11 +1,15 @@
+import { FC } from "react"
 import Media from "../../shared/Media"
 
-const DNALoading = () => (
+interface DNALoadingProps {
+  className?: string
+}
+const DNALoading: FC<DNALoadingProps> = ({ className }) => (
   <div
-    className="relative lg:absolute 
-        w-full flex justify-center
-        pt-[30px] lg:pt-[105px]
-        z-[2]"
+    className={`relative lg:absolute 
+    w-full h-full flex justify-center
+    pt-[30px] lg:pt-[105px]
+    z-[1] ${className || ""}`}
   >
     <Media
       type="image"

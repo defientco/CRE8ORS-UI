@@ -1,14 +1,12 @@
+import { FC } from "react"
 import Media from "../../../../shared/Media"
 import Tooltip from "../../../../shared/Tooltip"
-import { FC } from 'react'
 
 interface PreDesktopProfileViewProps {
   handleEditable: () => void
 }
 
-const PreTwitterLocation: FC<PreDesktopProfileViewProps> = ({
-  handleEditable
-}) => (
+const PreTwitterLocation: FC<PreDesktopProfileViewProps> = ({ handleEditable }) => (
   <div className="flex items-center gap-x-[15px]">
     <div className="flex items-center gap-x-[5px]">
       <Media
