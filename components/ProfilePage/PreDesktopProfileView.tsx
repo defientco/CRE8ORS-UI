@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -7,19 +8,50 @@ import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import PreSimilarProfiles from "./Desktop/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
-import { Button } from "../../shared/Button"
 import { useUserProvider } from "../../providers/UserProvider"
+import EditPanel from "./EditPanel"
+import { updateUserInfo } from "../../lib/userInfo"
 
 const PreDesktopProfileView = () => {
-  const { userInfo } = useUserProvider()
+  const router = useRouter()
+  const { userInfo, getUserData } = useUserProvider()
+  const { address } = router.query
 
   const [expandedMore, setExpandedMore] = useState(false)
   const [isEditable, setIsEditable] = useState(false)
   const [editedUserName, setEditedUserName] = useState("")
+  const [editedTwitterHandle, setEditedTwitterHandle] = useState("")
+  const [editedLocation, setEditedLocation] = useState("")
+  const [editedAskedMeAbout, setEditedAskedMeAbout] = useState("")
+  const [editedINeedHelpWith, setEditedINeedHelpWith] = useState("")
+  const [editedBio, setEditedBio] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const saveProfile = async () => {
+    setLoading(true)
+    const response = await updateUserInfo({
+      address,
+      twitterHandle: editedTwitterHandle,
+      location: editedLocation,
+      iNeedHelpWith: editedINeedHelpWith,
+      askMeAbout: editedAskedMeAbout,
+      bio: editedBio,
+      username: editedUserName,
+    })
+
+    if (response) await getUserData()
+    setLoading(false)
+    setIsEditable(false)
+  }
 
   useEffect(() => {
     if (userInfo) {
       setEditedUserName(userInfo.username)
+      setEditedTwitterHandle(userInfo.twitterHandle)
+      setEditedLocation(userInfo.location)
+      setEditedAskedMeAbout(userInfo.askMeAbout)
+      setEditedINeedHelpWith(userInfo.iNeedHelpWith)
+      setEditedBio(userInfo.bio)
     }
   }, [isEditable, userInfo])
 
@@ -30,13 +62,12 @@ const PreDesktopProfileView = () => {
         rounded-[10px]
         overflow-hidden"
     >
-      {!isEditable && <DNALoading />}
+      <DNALoading />
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
             pt-6`}
       >
-        {isEditable && <DNALoading className="!z-[104]" />}
         <div className="w-full flex justify-between items-center px-10">
           {isEditable ? (
             <>
@@ -45,23 +76,19 @@ const PreDesktopProfileView = () => {
             font-eigerdals text-[75px] w-[320px]
             ring-0 outline-none
             border-[lightgray] border-[1px]
-            mb-[20px]
-            px-[10px] py-[5px]
+            mb-[20px] bg-[#D9D9D9]
+            px-[10px] py-[2px]
             leading-[110.3%]
-            rounded-[10px]"
+            rounded-[4px]"
                 value={editedUserName}
                 onChange={(e) => setEditedUserName(e.target.value)}
                 type="text"
               />
-              <Button
-                id="save_profile_button"
-                className="!z-[105] !relative !bg-[black] !text-[white]"
-              >
-                save profile
-              </Button>
-              <div
-                className="absolute w-full h-full
-            left-0 top-0 backdrop-blur-[4px] z-[80]"
+
+              <EditPanel
+                handleCloseEditingMode={() => setIsEditable(false)}
+                isExpanded={expandedMore}
+                saveProfile={!loading ? saveProfile : async () => {}}
               />
             </>
           ) : (
@@ -111,7 +138,14 @@ const PreDesktopProfileView = () => {
         </div>
         <div className="w-full flex justify-between items-start px-10">
           <div className="flex flex-col">
-            <PreTwitterLocation handleEditable={() => setIsEditable(true)} />
+            <PreTwitterLocation
+              handleEditable={() => setIsEditable(true)}
+              isEditable={isEditable}
+              editedTwitterHandle={editedTwitterHandle}
+              handleEditedTwitterHandle={(e) => setEditedTwitterHandle(e.target.value)}
+              editedLocation={editedLocation}
+              handleEditedLocation={(e) => setEditedLocation(e.target.value)}
+            />
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
@@ -121,7 +155,15 @@ const PreDesktopProfileView = () => {
             </div>
           </div>
           <div className="flex flex-col gap-y-[40px]">
-            <PreProfileInformation />
+            <PreProfileInformation
+              editedAskedMeAbout={editedAskedMeAbout}
+              editedINeedHelpWith={editedINeedHelpWith}
+              editedBio={editedBio}
+              handleEditedAskedMeAbout={(e) => setEditedAskedMeAbout(e.target.value)}
+              handleINeedHelpWith={(e) => setEditedINeedHelpWith(e.target.value)}
+              handleEditedBio={(e) => setEditedBio(e.target.value)}
+              isEditable={isEditable}
+            />
             <PreSimilarProfiles />
           </div>
         </div>

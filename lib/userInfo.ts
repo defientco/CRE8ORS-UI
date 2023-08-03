@@ -29,3 +29,28 @@ export const saveUserInfo = async ({
     return null
   }
 }
+
+export const updateUserInfo = async ({
+  twitterHandle,
+  location,
+  iNeedHelpWith,
+  askMeAbout,
+  bio,
+  username,
+  address,
+}) => {
+  try {
+    const { data } = await axios.put(`/api/v2/update/userprofile`, {
+      walletAddress: address,
+      location,
+      bio,
+      username,
+      twitterHandle,
+      iNeedHelpWith,
+      askMeAbout,
+    })
+    return data
+  } catch (err) {
+    return null
+  }
+}
