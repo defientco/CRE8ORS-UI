@@ -6,6 +6,7 @@ import PreDesktopProfileView from "./PreDesktopProfileView"
 import PreMobileProfileView from "./PreMobileProfileView"
 import { useUserProvider } from "../../providers/UserProvider"
 import { updateUserInfo } from "../../lib/userInfo"
+import { Button } from "../../shared/Button"
 
 const ProfilePage = () => {
   const router = useRouter()
@@ -90,26 +91,63 @@ const ProfilePage = () => {
               w-full"
       >
         {isMobile ? (
-          <PreMobileProfileView
-            saveProfile={saveProfile}
-            loading={loading}
-            handleEditable={handleEditable}
-            handleEditedUserName={handleEditedUserName}
-            handleEditedAskedMeAbout={handleEditedAskedMeAbout}
-            handleEditedBio={handleEditedBio}
-            expandedMore={expandedMore}
-            handleExpandMore={handleExpandedMore}
-            handleINeedHelpWith={handleEditedINeedHelpWith}
-            handleEditedTwitterHandle={handleEditedTwitterHandle}
-            handleEditedLocation={handleEditedLocation}
-            isEditable={isEditable}
-            editedAskedMeAbout={editedAskedMeAbout}
-            editedUserName={editedUserName}
-            editedLocation={editedLocation}
-            editedINeedHelpWith={editedINeedHelpWith}
-            editedTwitterHandle={editedTwitterHandle}
-            editedBio={editedBio}
-          />
+          <>
+            {isEditable && (
+              <div className="flex justify-center mb-[20px]">
+                <div
+                  className="w-[280px] h-[40px]
+                        rounded-[20px] bg-white
+                        flex items-center justify-center
+                        gap-x-[10px]"
+                >
+                  <div
+                    className="text-black text-[12px]
+                            font-quicksand font-medium"
+                  >
+                    You are in editing mode.
+                  </div>
+                  <Button
+                    id="save-btn"
+                    className="!p-0 !w-[70px] !h-[30px] !rounded-[15px] 
+                            !text-[12px] !bg-[black] !text-white
+                            !font-quicksand !font-bold !uppercase"
+                    onClick={saveProfile}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    id="cancel-btn"
+                    className="!p-0 !w-[30px] !h-[30px] !rounded-full 
+                            !text-[12px] !bg-[black] !text-white
+                            !font-quicksand !font-bold !uppercase"
+                    onClick={() => handleEditable(false)}
+                  >
+                    X
+                  </Button>
+                </div>
+              </div>
+            )}
+            <PreMobileProfileView
+              saveProfile={saveProfile}
+              loading={loading}
+              handleEditable={handleEditable}
+              handleEditedUserName={handleEditedUserName}
+              handleEditedAskedMeAbout={handleEditedAskedMeAbout}
+              handleEditedBio={handleEditedBio}
+              expandedMore={expandedMore}
+              handleExpandMore={handleExpandedMore}
+              handleINeedHelpWith={handleEditedINeedHelpWith}
+              handleEditedTwitterHandle={handleEditedTwitterHandle}
+              handleEditedLocation={handleEditedLocation}
+              isEditable={isEditable}
+              editedAskedMeAbout={editedAskedMeAbout}
+              editedUserName={editedUserName}
+              editedLocation={editedLocation}
+              editedINeedHelpWith={editedINeedHelpWith}
+              editedTwitterHandle={editedTwitterHandle}
+              editedBio={editedBio}
+            />
+          </>
         ) : (
           <PreDesktopProfileView
             saveProfile={saveProfile}
