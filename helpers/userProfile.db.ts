@@ -2,8 +2,8 @@ import UserProfile from "../Models/UserProfile"
 import dbConnect from "../utils/db"
 
 export interface UserProfile {
-  username: string
   walletAddress: string
+  username?: string
   bio?: string
   twitterHandle?: string
   location?: string
@@ -24,10 +24,6 @@ export const userNameExists = async (username: string) => {
   }
 }
 export const addUserProfile = async (body: UserProfile) => {
-  const userAlreadyExists = await userNameExists(body.username)
-  if (userAlreadyExists) {
-    return { success: false, message: "User already exists" }
-  }
   try {
     await dbConnect()
     const result = await UserProfile.create(body)

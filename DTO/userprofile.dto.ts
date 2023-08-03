@@ -3,11 +3,11 @@ import { IsString, IsOptional, IsNotEmpty } from "class-validator"
 export class UserProfileDTO {
   @IsNotEmpty()
   @IsString()
-  username: string
-
-  @IsNotEmpty()
-  @IsString()
   walletAddress: string
+
+  @IsOptional()
+  @IsString()
+  username: string
 
   @IsOptional()
   @IsString()
