@@ -4,6 +4,9 @@ const profileValidation = JoiBase.object({
   username: JoiBase.string().messages({
     "string.empty": `Username cannot be an empty field`,
   }),
+  needhelpwith: JoiBase.string().messages({
+    "string.empty": `I need help with cannot be an empty field`,
+  }),
   twitterhandle: JoiBase.string().messages({
     "string.empty": `Twitter Handle cannot be an empty field`,
   }),
