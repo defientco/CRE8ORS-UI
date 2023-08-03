@@ -12,6 +12,7 @@ interface UserProfile {
 const UserProfileSchema = new Schema<UserProfile>({
   username: {
     type: String,
+    unique: true,
     required: [true, "Please add a username"],
   },
   bio: {
