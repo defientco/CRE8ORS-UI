@@ -8,12 +8,10 @@ import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
 import IMintModal from "./IMintModal"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import { useUserProvider } from "../../../../providers/UserProvider"
 
 interface MintMoreModalProps extends IMintModal {}
 
 const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible, loading }) => {
-  const { userInfo } = useUserProvider()
   const { address } = useAccount()
 
   const isXl = useMediaQuery("(max-width: 1150px)")
@@ -111,7 +109,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
               <MintModalCTAButton link="/staking" id="stake_link_btn" label="Enter warehouse" />
             ) : (
               <MintModalCTAButton
-                link={userInfo ? `profile/${address}` : "/save-profile"}
+                link={`/profile/${address}`}
                 id="profile_link_btn"
                 label="set up profile"
               />
