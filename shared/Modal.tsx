@@ -29,6 +29,7 @@ function Modal({
         e.target === e.currentTarget ? await onClose() : () => {}
       }
     >
+        
       <div className={`bg-white rounded-lg relative ${containerClassName || ""}`}>
         {showCloseButton && (
           <div
