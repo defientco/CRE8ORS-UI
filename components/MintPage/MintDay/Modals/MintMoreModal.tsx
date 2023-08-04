@@ -112,6 +112,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
                 link={`/profile/${address}`}
                 id="profile_link_btn"
                 label="set up profile"
+                target="_blank"
               />
             )}
           </>
