@@ -182,17 +182,17 @@ const PreWalletCollection = () => {
             </button>
           </div>
           <div
-            className="grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 gap-x-[5px] lg:gap-x-[15px] gap-y-[5px] pt-[15px] mt-[20px]
+            className="grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 gap-x-[3px] lg:gap-x-[15px] gap-y-[5px] pt-[15px] mt-[20px]
                   h-[140px] lg:h-[287px] 
                   overflow-y-auto overflow-x-hidden
-                  pr-4"
+                  pr-2"
           >
             {mockData.map((data, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <div key={i} className="flex flex-col items-center gap-y-[5px]">
                 <div className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[93px] lg:h-[93px] bg-white rounded-[5px] lg:rounded-[15px]" />
                 <div
-                  className="text-[8px] lg:text-[12px] font-quicksand font-bold text-white
+                  className="text-[6px] samsungS8:text-[7px] xs:text-[8px] lg:text-[12px] font-quicksand font-bold text-white
                               w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center
                               flex flex-col items-center gap-y-[2px]"
                 >
