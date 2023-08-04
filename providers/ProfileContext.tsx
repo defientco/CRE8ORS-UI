@@ -35,7 +35,7 @@ export const ProfileProvider = ({ children }) => {
       username: editedUserName,
     })
 
-    if (response) await getUserData()
+    if (response) await getUserData(address as string)
     setLoading(false)
     setIsEditable(false)
   }

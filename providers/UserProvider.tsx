@@ -42,10 +42,6 @@ export const UserProvider: FC<Props> = ({ children }) => {
     [address],
   )
 
-  useEffect(() => {
-    getUserData()
-  }, [getUserData])
-
   const provider = useMemo(
     () => ({
       userInfo,

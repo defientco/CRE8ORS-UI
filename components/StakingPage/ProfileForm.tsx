@@ -39,7 +39,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
       return
     }
 
-    await getUserData()
+    await getUserData(address)
 
     router.push(`/profile/${address}`)
   }
