@@ -14,7 +14,6 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
       if (!checkNetwork()) return
       handleLoading(true)
       try {
-        console.log("SWEETS CART", cart)
         await mint(cart)
         await refetchInformation()
         openSuccessModal()
