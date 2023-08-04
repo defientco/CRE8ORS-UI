@@ -1,25 +1,27 @@
-import { FC } from "react"
+import { FC, useMemo } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
+import { useAccount } from "wagmi"
 import ModalTimer from "../ModalTimer"
 import Modal from "../../../../shared/Modal"
 import { Button } from "../../../../shared/Button"
+import { useMintProvider } from "../../../../providers/MintProvider"
+import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
+import epochToModalTimerString from "../../../../lib/epochToModalTimerString"
 
 interface DetectedPassportModalProps {
   isModalVisible: boolean
   toggleIsVisible: () => void
-  hasAllowListRole: boolean
-  isCre8orsDay: boolean
 }
 
-const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
-  isModalVisible,
-  toggleIsVisible,
-  hasAllowListRole,
-  isCre8orsDay,
-}) => {
+const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, toggleIsVisible }) => {
+  const { address } = useAccount()
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
+  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus } = useMintProvider()
+  const whitelisted = useMemo(() => isWhitelisted(address), [address])
+  const endDay = epochToModalTimerString(whitelisted ? presaleStart : publicSaleStart)
+  const notWhitelistPresaleActive = !whitelisted && presaleActive
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -27,7 +29,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
         className={`p-2 samsungS8:p-6 xs:p-8 xl:p-6 rounded-lg
                 flex-col flex justify-center items-center
                 ${
-                  hasAllowListRole
+                  whitelisted
                     ? "bg-[url('/assets/Mint/MintNow/MintCoreModal/allowlist_bg.png')]"
                     : "bg-[url('/assets/Mint/MintNow/MintCoreModal/notallowlist_bg.png')]"
                 }
@@ -36,8 +38,8 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
         style={{
           width: isXl ? "100%" : "803px",
           height: isXl
-            ? `${(width / 803) * (!hasAllowListRole && isCre8orsDay ? 794 : 633)}px`
-            : `${!hasAllowListRole && isCre8orsDay ? "700px" : "633px"}`,
+            ? `${(width / 803) * (notWhitelistPresaleActive ? 794 : 633)}px`
+            : `${notWhitelistPresaleActive ? "700px" : "633px"}`,
         }}
       >
         <pre
@@ -46,7 +48,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
                 uppercase text-center
                 leading-[103.3%]"
         >
-          {hasAllowListRole ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
+          {whitelisted ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
         </pre>
         <pre
           className="font-quicksand font-bold
@@ -59,8 +61,8 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({
         >
           Mint starts in:
         </pre>
-        <ModalTimer endDay="10 Aug 2023 08:00:00 EDT" />
-        {!hasAllowListRole && isCre8orsDay && (
+        {!loadingSaleStatus && <ModalTimer endDay={endDay} />}
+        {notWhitelistPresaleActive && (
           <Button
             id="mint_now"
             className="xl:!w-[461px] xl:!h-[107px] 

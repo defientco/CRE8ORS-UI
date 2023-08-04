@@ -1,20 +1,17 @@
 import { Contract } from "ethers"
 import { useAccount, useSigner } from "wagmi"
-import axios from "axios"
-import cre8orlistMinterAbi from "../../lib/abi-cre8orlist-minter.json"
+import publicMinterAbi from "../../lib/abi-public-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
 
-const useCre8orlistMint = () => {
+const usePublicMint = () => {
   const { data: signer } = useSigner()
   const { address } = useAccount()
 
   const mint = async (cart) => {
-    const response = await axios.get(`/api/merkle?address=${address}`)
-    const proof = response.data
     const value = await getCartPrice(cart)
     const contract = new Contract(
-      process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,
-      cre8orlistMinterAbi,
+      process.env.NEXT_PUBLIC_GENERAL_PUBLIC_MINTER_ADDRESS,
+      publicMinterAbi,
       signer,
     )
     const tx = await contract.mintPfp(
@@ -22,7 +19,6 @@ const useCre8orlistMint = () => {
       cart,
       process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
       process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
-      proof,
       { value },
     )
     await tx.wait()
@@ -32,4 +28,4 @@ const useCre8orlistMint = () => {
     mint,
   }
 }
-export default useCre8orlistMint
+export default usePublicMint

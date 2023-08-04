@@ -14,6 +14,7 @@ import { toast } from "react-toastify"
 import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import useMintCart from "../hooks/useMintCart"
+import useSaleStatus from "../hooks/mintDay/useSaleStatus"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
@@ -25,6 +26,11 @@ interface mintProps {
   hasUnclaimedFreeMint: boolean | null
   freeMintCount: number | null
   cart: any[]
+  loadingSaleStatus: boolean
+  publicSaleActive: boolean
+  presaleActive: boolean
+  presaleStart: number
+  publicSaleStart: number
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean
@@ -42,7 +48,6 @@ const MintContext = createContext<Partial<mintProps> | null>(null)
 
 export const MintProvider: FC<Props> = ({ children }) => {
   const { address } = useAccount()
-
   const [hasFriendAndFamily, setHasFriendAndFamily] = useState<boolean | null>(null)
   const [hasPassport, setHasPassport] = useState<boolean | null>(null)
   const [hasUnclaimedFreeMint, setHasUnclaimedFreeMint] = useState<boolean | null>(null)
@@ -54,6 +59,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
+  const saleStatus = useSaleStatus()
 
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
@@ -122,6 +128,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      ...saleStatus,
       availablePassportIds,
       cart,
       freeMintCount,
@@ -139,6 +146,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       getCartTier,
     }),
     [
+      saleStatus,
       availablePassportIds,
       cart,
       freeMintCount,
