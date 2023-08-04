@@ -6,13 +6,15 @@ interface IModal {
   showCloseButton?: boolean
   children: ReactNode
   isVisible: Boolean
+  containerClassName?: string
 }
 
 function Modal({
   onClose,
   showCloseButton,
   children,
-  isVisible
+  isVisible,
+  containerClassName
 }: IModal) {
   const { themeMode } = useTheme()
   
@@ -27,7 +29,7 @@ function Modal({
         e.target === e.currentTarget ? await onClose() : () => {}
       }
     >
-      <div className='bg-white rounded-lg relative'>
+      <div className={`bg-white rounded-lg relative ${containerClassName || ""}`}>
         {showCloseButton && (
           <div
             className="bg-white dark:bg-[black] absolute 
