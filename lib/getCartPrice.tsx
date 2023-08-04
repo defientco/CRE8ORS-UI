@@ -1,7 +1,9 @@
-import { Contract, getDefaultProvider } from "ethers"
+import { Contract } from "ethers"
 import minterUtilityAbi from "./abi-minter-utilities.json"
+import getDefaultProvider from "./getDefaultProvider"
 
 const getCartPrice = async (cart: any) => {
+  console.log("getCartPrice")
   const contract = new Contract(
     process.env.NEXT_PUBLIC_MINTER_UTILITY,
     minterUtilityAbi,
