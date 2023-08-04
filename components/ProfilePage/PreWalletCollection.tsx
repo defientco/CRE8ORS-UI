@@ -5,7 +5,7 @@ import Media from "../../shared/Media"
 import UnlockModal from "./UnlockModal"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import getNFTs from "../../lib/alchemy/getNFTs"
+import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
@@ -18,20 +18,10 @@ const PreWalletCollection = () => {
 
   useEffect(() => {
     const init = async () => {
-      const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
-
-      // Transformation of the raw data
-      const formattedData = response.ownedNfts.map((nft) => ({
-        label: nft.contractMetadata.name, // You can change this according to your specific requirements
-        type:
-          nft.contract.address === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS ? "cre8or" : undefined,
-        isLocked: true,
-        image: nft.media[0].thumbnail,
-        // Add additional properties if needed
-      }))
+      const response = await getProfileFormattedCollection(address)
 
       // Set the state
-      setOwnedNfts(formattedData)
+      setOwnedNfts(response)
     }
     init()
   }, [address])
