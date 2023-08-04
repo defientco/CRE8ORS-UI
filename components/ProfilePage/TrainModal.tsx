@@ -76,7 +76,7 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
               !p-0"
               onClick={trainFunc}
             >
-              start trainning
+              start training
             </Button>
           </>
         )}
