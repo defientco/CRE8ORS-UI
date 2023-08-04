@@ -1,8 +1,9 @@
-import { createContext, useState, useEffect, useMemo, useContext } from "react"
+import { createContext, useState, useEffect, useMemo, useContext, useCallback } from "react"
 
 import { useRouter } from "next/router"
 import { useUserProvider } from "./UserProvider"
 import { updateUserInfo } from "../lib/userInfo"
+import getNFTs from "../lib/alchemy/getNFTs"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
 
@@ -23,6 +24,7 @@ export const ProfileProvider = ({ children }) => {
   const [editedINeedHelpWith, setEditedINeedHelpWith] = useState("")
   const [editedBio, setEditedBio] = useState("")
   const [loading, setLoading] = useState(false)
+  const [cre8orNumber, setCre8orNumber] = useState("")
 
   const saveProfile = async () => {
     setLoading(true)
@@ -52,8 +54,25 @@ export const ProfileProvider = ({ children }) => {
     }
   }, [isEditable, userInfo])
 
+  const getCre8orInformation = useCallback(async () => {
+    if (!address) return null
+
+    const response = await getNFTs(
+      address as string,
+      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+    )
+
+    return setCre8orNumber(response?.ownedNfts === undefined ? "" : response?.ownedNfts.length)
+  }, [address])
+
+  useEffect(() => {
+    getCre8orInformation()
+  }, [getCre8orInformation])
+
   const provider = useMemo(
     () => ({
+      cre8orNumber,
       editedAskedMeAbout,
       editedUserName,
       editedBio,
@@ -76,6 +95,7 @@ export const ProfileProvider = ({ children }) => {
       loading,
     }),
     [
+      cre8orNumber,
       editedAskedMeAbout,
       editedUserName,
       editedBio,
