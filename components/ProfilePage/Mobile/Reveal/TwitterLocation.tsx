@@ -1,17 +1,17 @@
-import { FC } from "react"
 import Media from "../../../../shared/Media"
 
-import { TwitterLocationProps } from "../../interface"
+import { useProfileProvider } from "../../../../providers/ProfileContext"
 import { useUserProvider } from "../../../../providers/UserProvider"
 
-const TwitterLocation: FC<TwitterLocationProps> = ({
-  isEditable,
-  handleEditedTwitterHandle,
-  editedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-}) => {
+const TwitterLocation = () => {
   const { userInfo } = useUserProvider()
+  const {
+    isEditable,
+    editedTwitterHandle,
+    editedLocation,
+    handleEditedLocation,
+    handleEditedTwitterHandle,
+  } = useProfileProvider()
 
   return (
     <div className="flex items-center justify-center gap-x-[10px] pt-[5px]">

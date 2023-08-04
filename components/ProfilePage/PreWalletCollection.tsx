@@ -1,16 +1,14 @@
-import { FC, useState } from "react"
+import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Media from "../../shared/Media"
 import UnlockModal from "./UnlockModal"
 import TrainModal from "./TrainModal"
+import { useProfileProvider } from "../../providers/ProfileContext"
 
-interface WalletCollectionProps {
-  handleExpandMore: (expanded: boolean) => void
-  expandMore: boolean
-}
-
-const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expandMore }) => {
+const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
+
+  const { expandedMore, handleExpandedMore } = useProfileProvider()
 
   const mockData = [
     {
@@ -69,7 +67,7 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
     <>
       <div
         className={`${
-          !expandMore
+          !expandedMore
             ? `${
                 isMobile ? "mobile_un_expand_more" : "un_expand_more"
               } h-[55px] lg:h-[70px] overflow-hidden`
@@ -87,30 +85,32 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
             <Media
               type="image"
               containerClasses="w-[15px] h-[15px] lg:w-[25px] lg:h-[25px]"
-              link={`${expandMore ? "/assets/Profile/help.svg" : "/assets/Profile/black_help.svg"}`}
+              link={`${
+                expandedMore ? "/assets/Profile/help.svg" : "/assets/Profile/black_help.svg"
+              }`}
               blurLink={`${
-                expandMore ? "/assets/Profile/help.png" : "/assets/Profile/black_help.png"
+                expandedMore ? "/assets/Profile/help.png" : "/assets/Profile/black_help.png"
               }`}
             />
             <p
               className={`${
-                expandMore ? "text-white" : "text-black"
+                expandedMore ? "text-white" : "text-black"
               } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
               uppercase`}
             >
               SMART WALLET
             </p>
-            <button type="button" onClick={() => handleExpandMore(!expandMore)}>
+            <button type="button" onClick={() => handleExpandedMore(!expandedMore)}>
               <Media
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
                 link={`${
-                  expandMore
+                  expandedMore
                     ? "/assets/Profile/arrow_up.svg"
                     : "/assets/Profile/black_arrow_down.svg"
                 }`}
                 blurLink={`${
-                  expandMore
+                  expandedMore
                     ? "/assets/Profile/arrow_up.png"
                     : "/assets/Profile/black_arrow_down.png"
                 }`}
@@ -158,23 +158,23 @@ const PreWalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expa
           <div className="flex items-center justify-end gap-x-[5px] samsungS8:gap-x-[10px]">
             <p
               className={`${
-                expandMore ? "text-white" : "text-black"
+                expandedMore ? "text-white" : "text-black"
               } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
               uppercase`}
             >
               VIEW COLLECTION
             </p>
-            <button type="button" onClick={() => handleExpandMore(!expandMore)}>
+            <button type="button" onClick={() => handleExpandedMore(!expandedMore)}>
               <Media
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
                 link={`${
-                  expandMore
+                  expandedMore
                     ? "/assets/Profile/arrow_up.svg"
                     : "/assets/Profile/black_arrow_down.svg"
                 }`}
                 blurLink={`${
-                  expandMore
+                  expandedMore
                     ? "/assets/Profile/arrow_up.png"
                     : "/assets/Profile/black_arrow_down.png"
                 }`}

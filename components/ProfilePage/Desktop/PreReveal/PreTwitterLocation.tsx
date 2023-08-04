@@ -1,18 +1,18 @@
-import { FC } from "react"
 import Media from "../../../../shared/Media"
 import Tooltip from "../../../../shared/Tooltip"
 import { useUserProvider } from "../../../../providers/UserProvider"
-import { TwitterLocationProps } from "../../interface"
+import { useProfileProvider } from "../../../../providers/ProfileContext"
 
-const PreTwitterLocation: FC<TwitterLocationProps> = ({
-  handleEditable,
-  isEditable,
-  handleEditedTwitterHandle,
-  editedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-}) => {
+const PreTwitterLocation = () => {
   const { userInfo } = useUserProvider()
+  const {
+    isEditable,
+    editedTwitterHandle,
+    editedLocation,
+    handleEditable,
+    handleEditedLocation,
+    handleEditedTwitterHandle,
+  } = useProfileProvider()
 
   return (
     <div className="flex items-center gap-x-[15px]">
@@ -88,7 +88,7 @@ const PreTwitterLocation: FC<TwitterLocationProps> = ({
                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                 rounded-[2px] cursor-pointer"
           type="button"
-          onClick={handleEditable}
+          onClick={() => handleEditable(true)}
         >
           <Media
             type="image"
