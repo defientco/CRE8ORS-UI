@@ -13,17 +13,18 @@ const PreWalletCollection = () => {
   const { expandedMore, setExpandedMore, isEditable } = useProfileProvider()
   const { address } = router.query as any
   const [ownedNfts, setOwnedNfts] = useState([])
+  const [openUnlockModal, setOpenUnlockModal] = useState(false)
+  const [openTraninModal, setOpenTrainModal] = useState(false)
 
   useEffect(() => {
     const init = async () => {
-      console.log("LOOKUP WALLET FOR ", address)
       const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
-      console.log("RAW ", response)
 
       // Transformation of the raw data
       const formattedData = response.ownedNfts.map((nft) => ({
         label: nft.contractMetadata.name, // You can change this according to your specific requirements
-        type: nft.contractMetadata.symbol === "CRE8" ? "cre8or" : undefined,
+        type:
+          nft.contract.address === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS ? "cre8or" : undefined,
         isLocked: true,
         image: nft.media[0].thumbnail,
         // Add additional properties if needed
@@ -34,11 +35,6 @@ const PreWalletCollection = () => {
     }
     init()
   }, [address])
-
-  console.log("LOOKUP WALLET FOR response", ownedNfts)
-
-  const [openUnlockModal, setOpenUnlockModal] = useState(false)
-  const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const toggleUnlockModal = () => {
     setOpenUnlockModal(!openUnlockModal)
