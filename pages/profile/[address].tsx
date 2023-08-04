@@ -1,8 +1,12 @@
 import { GetServerSideProps } from "next"
 import validator from "validator"
 import axios from "axios"
-import ProfilePage from "../../components/ProfilePage"
+import { useAccount } from "wagmi"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 import { ProfileProvider } from "../../providers/ProfileContext"
+import ProfilePage from "../../components/ProfilePage"
+import { useUserProvider } from "../../providers/UserProvider"
 
 interface ProfileProps {
   address: string
@@ -49,10 +53,30 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
   }
 }
 
-const Profile = () => (
-  <ProfileProvider>
-    <ProfilePage />
-  </ProfileProvider>
-)
+const Profile = () => {
+  const { getUserData } = useUserProvider()
+
+  const router = useRouter()
+
+  const { address } = useAccount()
+
+  useEffect(() => {
+    if (!address) {
+      getUserData(router.query.address as string)
+      return
+    }
+
+    if (address !== router.query.address) {
+      router.push(`/profile/${address}`)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
+
+  return (
+    <ProfileProvider>
+      <ProfilePage />
+    </ProfileProvider>
+  )
+}
 
 export default Profile
