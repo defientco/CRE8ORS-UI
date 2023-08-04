@@ -84,6 +84,7 @@ const PreTwitterLocation = () => {
       >
         <button
           className="w-[26px] h-[26px] bg-[white]
+                hover:scale-[1.3] scale-[1] transition duration-[300ms]
                 flex items-center justify-center
                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                 rounded-[2px] cursor-pointer"
