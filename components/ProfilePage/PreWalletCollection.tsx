@@ -1,57 +1,41 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
+import { useRouter } from "next/router"
 import Media from "../../shared/Media"
 import UnlockModal from "./UnlockModal"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
+import getNFTs from "../../lib/alchemy/getNFTs"
 
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-
+  const router = useRouter()
   const { expandedMore, setExpandedMore, isEditable } = useProfileProvider()
+  const { address } = router.query as any
+  const [ownedNfts, setOwnedNfts] = useState([])
 
-  const mockData = [
-    {
-      label: "CRE8OR #2 InTraining",
-      type: "cre8or",
-      isLocked: true,
-    },
-    {
-      label: "PASSPORT 88",
-    },
-    {
-      label: "DNA 752",
-    },
-    {
-      label: "CRE8OR #2 InTraining",
-      type: "cre8or",
-    },
-    {
-      label: "PASSPORT 88",
-    },
-    {
-      label: "DNA 752",
-    },
-    {
-      label: "PASSPORT 88",
-    },
-    {
-      label: "CRE8OR #46 InTraining",
-      type: "cre8or",
-      isLocked: false,
-    },
-    {
-      label: "DNA 67",
-    },
-    {
-      label: "CRE8OR #46 InTraining",
-      type: "cre8or",
-      isLocked: false,
-    },
-    {
-      label: "DNA 67",
-    },
-  ]
+  useEffect(() => {
+    const init = async () => {
+      console.log("LOOKUP WALLET FOR ", address)
+      const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+      console.log("RAW ", response)
+
+      // Transformation of the raw data
+      const formattedData = response.ownedNfts.map((nft) => ({
+        label: nft.contractMetadata.name, // You can change this according to your specific requirements
+        type: nft.contractMetadata.symbol === "CRE8" ? "cre8or" : undefined,
+        isLocked: true,
+        image: nft.media[0].thumbnail,
+        // Add additional properties if needed
+      }))
+
+      // Set the state
+      setOwnedNfts(formattedData)
+    }
+    init()
+  }, [address])
+
+  console.log("LOOKUP WALLET FOR response", ownedNfts)
 
   const [openUnlockModal, setOpenUnlockModal] = useState(false)
   const [openTraninModal, setOpenTrainModal] = useState(false)
@@ -187,10 +171,18 @@ const PreWalletCollection = () => {
                   overflow-y-auto overflow-x-hidden
                   pr-2"
           >
-            {mockData.map((data, i) => (
+            {ownedNfts.map((data, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <div key={i} className="flex flex-col items-center gap-y-[5px]">
-                <div className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[93px] lg:h-[93px] bg-white rounded-[5px] lg:rounded-[15px]" />
+                {data.image ? (
+                  <img
+                    className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[93px] lg:h-[93px] bg-white rounded-[5px] lg:rounded-[15px]"
+                    src={data.image}
+                    alt={data.label}
+                  />
+                ) : (
+                  <div className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[93px] lg:h-[93px] bg-white rounded-[5px] lg:rounded-[15px]" />
+                )}{" "}
                 <div
                   className="text-[6px] samsungS8:text-[7px] xs:text-[8px] lg:text-[12px] font-quicksand font-bold text-white
                               w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center

@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { useUserProvider } from "./UserProvider"
 import { updateUserInfo } from "../lib/userInfo"
 import getNFTs from "../lib/alchemy/getNFTs"
+import { BigNumber } from "ethers"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
 
@@ -63,7 +64,10 @@ export const ProfileProvider = ({ children }) => {
       process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
     )
 
-    return setCre8orNumber(response?.ownedNfts === undefined ? "" : response?.ownedNfts.length)
+    const lastCre8or = response.ownedNfts[response.totalCount - 1]
+    const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+
+    return setCre8orNumber(response?.ownedNfts === undefined ? "" : tokenId)
   }, [address])
 
   useEffect(() => {
