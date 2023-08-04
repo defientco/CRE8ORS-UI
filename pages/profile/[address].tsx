@@ -4,7 +4,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useAccount } from "wagmi"
-import { ProfileProvider, useProfileProvider } from "../../providers/ProfileContext"
+import { useProfileProvider } from "../../providers/ProfileContext"
 import ProfilePage from "../../components/ProfilePage"
 import { useUserProvider } from "../../providers/UserProvider"
 
@@ -65,7 +65,8 @@ const Profile = () => {
     getUserData(router.query.address as string)
 
     if (address !== router.query.address) {
-      return setIsHiddenEditable(true)
+      setIsHiddenEditable(true)
+      return
     }
 
     setIsHiddenEditable(false)
