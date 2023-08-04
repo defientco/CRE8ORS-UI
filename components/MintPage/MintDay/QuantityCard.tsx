@@ -1,7 +1,9 @@
-import { FC, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Media from "../../../shared/Media"
 import InfographicModal from "../InfographicModal"
+import useShakeEffect from "../../../hooks/useShakeEffect"
+import { useMintProvider } from "../../../providers/MintProvider"
 
 interface MintCardProps {
   className?: string
@@ -29,6 +31,15 @@ const QuantityCard: FC<MintCardProps> = ({
   const isXl = useMediaQuery("(max-width: 1150px)")
   const isIphone = useMediaQuery("(max-width: 330px)")
   const [openInfographicModal, setOpenInfographicModal] = useState(false)
+
+  const shakeRef = useRef()
+
+  const { getCartTier } = useMintProvider()
+
+  useShakeEffect({
+    ref: shakeRef,
+    isEnabled: getCartTier(type) === 0,
+  })
 
   return (
     <>
@@ -97,13 +108,15 @@ const QuantityCard: FC<MintCardProps> = ({
                             w-[102px] h-[20px] samsungS8:h-[30px] xs:h-[35px] xl:w-[170px] xl:h-[45px]"
           >
             <div className="flex gap-x-[10px] xl:gap-x-[30px] text-[13px] samsungS8:text-[18px] xl:text-[25px]">
-              <button
-                type="button"
-                className="w-[20px] xl:w-[40px]"
-                onClick={() => decreaseQuantity(type)}
-              >
-                -
-              </button>
+              <div ref={shakeRef}>
+                <button
+                  type="button"
+                  className="w-[20px] xl:w-[40px]"
+                  onClick={() => decreaseQuantity(type)}
+                >
+                  -
+                </button>
+              </div>
               <div className="w-[20px] xl:w-[30px]">{quantity}</div>
               <button
                 type="button"

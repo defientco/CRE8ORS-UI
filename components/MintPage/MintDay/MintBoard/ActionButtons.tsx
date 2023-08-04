@@ -1,9 +1,21 @@
 import { useAccount } from "wagmi"
+import { useRef } from "react"
 import { Button } from "../../../../shared/Button"
 import WalletConnectButton from "../../../WalletConnectButton"
+import { useMintProvider } from "../../../../providers/MintProvider"
+import useShakeEffect from "../../../../hooks/useShakeEffect"
 
 const MintBoardButtons = ({ setOpenModal }: any) => {
   const { isConnected } = useAccount()
+
+  const { cart } = useMintProvider()
+
+  const shakeRef = useRef()
+
+  useShakeEffect({
+    ref: shakeRef,
+    isEnabled: cart.length === 0,
+  })
 
   const handleClick = () => {
     setOpenModal(true)
@@ -12,17 +24,19 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
   return (
     <div className="flex justify-center">
       {isConnected ? (
-        <Button
-          id="mint_btn_mint_page"
-          className="mt-[20px] xl:mt-[40px] 
-        xl:w-[308px] xl:h-[88px] 
-        w-[133px] h-[38px]
-        text-[14px] xl:text-[30px] 
-        rounded-[5px] xl:rounded-[15px]"
-          onClick={handleClick}
-        >
-          Mint now
-        </Button>
+        <div ref={shakeRef}>
+          <Button
+            id="mint_btn_mint_page"
+            className="mt-[20px] xl:mt-[40px] 
+          xl:w-[308px] xl:h-[88px] 
+          w-[133px] h-[38px]
+          text-[14px] xl:text-[30px] 
+          rounded-[5px] xl:rounded-[15px]"
+            onClick={handleClick}
+          >
+            Mint now
+          </Button>
+        </div>
       ) : (
         <WalletConnectButton>
           <div
