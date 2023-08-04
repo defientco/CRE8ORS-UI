@@ -6,10 +6,16 @@ const Timer = () => {
   const [minutes, setMinutes] = useState("00")
   const [seconds, setSeconds] = useState("00")
 
-  const mintDay = "8 Aug 2023 08:00:00 UTC"
+  const mintDay = "8/8/2023, 8:00:00 AM"
 
   const getTime = () => {
-    const time = Date.parse(mintDay) - Date.now()
+    const time =
+      new Date(mintDay).getTime() -
+      new Date(
+        new Date().toLocaleString("en-us", {
+          timeZone: "America/New_York",
+        }),
+      ).getTime()
 
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)).toString())
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24).toString())
