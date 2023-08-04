@@ -14,13 +14,7 @@ const usePublicMint = () => {
       publicMinterAbi,
       signer,
     )
-    const tx = await contract.mintPfp(
-      address,
-      cart,
-      process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
-      process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
-      { value },
-    )
+    const tx = await contract.mintPfp(address, cart, { value })
     await tx.wait()
   }
 
