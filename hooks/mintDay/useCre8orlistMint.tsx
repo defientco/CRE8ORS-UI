@@ -17,14 +17,8 @@ const useCre8orlistMint = () => {
       cre8orlistMinterAbi,
       signer,
     )
-    const tx = await contract.mintPfp(
-      address,
-      cart,
-      process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
-      process.env.NEXT_PUBLIC_FRIENDS_AND_FAMILY_ADDRESS,
-      proof,
-      { value },
-    )
+    console.log("MINTING ALLOWLIST")
+    const tx = await contract.mintPfp(address, cart, proof, { value })
     await tx.wait()
   }
 
