@@ -23,6 +23,7 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
       onClose={toggleIsVisible}
       containerClassName="rounded-[30px] md:rounded-[56px] overflow-hidden bg-black
       drop-shadow-[2px_3px_2px_rgba(255,255,255,0.25)]"
+      modalClassName="!z-[110]"
     >
       <div
         className="px-4 py-10 samsungS8:p-6 xs:p-8 xl:p-6 rounded-lg

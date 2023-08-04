@@ -2,13 +2,13 @@ import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 
 const EditPanel = () => {
-  const { saveProfile, expandedMore, setIsEditable, loading } = useProfileProvider()
+  const { saveProfile, setIsEditable, loading, expandedMore } = useProfileProvider()
 
   return (
     <div
-      className={`absolute w-full h-full
+      className={`absolute w-full ${expandedMore ? "h-[730px]" : "h-[770px]"}
               left-0 top-0 z-[80]
-              flex justify-center items-end ${expandedMore ? "pb-[440px]" : "pb-[50px]"}`}
+              flex justify-center items-end`}
     >
       <div
         className="w-[480px] h-[80px]

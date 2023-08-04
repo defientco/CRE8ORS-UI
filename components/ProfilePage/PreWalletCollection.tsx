@@ -8,7 +8,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
-  const { expandedMore, setExpandedMore } = useProfileProvider()
+  const { expandedMore, setExpandedMore, isEditable } = useProfileProvider()
 
   const mockData = [
     {
@@ -197,26 +197,30 @@ const PreWalletCollection = () => {
                               flex flex-col items-center gap-y-[2px]"
                 >
                   <div className="w-full">{data.label}</div>
-                  {data.type === "cre8or" &&
-                    (data.isLocked ? (
-                      <button type="button" onClick={() => setOpenUnlockModal(true)}>
-                        <Media
-                          type="image"
-                          containerClasses="w-[13.54px] h-[16.83px]"
-                          link="/assets/Profile/locked.svg"
-                          blurLink="/assets/Profile/locked.png"
-                        />
-                      </button>
-                    ) : (
-                      <button onClick={() => setOpenTrainModal(true)} type="button">
-                        <Media
-                          type="image"
-                          containerClasses="w-[14.8px] h-[17px]"
-                          link="/assets/Profile/unlocked.svg"
-                          blurLink="/assets/Profile/unlocked.png"
-                        />
-                      </button>
-                    ))}
+                  {isEditable && (
+                    <div>
+                      {data.type === "cre8or" &&
+                        (data.isLocked ? (
+                          <button type="button" onClick={() => setOpenUnlockModal(true)}>
+                            <Media
+                              type="image"
+                              containerClasses="w-[13.54px] h-[16.83px]"
+                              link="/assets/Profile/locked.svg"
+                              blurLink="/assets/Profile/locked.png"
+                            />
+                          </button>
+                        ) : (
+                          <button onClick={() => setOpenTrainModal(true)} type="button">
+                            <Media
+                              type="image"
+                              containerClasses="w-[14.8px] h-[17px]"
+                              link="/assets/Profile/unlocked.svg"
+                              blurLink="/assets/Profile/unlocked.png"
+                            />
+                          </button>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
