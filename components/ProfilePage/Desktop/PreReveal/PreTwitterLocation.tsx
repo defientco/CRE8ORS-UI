@@ -9,9 +9,9 @@ const PreTwitterLocation = () => {
     isEditable,
     editedTwitterHandle,
     editedLocation,
-    handleEditable,
-    handleEditedLocation,
-    handleEditedTwitterHandle,
+    setIsEditable,
+    setEditedLocation,
+    setEditedTwitterHandle,
   } = useProfileProvider()
 
   return (
@@ -34,7 +34,7 @@ const PreTwitterLocation = () => {
         bg-[#D9D9D9]
         px-[10px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedTwitterHandle}
+            onChange={(e) => setEditedTwitterHandle(e.target.value)}
             value={editedTwitterHandle}
           />
         ) : (
@@ -61,7 +61,7 @@ const PreTwitterLocation = () => {
         bg-[#D9D9D9]
         px-[10px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedLocation}
+            onChange={(e) => setEditedLocation(e.target.value)}
             value={editedLocation}
           />
         ) : (
@@ -89,7 +89,7 @@ const PreTwitterLocation = () => {
                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                 rounded-[2px] cursor-pointer"
           type="button"
-          onClick={() => handleEditable(true)}
+          onClick={() => setIsEditable(true)}
         >
           <Media
             type="image"

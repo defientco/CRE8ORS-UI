@@ -9,8 +9,8 @@ const TwitterLocation = () => {
     isEditable,
     editedTwitterHandle,
     editedLocation,
-    handleEditedLocation,
-    handleEditedTwitterHandle,
+    setEditedLocation,
+    setEditedTwitterHandle,
   } = useProfileProvider()
 
   return (
@@ -33,7 +33,7 @@ const TwitterLocation = () => {
         bg-[#D9D9D9]
         px-[3px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedTwitterHandle}
+            onChange={(e) => setEditedTwitterHandle(e.target.value)}
             value={editedTwitterHandle}
           />
         ) : (
@@ -60,7 +60,7 @@ const TwitterLocation = () => {
         bg-[#D9D9D9]
         px-[3px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedLocation}
+            onChange={(e) => setEditedLocation(e.target.value)}
             value={editedLocation}
           />
         ) : (

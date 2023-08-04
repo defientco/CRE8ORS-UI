@@ -13,8 +13,8 @@ export const ProfileProvider = ({ children }) => {
 
   const { userInfo, getUserData } = useUserProvider()
 
-  const [expandedMore, setExpandedMore] = useState(false)
-  const [isEditable, setIsEditable] = useState(false)
+  const [expandedMore, setExpandedMore] = useState<boolean>(false)
+  const [isEditable, setIsEditable] = useState<boolean>(false)
   const [editedUserName, setEditedUserName] = useState("")
   const [editedTwitterHandle, setEditedTwitterHandle] = useState("")
   const [editedLocation, setEditedLocation] = useState("")
@@ -51,38 +51,6 @@ export const ProfileProvider = ({ children }) => {
     }
   }, [isEditable, userInfo])
 
-  const handleEditable = (ediable: boolean) => {
-    setIsEditable(ediable)
-  }
-
-  const handleEditedUserName = (e: any) => {
-    setEditedUserName(e.target.value)
-  }
-
-  const handleEditedAskedMeAbout = (e: any) => {
-    setEditedAskedMeAbout(e.target.value)
-  }
-
-  const handleEditedTwitterHandle = (e: any) => {
-    setEditedTwitterHandle(e.target.value)
-  }
-
-  const handleEditedINeedHelpWith = (e: any) => {
-    setEditedINeedHelpWith(e.target.value)
-  }
-
-  const handleEditedBio = (e: any) => {
-    setEditedBio(e.target.value)
-  }
-
-  const handleEditedLocation = (e: any) => {
-    setEditedLocation(e.target.value)
-  }
-
-  const handleExpandedMore = (isExpanded: boolean) => {
-    setExpandedMore(isExpanded)
-  }
-
   const provider = useMemo(
     () => ({
       editedAskedMeAbout,
@@ -93,14 +61,14 @@ export const ProfileProvider = ({ children }) => {
       editedTwitterHandle,
       expandedMore,
       isEditable,
-      handleExpandedMore,
-      handleEditedUserName,
-      handleEditedAskedMeAbout,
-      handleEditedBio,
-      handleEditedINeedHelpWith,
-      handleEditedTwitterHandle,
-      handleEditedLocation,
-      handleEditable,
+      setExpandedMore,
+      setEditedUserName,
+      setEditedAskedMeAbout,
+      setEditedBio,
+      setEditedINeedHelpWith,
+      setEditedTwitterHandle,
+      setEditedLocation,
+      setIsEditable,
       saveProfile,
       loading,
     }),
@@ -113,14 +81,14 @@ export const ProfileProvider = ({ children }) => {
       editedTwitterHandle,
       expandedMore,
       isEditable,
-      handleExpandedMore,
-      handleEditedUserName,
-      handleEditedAskedMeAbout,
-      handleEditedBio,
-      handleEditedINeedHelpWith,
-      handleEditedTwitterHandle,
-      handleEditedLocation,
-      handleEditable,
+      setExpandedMore,
+      setEditedUserName,
+      setEditedAskedMeAbout,
+      setEditedBio,
+      setEditedINeedHelpWith,
+      setEditedTwitterHandle,
+      setEditedLocation,
+      setIsEditable,
       saveProfile,
       loading,
     ],

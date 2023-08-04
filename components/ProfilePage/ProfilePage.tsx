@@ -8,7 +8,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 const ProfilePage = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
-  const { isEditable, saveProfile, handleEditable } = useProfileProvider()
+  const { isEditable, saveProfile, setIsEditable } = useProfileProvider()
 
   return (
     <Layout type="contained">
@@ -46,7 +46,7 @@ const ProfilePage = () => {
                     className="!p-0 !w-[30px] !h-[30px] !rounded-full 
                             !text-[12px] !bg-[black] !text-white
                             !font-quicksand !font-bold !uppercase"
-                    onClick={() => handleEditable(false)}
+                    onClick={() => setIsEditable(false)}
                   >
                     X
                   </Button>

@@ -2,7 +2,7 @@ import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 
 const EditPanel = () => {
-  const { saveProfile, expandedMore, handleEditable, loading } = useProfileProvider()
+  const { saveProfile, expandedMore, setIsEditable, loading } = useProfileProvider()
 
   return (
     <div
@@ -36,7 +36,7 @@ const EditPanel = () => {
           className="!p-0 !w-[54px] !h-[54px] !rounded-full 
                   !text-[22px]
                   !font-quicksand !font-bold !uppercase"
-          onClick={() => handleEditable(false)}
+          onClick={() => setIsEditable(false)}
         >
           X
         </Button>

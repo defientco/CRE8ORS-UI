@@ -8,9 +8,9 @@ const PreProfileInformation = () => {
     editedBio,
     editedINeedHelpWith,
     editedAskedMeAbout,
-    handleEditedAskedMeAbout,
-    handleEditedINeedHelpWith,
-    handleEditedBio,
+    setEditedAskedMeAbout,
+    setEditedINeedHelpWith,
+    setEditedBio,
   } = useProfileProvider()
 
   return (
@@ -36,7 +36,7 @@ const PreProfileInformation = () => {
          px-[10px] py-[5px]
          rounded-[4px]"
           value={editedBio}
-          onChange={handleEditedBio}
+          onChange={(e) => setEditedBio(e.target.value)}
         />
       ) : (
         <pre
@@ -71,7 +71,7 @@ const PreProfileInformation = () => {
          px-[10px]
          rounded-[4px]"
           value={editedAskedMeAbout}
-          onChange={handleEditedAskedMeAbout}
+          onChange={(e) => setEditedAskedMeAbout(e.target.value)}
         />
       ) : (
         <pre
@@ -105,7 +105,7 @@ const PreProfileInformation = () => {
          px-[10px]
          rounded-[4px]"
           value={editedINeedHelpWith}
-          onChange={handleEditedINeedHelpWith}
+          onChange={(e) => setEditedINeedHelpWith(e.target.value)}
         />
       ) : (
         <pre

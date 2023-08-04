@@ -13,7 +13,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 const PreDesktopProfileView = () => {
   const { userInfo } = useUserProvider()
 
-  const { expandedMore, isEditable, editedUserName, handleEditedUserName } = useProfileProvider()
+  const { expandedMore, isEditable, editedUserName, setEditedUserName } = useProfileProvider()
 
   return (
     <div
@@ -41,7 +41,7 @@ const PreDesktopProfileView = () => {
             leading-[110.3%]
             rounded-[4px]"
                 value={editedUserName}
-                onChange={handleEditedUserName}
+                onChange={(e) => setEditedUserName(e.target.value)}
                 type="text"
               />
 

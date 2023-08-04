@@ -9,7 +9,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 
 const PreMobileProfileView = () => {
   const { userInfo } = useUserProvider()
-  const { isEditable, editedUserName, handleEditedUserName, handleEditable } = useProfileProvider()
+  const { isEditable, editedUserName, setEditedUserName, setIsEditable } = useProfileProvider()
 
   return (
     <div
@@ -35,7 +35,7 @@ const PreMobileProfileView = () => {
           bg-[#D9D9D9]
           px-[10px] py-[2px]
           rounded-[4px]"
-              onChange={handleEditedUserName}
+              onChange={(e) => setEditedUserName(e.target.value)}
               value={editedUserName}
             />{" "}
           </div>
@@ -73,7 +73,7 @@ const PreMobileProfileView = () => {
                           flex items-center justify-center
                           rounded-[2px] cursor-pointer"
             type="button"
-            onClick={() => handleEditable(!isEditable)}
+            onClick={() => setIsEditable(!isEditable)}
           >
             <Media
               type="image"

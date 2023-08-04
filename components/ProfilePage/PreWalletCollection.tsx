@@ -8,7 +8,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
-  const { expandedMore, handleExpandedMore } = useProfileProvider()
+  const { expandedMore, setExpandedMore } = useProfileProvider()
 
   const mockData = [
     {
@@ -100,7 +100,7 @@ const PreWalletCollection = () => {
             >
               SMART WALLET
             </p>
-            <button type="button" onClick={() => handleExpandedMore(!expandedMore)}>
+            <button type="button" onClick={() => setExpandedMore(!expandedMore)}>
               <Media
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
@@ -164,7 +164,7 @@ const PreWalletCollection = () => {
             >
               VIEW COLLECTION
             </p>
-            <button type="button" onClick={() => handleExpandedMore(!expandedMore)}>
+            <button type="button" onClick={() => setExpandedMore(!expandedMore)}>
               <Media
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
