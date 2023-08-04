@@ -16,7 +16,6 @@ import { ChatProvider } from "../providers/ChatProvider"
 import { ThemeProvider } from "../providers/ThemeProvider"
 import { AdminProvider } from "../providers/AdminProvider"
 import { UserProvider } from "../providers/UserProvider"
-import { ProfileProvider } from "../providers/ProfileContext"
 
 const isMainnet = !process.env.NEXT_PUBLIC_TESTNET
 const myChains = [isMainnet ? mainnet : goerli, isMainnet ? polygon : polygonMumbai]
@@ -46,13 +45,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <UserProvider>
             <SessionProvider>
               <AdminProvider>
-                <ProfileProvider>
-                  <ChatProvider>
-                    <Component {...pageProps} />
-                    <ToastContainer />
-                    <Analytics />
-                  </ChatProvider>
-                </ProfileProvider>
+                <ChatProvider>
+                  <Component {...pageProps} />
+                  <ToastContainer />
+                  <Analytics />
+                </ChatProvider>
               </AdminProvider>
             </SessionProvider>
           </UserProvider>
