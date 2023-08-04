@@ -71,7 +71,7 @@ const PreTwitterLocation = () => {
           </p>
         )}
       </div>
-      {!isHiddenEditable && (
+      {!isHiddenEditable && !isEditable && (
         <Tooltip
           id="edit_profile"
           message="EDIT PROFILE"

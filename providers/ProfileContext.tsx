@@ -27,6 +27,7 @@ export const ProfileProvider = ({ children }) => {
   const [cre8orNumber, setCre8orNumber] = useState("")
 
   const saveProfile = async () => {
+    setIsEditable(false)
     setLoading(true)
     const response = await updateUserInfo({
       address,
@@ -40,7 +41,6 @@ export const ProfileProvider = ({ children }) => {
 
     if (response) await getUserData(address as string)
     setLoading(false)
-    setIsEditable(false)
   }
 
   useEffect(() => {
