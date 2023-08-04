@@ -21,6 +21,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
   const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus } = useMintProvider()
   const whitelisted = useMemo(() => isWhitelisted(address), [address])
   const endDay = epochToModalTimerString(whitelisted ? presaleStart : publicSaleStart)
+  const notWhitelistPresaleActive = !whitelisted && presaleActive
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -37,8 +38,8 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
         style={{
           width: isXl ? "100%" : "803px",
           height: isXl
-            ? `${(width / 803) * (!whitelisted && presaleActive ? 794 : 633)}px`
-            : `${!whitelisted && presaleActive ? "700px" : "633px"}`,
+            ? `${(width / 803) * (notWhitelistPresaleActive ? 794 : 633)}px`
+            : `${notWhitelistPresaleActive ? "700px" : "633px"}`,
         }}
       >
         <pre
@@ -61,7 +62,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
           Mint starts in:
         </pre>
         {!loadingSaleStatus && <ModalTimer endDay={endDay} />}
-        {!whitelisted && presaleActive && (
+        {notWhitelistPresaleActive && (
           <Button
             id="mint_now"
             className="xl:!w-[461px] xl:!h-[107px] 
