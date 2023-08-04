@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useMemo, useState } from "react"
 import { useAccount } from "wagmi"
 
 import MintMoreModal from "./MintMoreModal"
-import getApplicant from "../../../../lib/getApplicant"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
+import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -16,31 +16,23 @@ interface ModalSelectorProps {
 
 const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
   const { address } = useAccount()
-  const [applicant, setApplicant] = useState({} as any)
-  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, leftQuantityCount, cart } =
-    useMintProvider()
+  const {
+    hasPassport,
+    hasUnclaimedFreeMint,
+    hasFriendAndFamily,
+    leftQuantityCount,
+    cart,
+    publicSaleActive,
+  } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
-
-  const isCre8orlistDay =
-    new Date().getTime() >= new Date("09 Aug 2023 08:00:00 UTC").getTime() &&
-    new Date().getTime() < new Date("10 Aug 2023 08:00:00 UTC").getTime()
+  const whitelisted = useMemo(() => isWhitelisted(address), [address])
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
   }
 
   const { mintCre8ors, freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay()
-
-  useEffect(() => {
-    const init = async () => {
-      const response = await getApplicant(address)
-      setApplicant(response)
-    }
-    if (!address) return
-    init()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
 
   useEffect(() => {
     if (address) setShouldOpenSuccessModal(false)
@@ -77,7 +69,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount > 0 && cart.length > 0) {
+    if (leftQuantityCount > 0 && cart.length > 0 && whitelisted) {
       return (
         <Cre8orlistModal
           isModalVisible={isVisibleModal}
@@ -88,14 +80,11 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
     }
 
-    return (
-      <WaitCre8orsModal
-        isModalVisible={isVisibleModal}
-        toggleIsVisible={toggleModal}
-        hasAllowListRole={applicant?.isVerified}
-        isCre8orsDay={!isCre8orlistDay}
-      />
-    )
+    if (!publicSaleActive) {
+      return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
+    }
+
+    return null
   }
 
   return selectModal()

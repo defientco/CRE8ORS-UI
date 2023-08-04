@@ -12,7 +12,6 @@ const ModalTimer: FC<ModalTimerProps> = ({ endDay }) => {
 
   const getTime = () => {
     const time = Date.parse(endDay) - Date.now()
-
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)).toString())
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24).toString())
     setMinutes(Math.floor((time / 1000 / 60) % 60).toString())
