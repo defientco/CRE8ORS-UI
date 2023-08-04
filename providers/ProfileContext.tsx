@@ -13,6 +13,7 @@ export const ProfileProvider = ({ children }) => {
 
   const { userInfo, getUserData } = useUserProvider()
 
+  const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
   const [isEditable, setIsEditable] = useState<boolean>(false)
   const [editedUserName, setEditedUserName] = useState("")
@@ -61,6 +62,7 @@ export const ProfileProvider = ({ children }) => {
       editedTwitterHandle,
       expandedMore,
       isEditable,
+      isHiddenEditable,
       setExpandedMore,
       setEditedUserName,
       setEditedAskedMeAbout,
@@ -69,6 +71,7 @@ export const ProfileProvider = ({ children }) => {
       setEditedTwitterHandle,
       setEditedLocation,
       setIsEditable,
+      setIsHiddenEditable,
       saveProfile,
       loading,
     }),
@@ -81,6 +84,7 @@ export const ProfileProvider = ({ children }) => {
       editedTwitterHandle,
       expandedMore,
       isEditable,
+      isHiddenEditable,
       setExpandedMore,
       setEditedUserName,
       setEditedAskedMeAbout,
@@ -89,6 +93,7 @@ export const ProfileProvider = ({ children }) => {
       setEditedTwitterHandle,
       setEditedLocation,
       setIsEditable,
+      setIsHiddenEditable,
       saveProfile,
       loading,
     ],

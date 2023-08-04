@@ -3,7 +3,8 @@ import validator from "validator"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
-import { ProfileProvider } from "../../providers/ProfileContext"
+import { useAccount } from "wagmi"
+import { ProfileProvider, useProfileProvider } from "../../providers/ProfileContext"
 import ProfilePage from "../../components/ProfilePage"
 import { useUserProvider } from "../../providers/UserProvider"
 
@@ -53,6 +54,9 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
 }
 
 const Profile = () => {
+  const { address } = useAccount()
+  const { setIsHiddenEditable } = useProfileProvider()
+
   const { getUserData } = useUserProvider()
 
   const router = useRouter()
@@ -60,14 +64,15 @@ const Profile = () => {
   useEffect(() => {
     getUserData(router.query.address as string)
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router])
+    if (address !== router.query.address) {
+      return setIsHiddenEditable(true)
+    }
 
-  return (
-    <ProfileProvider>
-      <ProfilePage />
-    </ProfileProvider>
-  )
+    setIsHiddenEditable(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
+
+  return <ProfilePage />
 }
 
 export default Profile

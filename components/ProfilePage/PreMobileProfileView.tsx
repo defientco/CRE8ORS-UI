@@ -9,7 +9,8 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 
 const PreMobileProfileView = () => {
   const { userInfo } = useUserProvider()
-  const { isEditable, editedUserName, setEditedUserName, setIsEditable } = useProfileProvider()
+  const { isEditable, editedUserName, setEditedUserName, setIsEditable, isHiddenEditable } =
+    useProfileProvider()
 
   return (
     <div
@@ -68,20 +69,22 @@ const PreMobileProfileView = () => {
               containerClasses="w-[17px] h-[17px]"
             />
           </div>
-          <button
-            className="w-[26px] h-[26px] bg-[#DBDBDB]
+          {!isHiddenEditable && (
+            <button
+              className="w-[26px] h-[26px] bg-[#DBDBDB]
                           flex items-center justify-center
                           rounded-[2px] cursor-pointer"
-            type="button"
-            onClick={() => setIsEditable(!isEditable)}
-          >
-            <Media
-              type="image"
-              link="/assets/Profile/edit.svg"
-              blurLink="/assets/Profile/edit.png"
-              containerClasses="w-[17px] h-[17px]"
-            />
-          </button>
+              type="button"
+              onClick={() => setIsEditable(!isEditable)}
+            >
+              <Media
+                type="image"
+                link="/assets/Profile/edit.svg"
+                blurLink="/assets/Profile/edit.png"
+                containerClasses="w-[17px] h-[17px]"
+              />
+            </button>
+          )}
         </div>
         <DNALoading />
 

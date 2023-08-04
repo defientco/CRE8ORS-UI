@@ -12,6 +12,7 @@ const PreTwitterLocation = () => {
     setIsEditable,
     setEditedLocation,
     setEditedTwitterHandle,
+    isHiddenEditable,
   } = useProfileProvider()
 
   return (
@@ -70,35 +71,37 @@ const PreTwitterLocation = () => {
           </p>
         )}
       </div>
-      <Tooltip
-        id="edit_profile"
-        message="EDIT PROFILE"
-        place="right"
-        style={{
-          backgroundColor: "#DADADA",
-          color: "black",
-          fontFamily: "quicksand",
-          fontSize: "10px",
-          fontWeight: "bold",
-        }}
-      >
-        <button
-          className="w-[26px] h-[26px] bg-[white]
+      {!isHiddenEditable && (
+        <Tooltip
+          id="edit_profile"
+          message="EDIT PROFILE"
+          place="right"
+          style={{
+            backgroundColor: "#DADADA",
+            color: "black",
+            fontFamily: "quicksand",
+            fontSize: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          <button
+            className="w-[26px] h-[26px] bg-[white]
                 hover:scale-[1.3] scale-[1] transition duration-[300ms]
                 flex items-center justify-center
                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                 rounded-[2px] cursor-pointer"
-          type="button"
-          onClick={() => setIsEditable(true)}
-        >
-          <Media
-            type="image"
-            link="/assets/Profile/edit.svg"
-            blurLink="/assets/Profile/edit.png"
-            containerClasses="w-[17px] h-[17px]"
-          />
-        </button>
-      </Tooltip>
+            type="button"
+            onClick={() => setIsEditable(true)}
+          >
+            <Media
+              type="image"
+              link="/assets/Profile/edit.svg"
+              blurLink="/assets/Profile/edit.png"
+              containerClasses="w-[17px] h-[17px]"
+            />
+          </button>
+        </Tooltip>
+      )}
     </div>
   )
 }
