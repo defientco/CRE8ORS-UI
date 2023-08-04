@@ -13,7 +13,7 @@ import { useAccount } from "wagmi"
 import { getUserInfo } from "../lib/userInfo"
 
 interface userProps {
-  getUserData: () => Promise<void>
+  getUserData: (address?: string) => Promise<void>
   userInfo: any
 }
 
@@ -27,19 +27,20 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
 
-  const getUserData = useCallback(async () => {
-    if (!address) return setUserInfo(null)
+  const getUserData = useCallback(
+    async (walletAddress?: string) => {
+      if (walletAddress || address) {
+        const info: any = await getUserInfo(walletAddress || address)
 
-    const info = await getUserInfo(address)
+        if (!info?.doc) setUserInfo(null)
 
-    if (!info?.doc) setUserInfo(null)
+        return setUserInfo(info.doc)
+      }
 
-    setUserInfo(info.doc)
-  }, [address])
-
-  useEffect(() => {
-    getUserData()
-  }, [getUserData])
+      return setUserInfo(null)
+    },
+    [address],
+  )
 
   const provider = useMemo(
     () => ({

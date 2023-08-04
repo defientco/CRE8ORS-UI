@@ -7,10 +7,26 @@ interface MintModalCTAButtonProps {
   link: string
   label: string
   className?: string
+  target?: string
 }
 
-const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({ id, link, label, className }) => {
+const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
+  id,
+  link,
+  label,
+  className,
+  target,
+}) => {
   const router = useRouter()
+
+  const goToLink = () => {
+    if (!target) {
+      router.push(link)
+      return
+    }
+
+    window.open(link, target)
+  }
 
   return (
     <Button
@@ -23,7 +39,7 @@ const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({ id, link, label, clas
               !rounded-[10px]
               !text-black dark:!text-white
               dark:!bg-black !bg-white ${className || ""}`}
-      onClick={() => router.push(link)}
+      onClick={goToLink}
     >
       {label}
     </Button>

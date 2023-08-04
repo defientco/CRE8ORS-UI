@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next"
 import validator from "validator"
 import axios from "axios"
+import { ProfileProvider } from "../../providers/ProfileContext"
 import ProfilePage from "../../components/ProfilePage"
 
 interface ProfileProps {
@@ -48,6 +49,10 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
   }
 }
 
-const Profile = () => <ProfilePage />
+const Profile = () => (
+  <ProfileProvider>
+    <ProfilePage />
+  </ProfileProvider>
+)
 
 export default Profile

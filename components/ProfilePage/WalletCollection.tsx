@@ -11,27 +11,46 @@ const WalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expandM
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
   const mockData = [
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
-    "CRE8OR #2 InTraining",
-    "PASSPORT 88",
-    "DNA 752",
+    {
+      label: "CRE8OR #2 InTraining",
+      type: "cre8or",
+    },
+    {
+      label: "PASSPORT 88",
+      isLocked: false,
+    },
+    {
+      label: "DNA 752",
+    },
+    {
+      label: "CRE8OR #2 InTraining",
+      type: "cre8or",
+    },
+    {
+      label: "PASSPORT 88",
+    },
+    {
+      label: "DNA 752",
+    },
+    {
+      label: "PASSPORT 88",
+    },
+    {
+      label: "CRE8OR #46 InTraining",
+      type: "cre8or",
+      isLocked: false,
+    },
+    {
+      label: "DNA 67",
+    },
+    {
+      label: "CRE8OR #46 InTraining",
+      type: "cre8or",
+      isLocked: false,
+    },
+    {
+      label: "DNA 67",
+    },
   ]
 
   return (
@@ -138,7 +157,23 @@ const WalletCollection: FC<WalletCollectionProps> = ({ handleExpandMore, expandM
                 className="text-[8px] lg:text-[12px] font-quicksand font-bold text-white
                             w-[30px] samsungS8:w-[40px] lg:w-[67px] text-center"
               >
-                {data}
+                {data.label}
+                {data.type === "cre8or" &&
+                  (data.isLocked ? (
+                    <Media
+                      type="image"
+                      containerClasses="w-[13.54px] h-[16.83px]"
+                      link="/assets/Profile/locked.svg"
+                      blurLink="/assets/Profile/locked.png"
+                    />
+                  ) : (
+                    <Media
+                      type="image"
+                      containerClasses="w-[14.8px] h-[17px]"
+                      link="/assets/Profile/unlock.svg"
+                      blurLink="/assets/Profile/unlock.png"
+                    />
+                  ))}
               </div>
             </div>
           ))}

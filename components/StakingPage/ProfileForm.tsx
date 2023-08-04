@@ -31,6 +31,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
     const response = await saveUserInfo({
       address,
       ...values,
+      twitterhandle: values.twitterhandle.replace("@", ""),
     })
 
     if (!response) {
@@ -39,7 +40,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
       return
     }
 
-    await getUserData()
+    await getUserData(address)
 
     router.push(`/profile/${address}`)
   }

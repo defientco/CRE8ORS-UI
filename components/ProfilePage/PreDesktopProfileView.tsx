@@ -1,4 +1,3 @@
-import { FC } from "react"
 import Media from "../../shared/Media"
 import Tooltip from "../../shared/Tooltip"
 import PreTwitterLocation from "./Desktop/PreReveal/PreTwitterLocation"
@@ -9,29 +8,12 @@ import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
 import EditPanel from "./EditPanel"
 import { useUserProvider } from "../../providers/UserProvider"
-import { ProfileViewProps } from "./interface"
+import { useProfileProvider } from "../../providers/ProfileContext"
 
-const PreDesktopProfileView: FC<ProfileViewProps> = ({
-  saveProfile,
-  editedUserName,
-  handleEditedUserName,
-  handleEditable,
-  editedTwitterHandle,
-  handleEditedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-  editedBio,
-  handleEditedBio,
-  editedAskedMeAbout,
-  handleEditedAskedMeAbout,
-  editedINeedHelpWith,
-  handleINeedHelpWith,
-  isEditable,
-  handleExpandMore,
-  expandedMore,
-  loading,
-}) => {
+const PreDesktopProfileView = () => {
   const { userInfo } = useUserProvider()
+
+  const { expandedMore, isEditable, editedUserName, setEditedUserName } = useProfileProvider()
 
   return (
     <div
@@ -59,22 +41,20 @@ const PreDesktopProfileView: FC<ProfileViewProps> = ({
             leading-[110.3%]
             rounded-[4px]"
                 value={editedUserName}
-                onChange={handleEditedUserName}
+                onChange={(e) => setEditedUserName(e.target.value)}
                 type="text"
               />
 
-              <EditPanel
-                handleCloseEditingMode={() => handleEditable(false)}
-                isExpanded={expandedMore}
-                saveProfile={!loading ? saveProfile : async () => {}}
-              />
+              <EditPanel />
             </>
           ) : (
             <div className="font-eigerdals text-[75px]">{userInfo?.username}</div>
           )}
           <div className="flex items-center gap-x-[10px]">
-            <div
+            <button
+              type="button"
               className="w-[26px] h-[26px] bg-[black] 
+                        hover:scale-[1.3] scale-[1] transition duration-[300ms]
                         flex items-center justify-center
                         drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                         rounded-[3px] cursor-pointer"
@@ -85,7 +65,7 @@ const PreDesktopProfileView: FC<ProfileViewProps> = ({
                 blurLink="/assets/Profile/white_home.png"
                 containerClasses="w-[17px] h-[17px]"
               />
-            </div>
+            </button>
             <Tooltip
               id="comming_soon_btn"
               message="BADGES,<br />EMBLEMS, &<br />AWARDS<br />COMING SOON"
@@ -98,9 +78,11 @@ const PreDesktopProfileView: FC<ProfileViewProps> = ({
                 fontWeight: "bold",
               }}
             >
-              <div
+              <button
+                type="button"
                 className="w-[26px] h-[26px] bg-[white] 
                             flex items-center justify-center
+                            hover:scale-[1.3] scale-[1] transition duration-[300ms]
                             drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                             rounded-[3px] cursor-pointer"
               >
@@ -110,20 +92,13 @@ const PreDesktopProfileView: FC<ProfileViewProps> = ({
                   blurLink="/assets/Profile/three_dot.png"
                   containerClasses="w-[17px] h-[17px]"
                 />
-              </div>
+              </button>
             </Tooltip>
           </div>
         </div>
         <div className="w-full flex justify-between items-start px-10">
           <div className="flex flex-col">
-            <PreTwitterLocation
-              handleEditable={() => handleEditable(true)}
-              isEditable={isEditable}
-              editedTwitterHandle={editedTwitterHandle}
-              handleEditedTwitterHandle={handleEditedTwitterHandle}
-              editedLocation={editedLocation}
-              handleEditedLocation={handleEditedLocation}
-            />
+            <PreTwitterLocation />
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
@@ -133,19 +108,11 @@ const PreDesktopProfileView: FC<ProfileViewProps> = ({
             </div>
           </div>
           <div className="flex flex-col gap-y-[40px]">
-            <PreProfileInformation
-              editedAskedMeAbout={editedAskedMeAbout}
-              editedINeedHelpWith={editedINeedHelpWith}
-              editedBio={editedBio}
-              handleEditedAskedMeAbout={handleEditedAskedMeAbout}
-              handleINeedHelpWith={handleINeedHelpWith}
-              handleEditedBio={handleEditedBio}
-              isEditable={isEditable}
-            />
+            <PreProfileInformation />
             <PreSimilarProfiles />
           </div>
         </div>
-        <PreWalletCollection handleExpandMore={handleExpandMore} expandMore={expandedMore} />
+        <PreWalletCollection />
       </div>
     </div>
   )

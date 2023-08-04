@@ -1,17 +1,17 @@
-import { FC } from "react"
 import Media from "../../../../shared/Media"
 
-import { TwitterLocationProps } from "../../interface"
+import { useProfileProvider } from "../../../../providers/ProfileContext"
 import { useUserProvider } from "../../../../providers/UserProvider"
 
-const TwitterLocation: FC<TwitterLocationProps> = ({
-  isEditable,
-  handleEditedTwitterHandle,
-  editedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-}) => {
+const TwitterLocation = () => {
   const { userInfo } = useUserProvider()
+  const {
+    isEditable,
+    editedTwitterHandle,
+    editedLocation,
+    setEditedLocation,
+    setEditedTwitterHandle,
+  } = useProfileProvider()
 
   return (
     <div className="flex items-center justify-center gap-x-[10px] pt-[5px]">
@@ -33,7 +33,7 @@ const TwitterLocation: FC<TwitterLocationProps> = ({
         bg-[#D9D9D9]
         px-[3px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedTwitterHandle}
+            onChange={(e) => setEditedTwitterHandle(e.target.value)}
             value={editedTwitterHandle}
           />
         ) : (
@@ -60,7 +60,7 @@ const TwitterLocation: FC<TwitterLocationProps> = ({
         bg-[#D9D9D9]
         px-[3px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedLocation}
+            onChange={(e) => setEditedLocation(e.target.value)}
             value={editedLocation}
           />
         ) : (

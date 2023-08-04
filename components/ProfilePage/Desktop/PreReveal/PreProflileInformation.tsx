@@ -1,17 +1,17 @@
-import { FC } from "react"
+import { useProfileProvider } from "../../../../providers/ProfileContext"
 import { useUserProvider } from "../../../../providers/UserProvider"
-import { ProfileInformationProps } from "../../interface"
 
-const PreProfileInformation: FC<ProfileInformationProps> = ({
-  editedBio,
-  handleEditedBio,
-  editedAskedMeAbout,
-  handleEditedAskedMeAbout,
-  editedINeedHelpWith,
-  handleINeedHelpWith,
-  isEditable,
-}) => {
+const PreProfileInformation = () => {
   const { userInfo } = useUserProvider()
+  const {
+    isEditable,
+    editedBio,
+    editedINeedHelpWith,
+    editedAskedMeAbout,
+    setEditedAskedMeAbout,
+    setEditedINeedHelpWith,
+    setEditedBio,
+  } = useProfileProvider()
 
   return (
     <div className="flex flex-col text-black items-center lg:items-end pt-[50px]">
@@ -36,7 +36,7 @@ const PreProfileInformation: FC<ProfileInformationProps> = ({
          px-[10px] py-[5px]
          rounded-[4px]"
           value={editedBio}
-          onChange={handleEditedBio}
+          onChange={(e) => setEditedBio(e.target.value)}
         />
       ) : (
         <pre
@@ -71,7 +71,7 @@ const PreProfileInformation: FC<ProfileInformationProps> = ({
          px-[10px]
          rounded-[4px]"
           value={editedAskedMeAbout}
-          onChange={handleEditedAskedMeAbout}
+          onChange={(e) => setEditedAskedMeAbout(e.target.value)}
         />
       ) : (
         <pre
@@ -105,7 +105,7 @@ const PreProfileInformation: FC<ProfileInformationProps> = ({
          px-[10px]
          rounded-[4px]"
           value={editedINeedHelpWith}
-          onChange={handleINeedHelpWith}
+          onChange={(e) => setEditedINeedHelpWith(e.target.value)}
         />
       ) : (
         <pre

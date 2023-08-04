@@ -1,88 +1,36 @@
 import { useMediaQuery } from "usehooks-ts"
+import { useAccount } from "wagmi"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Layout from "../Layout"
 import PreDesktopProfileView from "./PreDesktopProfileView"
 import PreMobileProfileView from "./PreMobileProfileView"
-import { useUserProvider } from "../../providers/UserProvider"
-import { updateUserInfo } from "../../lib/userInfo"
 import { Button } from "../../shared/Button"
+import { useProfileProvider } from "../../providers/ProfileContext"
+import { useUserProvider } from "../../providers/UserProvider"
 
 const ProfilePage = () => {
   const router = useRouter()
+
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { userInfo, getUserData } = useUserProvider()
-  const { address } = router.query
 
-  const [expandedMore, setExpandedMore] = useState(false)
-  const [isEditable, setIsEditable] = useState(false)
-  const [editedUserName, setEditedUserName] = useState("")
-  const [editedTwitterHandle, setEditedTwitterHandle] = useState("")
-  const [editedLocation, setEditedLocation] = useState("")
-  const [editedAskedMeAbout, setEditedAskedMeAbout] = useState("")
-  const [editedINeedHelpWith, setEditedINeedHelpWith] = useState("")
-  const [editedBio, setEditedBio] = useState("")
-  const [loading, setLoading] = useState(false)
+  const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable } = useProfileProvider()
 
-  const saveProfile = async () => {
-    setLoading(true)
-    const response = await updateUserInfo({
-      address,
-      twitterHandle: editedTwitterHandle,
-      location: editedLocation,
-      iNeedHelpWith: editedINeedHelpWith,
-      askMeAbout: editedAskedMeAbout,
-      bio: editedBio,
-      username: editedUserName,
-    })
+  const { getUserData } = useUserProvider()
 
-    if (response) await getUserData()
-    setLoading(false)
-    setIsEditable(false)
-  }
+  const { address } = useAccount()
 
   useEffect(() => {
-    if (userInfo) {
-      setEditedUserName(userInfo.username)
-      setEditedTwitterHandle(userInfo.twitterHandle)
-      setEditedLocation(userInfo.location)
-      setEditedAskedMeAbout(userInfo.askMeAbout)
-      setEditedINeedHelpWith(userInfo.iNeedHelpWith)
-      setEditedBio(userInfo.bio)
+    getUserData(router.query.address as string)
+
+    if (address !== router.query.address) {
+      setIsHiddenEditable(true)
+      return
     }
-  }, [isEditable, userInfo])
 
-  const handleEditable = (ediable: boolean) => {
-    setIsEditable(ediable)
-  }
-
-  const handleEditedUserName = (e: any) => {
-    setEditedUserName(e.target.value)
-  }
-
-  const handleEditedAskedMeAbout = (e: any) => {
-    setEditedAskedMeAbout(e.target.value)
-  }
-
-  const handleEditedTwitterHandle = (e: any) => {
-    setEditedTwitterHandle(e.target.value)
-  }
-
-  const handleEditedINeedHelpWith = (e: any) => {
-    setEditedINeedHelpWith(e.target.value)
-  }
-
-  const handleEditedBio = (e: any) => {
-    setEditedBio(e.target.value)
-  }
-
-  const handleEditedLocation = (e: any) => {
-    setEditedLocation(e.target.value)
-  }
-
-  const handleExpandedMore = (isExpanded: boolean) => {
-    setExpandedMore(isExpanded)
-  }
+    setIsHiddenEditable(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, getUserData])
 
   return (
     <Layout type="contained">
@@ -120,55 +68,17 @@ const ProfilePage = () => {
                     className="!p-0 !w-[30px] !h-[30px] !rounded-full 
                             !text-[12px] !bg-[black] !text-white
                             !font-quicksand !font-bold !uppercase"
-                    onClick={() => handleEditable(false)}
+                    onClick={() => setIsEditable(false)}
                   >
                     X
                   </Button>
                 </div>
               </div>
             )}
-            <PreMobileProfileView
-              saveProfile={saveProfile}
-              loading={loading}
-              handleEditable={handleEditable}
-              handleEditedUserName={handleEditedUserName}
-              handleEditedAskedMeAbout={handleEditedAskedMeAbout}
-              handleEditedBio={handleEditedBio}
-              expandedMore={expandedMore}
-              handleExpandMore={handleExpandedMore}
-              handleINeedHelpWith={handleEditedINeedHelpWith}
-              handleEditedTwitterHandle={handleEditedTwitterHandle}
-              handleEditedLocation={handleEditedLocation}
-              isEditable={isEditable}
-              editedAskedMeAbout={editedAskedMeAbout}
-              editedUserName={editedUserName}
-              editedLocation={editedLocation}
-              editedINeedHelpWith={editedINeedHelpWith}
-              editedTwitterHandle={editedTwitterHandle}
-              editedBio={editedBio}
-            />
+            <PreMobileProfileView />
           </>
         ) : (
-          <PreDesktopProfileView
-            saveProfile={saveProfile}
-            loading={loading}
-            handleEditable={handleEditable}
-            handleEditedUserName={handleEditedUserName}
-            handleEditedAskedMeAbout={handleEditedAskedMeAbout}
-            handleEditedBio={handleEditedBio}
-            expandedMore={expandedMore}
-            handleExpandMore={handleExpandedMore}
-            handleINeedHelpWith={handleEditedINeedHelpWith}
-            handleEditedTwitterHandle={handleEditedTwitterHandle}
-            handleEditedLocation={handleEditedLocation}
-            isEditable={isEditable}
-            editedAskedMeAbout={editedAskedMeAbout}
-            editedUserName={editedUserName}
-            editedLocation={editedLocation}
-            editedINeedHelpWith={editedINeedHelpWith}
-            editedTwitterHandle={editedTwitterHandle}
-            editedBio={editedBio}
-          />
+          <PreDesktopProfileView />
         )}
       </div>
     </Layout>

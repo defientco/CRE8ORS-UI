@@ -1,34 +1,16 @@
-import { FC } from "react"
 import Media from "../../shared/Media"
 import PreProfileInformation from "./Desktop/PreReveal/PreProflileInformation"
 import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
 import PreSimilarProfiles from "./Mobile/PreReveal/PreSimilarProfiles"
 import PreWalletCollection from "./PreWalletCollection"
 import DNALoading from "./DNALoading"
-import { ProfileViewProps } from "./interface"
 import { useUserProvider } from "../../providers/UserProvider"
+import { useProfileProvider } from "../../providers/ProfileContext"
 
-const PreMobileProfileView: FC<ProfileViewProps> = ({
-  // saveProfile,
-  editedUserName,
-  handleEditedUserName,
-  handleEditable,
-  editedTwitterHandle,
-  handleEditedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-  editedBio,
-  handleEditedBio,
-  editedAskedMeAbout,
-  handleEditedAskedMeAbout,
-  editedINeedHelpWith,
-  handleINeedHelpWith,
-  isEditable,
-  handleExpandMore,
-  expandedMore,
-  // loading,
-}) => {
+const PreMobileProfileView = () => {
   const { userInfo } = useUserProvider()
+  const { isEditable, editedUserName, setEditedUserName, setIsEditable, isHiddenEditable } =
+    useProfileProvider()
 
   return (
     <div
@@ -54,21 +36,14 @@ const PreMobileProfileView: FC<ProfileViewProps> = ({
           bg-[#D9D9D9]
           px-[10px] py-[2px]
           rounded-[4px]"
-              onChange={handleEditedUserName}
+              onChange={(e) => setEditedUserName(e.target.value)}
               value={editedUserName}
             />{" "}
           </div>
         ) : (
           <div className="font-eigerdals text-[40px] text-center">{userInfo?.username || ""}</div>
         )}
-        <TwitterLocation
-          handleEditable={() => handleEditable(true)}
-          isEditable={isEditable}
-          editedTwitterHandle={editedTwitterHandle}
-          handleEditedTwitterHandle={handleEditedTwitterHandle}
-          editedLocation={editedLocation}
-          handleEditedLocation={handleEditedLocation}
-        />
+        <TwitterLocation />
         <div className="w-full flex justify-center items-center px-10 gap-x-[10px] pt-[15px]">
           <div
             className="w-[26px] h-[26px] bg-[#DBDBDB] 
@@ -94,38 +69,29 @@ const PreMobileProfileView: FC<ProfileViewProps> = ({
               containerClasses="w-[17px] h-[17px]"
             />
           </div>
-          <button
-            className="w-[26px] h-[26px] bg-[#DBDBDB]
+          {!isHiddenEditable && (
+            <button
+              className="w-[26px] h-[26px] bg-[#DBDBDB]
                           flex items-center justify-center
                           rounded-[2px] cursor-pointer"
-            type="button"
-            onClick={() => handleEditable(!isEditable)}
-          >
-            <Media
-              type="image"
-              link="/assets/Profile/edit.svg"
-              blurLink="/assets/Profile/edit.png"
-              containerClasses="w-[17px] h-[17px]"
-            />
-          </button>
+              type="button"
+              onClick={() => setIsEditable(!isEditable)}
+            >
+              <Media
+                type="image"
+                link="/assets/Profile/edit.svg"
+                blurLink="/assets/Profile/edit.png"
+                containerClasses="w-[17px] h-[17px]"
+              />
+            </button>
+          )}
         </div>
         <DNALoading />
 
-        <PreProfileInformation
-          editedAskedMeAbout={editedAskedMeAbout}
-          editedINeedHelpWith={editedINeedHelpWith}
-          editedBio={editedBio}
-          handleEditedAskedMeAbout={handleEditedAskedMeAbout}
-          handleINeedHelpWith={handleINeedHelpWith}
-          handleEditedBio={handleEditedBio}
-          isEditable={isEditable}
-        />
+        <PreProfileInformation />
         <PreSimilarProfiles />
 
-        <PreWalletCollection
-          handleExpandMore={(expanded: boolean) => handleExpandMore(expanded)}
-          expandMore={expandedMore}
-        />
+        <PreWalletCollection />
       </div>
     </div>
   )

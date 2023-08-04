@@ -1,18 +1,19 @@
-import { FC } from "react"
 import Media from "../../../../shared/Media"
 import Tooltip from "../../../../shared/Tooltip"
 import { useUserProvider } from "../../../../providers/UserProvider"
-import { TwitterLocationProps } from "../../interface"
+import { useProfileProvider } from "../../../../providers/ProfileContext"
 
-const PreTwitterLocation: FC<TwitterLocationProps> = ({
-  handleEditable,
-  isEditable,
-  handleEditedTwitterHandle,
-  editedTwitterHandle,
-  editedLocation,
-  handleEditedLocation,
-}) => {
+const PreTwitterLocation = () => {
   const { userInfo } = useUserProvider()
+  const {
+    isEditable,
+    editedTwitterHandle,
+    editedLocation,
+    setIsEditable,
+    setEditedLocation,
+    setEditedTwitterHandle,
+    isHiddenEditable,
+  } = useProfileProvider()
 
   return (
     <div className="flex items-center gap-x-[15px]">
@@ -34,7 +35,7 @@ const PreTwitterLocation: FC<TwitterLocationProps> = ({
         bg-[#D9D9D9]
         px-[10px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedTwitterHandle}
+            onChange={(e) => setEditedTwitterHandle(e.target.value)}
             value={editedTwitterHandle}
           />
         ) : (
@@ -61,7 +62,7 @@ const PreTwitterLocation: FC<TwitterLocationProps> = ({
         bg-[#D9D9D9]
         px-[10px] py-[2px]
         rounded-[4px]"
-            onChange={handleEditedLocation}
+            onChange={(e) => setEditedLocation(e.target.value)}
             value={editedLocation}
           />
         ) : (
@@ -70,34 +71,37 @@ const PreTwitterLocation: FC<TwitterLocationProps> = ({
           </p>
         )}
       </div>
-      <Tooltip
-        id="edit_profile"
-        message="EDIT PROFILE"
-        place="right"
-        style={{
-          backgroundColor: "#DADADA",
-          color: "black",
-          fontFamily: "quicksand",
-          fontSize: "10px",
-          fontWeight: "bold",
-        }}
-      >
-        <button
-          className="w-[26px] h-[26px] bg-[white]
+      {!isHiddenEditable && !isEditable && (
+        <Tooltip
+          id="edit_profile"
+          message="EDIT PROFILE"
+          place="right"
+          style={{
+            backgroundColor: "#DADADA",
+            color: "black",
+            fontFamily: "quicksand",
+            fontSize: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          <button
+            className="w-[26px] h-[26px] bg-[white]
+                hover:scale-[1.3] scale-[1] transition duration-[300ms]
                 flex items-center justify-center
                 drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                 rounded-[2px] cursor-pointer"
-          type="button"
-          onClick={handleEditable}
-        >
-          <Media
-            type="image"
-            link="/assets/Profile/edit.svg"
-            blurLink="/assets/Profile/edit.png"
-            containerClasses="w-[17px] h-[17px]"
-          />
-        </button>
-      </Tooltip>
+            type="button"
+            onClick={() => setIsEditable(true)}
+          >
+            <Media
+              type="image"
+              link="/assets/Profile/edit.svg"
+              blurLink="/assets/Profile/edit.png"
+              containerClasses="w-[17px] h-[17px]"
+            />
+          </button>
+        </Tooltip>
+      )}
     </div>
   )
 }
