@@ -18,7 +18,7 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
   })
 
   const handleClick = () => {
-    setOpenModal(true)
+    if (cart.length) setOpenModal(true)
   }
 
   return (
