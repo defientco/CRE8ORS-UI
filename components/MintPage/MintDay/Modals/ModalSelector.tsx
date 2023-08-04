@@ -8,6 +8,7 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
+import PublicSaleModal from "./PublicSaleModal"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -23,6 +24,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     leftQuantityCount,
     cart,
     publicSaleActive,
+    loadingSaleStatus,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -69,9 +71,19 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount > 0 && cart.length > 0 && whitelisted) {
+    if (leftQuantityCount > 0 && cart.length > 0) {
+      if (whitelisted) {
+        return (
+          <Cre8orlistModal
+            isModalVisible={isVisibleModal}
+            toggleIsVisible={toggleModal}
+            openSuccessModal={() => setShouldOpenSuccessModal(true)}
+            handleLoading={handleMintLoading}
+          />
+        )
+      }
       return (
-        <Cre8orlistModal
+        <PublicSaleModal
           isModalVisible={isVisibleModal}
           toggleIsVisible={toggleModal}
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
@@ -80,7 +92,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
     }
 
-    if (!publicSaleActive) {
+    if (!(publicSaleActive || loadingSaleStatus)) {
       return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
     }
 
