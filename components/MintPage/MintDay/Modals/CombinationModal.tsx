@@ -29,11 +29,14 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
       <div
-        className="px-14 py-8 samsungS8:px-20 samsungS8:py-10 rounded-lg
-                      flex-col flex justify-center items-center
-                      bg-[url('/assets/Mint/MintNow/MintCoreModal/combination_bg.png')]
-                      bg-cover bg-black dark:bg-white 
-                      xl:w-[803px] xl:h-[569px]"
+        className="rounded-lg
+                  flex-col flex justify-center items-center
+                  bg-[url('/assets/Mint/MintNow/MintCoreModal/combination_bg.png')]
+                  bg-cover bg-black dark:bg-white 
+                  w-[250px] h-[200px]
+                  samsungS8:w-[300px] samsungS8:h-[250px]
+                  xs:w-[320px] xs:h-[250px]
+                  xl:w-[803px] xl:h-[569px]"
       >
         {loading ? (
           <MintLoading />
