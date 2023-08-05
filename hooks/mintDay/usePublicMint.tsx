@@ -1,10 +1,11 @@
 import { Contract } from "ethers"
-import { useAccount, useSigner } from "wagmi"
+import { useAccount } from "wagmi"
 import publicMinterAbi from "../../lib/abi-public-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
+import { useEthersSigner } from "../useEthersSigner"
 
 const usePublicMint = () => {
-  const { data: signer } = useSigner()
+  const signer = useEthersSigner({ chainId: 5 })
   const { address } = useAccount()
 
   const mint = async (cart) => {
@@ -14,6 +15,7 @@ const usePublicMint = () => {
       publicMinterAbi,
       signer,
     )
+
     const tx = await contract.mintPfp(address, cart, { value })
     await tx.wait()
   }

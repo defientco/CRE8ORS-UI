@@ -1,13 +1,14 @@
-import { useAccount, useSigner } from "wagmi"
+import { useAccount } from "wagmi"
 import { mintByCollectionHolder } from "../../lib/collectionHolder"
 import { mintByFriendsAndFamily } from "../../lib/friendAndFamily"
 import purchase from "../../lib/purchase"
 import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useMintProvider } from "../../providers/MintProvider"
+import { useEthersSigner } from "../useEthersSigner"
 
 const usePassportMintDay = () => {
   const { availablePassportIds } = useMintProvider()
-  const { data: signer } = useSigner()
+  const signer = useEthersSigner()
   const { address } = useAccount()
 
   const freeMintFamilyAndFriend = async () => {
