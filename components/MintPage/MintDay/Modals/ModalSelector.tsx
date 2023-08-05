@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react"
 import { useAccount } from "wagmi"
 
+import _ from "lodash"
 import MintMoreModal from "./MintMoreModal"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
@@ -9,7 +10,6 @@ import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
 import PublicSaleModal from "./PublicSaleModal"
-import _ from 'lodash'
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
