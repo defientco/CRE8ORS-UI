@@ -9,6 +9,7 @@ import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
 import PublicSaleModal from "./PublicSaleModal"
+import _ from 'lodash'
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -71,7 +72,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount > 0 && cart.length > 0) {
+    if (leftQuantityCount > 0 && _.sum(cart) > 0) {
       if (whitelisted) {
         return (
           <Cre8orlistModal
