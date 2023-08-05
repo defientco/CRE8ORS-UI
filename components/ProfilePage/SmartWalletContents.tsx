@@ -1,31 +1,22 @@
-import { Contract } from "ethers"
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react"
-import registryAbi from "../../lib/abi-ERC6551-registry.json"
-import getDefaultProvider from "../../lib/getDefaultProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
-import getNFTs from "../../lib/alchemy/getNFTs"
 import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 
 const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
-  const [smartWalletAddress, setSmartWalletAddress] = useState()
   const [ownedNfts, setOwnedNfts] = useState([])
 
   useEffect(() => {
     const init = async () => {
-      const smartWalletResponse = await getSmartWallet(cre8orNumber)
-      setSmartWalletAddress(smartWalletResponse)
-
-      const nftResponse = await getProfileFormattedCollection(smartWalletResponse)
+      const smartWalletAddress = await getSmartWallet(cre8orNumber)
+      const nftResponse = await getProfileFormattedCollection(smartWalletAddress)
       setOwnedNfts(nftResponse)
     }
 
     init()
   }, [cre8orNumber])
-
-  console.log("SWEETS tokenBoundAccount", smartWalletAddress)
-  console.log("SWEETS ownedNfts", ownedNfts)
 
   return (
     <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
