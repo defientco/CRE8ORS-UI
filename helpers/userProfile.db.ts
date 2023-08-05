@@ -53,7 +53,7 @@ export const updateUserProfile = async (body: UserProfile) => {
     if (!doc) {
       throw new Error("No user found")
     }
-    const results = await UserProfile.findOneAndUpdate({ username: body.username }, body)
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: body.walletAddress }, body)
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
