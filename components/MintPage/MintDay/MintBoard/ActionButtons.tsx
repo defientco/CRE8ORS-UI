@@ -1,5 +1,6 @@
 import { useAccount } from "wagmi"
 import { useRef } from "react"
+import _ from "lodash"
 import { Button } from "../../../../shared/Button"
 import WalletConnectButton from "../../../WalletConnectButton"
 import { useMintProvider } from "../../../../providers/MintProvider"
@@ -14,11 +15,11 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
 
   useShakeEffect({
     ref: shakeRef,
-    isEnabled: cart.length === 0,
+    isEnabled: _.sum(cart) === 0,
   })
 
   const handleClick = () => {
-    if (cart.length) setOpenModal(true)
+    if (_.sum(cart)) setOpenModal(true)
   }
 
   return (
