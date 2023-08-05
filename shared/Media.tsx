@@ -10,6 +10,7 @@ interface IMedia {
   className?: string
   videoProps?: DetailedHTMLProps<VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>
   blurLink?: string
+  alt?: string
 }
 
 function Media({
@@ -20,7 +21,8 @@ function Media({
   containerClasses,
   containerStyle,
   blurLink,
-  posterLink
+  posterLink,
+  alt
 }: IMedia) {
   const videoRef = useRef<any>()
   const [isMuted, setIsMuted] = useState(true)
@@ -56,7 +58,7 @@ function Media({
           className="absolute w-[100%] h-[100%]"
           src={link}
           layout="fill"
-          alt="not found image"
+          alt={alt || "not found image"}
           placeholder="blur"
           blurDataURL={
             blurLink ||
