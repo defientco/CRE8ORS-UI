@@ -95,7 +95,39 @@ export const updateUserProfile = async (body: UserProfile) => {
       newProfile['avatarUrl'] = avatarUrl
     }
 
+    if(!newProfile['avatarUrl']) {
+      const pipline = [
+        {
+          $project: {
+            location: 1,
+            twitterHandle: 1,
+            avatarUrl: 1,
+            username: 1,
+            iNeedHelpWith: 1,
+            askMeAbout: 1,
+            walletAddress: { $toLower: '$walletAddress' },
+          },
+        },
+        {
+          $match: {
+            walletAddress: { $ne: body.walletAddress?.toLowerCase() },
+            location: body.location,
+          }
+        },
+      ]
+
+      const similarDocs = await UserProfile.aggregate(pipline)
+
+      for(const _doc of similarDocs) {
+        if(_doc.avatarUrl) {
+          newProfile['avatarUrl'] = _doc.avatarUrl
+          break 
+        }
+      }
+    }
+    
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, newProfile)
+
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
@@ -106,7 +138,15 @@ export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
-    const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+
+    if(!doc) throw new Error("Profile is not existed!") 
+
+    if(doc.avatarUrl) {
+      const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
+
+      await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
+    }
 
     return { success: true, doc }
   } catch (e) {
