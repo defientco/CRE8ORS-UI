@@ -92,7 +92,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
     }
 
-    if (!(publicSaleActive || loadingSaleStatus)) {
+    if (!(publicSaleActive || loadingSaleStatus) || hasWhitelist) {
       return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
     }
 

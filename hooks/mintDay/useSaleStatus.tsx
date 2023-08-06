@@ -25,8 +25,8 @@ const useSaleStatus = () => {
       const details = await cre8orsContract.saleDetails()
       setPublicSaleActive(details.publicSaleActive)
       setPresaleActive(details.presaleActive)
-      setPresaleStart(details.presaleStart.toNumber())
-      setPublicSaleStart(details.publicSaleStart.toNumber())
+      setPresaleStart(details.presaleStart.toString())
+      setPublicSaleStart(details.publicSaleStart.toString())
       setLoading(false)
     }
 

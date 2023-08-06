@@ -1,12 +1,10 @@
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
-import { useAccount } from "wagmi"
 import ModalTimer from "../ModalTimer"
 import Modal from "../../../../shared/Modal"
 import { Button } from "../../../../shared/Button"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import { isWhitelisted, hasMerkleProof } from "../../../../lib/merkle/isWhitelisted"
 import epochToModalTimerString from "../../../../lib/epochToModalTimerString"
 
 interface DetectedPassportModalProps {
@@ -15,20 +13,13 @@ interface DetectedPassportModalProps {
 }
 
 const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, toggleIsVisible }) => {
-  const { address } = useAccount()
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
-  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus, merkleRoot } =
+  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus, hasWhitelist } =
     useMintProvider()
-  const whitelisted = useMemo(async () => {
-    let hasProof = false
-    if (merkleRoot.length > 0) {
-      hasProof = await hasMerkleProof(address, merkleRoot)
-    }
-    return isWhitelisted(address) || hasProof
-  }, [address, merkleRoot])
-  const endDay = epochToModalTimerString(whitelisted ? presaleStart : publicSaleStart)
-  const notWhitelistPresaleActive = !whitelisted && presaleActive
+
+  const endDay = epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
+  const notWhitelistPresaleActive = !hasWhitelist && presaleActive
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -36,7 +27,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
         className={`p-2 samsungS8:p-6 xs:p-8 xl:p-6 rounded-lg
                 flex-col flex justify-center items-center
                 ${
-                  whitelisted
+                  hasWhitelist
                     ? "bg-[url('/assets/Mint/MintNow/MintCoreModal/allowlist_bg.png')]"
                     : "bg-[url('/assets/Mint/MintNow/MintCoreModal/notallowlist_bg.png')]"
                 }
@@ -55,7 +46,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 uppercase text-center
                 leading-[103.3%]"
         >
-          {whitelisted ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
+          {hasWhitelist ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
         </pre>
         <pre
           className="font-quicksand font-bold
