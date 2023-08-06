@@ -2,7 +2,6 @@ import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
 import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
 import dbConnect from "../utils/db"
-import axios from 'axios'
 
 export interface UserProfile {
   walletAddress: string
@@ -144,17 +143,9 @@ export const getUserProfile = async (walletAddress: string) => {
     if(!doc) throw new Error("Profile is not existed!") 
 
     if(!doc.avatarUrl) {
-      const response = await axios.get(`https://api.twitter.com/1.1/users/show.json?screen_name=${doc.twitterHandle}`, {
-        headers: {
-          Authorization: `Bearer ${process.env.TWITTER_BEARER}`
-        }
-      })    
-
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
-      const updatedDoc = await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
-      return { success: true, doc: updatedDoc, avatarUrl, data: response?.data }
-
+      if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
     }
 
     return { success: true, doc }
