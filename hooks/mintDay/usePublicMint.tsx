@@ -5,7 +5,7 @@ import getCartPrice from "../../lib/getCartPrice"
 import { useEthersSigner } from "../useEthersSigner"
 
 const usePublicMint = () => {
-  const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5: 1 })
+  const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
   const { address } = useAccount()
 
   const mint = async (cart) => {
