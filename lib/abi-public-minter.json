@@ -1,161 +1,153 @@
 [
   {
-    "type": "constructor",
-    "name": "",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "_cre8orsNFT",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "address",
+        "internalType": "address",
         "name": "_minterUtility",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "address",
+        "internalType": "address",
         "name": "_collectionHolderMint",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "address",
+        "internalType": "address",
         "name": "_friendsAndFamilyMinter",
-        "internalType": "address"
+        "type": "address"
       }
     ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    "type": "error",
+    "inputs": [],
     "name": "Access_OnlyAdmin",
-    "inputs": [],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "error",
+    "inputs": [],
     "name": "InvalidArrayLength",
-    "inputs": [],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "error",
+    "inputs": [],
     "name": "InvalidTier",
-    "inputs": [],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "error",
+    "inputs": [],
     "name": "Purchase_TooManyForAddress",
-    "inputs": [],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "error",
-    "name": "Purchase_WrongPrice",
     "inputs": [
       {
-        "type": "uint256",
+        "internalType": "uint256",
         "name": "correctPrice",
-        "internalType": "uint256"
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Purchase_WrongPrice",
+    "type": "error"
   },
   {
-    "type": "error",
+    "inputs": [],
     "name": "Sale_Inactive",
-    "inputs": [],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "collectionHolderMint",
-    "inputs": [],
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "",
-        "internalType": "address"
+        "type": "address"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "cre8orsNFT",
-    "inputs": [],
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "",
-        "internalType": "address"
+        "type": "address"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "friendsAndFamilyMinter",
-    "inputs": [],
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "",
-        "internalType": "address"
+        "type": "address"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "name": "mintPfp",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "recipient",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "uint256[]",
+        "internalType": "uint256[]",
         "name": "carts",
-        "internalType": "uint256[]"
+        "type": "uint256[]"
       }
     ],
+    "name": "mintPfp",
     "outputs": [
       {
-        "type": "uint256",
+        "internalType": "uint256",
         "name": "",
-        "internalType": "uint256"
+        "type": "uint256"
       }
     ],
-    "stateMutability": "payable"
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    "type": "function",
-    "name": "minterUtility",
     "inputs": [],
+    "name": "minterUtility",
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "",
-        "internalType": "address"
+        "type": "address"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "name": "setNewMinterUtilityContractAddress",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "_newMinterUtilityContractAddress",
-        "internalType": "address"
+        "type": "address"
       }
     ],
+    "name": "setNewMinterUtilityContractAddress",
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]

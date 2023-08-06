@@ -38,7 +38,13 @@ const TwitterLocation = () => {
           />
         ) : (
           <p className="font-quicksand font-bold text-[12px] leading-[99.3%]">
-            @{userInfo?.twitterHandle || ""}
+            <a
+              href={`https://twitter.com/${userInfo?.twitterHandle}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              @{userInfo?.twitterHandle}
+            </a>
           </p>
         )}
       </div>

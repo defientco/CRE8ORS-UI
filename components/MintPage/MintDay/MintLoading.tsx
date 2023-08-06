@@ -14,7 +14,11 @@ const MintLoading = () => (
     <Media
       type="image"
       link="/assets/Common/loading.svg"
-      containerClasses="w-[230px] h-[200px] samsungS8:w-[260px] xs:w-[300px] md:w-[250px] md:h-[250px] z-[3]"
+      containerClasses="w-[80px] h-[80px] 
+      samsungS8:w-[130px] samsungS8:h-[130px] 
+      xs:w-[130px] xs:h-[130px] 
+      md:w-[250px] md:h-[250px] 
+      z-[3]"
     />
     <div
       className="uppercase text-white dark:text-black

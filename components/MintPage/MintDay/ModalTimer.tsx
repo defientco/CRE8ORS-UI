@@ -11,7 +11,13 @@ const ModalTimer: FC<ModalTimerProps> = ({ endDay }) => {
   const [seconds, setSeconds] = useState("00")
 
   const getTime = () => {
-    const time = Date.parse(endDay) - Date.now()
+    const time =
+      new Date(endDay).getTime() -
+      new Date(
+        new Date().toLocaleString("en-us", {
+          timeZone: "America/New_York",
+        }),
+      ).getTime()
 
     setDays(Math.floor(time / (1000 * 60 * 60 * 24)).toString())
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24).toString())
