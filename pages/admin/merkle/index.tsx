@@ -39,12 +39,14 @@ const Merkle = () => {
           <div className="flex flex-col justify-center w-full max-w-lg p-6 space-y-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
             {reset && (
               <>
-                <h5 className="text-center text-white">{copied ? "Copied" : "Click to Copy"}</h5>
+                <h5 className="text-center text-gray-500 dark:text-white">
+                  {copied ? "Copied" : "Click to Copy"}
+                </h5>
                 <input
                   type="text"
                   id="disabled-input-2"
                   aria-label="disabled input 2"
-                  className="bg-gray-100 border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-100 border border-gray-300 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 text-gray-800 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   readOnly
                   onClick={() => {
                     setCopied(true)
