@@ -1,10 +1,10 @@
 import { createContext, useState, useEffect, useMemo, useContext, useCallback } from "react"
 
 import { useRouter } from "next/router"
+import { BigNumber } from "ethers"
 import { useUserProvider } from "./UserProvider"
 import { getSimilarProfiles, updateUserInfo } from "../lib/userInfo"
 import getNFTs from "../lib/alchemy/getNFTs"
-import { BigNumber } from "ethers"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
 

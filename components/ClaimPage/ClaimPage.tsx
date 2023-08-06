@@ -1,7 +1,7 @@
 import { useMeasure } from "react-use"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useMediaQuery, useReadLocalStorage } from "usehooks-ts"
-import { useSigner, useAccount } from "wagmi"
+import { useAccount } from "wagmi"
 import { ILogObj, Logger } from "tslog"
 import { useRouter } from "next/router"
 import Layout from "../Layout"
@@ -21,12 +21,13 @@ import claimTicketAbi from "../../lib/abi-cre8ors.json"
 import claimExchangeAbi from "../../lib/abi-passport-adapter.json"
 import { approveClaimTicket, exchangeClaimTicket, getIsApproved } from "../../lib/exchange"
 import { ModalStatus } from "./contants"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
 
 const log: Logger<ILogObj> = new Logger({ hideLogPositionForProduction: true })
 const ClaimPage = () => {
   const router = useRouter()
   const { address } = useAccount()
-  const { data: signer } = useSigner()
+  const signer = useEthersSigner()
   const [containerRef, { width }] = useMeasure()
   const [latestClaimTicketId, setLatestClaimTicketId] = useState<number | string>(null)
   const [ticketCount, setTicketCount] = useState(0)
@@ -155,7 +156,7 @@ const ClaimPage = () => {
                 )}
               </div>
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                <div className="flex flex-col justify-center items-center md:items-start">
+                <div className="flex flex-col items-center justify-center md:items-start">
                   <div ref={titleRef}>
                     <SectionTitle
                       text="Burn Ticket, Mint Passport"
