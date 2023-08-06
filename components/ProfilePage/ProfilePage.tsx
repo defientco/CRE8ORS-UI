@@ -16,12 +16,13 @@ const ProfilePage = () => {
 
   const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable } = useProfileProvider()
 
-  const { getUserData } = useUserProvider()
+  const { getUserData, getUserSimilarProfiles } = useUserProvider()
 
   const { address } = useAccount()
 
   useEffect(() => {
     getUserData(router.query.address as string)
+    getUserSimilarProfiles(router.query.address as string)
 
     if (address !== router.query.address) {
       setIsHiddenEditable(true)
@@ -30,7 +31,7 @@ const ProfilePage = () => {
 
     setIsHiddenEditable(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, getUserData])
+  }, [router, getUserData, getUserSimilarProfiles])
 
   return (
     <Layout type="contained">

@@ -1,6 +1,6 @@
-import { Schema, model, models, Model } from "mongoose"
+import { Schema, model, models, Model, Document } from "mongoose"
 
-interface UserProfile {
+interface UserProfile extends Document {
   walletAddress: string
   username?: string
   bio?: string
@@ -15,6 +15,7 @@ const UserProfileSchema = new Schema<UserProfile>({
     type: String,
     unique: true,
     required: [true, "Please add a wallet address"],
+    lowercase: true
   },
   username: {
     type: String,
@@ -41,5 +42,15 @@ const UserProfileSchema = new Schema<UserProfile>({
     required: [false, "Please add a askMeAbout"],
   },
 })
+
+UserProfileSchema.pre<UserProfile>('findOne', function (next) {
+  this.walletAddress = this.walletAddress.toLowerCase();
+  next();
+});
+
+UserProfileSchema.pre<UserProfile>('save', function (next) {
+  this.walletAddress = this.walletAddress.toLowerCase();
+  next();
+});
 
 export default (models.UserProfile as Model<UserProfile>) || model("UserProfile", UserProfileSchema)
