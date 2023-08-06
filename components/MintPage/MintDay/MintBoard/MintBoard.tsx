@@ -29,7 +29,8 @@ const MintBoard = () => {
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const automaticOpenModal = useMemo(
-    () => isFreeMintModal || (!isFreeMintModal && hasWhitelist),
+    () =>
+      isFreeMintModal || (!isFreeMintModal && hasWhitelist) || (!isFreeMintModal && !hasWhitelist),
     [isFreeMintModal, hasWhitelist],
   )
 
