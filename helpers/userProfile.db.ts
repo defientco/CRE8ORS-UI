@@ -61,7 +61,7 @@ export const addUserProfile = async (body: UserProfile) => {
       throw new Error("User profile already existed!")
     }
 
-    const avatarUrl = await  getUserAvatar(body.walletAddress, body.twitterHandle)
+    const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
 
     const result = await UserProfile.create({
       ...body,
@@ -84,12 +84,18 @@ export const updateUserProfile = async (body: UserProfile) => {
       throw new Error("No user found")
     }
     
-    const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
-
-    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, {
+    const newProfile = {
       ...body,
-      avatarUrl
-    })
+      avatarUrl: doc.avatarUrl
+    }
+
+    if(doc.twitterHandle !== body.twitterHandle) {
+      const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
+
+      newProfile['avatarUrl'] = avatarUrl
+    }
+
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, newProfile)
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
