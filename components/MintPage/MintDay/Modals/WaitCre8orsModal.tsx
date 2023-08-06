@@ -5,7 +5,6 @@ import ModalTimer from "../ModalTimer"
 import Modal from "../../../../shared/Modal"
 import { Button } from "../../../../shared/Button"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import epochToModalTimerString from "../../../../lib/epochToModalTimerString"
 
 interface DetectedPassportModalProps {
   isModalVisible: boolean
@@ -15,8 +14,7 @@ interface DetectedPassportModalProps {
 const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
-  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus, hasWhitelist } =
-    useMintProvider()
+  const { presaleActive, loadingSaleStatus, hasWhitelist } = useMintProvider()
 
   const endDay = "2023-08-08 08:00:00 EST" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
