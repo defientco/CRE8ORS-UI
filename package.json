@@ -43,7 +43,6 @@
     "next": "^12.2.2",
     "next-api-decorators": "^2.0.0",
     "next-auth": "^4.20.1",
-    "randpix": "^1.1.1",
     "react": "^18.1.0",
     "react-confetti": "^6.1.0",
     "react-csv": "^2.2.2",
