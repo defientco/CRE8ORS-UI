@@ -27,7 +27,7 @@ export const userNameExists = async (username: string) => {
 export const userProfileExists = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.countDocuments({ walletAddress: walletAddress.toLowerCase() })
+    const doc = await UserProfile.countDocuments({ walletAddress: walletAddress?.toLowerCase() })
     if (doc > 0) {
       return true
     }
@@ -41,7 +41,7 @@ export const addUserProfile = async (body: UserProfile) => {
     await dbConnect()
     const result = await UserProfile.create({
       ...body,
-      walletAddress: body.walletAddress.toLowerCase()
+      walletAddress: body.walletAddress?.toLowerCase()
     })
     return { success: true, result }
   } catch (e) {
@@ -52,11 +52,11 @@ export const addUserProfile = async (body: UserProfile) => {
 export const updateUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ walletAddress: body.walletAddress.toLowerCase() }).lean()
+    const doc = await UserProfile.findOne({ walletAddress: body.walletAddress?.toLowerCase() }).lean()
     if (!doc) {
       throw new Error("No user found")
     }
-    const results = await UserProfile.findOneAndUpdate({ walletAddress: body.walletAddress.toLowerCase() }, body)
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: body.walletAddress?.toLowerCase() }, body)
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
@@ -66,7 +66,7 @@ export const updateUserProfile = async (body: UserProfile) => {
 export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const doc = await UserProfile.findOne({ walletAddress: walletAddress.toLowerCase() }).lean()
+    const doc = await UserProfile.findOne({ walletAddress: walletAddress }).lean()
     return { success: true, doc }
   } catch (e) {
     throw new Error(e)
@@ -76,7 +76,7 @@ export const getUserProfile = async (walletAddress: string) => {
 export const getSimilarProfiles = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const userProfile = await UserProfile.findOne({walletAddress: walletAddress.toLowerCase()}).lean()
+    const userProfile = await UserProfile.findOne({walletAddress: walletAddress?.toLowerCase()}).lean()
    
     if (!userProfile?.location) return { success:true, similarProfiles: [] } 
     const location = userProfile.location
@@ -87,7 +87,7 @@ export const getSimilarProfiles = async (walletAddress: string) => {
           location: location.replace(/[\s,]/g, ""),
         },
         {
-          walletAddress: { $ne: walletAddress.toLowerCase() }
+          walletAddress: { $ne: walletAddress?.toLowerCase() }
         },
       ],
     }).lean()
