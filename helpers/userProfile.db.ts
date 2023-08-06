@@ -2,6 +2,9 @@ import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
 import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
 import dbConnect from "../utils/db"
+import TwitterApi from "twitter-api-v2"
+
+const twitterClient = new TwitterApi(process.env.TWITTER_BEARER)
 
 export interface UserProfile {
   walletAddress: string
@@ -143,10 +146,14 @@ export const getUserProfile = async (walletAddress: string) => {
     if(!doc) throw new Error("Profile is not existed!") 
 
     if(!doc.avatarUrl) {
+      const readOnlyClient = twitterClient.readOnly
+
+      const data = await readOnlyClient.v2.userByUsername(doc.twitterHandle)
+
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
       const updatedDoc = await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
-      return { success: true, doc: updatedDoc, avatarUrl }
+      return { success: true, doc: updatedDoc, avatarUrl, data }
 
     }
 
