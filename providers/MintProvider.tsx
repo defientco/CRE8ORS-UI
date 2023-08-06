@@ -30,8 +30,8 @@ interface mintProps {
   loadingSaleStatus: boolean
   publicSaleActive: boolean
   presaleActive: boolean
-  presaleStart: number
-  publicSaleStart: number
+  presaleStart: string
+  publicSaleStart: string
   getFFAndPassportsInformation: () => Promise<void>
   getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean

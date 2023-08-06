@@ -5,9 +5,9 @@ import getDefaultProvider from "../../lib/getDefaultProvider"
 
 const useSaleStatus = () => {
   const [presaleActive, setPresaleActive] = useState(false)
-  const [presaleStart, setPresaleStart] = useState(0)
+  const [presaleStart, setPresaleStart] = useState("")
   const [publicSaleActive, setPublicSaleActive] = useState(false)
-  const [publicSaleStart, setPublicSaleStart] = useState(0)
+  const [publicSaleStart, setPublicSaleStart] = useState("")
   const [loading, setLoading] = useState(true)
   const cre8orsContract = useMemo(
     () =>
