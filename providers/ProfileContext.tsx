@@ -67,10 +67,13 @@ export const ProfileProvider = ({ children }) => {
       process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
     )
 
-    const lastCre8or = response.ownedNfts[response.totalCount - 1]
-    const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+    if (response.length) {
+      const lastCre8or = response.ownedNfts[response.totalCount - 1]
+      const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+      return setCre8orNumber(tokenId)
+    }
 
-    return setCre8orNumber(response?.ownedNfts === undefined ? "" : tokenId)
+    return setCre8orNumber("")
   }, [address])
 
   useEffect(() => {

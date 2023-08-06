@@ -1,6 +1,5 @@
 import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
-import { getRandomAvatar } from "../lib/getRandomAvatar"
 import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
 import dbConnect from "../utils/db"
 
@@ -22,9 +21,8 @@ const getFilterObject = (value) => ({
 const getUserAvatar = async (walletAddress: string, twitterHandle: string) => {
   const ensImageURL = await getEnsImageURL(walletAddress)
   const twitterImageURL = await getAvatarByTwitterHandle(twitterHandle)
-  const randomAvatar = await getRandomAvatar()
 
-  return twitterImageURL || ensImageURL || randomAvatar
+  return twitterImageURL || ensImageURL || ""
 }
 
 export const userNameExists = async (username: string) => {
