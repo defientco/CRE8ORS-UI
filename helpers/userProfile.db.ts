@@ -89,41 +89,10 @@ export const updateUserProfile = async (body: UserProfile) => {
       avatarUrl: doc.avatarUrl
     }
 
-    if(doc.twitterHandle !== body.twitterHandle) {
+    if((doc.twitterHandle !== body.twitterHandle) || (doc.twitterHandle && !newProfile.avatarUrl)) {
       const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
 
-      newProfile['avatarUrl'] = avatarUrl
-    }
-
-    if(!newProfile['avatarUrl']) {
-      const pipline = [
-        {
-          $project: {
-            location: 1,
-            twitterHandle: 1,
-            avatarUrl: 1,
-            username: 1,
-            iNeedHelpWith: 1,
-            askMeAbout: 1,
-            walletAddress: { $toLower: '$walletAddress' },
-          },
-        },
-        {
-          $match: {
-            walletAddress: { $ne: body.walletAddress?.toLowerCase() },
-            location: body.location,
-          }
-        },
-      ]
-
-      const similarDocs = await UserProfile.aggregate(pipline)
-
-      for(const _doc of similarDocs) {
-        if(_doc.avatarUrl) {
-          newProfile['avatarUrl'] = _doc.avatarUrl
-          break 
-        }
-      }
+      newProfile.avatarUrl = avatarUrl
     }
     
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, newProfile)
