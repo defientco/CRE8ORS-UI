@@ -18,7 +18,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
   const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus, hasWhitelist } =
     useMintProvider()
 
-  const endDay = epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
+  const endDay = "2023-08-08 08:00:00 EST" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
 
   return (

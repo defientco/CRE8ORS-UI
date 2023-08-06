@@ -68,11 +68,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const setWhitelistStatus = useCallback(async () => {
     let hasProof = false
-    if (merkleRoot.length > 0) {
+    if (merkleRoot?.length > 0) {
       hasProof = await hasMerkleProof(address, merkleRoot)
     }
-    const status = isWhitelisted(address) || hasProof
-    setHasWhitelist(status)
+    setHasWhitelist(hasProof)
   }, [address, merkleRoot])
 
   useEffect(() => {

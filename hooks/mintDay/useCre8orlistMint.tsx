@@ -17,7 +17,7 @@ const useCre8orlistMint = () => {
       walletAddress: address,
     }
     const response = await axios.get(`/api/v2/get/merkle`, { params })
-    if (!response.data.success) throw new Error("Merkle proof not found")
+    // if (!response.data.success) throw new Error("Merkle proof not found")
     const { proof } = response.data
     const value = await getCartPrice(cart)
     const contract = new Contract(
@@ -26,7 +26,8 @@ const useCre8orlistMint = () => {
       signer,
     )
 
-    const tx = await contract.mintPfp(address, cart, proof, { value })
+    console.log("SWEETS PROOF ", proof || [])
+    const tx = await contract.mintPfp(address, cart, proof || [], { value })
     await tx.wait()
   }
 
