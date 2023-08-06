@@ -10,6 +10,7 @@ import QuantityCard from "../QuantityCard"
 import ModalSelector from "../Modals/ModalSelector"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import MintBoardButtons from "./ActionButtons"
+import { useAccount } from "wagmi"
 
 const MintBoard = () => {
   const {
@@ -22,7 +23,7 @@ const MintBoard = () => {
     hasWhitelist,
   } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
-
+  const { isConnected } = useAccount()
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
 
@@ -35,8 +36,8 @@ const MintBoard = () => {
   )
 
   useEffect(() => {
-    setOpenModal(automaticOpenModal)
-  }, [automaticOpenModal])
+    setOpenModal(automaticOpenModal && isConnected)
+  }, [automaticOpenModal, isConnected])
 
   const increaseQuantity = (type: number) => {
     addToCart(type)
