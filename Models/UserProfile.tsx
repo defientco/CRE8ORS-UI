@@ -14,8 +14,7 @@ const UserProfileSchema = new Schema<UserProfile>({
   walletAddress: {
     type: String,
     unique: true,
-    required: [true, "Please add a wallet address"],
-    lowercase: true,
+    required: [true, "Please add a wallet address"]
   },
   username: {
     type: String,
