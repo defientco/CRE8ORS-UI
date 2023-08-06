@@ -3,7 +3,7 @@ import { createContext, useState, useEffect, useMemo, useContext, useCallback } 
 import { useRouter } from "next/router"
 import { BigNumber } from "ethers"
 import { useUserProvider } from "./UserProvider"
-import { updateUserInfo } from "../lib/userInfo"
+import { getSimilarProfiles, updateUserInfo } from "../lib/userInfo"
 import getNFTs from "../lib/alchemy/getNFTs"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
@@ -13,7 +13,7 @@ export const ProfileProvider = ({ children }) => {
 
   const { address } = router.query
 
-  const { userInfo, getUserData } = useUserProvider()
+  const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
 
   const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
@@ -40,7 +40,10 @@ export const ProfileProvider = ({ children }) => {
       username: editedUserName,
     })
 
-    if (response) await getUserData(address as string)
+    if (response) {
+      await getUserData(address as string)
+      await getUserSimilarProfiles(address as string)
+    }
     setLoading(false)
   }
 
@@ -64,10 +67,13 @@ export const ProfileProvider = ({ children }) => {
       process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
     )
 
-    const lastCre8or = response.ownedNfts[response.totalCount - 1]
-    const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+    if (response.length) {
+      const lastCre8or = response.ownedNfts[response.totalCount - 1]
+      const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+      return setCre8orNumber(tokenId)
+    }
 
-    return setCre8orNumber(response?.ownedNfts === undefined ? "" : tokenId)
+    return setCre8orNumber("")
   }, [address])
 
   useEffect(() => {

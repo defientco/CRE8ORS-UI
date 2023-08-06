@@ -28,4 +28,8 @@ export class UserProfileDTO {
   @IsOptional()
   @IsString()
   askMeAbout?: string
+
+  @IsOptional()
+  @IsString()
+  avatarUrl?: string
 }

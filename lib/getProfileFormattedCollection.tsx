@@ -1,9 +1,21 @@
 import getNFTs from "./alchemy/getNFTs"
 
 const getProfileFormattedCollection = async (address) => {
-  const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const [cre8ors, passport] = await Promise.all([
+    getNFTs(
+      address,
+      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+    ),
+    getNFTs(
+      address,
+      process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
+      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+    ),
+  ])
+  const collection = [...cre8ors.ownedNfts, ...passport.ownedNfts]
 
-  const formattedData = response.ownedNfts.map((nft) => ({
+  const formattedData = collection.map((nft) => ({
     label: nft.contractMetadata.name,
     type: nft.contract.address === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS ? "cre8or" : undefined,
     isLocked: true,

@@ -1,22 +1,56 @@
-const PreSimilarProfiles = () => (
-  <div>
-    <div
-      className="text-[22px] font-bold font-quicksand
-              leading-[99.3%] text-black
-              pt-[20px] pb-[20px]
-              text-right"
-    >
-      SIMILAR PROFILES
+import { useUserProvider } from "../../../../providers/UserProvider"
+import Media from "../../../../shared/Media"
+import Tooltip from "../../../../shared/Tooltip"
+
+const PreSimilarProfiles = () => {
+  const { similarProfiles } = useUserProvider()
+
+  return (
+    <div>
+      <div
+        className="text-[22px] font-bold font-quicksand
+                leading-[99.3%] text-black
+                pt-[20px] pb-[20px]
+                text-right"
+      >
+        SIMILAR PROFILES
+      </div>
+      <div
+        className={`grid ${
+          similarProfiles.length >= 4 ? "grid-cols-4" : `grid-cols-${similarProfiles.length}`
+        } gap-x-[10px] gap-y-[10px] min-h-[120px]`}
+      >
+        {similarProfiles.map((profile) => (
+          // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
+          <div key={profile._id} className="flex justify-end">
+            <Tooltip
+              // eslint-disable-next-line no-underscore-dangle
+              id={profile._id}
+              message={profile.username}
+              place="top"
+              style={{
+                backgroundColor: "#DADADA",
+                color: "black",
+                fontFamily: "quicksand",
+                fontSize: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              <a href={`/profile/${profile.walletAddress}`} target="_blank" rel="noreferrer">
+                <Media
+                  type="image"
+                  link={profile.avatarUrl}
+                  blurLink={profile.avatarUrl}
+                  containerClasses="w-[39px] h-[39px] rounded-full bg-[black]
+                  overflow-hidden"
+                />
+              </a>
+            </Tooltip>
+          </div>
+        ))}
+      </div>
     </div>
-    <div className="grid grid-cols-4 gap-x-[10px] gap-y-[10px]">
-      {[...Array(8)].map((_, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <div key={i} className="flex justify-end">
-          <div className="w-[39px] h-[39px] rounded-full bg-[black]" />
-        </div>
-      ))}
-    </div>
-  </div>
-)
+  )
+}
 
 export default PreSimilarProfiles

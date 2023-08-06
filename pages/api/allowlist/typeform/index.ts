@@ -1,5 +1,5 @@
-import { createHandler, Post, Body } from "next-api-decorators"
 import { error } from "console"
+import { createHandler, Post, Body } from "next-api-decorators"
 import { addAllowListApplicant, typeformResponseExists } from "../../../../helpers/db"
 import { ApplicantDTO } from "../../../../DTO/applicant.dto"
 
