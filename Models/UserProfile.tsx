@@ -43,7 +43,7 @@ const UserProfileSchema = new Schema<UserProfile>({
   },
   avatarUrl: {
     type: String,
-    equired: [false, "Please add a avatarUrl"],
+    required: [false, "Please add a avatarUrl"],
   }
 });
 
