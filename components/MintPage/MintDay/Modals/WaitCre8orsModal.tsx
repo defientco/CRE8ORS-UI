@@ -6,7 +6,7 @@ import ModalTimer from "../ModalTimer"
 import Modal from "../../../../shared/Modal"
 import { Button } from "../../../../shared/Button"
 import { useMintProvider } from "../../../../providers/MintProvider"
-import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
+import { isWhitelisted, hasMerkleProof } from "../../../../lib/merkle/isWhitelisted"
 import epochToModalTimerString from "../../../../lib/epochToModalTimerString"
 
 interface DetectedPassportModalProps {
@@ -18,8 +18,15 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
   const { address } = useAccount()
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
-  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus } = useMintProvider()
-  const whitelisted = useMemo(() => isWhitelisted(address), [address])
+  const { presaleActive, presaleStart, publicSaleStart, loadingSaleStatus, merkleRoot } =
+    useMintProvider()
+  const whitelisted = useMemo(async () => {
+    let hasProof = false
+    if (merkleRoot.length > 0) {
+      hasProof = await hasMerkleProof(address, merkleRoot)
+    }
+    return isWhitelisted(address) || hasProof
+  }, [address, merkleRoot])
   const endDay = epochToModalTimerString(whitelisted ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !whitelisted && presaleActive
 
