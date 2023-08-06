@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
+import { useAccount } from "wagmi"
 import SectionContainer from "../../SectionContainer"
 import Title from "../../../Common/Title"
 import Content from "../../../Common/Content"
@@ -10,7 +11,6 @@ import QuantityCard from "../QuantityCard"
 import ModalSelector from "../Modals/ModalSelector"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import MintBoardButtons from "./ActionButtons"
-import { useAccount } from "wagmi"
 
 const MintBoard = () => {
   const {
