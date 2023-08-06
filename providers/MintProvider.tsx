@@ -38,6 +38,7 @@ interface mintProps {
   addToCart: (tier: number) => void
   removeFromCart: (tier: number) => void
   getCartTier: (tier: number) => number
+  merkleRoot: string | null
 }
 
 interface Props {
@@ -58,6 +59,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [availablePassportIds, setAvailablePassportIds] = useState([] as any)
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
+  const [merkleRoot, setMerkleRoot] = useState(null)
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
   const saleStatus = useSaleStatus()
 
@@ -65,6 +67,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     passports: Array<number | string>
     discount: boolean
     quantityLeft: number
+    merkleRoot?: string
   } | null>(null)
 
   const getLockedAndQuantityInformation = useCallback(async () => {
@@ -79,6 +82,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+    setMerkleRoot(results?.merkleRoot)
     setInitialData(results)
   }, [address])
 
@@ -144,6 +148,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       addToCart,
       removeFromCart,
       getCartTier,
+      merkleRoot,
     }),
     [
       saleStatus,
@@ -162,6 +167,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       addToCart,
       removeFromCart,
       getCartTier,
+      merkleRoot,
     ],
   )
 

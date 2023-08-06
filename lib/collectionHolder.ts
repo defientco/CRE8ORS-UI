@@ -6,6 +6,7 @@ import getDefaultProvider from "./getDefaultProvider"
 import getNFTs from "./alchemy/getNFTs"
 import friendAndFamilyAbi from "./abi-friend-family.json"
 import minterUtilitiesAbi from "./abi-minter-utilities.json"
+import cre8orsAbi from "./abi-cre8ors.json"
 
 export const getPassports = async (address: string) => {
   const res = await getNFTs(
@@ -45,7 +46,13 @@ export const aggregateReads = async (passportIds: Array<number | string>, addres
       methodParameters: [address],
     },
   ]
-
+  const merkleRootCalls = [
+    {
+      reference: "merkleRoot",
+      methodName: "saleDetails",
+      methodParameters: [],
+    },
+  ]
   const quantityLeftCalls = [
     {
       reference: "quantityLeft",
@@ -75,6 +82,12 @@ export const aggregateReads = async (passportIds: Array<number | string>, addres
       abi: minterUtilitiesAbi,
       calls: quantityLeftCalls,
     },
+    {
+      reference: "merkleRoot",
+      contractAddress: process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+      abi: cre8orsAbi,
+      calls: merkleRootCalls,
+    },
   ]
   if (calls.length > 0) {
     contractCallContext.push({
@@ -93,6 +106,7 @@ export const getAvailableFreeMints = async (
   address: string,
 ) => {
   const results = await aggregateReads(passportIds, address)
+
   const availablePassportIds = results?.results?.freeMintClaimed?.callsReturnContext.map((call) => {
     if (call.returnValues[0] === false) {
       return parseInt(call.methodParameters[0], 16)
@@ -101,11 +115,12 @@ export const getAvailableFreeMints = async (
   })
   const discount = results?.results?.discount?.callsReturnContext[0]?.returnValues[0]
   const quantityLeft = results?.results?.quantityLeft?.callsReturnContext[0]?.returnValues?.[0]?.hex
-
+  const merkleRoot = results?.results?.merkleRoot?.callsReturnContext[0]?.returnValues?.[8]
   return {
     passports: availablePassportIds?.filter((id) => id !== null),
     discount,
     quantityLeft: parseInt(quantityLeft, 16),
+    merkleRoot,
   }
 }
 
