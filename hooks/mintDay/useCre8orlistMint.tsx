@@ -11,11 +11,14 @@ const useCre8orlistMint = () => {
   const { address } = useAccount()
 
   const mint = async (cart) => {
-    const response = await axios.get(
-      `/api/v2/get/merkle?root=${merkleRoot} && walletAddress=${address}`,
-    )
-    if (!response.data.success) return
+    const params = {
+      root: merkleRoot,
+      walletAddress: address,
+    }
+    const response = await axios.get(`/api/v2/get/merkle`, { params })
+    if (!response.data.success) throw new Error("Merkle proof not found")
     const { proof } = response.data
+    console.log(proof)
     const value = await getCartPrice(cart)
     const contract = new Contract(
       process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,
