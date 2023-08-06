@@ -49,8 +49,8 @@ const PreDesktopProfileView = () => {
             </>
           ) : (
             <div
-              className="font-eigerdals text-[75px] max-w-[340px] break-words
-            py-[10px]
+              className="font-eigerdals text-[75px] max-w-[340px]
+            pb-[30px] py-[10px]
             leading-[90.3%]"
             >
               {userInfo?.username}

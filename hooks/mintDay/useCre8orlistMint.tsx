@@ -1,13 +1,14 @@
 import { Contract } from "ethers"
-import { useAccount, useSigner } from "wagmi"
+import { useAccount } from "wagmi"
 import axios from "axios"
 import cre8orlistMinterAbi from "../../lib/abi-cre8orlist-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
+import { useEthersSigner } from "../useEthersSigner"
 import { useMintProvider } from "../../providers/MintProvider"
 
 const useCre8orlistMint = () => {
+  const signer = useEthersSigner()
   const { merkleRoot } = useMintProvider()
-  const { data: signer } = useSigner()
   const { address } = useAccount()
 
   const mint = async (cart) => {

@@ -5,6 +5,14 @@ export const getUserInfo = async (address: string) => {
   return data
 }
 
+export const getSimilarProfiles = async (address: string) => {
+  const { data } = await axios.get(
+    `/api/v2/get/userprofile/similarProfiles?walletAddress=${address}`,
+  )
+
+  return data
+}
+
 export const saveUserInfo = async ({
   twitterhandle,
   location,

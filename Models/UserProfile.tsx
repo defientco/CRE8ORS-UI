@@ -1,20 +1,21 @@
-import { Schema, model, models, Model } from "mongoose"
+import { Schema, model, models, Model, Document } from "mongoose";
 
-interface UserProfile {
-  walletAddress: string
-  username?: string
-  bio?: string
-  twitterHandle?: string
-  location?: string
-  iNeedHelpWith?: string
-  askMeAbout?: string
+interface UserProfile extends Document {
+  walletAddress: string;
+  username?: string;
+  bio?: string;
+  twitterHandle?: string;
+  location?: string;
+  iNeedHelpWith?: string;
+  askMeAbout?: string;
+  avatarUrl?: string;
 }
 
 const UserProfileSchema = new Schema<UserProfile>({
   walletAddress: {
     type: String,
     unique: true,
-    required: [true, "Please add a wallet address"],
+    required: [true, "Please add a wallet address"]
   },
   username: {
     type: String,
@@ -40,6 +41,10 @@ const UserProfileSchema = new Schema<UserProfile>({
     type: String,
     required: [false, "Please add a askMeAbout"],
   },
-})
+  avatarUrl: {
+    type: String,
+    required: [false, "Please add a avatarUrl"],
+  }
+});
 
-export default (models.UserProfile as Model<UserProfile>) || model("UserProfile", UserProfileSchema)
+export default (models.UserProfile as Model<UserProfile>) || model("UserProfile", UserProfileSchema);
