@@ -18,7 +18,6 @@ const useCre8orlistMint = () => {
     const response = await axios.get(`/api/v2/get/merkle`, { params })
     if (!response.data.success) throw new Error("Merkle proof not found")
     const { proof } = response.data
-    console.log(proof)
     const value = await getCartPrice(cart)
     const contract = new Contract(
       process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,

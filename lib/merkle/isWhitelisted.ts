@@ -11,4 +11,5 @@ export const hasMerkleProof = async (address: string, root: string) => {
     walletAddress: address,
   }
   const result = await axios.get("/api/v2/get/merkle", { params })
+  return result.data.success
 }

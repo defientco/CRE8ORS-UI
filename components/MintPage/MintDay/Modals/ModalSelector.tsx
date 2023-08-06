@@ -30,10 +30,13 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
-  const whitelisted = useMemo(
-    () => isWhitelisted(address) || hasMerkleProof(address, merkleRoot),
-    [address, merkleRoot],
-  )
+  const whitelisted = useMemo(async () => {
+    let hasProof = false
+    if (merkleRoot.length > 0) {
+      hasProof = await hasMerkleProof(address, merkleRoot)
+    }
+    return isWhitelisted(address) || hasProof
+  }, [address, merkleRoot])
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
