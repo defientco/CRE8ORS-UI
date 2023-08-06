@@ -8,6 +8,7 @@ const getProfileFormattedCollection = async (address) => {
     type: nft.contract.address === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS ? "cre8or" : undefined,
     isLocked: true,
     image: nft.media[0].thumbnail,
+    tokenId: parseInt(nft.id.tokenId, 16),
   }))
 
   return formattedData

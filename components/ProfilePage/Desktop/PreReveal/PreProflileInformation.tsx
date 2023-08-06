@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import { useProfileProvider } from "../../../../providers/ProfileContext"
 import { useUserProvider } from "../../../../providers/UserProvider"
 
@@ -26,28 +27,32 @@ const PreProfileInformation = () => {
         <textarea
           className="relative z-[105]
          mt-[15px] 
-         text-center md:text-right 
+         text-center md:text-right
          text-[16px] leading-[99.3%] 
          font-quicksand font-medium
-         w-[220px] h-[80px] md:h-[112px]
+         w-[220px] h-[80px] md:h-[140px]
          ring-0 outline-none
          border-[lightgray] border-[1px]
          bg-[#D9D9D9]
          px-[10px] py-[5px]
          rounded-[4px]"
           value={editedBio}
-          onChange={(e) => setEditedBio(e.target.value)}
+          onChange={(e) => setEditedBio(e.target.value.slice(0, 160))}
         />
       ) : (
-        <pre
+        <div
           className="text-[16px] font-quicksand font-medium
                   pt-[15px]
                   leading-[99.3%]
-                  lg:text-right"
-        >
-          {userInfo?.bio ||
-            `Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor\nincididunt ut labore et dolore\nmagna aliqua. Ut enim ad\nminim veniam, quis nostrud\nexercitation.`}
-        </pre>
+                  text-center lg:text-right
+                  max-w-[220px]
+                  break-all"
+          dangerouslySetInnerHTML={{
+            __html:
+              userInfo?.bio.replace("\n", "<br/>") ||
+              `Lorem ipsum dolor sit amet,<br/>consectetur adipiscing elit,<br/>sed do eiusmod tempor<br/>incididunt ut labore et dolore<br/>magna aliqua. Ut enim ad<br/>minim veniam, quis nostrud<br/>exercitation.`,
+          }}
+        />
       )}
       <div
         className="text-[16px] font-medium font-quicksand
@@ -71,17 +76,18 @@ const PreProfileInformation = () => {
          px-[10px]
          rounded-[4px]"
           value={editedAskedMeAbout}
-          onChange={(e) => setEditedAskedMeAbout(e.target.value)}
+          onChange={(e) => setEditedAskedMeAbout(e.target.value.slice(0, 60))}
         />
       ) : (
-        <pre
+        <div
           className="text-[16px] font-quicksand font-medium
                   pt-[15px]
                   leading-[99.3%]
-                  lg:text-right"
-        >
-          {userInfo?.askMeAbout || "____________"}
-        </pre>
+                  lg:text-right
+                  max-w-[220px]
+                  break-words"
+          dangerouslySetInnerHTML={{ __html: userInfo?.askMeAbout || "____________" }}
+        />
       )}
       <div
         className="text-[16px] font-medium font-quicksand
@@ -105,17 +111,18 @@ const PreProfileInformation = () => {
          px-[10px]
          rounded-[4px]"
           value={editedINeedHelpWith}
-          onChange={(e) => setEditedINeedHelpWith(e.target.value)}
+          onChange={(e) => setEditedINeedHelpWith(e.target.value.slice(0, 60))}
         />
       ) : (
-        <pre
+        <div
           className="text-[16px] font-quicksand font-medium
                   pt-[15px]
                   leading-[99.3%]
-                  lg:text-right"
-        >
-          {userInfo?.iNeedHelpWith || "_______________"}
-        </pre>
+                  lg:text-right
+                  max-w-[220px]
+                  break-words"
+          dangerouslySetInnerHTML={{ __html: userInfo?.iNeedHelpWith || "____________" }}
+        />
       )}
     </div>
   )

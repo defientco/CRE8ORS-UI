@@ -48,7 +48,13 @@ const PreDesktopProfileView = () => {
               <EditPanel />
             </>
           ) : (
-            <div className="font-eigerdals text-[75px]">{userInfo?.username}</div>
+            <div
+              className="font-eigerdals text-[75px] max-w-[340px] break-words
+            py-[10px]
+            leading-[90.3%]"
+            >
+              {userInfo?.username}
+            </div>
           )}
           <div className="flex items-center gap-x-[10px]">
             <button

@@ -41,7 +41,15 @@ const PreMobileProfileView = () => {
             />{" "}
           </div>
         ) : (
-          <div className="font-eigerdals text-[40px] text-center">{userInfo?.username || ""}</div>
+          <div className="flex justify-center ">
+            <div
+              className="font-eigerdals text-[40px] text-center
+          max-w-[250px] break-words
+          leading-[100%]"
+            >
+              {userInfo?.username || ""}
+            </div>
+          </div>
         )}
         <TwitterLocation />
         <div className="w-full flex justify-center items-center px-10 gap-x-[10px] pt-[15px]">
