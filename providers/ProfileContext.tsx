@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useMemo, useContext, useCallback } 
 
 import { useRouter } from "next/router"
 import { useUserProvider } from "./UserProvider"
-import { updateUserInfo } from "../lib/userInfo"
+import { getSimilarProfiles, updateUserInfo } from "../lib/userInfo"
 import getNFTs from "../lib/alchemy/getNFTs"
 import { BigNumber } from "ethers"
 
@@ -13,7 +13,7 @@ export const ProfileProvider = ({ children }) => {
 
   const { address } = router.query
 
-  const { userInfo, getUserData } = useUserProvider()
+  const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
 
   const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
@@ -40,7 +40,10 @@ export const ProfileProvider = ({ children }) => {
       username: editedUserName,
     })
 
-    if (response) await getUserData(address as string)
+    if (response) {
+      await getUserData(address as string)
+      await getUserSimilarProfiles(address as string)
+    }
     setLoading(false)
   }
 

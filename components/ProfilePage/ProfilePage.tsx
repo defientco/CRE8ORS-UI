@@ -10,8 +10,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
 
 const ProfilePage = () => {
-  const router = useRouter()
-
+  const routerAddress = useRouter().query.address as string
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
   const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable } = useProfileProvider()
@@ -21,17 +20,17 @@ const ProfilePage = () => {
   const { address } = useAccount()
 
   useEffect(() => {
-    getUserData(router.query.address as string)
-    getUserSimilarProfiles(router.query.address as string)
+    getUserData(routerAddress)
+    getUserSimilarProfiles(routerAddress)
 
-    if (address !== router.query.address) {
+    if (address?.toLowerCase() !== routerAddress?.toLowerCase()) {
       setIsHiddenEditable(true)
       return
     }
 
     setIsHiddenEditable(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, getUserData, getUserSimilarProfiles])
+  }, [routerAddress, getUserData, getUserSimilarProfiles])
 
   return (
     <Layout type="contained">

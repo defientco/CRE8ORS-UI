@@ -19,7 +19,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
   const router = useRouter()
 
   const { address } = useAccount()
-  const { getUserData } = useUserProvider()
+  const { getUserData, getUserSimilarProfiles } = useUserProvider()
 
   const saveProfile = async (values: any) => {
     if (!address) {
@@ -41,6 +41,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
     }
 
     await getUserData(address)
+    await getUserSimilarProfiles(address)
 
     router.push(`/profile/${address}`)
   }

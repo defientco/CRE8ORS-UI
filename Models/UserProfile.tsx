@@ -8,6 +8,7 @@ interface UserProfile extends Document {
   location?: string;
   iNeedHelpWith?: string;
   askMeAbout?: string;
+  avatarUrl?: string;
 }
 
 const UserProfileSchema = new Schema<UserProfile>({
@@ -40,6 +41,10 @@ const UserProfileSchema = new Schema<UserProfile>({
     type: String,
     required: [false, "Please add a askMeAbout"],
   },
+  avatarUrl: {
+    type: String,
+    equired: [false, "Please add a avatarUrl"],
+  }
 });
 
 export default (models.UserProfile as Model<UserProfile>) || model("UserProfile", UserProfileSchema);

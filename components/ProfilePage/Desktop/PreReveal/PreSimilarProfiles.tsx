@@ -1,4 +1,6 @@
 import { useUserProvider } from "../../../../providers/UserProvider"
+import Media from "../../../../shared/Media"
+import Tooltip from "../../../../shared/Tooltip"
 
 const PreSimilarProfiles = () => {
   const { similarProfiles } = useUserProvider()
@@ -16,14 +18,34 @@ const PreSimilarProfiles = () => {
       <div
         className={`grid ${
           similarProfiles.length >= 4 ? "grid-cols-4" : `grid-cols-${similarProfiles.length}`
-        } gap-x-[10px] gap-y-[10px]`}
+        } gap-x-[10px] gap-y-[10px] min-h-[120px]`}
       >
         {similarProfiles.map((profile) => (
           // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
           <div key={profile._id} className="flex justify-end">
-            <a href={`/profile/${profile.walletAddress}`} target="_blank" rel="noreferrer">
-              <div className="w-[39px] h-[39px] rounded-full bg-[black]" />
-            </a>
+            <Tooltip
+              // eslint-disable-next-line no-underscore-dangle
+              id={profile._id}
+              message={profile.username}
+              place="top"
+              style={{
+                backgroundColor: "#DADADA",
+                color: "black",
+                fontFamily: "quicksand",
+                fontSize: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              <a href={`/profile/${profile.walletAddress}`} target="_blank" rel="noreferrer">
+                <Media
+                  type="image"
+                  link={profile.avatarUrl}
+                  blurLink={profile.avatarUrl}
+                  containerClasses="w-[39px] h-[39px] rounded-full bg-[black]
+                  overflow-hidden"
+                />
+              </a>
+            </Tooltip>
           </div>
         ))}
       </div>

@@ -1,4 +1,7 @@
 import UserProfile from "../Models/UserProfile"
+import { getEnsImageURL } from "../lib/getEnsImageURL"
+import { getRandomAvatar } from "../lib/getRandomAvatar"
+import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
 import dbConnect from "../utils/db"
 
 export interface UserProfile {
@@ -41,6 +44,7 @@ export const userProfileExists = async (walletAddress: string) => {
     throw new Error(e)
   }
 }
+
 export const addUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
@@ -51,10 +55,16 @@ export const addUserProfile = async (body: UserProfile) => {
       throw new Error("User profile already existed!")
     }
 
+    const ensImageURL = await getEnsImageURL(body.walletAddress)
+    const twitterImageURL = await getAvatarByTwitterHandle(body.twitterHandle)
+    const randomAvatar = await getRandomAvatar()
+
     const result = await UserProfile.create({
       ...body,
-      walletAddress: body.walletAddress?.toLowerCase()
+      walletAddress: body.walletAddress?.toLowerCase(),
+      avatarUrl: twitterImageURL || ensImageURL || randomAvatar
     })
+
     return { success: true, result }
   } catch (e) {
     throw new Error(e)
@@ -70,7 +80,14 @@ export const updateUserProfile = async (body: UserProfile) => {
       throw new Error("No user found")
     }
     
-    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, body)
+    const ensImageURL = await getEnsImageURL(body.walletAddress)
+    const twitterImageURL = await getAvatarByTwitterHandle(body.twitterHandle)
+    const randomAvatar = await getRandomAvatar()
+
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, {
+      ...body,
+      avatarUrl: twitterImageURL || ensImageURL || randomAvatar
+    })
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
@@ -82,6 +99,7 @@ export const getUserProfile = async (walletAddress: string) => {
     await dbConnect()
 
     const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+
     return { success: true, doc }
   } catch (e) {
     throw new Error(e)
@@ -94,18 +112,31 @@ export const getSimilarProfiles = async (walletAddress: string) => {
     const userProfile = await UserProfile.findOne({walletAddress: getFilterObject(walletAddress)}).lean()
    
     if (!userProfile?.location) return { success:true, similarProfiles: [] } 
-    const location = userProfile.location
 
-    const doc = await UserProfile.find({
-      $and: [
-        {
-          location: location.replace(/[\s,]/g, ""),
+    console.log("ZIAD:HERE", walletAddress)
+    const pipline = [
+      {
+        $project: {
+          location: 1,
+          twitterHandle: 1,
+          avatarUrl: 1,
+          username: 1,
+          iNeedHelpWith: 1,
+          askMeAbout: 1,
+          walletAddress: { $toLower: '$walletAddress' },
         },
-        {
-          walletAddress: { $ne: walletAddress?.toLowerCase() }
-        },
-      ],
-    }).lean()
+      },
+      {
+        $match: {
+          walletAddress: { $ne: walletAddress?.toLowerCase() },
+          location: userProfile.location,
+        }
+      },
+    ]
+
+    const doc = await UserProfile.aggregate(pipline)
+
+    console.log(doc)
 
     return { success: true, similarProfiles: doc }
   } catch(e) {
