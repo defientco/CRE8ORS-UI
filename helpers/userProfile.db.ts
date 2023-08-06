@@ -146,7 +146,7 @@ export const getUserProfile = async (walletAddress: string) => {
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
       const updatedDoc = await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
-      return { success: true, doc: updatedDoc }
+      return { success: true, doc: updatedDoc, avatarUrl }
 
     }
 
