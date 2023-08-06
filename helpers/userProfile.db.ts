@@ -44,6 +44,13 @@ export const userProfileExists = async (walletAddress: string) => {
 export const addUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
+
+    const isExited = await userProfileExists(body.walletAddress)
+
+    if(isExited) {
+      throw new Error("User profile already existed!")
+    }
+
     const result = await UserProfile.create({
       ...body,
       walletAddress: body.walletAddress?.toLowerCase()
@@ -62,6 +69,13 @@ export const updateUserProfile = async (body: UserProfile) => {
     if (!doc) {
       throw new Error("No user found")
     }
+
+    const isExitedUserName = await userNameExists(body.username)
+
+    if(isExitedUserName) {
+      throw new Error("User name already existed!")
+    }
+    
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, body)
     return { success: true, results }
   } catch (e) {
