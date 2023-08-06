@@ -1,20 +1,34 @@
 import { createHandler, Post, Body } from "next-api-decorators"
 import { getAddress, parseEther } from "ethers/lib/utils.js"
 import createMerkleProof from "../../../../../lib/merkle/createMerkleProof"
+import { addMerkleList } from "../../../../../helpers/merkleList.db"
 
 class CreateMerkle {
   @Post()
   async createMerkle(@Body() body: { addresses: string[] }) {
-    console.log("body", body)
     const { addresses } = body
     const whitelistedUsers = addresses.map((address) => ({
       minter: getAddress(address),
       maxCount: 8,
       price: parseEther("0.15"),
     }))
-    console.log("addresses", addresses)
     const result = createMerkleProof(whitelistedUsers)
-    return result
+    const documents: {
+      root: string
+      entries?: Array<{ minter: string; proof: [] }>
+      timestamp?: Date
+    } = { root: result.root }
+    const entries = []
+    result.entries.forEach((entry) => {
+      entries.push({
+        minter: entry.minter,
+        proof: entry.proof,
+      })
+    })
+    documents.entries = entries
+    documents.timestamp = new Date()
+    const res = await addMerkleList(documents)
+    return res
   }
 }
 

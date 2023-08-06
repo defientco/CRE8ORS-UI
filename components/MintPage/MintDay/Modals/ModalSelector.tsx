@@ -8,7 +8,7 @@ import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
-import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
+import { isWhitelisted, hasMerkleProof } from "../../../../lib/merkle/isWhitelisted"
 import PublicSaleModal from "./PublicSaleModal"
 
 interface ModalSelectorProps {
@@ -26,10 +26,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     cart,
     publicSaleActive,
     loadingSaleStatus,
+    merkleRoot,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
-  const whitelisted = useMemo(() => isWhitelisted(address), [address])
+  const whitelisted = useMemo(
+    () => isWhitelisted(address) || hasMerkleProof(address, merkleRoot),
+    [address, merkleRoot],
+  )
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
