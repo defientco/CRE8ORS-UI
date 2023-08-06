@@ -55,9 +55,9 @@ export const addUserProfile = async (body: UserProfile) => {
   try {
     await dbConnect()
 
-    const isExited = await userProfileExists(body.walletAddress)
+    const isExists = await userProfileExists(body.walletAddress)
 
-    if(isExited) {
+    if(isExists) {
       throw new Error("User profile already existed!")
     }
 
