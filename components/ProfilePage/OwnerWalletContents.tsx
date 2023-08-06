@@ -35,10 +35,10 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
               blurLink={data.image}
               link={data.image}
               alt={data.label}
-              className="w-[30px] h-[30px] 
+              containerClasses="w-[30px] h-[30px] 
               samsungS8:w-[35px] samsungS8:h-[35px] 
               lg:w-[93px] lg:h-[93px] 
-              bg-white 
+              bg-white overflow-hidden
               rounded-[5px] lg:rounded-[15px]"
             />
           ) : (
@@ -49,7 +49,10 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
                               w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center
                               flex flex-col items-center gap-y-[2px]"
           >
-            <div className="w-full">{data.label}</div>
+            <div className="w-full break-words">
+              {data.label}
+              {data.type === "cre8ors" && ` #${data.tokenId}`}
+            </div>
             {isEditable && (
               <div>
                 {data.type === "cre8or" &&
