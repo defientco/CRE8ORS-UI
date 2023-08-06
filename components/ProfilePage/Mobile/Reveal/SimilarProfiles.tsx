@@ -15,7 +15,7 @@ const SimilarProfiles = () => {
       </div>
       <div className="grid grid-cols-4 gap-x-[10px] gap-y-[10px]">
         {similarProfiles?.map((profile) => (
-          // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
+          // eslint-disable-next-line no-underscore-dangle
           <div className="w-[39px] h-[39px] rounded-full bg-[white]" key={profile._id} />
         ))}
       </div>
