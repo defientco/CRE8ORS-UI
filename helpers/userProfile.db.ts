@@ -19,6 +19,14 @@ const getFilterObject = (value) => ({
   $options: "i"
 })
 
+const getUserAvatar = async (walletAddress: string, twitterHandle: string) => {
+  const ensImageURL = await getEnsImageURL(walletAddress)
+  const twitterImageURL = await getAvatarByTwitterHandle(twitterHandle)
+  const randomAvatar = await getRandomAvatar()
+
+  return twitterImageURL || ensImageURL || randomAvatar
+}
+
 export const userNameExists = async (username: string) => {
   try {
     await dbConnect()
@@ -55,14 +63,12 @@ export const addUserProfile = async (body: UserProfile) => {
       throw new Error("User profile already existed!")
     }
 
-    const ensImageURL = await getEnsImageURL(body.walletAddress)
-    const twitterImageURL = await getAvatarByTwitterHandle(body.twitterHandle)
-    const randomAvatar = await getRandomAvatar()
+    const avatarUrl = await  getUserAvatar(body.walletAddress, body.twitterHandle)
 
     const result = await UserProfile.create({
       ...body,
       walletAddress: body.walletAddress?.toLowerCase(),
-      avatarUrl: twitterImageURL || ensImageURL || randomAvatar
+      avatarUrl
     })
 
     return { success: true, result }
@@ -80,13 +86,11 @@ export const updateUserProfile = async (body: UserProfile) => {
       throw new Error("No user found")
     }
     
-    const ensImageURL = await getEnsImageURL(body.walletAddress)
-    const twitterImageURL = await getAvatarByTwitterHandle(body.twitterHandle)
-    const randomAvatar = await getRandomAvatar()
+    const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
 
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, {
       ...body,
-      avatarUrl: twitterImageURL || ensImageURL || randomAvatar
+      avatarUrl
     })
     return { success: true, results }
   } catch (e) {

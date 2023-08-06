@@ -1,19 +1,14 @@
-import Twit from "twit"
+import TwitterApi from "twitter-api-v2"
 
-export const getAvatarByTwitterHandle = async (screenName) => {
+const twitterClient = new TwitterApi(process.env.TWITTER_BEARER)
+
+export const getAvatarByTwitterHandle = async (twitterHandle: string) => {
+  const readOnlyClient = twitterClient.readOnly
+
   try {
-    const twitterConfig = {
-      consumer_key: process.env.TWITTER_CONSUMER_KEY,
-      consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-      access_token: process.env.TWITTER_ACCESS_TOKEN,
-      access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    }
+    const data = await readOnlyClient.v2.userByUsername(twitterHandle)
 
-    const T = new Twit(twitterConfig)
-
-    const { data } = await T.get("users/show", { screen_name: screenName })
-    const avatarUrl = data.profile_image_url_https
-    return avatarUrl
+    return data?.data?.profile_image_url
   } catch (err) {
     return ""
   }
