@@ -113,7 +113,6 @@ export const getSimilarProfiles = async (walletAddress: string) => {
    
     if (!userProfile?.location) return { success:true, similarProfiles: [] } 
 
-    console.log("ZIAD:HERE", walletAddress)
     const pipline = [
       {
         $project: {
@@ -135,8 +134,6 @@ export const getSimilarProfiles = async (walletAddress: string) => {
     ]
 
     const doc = await UserProfile.aggregate(pipline)
-
-    console.log(doc)
 
     return { success: true, similarProfiles: doc }
   } catch(e) {
