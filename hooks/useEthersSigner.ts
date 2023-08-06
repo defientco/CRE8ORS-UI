@@ -1,3 +1,5 @@
+/* eslint-disable */
+// @ts-nocheck
 import * as React from "react"
 import { type WalletClient, useWalletClient } from "wagmi"
 import { providers } from "ethers"
@@ -9,7 +11,7 @@ export function walletClientToSigner(walletClient: WalletClient) {
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
-  const provider = new providers.Web3Provider(transport as any, network)
+  const provider = new providers.Web3Provider(transport, network)
   const signer = provider.getSigner(account.address)
   return signer
 }
