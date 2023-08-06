@@ -1,14 +1,14 @@
-import TwitterApi from "twitter-api-v2"
-
-const twitterClient = new TwitterApi(process.env.TWITTER_BEARER)
+import axios from 'axios'
 
 export const getAvatarByTwitterHandle = async (twitterHandle: string) => {
-  const readOnlyClient = twitterClient.readOnly
-
   try {
-    const data = await readOnlyClient.v2.userByUsername(twitterHandle)
+    const response = await axios.get(`https://api.twitter.com/1.1/users/show.json?screen_name=${twitterHandle}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.TWITTER_BEARER}`
+      }
+    })    
 
-    return data?.data?.profile_image_url
+    return response?.data?.profile_image_url_https
   } catch (err) {
     return ""
   }
