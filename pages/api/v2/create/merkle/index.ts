@@ -2,8 +2,10 @@ import { createHandler, Post, Body } from "next-api-decorators"
 import { getAddress, parseEther } from "ethers/lib/utils.js"
 import createMerkleProof from "../../../../../lib/merkle/createMerkleProof"
 import { addMerkleList } from "../../../../../helpers/merkleList.db"
+import { AdminAuthGuard } from "../../../../../middleware/auth.middleware"
 
 class CreateMerkle {
+  @AdminAuthGuard()
   @Post()
   async createMerkle(@Body() body: { addresses: string[] }) {
     const { addresses } = body

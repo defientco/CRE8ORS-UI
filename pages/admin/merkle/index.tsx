@@ -1,8 +1,10 @@
 import { useState } from "react"
 import axios from "axios"
 import Auth from "../../../components/Auth"
+import { useAdminProvider } from "../../../providers/AdminProvider"
 
 const Merkle = () => {
+  const { bearerToken } = useAdminProvider()
   const [merkle, setMerkle] = useState<string>("")
   const [input, setInput] = useState<string>("")
   const [reset, setReset] = useState<boolean>(false)
@@ -12,7 +14,15 @@ const Merkle = () => {
   }
   const handleGenerate = async () => {
     const addresses = input.split(",")
-    const result = await axios.post("/api/v2/create/merkle", { addresses })
+    const result = await axios.post(
+      "/api/v2/create/merkle",
+      { addresses },
+      {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      },
+    )
     setMerkle(result.data.result.root)
     setInput("")
     setReset(true)
