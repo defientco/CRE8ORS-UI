@@ -69,12 +69,6 @@ export const updateUserProfile = async (body: UserProfile) => {
     if (!doc) {
       throw new Error("No user found")
     }
-
-    const isExitedUserName = await userNameExists(body.username)
-
-    if(isExitedUserName) {
-      throw new Error("User name already existed!")
-    }
     
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, body)
     return { success: true, results }
