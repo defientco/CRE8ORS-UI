@@ -1,153 +1,61 @@
 [
   {
-    "type": "constructor",
-    "name": "",
     "inputs": [
-      {
-        "type": "address",
-        "name": "_cre8orsNFT",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "_minterUtility",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "_collectionHolderMint",
-        "internalType": "address"
-      },
-      {
-        "type": "address",
-        "name": "_friendsAndFamilyMinter",
-        "internalType": "address"
-      }
+      { "internalType": "address", "name": "_cre8orsNFT", "type": "address" },
+      { "internalType": "address", "name": "_minterUtility", "type": "address" },
+      { "internalType": "address", "name": "_collectionHolderMint", "type": "address" },
+      { "internalType": "address", "name": "_friendsAndFamilyMinter", "type": "address" }
     ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
+  { "inputs": [], "name": "InvalidArrayLength", "type": "error" },
+  { "inputs": [], "name": "InvalidTier", "type": "error" },
+  { "inputs": [], "name": "Presale_Inactive", "type": "error" },
+  { "inputs": [], "name": "Presale_MerkleNotApproved", "type": "error" },
+  { "inputs": [], "name": "Presale_TooManyForAddress", "type": "error" },
   {
-    "type": "error",
-    "name": "InvalidArrayLength",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "error",
-    "name": "InvalidTier",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "error",
-    "name": "Presale_Inactive",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "error",
-    "name": "Presale_MerkleNotApproved",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "error",
-    "name": "Presale_TooManyForAddress",
-    "inputs": [],
-    "outputs": []
-  },
-  {
-    "type": "error",
+    "inputs": [{ "internalType": "uint256", "name": "correctPrice", "type": "uint256" }],
     "name": "Purchase_WrongPrice",
-    "inputs": [
-      {
-        "type": "uint256",
-        "name": "correctPrice",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": []
+    "type": "error"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "collectionHolderMint",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "cre8orsNFT",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
+    "inputs": [],
     "name": "friendsAndFamilyMinter",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "type": "function",
-    "name": "mintPfp",
     "inputs": [
-      {
-        "type": "address",
-        "name": "recipient",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256[]",
-        "name": "carts",
-        "internalType": "uint256[]"
-      },
-      {
-        "type": "bytes32[]",
-        "name": "merkleProof",
-        "internalType": "bytes32[]"
-      }
+      { "internalType": "address", "name": "recipient", "type": "address" },
+      { "internalType": "uint256[]", "name": "carts", "type": "uint256[]" },
+      { "internalType": "bytes32[]", "name": "merkleProof", "type": "bytes32[]" }
     ],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "payable"
+    "name": "mintPfp",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    "type": "function",
-    "name": "minterUtility",
     "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
+    "name": "minterUtility",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   }
 ]
