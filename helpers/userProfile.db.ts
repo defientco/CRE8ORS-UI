@@ -94,7 +94,7 @@ export const getSimilarProfiles = async (walletAddress: string) => {
           location: location.replace(/[\s,]/g, ""),
         },
         {
-          walletAddress: { $ne: walletAddress?.toLocaleLowerCase() }
+          walletAddress: { $ne: walletAddress?.toLowerCase() }
         },
       ],
     }).lean()
