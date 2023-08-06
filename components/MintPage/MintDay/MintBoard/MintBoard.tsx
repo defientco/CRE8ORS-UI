@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
-import { useAccount } from "wagmi"
 import SectionContainer from "../../SectionContainer"
 import Title from "../../../Common/Title"
 import Content from "../../../Common/Content"
@@ -11,7 +10,6 @@ import QuantityCard from "../QuantityCard"
 import ModalSelector from "../Modals/ModalSelector"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import MintBoardButtons from "./ActionButtons"
-import isWhitelisted from "../../../../lib/merkle/isWhitelisted"
 
 const MintBoard = () => {
   const {
@@ -21,20 +19,18 @@ const MintBoard = () => {
     addToCart,
     removeFromCart,
     getCartTier,
+    hasWhitelist,
   } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
-  const { address } = useAccount()
 
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
 
-  const whitelisted = useMemo(() => isWhitelisted(address), [address])
-
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const automaticOpenModal = useMemo(
-    () => isFreeMintModal || (!isFreeMintModal && whitelisted),
-    [isFreeMintModal, whitelisted],
+    () => isFreeMintModal || (!isFreeMintModal && hasWhitelist),
+    [isFreeMintModal, hasWhitelist],
   )
 
   useEffect(() => {

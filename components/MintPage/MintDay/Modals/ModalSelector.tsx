@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 
 import _ from "lodash"
@@ -8,7 +8,6 @@ import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
-import { isWhitelisted, hasMerkleProof } from "../../../../lib/merkle/isWhitelisted"
 import PublicSaleModal from "./PublicSaleModal"
 
 interface ModalSelectorProps {
@@ -26,17 +25,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     cart,
     publicSaleActive,
     loadingSaleStatus,
-    merkleRoot,
+    hasWhitelist,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
-  const whitelisted = useMemo(async () => {
-    let hasProof = false
-    if (merkleRoot.length > 0) {
-      hasProof = await hasMerkleProof(address, merkleRoot)
-    }
-    return isWhitelisted(address) || hasProof
-  }, [address, merkleRoot])
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
@@ -80,7 +72,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
 
     if (leftQuantityCount > 0 && _.sum(cart) > 0) {
-      if (whitelisted) {
+      if (hasWhitelist) {
         return (
           <Cre8orlistModal
             isModalVisible={isVisibleModal}

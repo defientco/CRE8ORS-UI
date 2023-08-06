@@ -15,6 +15,7 @@ import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import { getLockedCount } from "../lib/cre8or"
 import useMintCart from "../hooks/useMintCart"
 import useSaleStatus from "../hooks/mintDay/useSaleStatus"
+import { hasMerkleProof, isWhitelisted } from "../lib/merkle/isWhitelisted"
 
 interface mintProps {
   lockedCntOfCre8or: number | null
@@ -39,6 +40,7 @@ interface mintProps {
   removeFromCart: (tier: number) => void
   getCartTier: (tier: number) => number
   merkleRoot: string | null
+  hasWhitelist: boolean
 }
 
 interface Props {
@@ -61,8 +63,21 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { switchNetwork } = useSwitchNetwork()
   const [merkleRoot, setMerkleRoot] = useState(null)
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
+  const [hasWhitelist, setHasWhitelist] = useState(false)
   const saleStatus = useSaleStatus()
 
+  const setWhitelistStatus = useCallback(async () => {
+    let hasProof = false
+    if (merkleRoot.length > 0) {
+      hasProof = await hasMerkleProof(address, merkleRoot)
+    }
+    const status = isWhitelisted(address) || hasProof
+    setHasWhitelist(status)
+  }, [address, merkleRoot])
+
+  useEffect(() => {
+    setWhitelistStatus()
+  }, [merkleRoot, setWhitelistStatus])
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
     discount: boolean
@@ -149,6 +164,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       removeFromCart,
       getCartTier,
       merkleRoot,
+      hasWhitelist,
     }),
     [
       saleStatus,
@@ -168,6 +184,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       removeFromCart,
       getCartTier,
       merkleRoot,
+      hasWhitelist,
     ],
   )
 
