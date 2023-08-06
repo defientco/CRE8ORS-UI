@@ -32,6 +32,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidArrayLength",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidTier",
     "type": "error"
   },
@@ -103,21 +108,9 @@
         "type": "address"
       },
       {
-        "components": [
-          {
-            "internalType": "uint8",
-            "name": "tier",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint256",
-            "name": "quantity",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IMinterUtilities.Cart[]",
+        "internalType": "uint256[]",
         "name": "carts",
-        "type": "tuple[]"
+        "type": "uint256[]"
       }
     ],
     "name": "mintPfp",

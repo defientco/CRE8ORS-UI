@@ -35,6 +35,7 @@
     "framer-motion": "^9.0.2",
     "joi": "^17.9.2",
     "keccak256": "^1.0.6",
+    "lodash": "^4.17.21",
     "merkletreejs": "^0.3.10",
     "mongodb": "^4.12.1",
     "mongoose": "^6.8.0",

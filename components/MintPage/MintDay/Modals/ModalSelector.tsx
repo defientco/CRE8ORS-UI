@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react"
 import { useAccount } from "wagmi"
 
+import _ from "lodash"
 import MintMoreModal from "./MintMoreModal"
 import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
@@ -71,7 +72,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount > 0 && cart.length > 0) {
+    if (leftQuantityCount > 0 && _.sum(cart) > 0) {
       if (whitelisted) {
         return (
           <Cre8orlistModal
