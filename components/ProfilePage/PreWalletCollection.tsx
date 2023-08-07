@@ -12,6 +12,7 @@ const PreWalletCollection = () => {
   const { expandedMore, setExpandedMore } = useProfileProvider()
   const [openUnlockModal, setOpenUnlockModal] = useState(false)
   const [openTraninModal, setOpenTrainModal] = useState(false)
+  const [isViewAll, setIsViewAll] = useState(false)
 
   const toggleUnlockModal = () => {
     setOpenUnlockModal(!openUnlockModal)
@@ -33,8 +34,9 @@ const PreWalletCollection = () => {
               bg-black`
         } 
           rounded-t-[10px] lg:rounded-t-[20px]
-          w-full flex justify-between items-start mt-[20px] pt-[20px]
-          gap-x-[10px]
+          w-full flex justify-between items-start 
+          mt-[20px] pt-[20px]
+          samsungS8:gap-x-[10px]
           lg:px-10 lg:pb-10
           px-2 pb-2`}
       >
@@ -78,35 +80,61 @@ const PreWalletCollection = () => {
           <SmartWalletContents />
         </div>
         <div>
-          <div className="flex items-center justify-end gap-x-[5px] samsungS8:gap-x-[10px]">
-            <p
-              className={`${
-                expandedMore ? "text-white" : "text-black"
-              } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
-              uppercase`}
-            >
-              VIEW COLLECTION
-            </p>
-            <button type="button" onClick={() => setExpandedMore(!expandedMore)}>
-              <Media
-                type="image"
-                containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
-                link={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.svg"
-                    : "/assets/Profile/black_arrow_down.svg"
-                }`}
-                blurLink={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.png"
-                    : "/assets/Profile/black_arrow_down.png"
-                }`}
-              />
-            </button>
+          <div
+            className={`flex items-center ${
+              !expandedMore || isMobile ? "justify-end" : "justify-between"
+            }
+          xl:min-w-[641px]`}
+          >
+            {!isMobile && expandedMore && (
+              <div className="flex justify-center w-16 h-6 cursor-pointer md:ml-[100px]">
+                <button
+                  type="button"
+                  className="flex items-center bg-[white] rounded-full w-full h-6 pl-2"
+                  onClick={() => setIsViewAll(!isViewAll)}
+                >
+                  <div
+                    className={`${
+                      !isViewAll ? "translate-x-[calc(100%+11px)]" : "translate-x-[-5px]"
+                    } 
+                    bg-[black]
+                    w-5 h-5 rounded-full 
+                    transition duration-[300ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]`}
+                  />
+                </button>
+              </div>
+            )}
+            <div className="flex gap-x-[10px] items-center">
+              <p
+                className={`${
+                  expandedMore ? "text-white" : "text-black"
+                } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
+                uppercase`}
+              >
+                VIEW COLLECTION
+              </p>
+              <button type="button" onClick={() => setExpandedMore(!expandedMore)}>
+                <Media
+                  type="image"
+                  containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
+                  link={`${
+                    expandedMore
+                      ? "/assets/Profile/arrow_up.svg"
+                      : "/assets/Profile/black_arrow_down.svg"
+                  }`}
+                  blurLink={`${
+                    expandedMore
+                      ? "/assets/Profile/arrow_up.png"
+                      : "/assets/Profile/black_arrow_down.png"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
           <OwnerWalletContents
             setOpenUnlockModal={setOpenUnlockModal}
             setOpenTrainModal={setOpenTrainModal}
+            isViewAll={isViewAll}
           />
         </div>
       </div>

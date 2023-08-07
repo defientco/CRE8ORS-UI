@@ -49,11 +49,13 @@ const PreDesktopProfileView = () => {
             </>
           ) : (
             <div
-              className="font-eigerdals text-[75px] max-w-[340px]
+              className="font-eigerdals text-[75px]
             pb-[30px] py-[10px]
             leading-[90.3%]"
             >
-              {userInfo?.username}
+              {userInfo?.username
+                ? `${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`
+                : ""}
             </div>
           )}
           <div className="flex items-center gap-x-[10px]">

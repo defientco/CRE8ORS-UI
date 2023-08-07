@@ -26,7 +26,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const endDay =
-    !isFreeMintModal && !hasWhitelist ? "2023-08-10 08:00:00 EST" : "2023-08-09 08:00:00 EST" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
+    !isFreeMintModal && !hasWhitelist ? "8/10/2023, 8:00:00 AM" : "08/09/202, 08:00:00 AM" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
 
   return (
@@ -42,10 +42,10 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 bg-cover`}
         ref={modalRef}
         style={{
-          width: isXl ? "100%" : "803px",
+          width: isXl ? "100%" : "750px",
           height: isXl
-            ? `${(width / 803) * (notWhitelistPresaleActive ? 794 : 633)}px`
-            : `${notWhitelistPresaleActive ? "700px" : "633px"}`,
+            ? `${(width / 750) * (notWhitelistPresaleActive ? 650 : 540)}px`
+            : `${notWhitelistPresaleActive ? "650px" : "540px"}`,
         }}
       >
         <pre

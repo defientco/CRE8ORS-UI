@@ -36,7 +36,7 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
                   w-[250px] h-[200px]
                   samsungS8:w-[300px] samsungS8:h-[250px]
                   xs:w-[320px] xs:h-[250px]
-                  xl:w-[803px] xl:h-[569px]"
+                  xl:w-[750px] xl:h-[530px]"
       >
         {loading ? (
           <MintLoading />

@@ -9,13 +9,13 @@ import useShakeEffect from "../../../../hooks/useShakeEffect"
 const MintBoardButtons = ({ setOpenModal }: any) => {
   const { isConnected } = useAccount()
 
-  const { cart } = useMintProvider()
+  const { cart, leftQuantityCount } = useMintProvider()
 
   const shakeRef = useRef()
 
   useShakeEffect({
     ref: shakeRef,
-    isEnabled: _.sum(cart) === 0,
+    isEnabled: _.sum(cart) === 0 || leftQuantityCount === 0,
   })
 
   const handleClick = () => {
@@ -35,7 +35,7 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
           rounded-[5px] xl:rounded-[15px]"
             onClick={handleClick}
           >
-            Mint now
+            {leftQuantityCount ? "Mint Now" : "Max Minted"}
           </Button>
         </div>
       ) : (

@@ -5,9 +5,9 @@ import getDefaultProvider from "../../lib/getDefaultProvider"
 
 const useSaleStatus = () => {
   const [presaleActive, setPresaleActive] = useState(false)
-  const [presaleStart, setPresaleStart] = useState("")
+  const [presaleStart, setPresaleStart] = useState(0)
   const [publicSaleActive, setPublicSaleActive] = useState(false)
-  const [publicSaleStart, setPublicSaleStart] = useState("")
+  const [publicSaleStart, setPublicSaleStart] = useState(0)
   const [loading, setLoading] = useState(true)
   const cre8orsContract = useMemo(
     () =>
@@ -25,8 +25,8 @@ const useSaleStatus = () => {
       const details = await cre8orsContract.saleDetails()
       setPublicSaleActive(details.publicSaleActive)
       setPresaleActive(details.presaleActive)
-      setPresaleStart(details.presaleStart)
-      setPublicSaleStart(details.publicSaleStart)
+      setPresaleStart(Math.floor(parseInt(details.presaleStart, 10) / 1000000))
+      setPublicSaleStart(Math.floor(parseInt(details.publicSaleStart, 10) / 1000000))
       setLoading(false)
     }
 

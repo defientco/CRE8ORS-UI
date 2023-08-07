@@ -55,7 +55,7 @@ const PreProfileInformation = () => {
         />
       )}
       <div
-        className="text-[16px] font-medium font-quicksand
+        className="text-[16px] font-bold font-quicksand
                   pt-[40px]
                   leading-[99.3%]
                   lg:text-right"
@@ -90,7 +90,7 @@ const PreProfileInformation = () => {
         />
       )}
       <div
-        className="text-[16px] font-medium font-quicksand
+        className="text-[16px] font-bold font-quicksand
                   pt-[40px]
                   leading-[99.3%]
                   lg:text-right"
