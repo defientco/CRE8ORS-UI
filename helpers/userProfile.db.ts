@@ -107,11 +107,9 @@ export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
-    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
 
-    if(!doc) throw new Error("Profile is not existed!") 
-
-    if(!doc.avatarUrl) {
+    if(doc && !doc?.avatarUrl) {
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
       if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
