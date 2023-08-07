@@ -22,7 +22,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
     useMintProvider()
   const whitelisted = useMemo(async () => {
     let hasProof = false
-    if (merkleRoot.length > 0) {
+    if (merkleRoot?.length > 0) {
       hasProof = await hasMerkleProof(address, merkleRoot)
     }
     return isWhitelisted(address) || hasProof

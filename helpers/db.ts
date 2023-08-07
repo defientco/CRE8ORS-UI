@@ -28,6 +28,15 @@ export const addAllowListApplicant = async (body: ApplicantDTO) => {
     throw new Error(e)
   }
 }
+export const getAcceptedAllowlistApplicants = async () => {
+  try {
+    await dbConnect()
+    const result = await AllowList.find({ status: "Accepted" }).lean()
+    return { sucess: true, result }
+  } catch (e) {
+    throw new Error(e)
+  }
+}
 
 export const deleteAllowListApplicant = async (id: string) => {
   try {
