@@ -11,12 +11,29 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll 
 
   const { address } = router.query as any
   const [ownedNfts, setOwnedNfts] = useState([])
+  const [walletNfts, setWalletNfts] = useState(null)
+  const [cre8ors, setCre8ors] = useState(null)
 
   const toggleProfileFormattedCollection = useCallback(async () => {
-    const response = await getProfileFormattedCollection(address, isViewAll ? 2 : 1)
-
-    setOwnedNfts(response)
-  }, [isViewAll, address])
+    if (isViewAll) {
+      if (walletNfts === null) {
+        const response = await getProfileFormattedCollection(address, 2)
+        setWalletNfts(response)
+        setOwnedNfts(response)
+        return
+      }
+      setOwnedNfts([...walletNfts])
+    } else {
+      if (cre8ors === null) {
+        const response = await getProfileFormattedCollection(address, 1)
+        setCre8ors(response)
+        setOwnedNfts(response)
+        return
+      }
+      setOwnedNfts([...cre8ors])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isViewAll])
 
   useEffect(() => {
     toggleProfileFormattedCollection()

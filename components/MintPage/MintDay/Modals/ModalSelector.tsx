@@ -61,7 +61,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
         />
       )
-    if (isFreeMintModal)
+    if (isFreeMintModal && !isReloadingChainData)
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
