@@ -14,11 +14,7 @@ interface DetectedPassportModalProps {
 const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [modalRef, { width }] = useMeasure()
   const isXl = useMediaQuery("(max-width: 1150px)")
-  const {
-    presaleActive,
-    loadingSaleStatus,
-    hasWhitelist,
-  } = useMintProvider()
+  const { presaleActive, loadingSaleStatus, hasWhitelist } = useMintProvider()
 
   const endDay = !hasWhitelist ? "8/10/2023, 8:00:00 AM" : "08/09/2023, 8:00:00 AM" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
