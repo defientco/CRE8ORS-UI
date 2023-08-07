@@ -18,15 +18,9 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
     presaleActive,
     loadingSaleStatus,
     hasWhitelist,
-    hasPassport,
-    hasUnclaimedFreeMint,
-    hasFriendAndFamily,
   } = useMintProvider()
 
-  const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
-
-  const endDay =
-    !isFreeMintModal && !hasWhitelist ? "8/10/2023, 8:00:00 AM" : "08/09/2023, 8:00:00 AM" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
+  const endDay = !hasWhitelist ? "8/10/2023, 8:00:00 AM" : "08/09/2023, 8:00:00 AM" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
 
   return (
