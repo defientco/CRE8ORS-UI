@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useRef, useState } from "react"
 
 interface ModalTimerProps {
   endDay: string
@@ -9,8 +9,9 @@ const ModalTimer: FC<ModalTimerProps> = ({ endDay }) => {
   const [hours, setHours] = useState("00")
   const [minutes, setMinutes] = useState("00")
   const [seconds, setSeconds] = useState("00")
+  const timer = useRef<any>()
 
-  const getTime = () => {
+  const getTime = useCallback(() => {
     const time =
       new Date(endDay).getTime() -
       new Date(
@@ -23,14 +24,13 @@ const ModalTimer: FC<ModalTimerProps> = ({ endDay }) => {
     setHours(Math.floor((time / (1000 * 60 * 60)) % 24).toString())
     setMinutes(Math.floor((time / 1000 / 60) % 60).toString())
     setSeconds(Math.floor((time / 1000) % 60).toString())
-  }
+  }, [endDay])
 
   useEffect(() => {
-    const interval = setInterval(() => getTime(), 1000)
-
-    return () => clearInterval(interval)
+    clearInterval(timer.current)
+    timer.current = setInterval(() => getTime(), 1000)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getTime])
 
   return (
     <div className="bg-white p-[10px] xl:p-[20px] rounded-[10px]">
