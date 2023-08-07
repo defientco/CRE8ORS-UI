@@ -42,16 +42,16 @@ const QuantityCard: FC<MintCardProps> = ({
 
   const { getCartTier } = useMintProvider()
 
-  useShakeEffect({
-    ref: minusShakeRef,
-    isEnabled: getCartTier(type) === 0,
-  })
-
   const canIncrease = useMemo(() => _.sum(cart) < leftQuantityCount, [cart, leftQuantityCount])
 
   useShakeEffect({
     ref: plusShakeRef,
     isEnabled: !canIncrease,
+  })
+
+  useShakeEffect({
+    ref: minusShakeRef,
+    isEnabled: getCartTier(type) === 0,
   })
 
   return (
@@ -146,6 +146,7 @@ const QuantityCard: FC<MintCardProps> = ({
                   type="button"
                   style={{
                     width: isXl ? `${(20 / mobileMaxWidth) * height}px` : "40px",
+                    color: getCartTier(type) === 0 ? "gray" : "black",
                   }}
                   onClick={() => decreaseQuantity(type)}
                 >
@@ -164,6 +165,7 @@ const QuantityCard: FC<MintCardProps> = ({
                   type="button"
                   style={{
                     width: isXl ? `${(20 / mobileMaxWidth) * height}px` : "40px",
+                    color: canIncrease ? "black" : "gray",
                   }}
                   onClick={() => {
                     if (!canIncrease) return
