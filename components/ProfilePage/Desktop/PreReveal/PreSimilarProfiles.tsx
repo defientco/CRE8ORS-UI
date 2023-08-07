@@ -6,7 +6,7 @@ const PreSimilarProfiles = () => {
   const { similarProfiles } = useUserProvider()
 
   return (
-    <div>
+    <div className="flex flex-col items-end">
       <div
         className="text-[22px] font-bold font-quicksand
                 leading-[99.3%] text-black
@@ -16,9 +16,8 @@ const PreSimilarProfiles = () => {
         SIMILAR PROFILES
       </div>
       <div
-        className={`grid ${
-          similarProfiles.length >= 4 ? "grid-cols-4" : `grid-cols-${similarProfiles.length}`
-        } gap-x-[10px] gap-y-[10px] min-h-[120px]`}
+        className={`flex flex-wrap flex-row-reverse
+        max-w-[210px] gap-x-[10px] gap-y-[10px] min-h-[120px]`}
       >
         {similarProfiles.map((profile) => (
           // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle

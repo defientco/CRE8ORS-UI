@@ -1,5 +1,6 @@
 const epochToModalTimerString = (epoch) => {
   // Multiply by 1000 to convert seconds to milliseconds
+
   const date = new Date(epoch * 1000)
 
   // Create a formatter using the desired options

@@ -75,8 +75,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             name="twitterhandle"
             value={twitterHandle}
             onChange={(e) => setTwitterHandle(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
+            className="outline-none !h-[33px] !w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="!h-[33px] !w-[235px]"
             placeholder="Twitter Handle"
             hookToForm
           />
@@ -94,8 +94,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             name="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
+            className="outline-none !h-[33px] !w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="!h-[33px] !w-[235px]"
             placeholder="Location"
             hookToForm
           />
@@ -115,8 +115,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             name="needhelpwith"
             value={needhelpwith}
             onChange={(e) => setNeedHelpWith(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
+            className="outline-none !h-[33px] !w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="!h-[33px] !w-[235px]"
             placeholder="I need help with..."
             hookToForm
           />
@@ -134,8 +134,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             name="askmeabout"
             value={askmeabout}
             onChange={(e) => setAskMeAbout(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
+            className="outline-none !h-[33px] !w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="!h-[33px] !w-[235px]"
             placeholder="Ask Me About"
             hookToForm
           />
@@ -156,8 +156,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="outline-none 
-              h-[86px] 
-              w-[235px] md:w-[500px]
+              !h-[86px] 
+              !w-[235px] md:!w-[500px]
               rounded-md placeholder:text-[gray]"
             placeholder="Bio"
             hookToForm
@@ -178,8 +178,8 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
             name="username"
             value={username}
             onChange={(e) => setUserName(e.target.value)}
-            className="outline-none h-[33px] w-[235px] rounded-md placeholder:text-[gray]"
-            containerClassName="h-[33px] w-[235px]"
+            className="outline-none !h-[33px] !w-[235px] rounded-md placeholder:text-[gray]"
+            containerClassName="!h-[33px] !w-[235px]"
             placeholder="Username"
             hookToForm
           />

@@ -3,15 +3,18 @@ import Image from "next/image"
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useAccount } from "wagmi"
 import CustomConnectWallet from "../CustomConnectWallet"
 import DiscordIcon from "../DiscordIcon"
 import { ToggleButton } from "../../shared/Button"
 import { useTheme } from "../../providers/ThemeProvider"
+import WalletConnectButton from "../WalletConnectButton"
 
 const DesktopMenu = () => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const router = useRouter()
+  const { isConnected, address } = useAccount()
 
   const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
@@ -113,7 +116,15 @@ const DesktopMenu = () => {
             <Link href="/faq" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">FAQ</div>
             </Link>
-            <div className="text-gray-400 cursor-not-allowed">Profiles</div>
+            {isConnected ? (
+              <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+                <div className="cursor-pointer text-white dark:text-[black]">Profile</div>
+              </Link>
+            ) : (
+              <WalletConnectButton>
+                <div className="cursor-pointer text-white dark:text-[black] uppercase">Connect</div>
+              </WalletConnectButton>
+            )}
             <div className="text-gray-400 cursor-not-allowed">Warehouse</div>
           </div>
         )}

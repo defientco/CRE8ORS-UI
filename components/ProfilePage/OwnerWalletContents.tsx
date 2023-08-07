@@ -1,27 +1,32 @@
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
+import { CRE8OR } from "./types"
 
-const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
+const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll }) => {
   const router = useRouter()
   const { isEditable } = useProfileProvider()
 
   const { address } = router.query as any
   const [ownedNfts, setOwnedNfts] = useState([])
 
+  const toggleProfileFormattedCollection = useCallback(async () => {
+    const response = await getProfileFormattedCollection(address, isViewAll ? 2 : 1)
+
+    setOwnedNfts(response)
+  }, [isViewAll, address])
+
   useEffect(() => {
-    const init = async () => {
-      const response = await getProfileFormattedCollection(address)
-      setOwnedNfts(response)
-    }
-    init()
-  }, [address])
+    toggleProfileFormattedCollection()
+  }, [toggleProfileFormattedCollection])
 
   return (
     <div
-      className="grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 gap-x-[3px] lg:gap-x-[15px] gap-y-[5px] pt-[15px] mt-[20px]
+      className="grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 
+                  gap-x-[5px] lg:gap-x-[15px] gap-y-[5px] 
+                  pt-[15px] mt-[20px]
                   h-[140px] lg:h-[287px] 
                   overflow-y-auto overflow-x-hidden
                   pr-2"
@@ -51,30 +56,29 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
           >
             <div className="w-full break-words">
               {data.label}
-              {data.type === "cre8ors" && ` #${data.tokenId}`}
+              {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
             </div>
-            {isEditable && (
+            {isEditable && data.type === CRE8OR && (
               <div>
-                {data.type === "cre8or" &&
-                  (data.isLocked ? (
-                    <button type="button" onClick={() => setOpenUnlockModal(true)}>
-                      <Media
-                        type="image"
-                        containerClasses="w-[13.54px] h-[16.83px]"
-                        link="/assets/Profile/locked.svg"
-                        blurLink="/assets/Profile/locked.png"
-                      />
-                    </button>
-                  ) : (
-                    <button onClick={() => setOpenTrainModal(true)} type="button">
-                      <Media
-                        type="image"
-                        containerClasses="w-[14.8px] h-[17px]"
-                        link="/assets/Profile/unlocked.svg"
-                        blurLink="/assets/Profile/unlocked.png"
-                      />
-                    </button>
-                  ))}
+                {data.isLocked ? (
+                  <button type="button" onClick={() => setOpenUnlockModal(true)}>
+                    <Media
+                      type="image"
+                      containerClasses="w-[13.54px] h-[16.83px]"
+                      link="/assets/Profile/locked.svg"
+                      blurLink="/assets/Profile/locked.png"
+                    />
+                  </button>
+                ) : (
+                  <button onClick={() => setOpenTrainModal(true)} type="button">
+                    <Media
+                      type="image"
+                      containerClasses="w-[14.8px] h-[17px]"
+                      link="/assets/Profile/unlocked.svg"
+                      blurLink="/assets/Profile/unlocked.png"
+                    />
+                  </button>
+                )}
               </div>
             )}
           </div>

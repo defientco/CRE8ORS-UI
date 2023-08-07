@@ -14,7 +14,10 @@ const PreMobileProfileView = () => {
 
   return (
     <div
-      className="relative w-full
+      className="relative 
+          w-[300px]
+          samsungS8:w-[325px]
+          xs:w-[360px]
           bg-[white]
           rounded-[10px]
           overflow-hidden"
@@ -43,11 +46,10 @@ const PreMobileProfileView = () => {
         ) : (
           <div className="flex justify-center ">
             <div
-              className="font-eigerdals text-[40px] text-center
-          max-w-[250px] break-words
+              className="font-eigerdals text-[27px] samsungS8:text-[30px] xs:text-[33px] text-center
           leading-[100%]"
             >
-              {userInfo?.username || ""}
+              {`${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`}
             </div>
           </div>
         )}

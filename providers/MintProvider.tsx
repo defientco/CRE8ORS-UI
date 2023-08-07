@@ -28,8 +28,8 @@ interface mintProps {
   freeMintCount: number | null
   cart: any[]
   loadingSaleStatus: boolean
-  publicSaleActive: boolean
-  presaleActive: boolean
+  publicSaleActive: boolean | null
+  presaleActive: boolean | null
   presaleStart: number
   publicSaleStart: number
   getFFAndPassportsInformation: () => Promise<void>
@@ -40,7 +40,8 @@ interface mintProps {
   removeFromCart: (tier: number) => void
   getCartTier: (tier: number) => number
   merkleRoot: string | null
-  hasWhitelist: boolean
+  hasWhitelist: any
+  isLoadingChainData: boolean
 }
 
 interface Props {
@@ -64,7 +65,18 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [merkleRoot, setMerkleRoot] = useState(null)
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
   const [hasWhitelist, setHasWhitelist] = useState(false)
+
   const saleStatus = useSaleStatus()
+
+  const isLoadingChainData = useMemo(() => {
+    return (
+      hasPassport === null ||
+      hasUnclaimedFreeMint === null ||
+      hasFriendAndFamily === null ||
+      saleStatus.presaleActive === null ||
+      saleStatus.publicSaleActive === null
+    )
+  }, [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, saleStatus])
 
   const setWhitelistStatus = useCallback(async () => {
     let hasProof = false
@@ -78,6 +90,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     setWhitelistStatus()
   }, [merkleRoot, setWhitelistStatus])
+
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
     discount: boolean
@@ -148,6 +161,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const provider = useMemo(
     () => ({
       ...saleStatus,
+      isLoadingChainData,
       availablePassportIds,
       cart,
       freeMintCount,
@@ -168,6 +182,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     }),
     [
       saleStatus,
+      isLoadingChainData,
       availablePassportIds,
       cart,
       freeMintCount,

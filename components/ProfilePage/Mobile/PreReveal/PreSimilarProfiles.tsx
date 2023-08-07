@@ -16,9 +16,8 @@ const PreSimilarProfiles = () => {
         SIMILAR PROFILES
       </div>
       <div
-        className={`grid ${
-          similarProfiles.length >= 4 ? "grid-cols-4" : `grid-cols-${similarProfiles.length}`
-        } gap-x-[10px] gap-y-[10px]`}
+        className={`flex flex-wrap justify-center
+        max-w-[200px] gap-x-[10px] gap-y-[10px]`}
       >
         {similarProfiles?.map((profile) => (
           <Tooltip

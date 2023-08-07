@@ -61,7 +61,7 @@ const CustomConnectWallet = () => (
             }
 
             return (
-              <div style={{ display: "flex", gap: 12, paddingLeft: 10 }}>
+              <div style={{ display: "flex", gap: 5, paddingLeft: 10 }}>
                 <button
                   onClick={openChainModal}
                   style={{ display: "flex", alignItems: "center", paddingLeft: 2 }}
@@ -95,7 +95,7 @@ const CustomConnectWallet = () => (
                 <button
                   onClick={openAccountModal}
                   type="button"
-                  className="font-bold uppercase text-[11px] md:text-[17px] lg:md:text-sm font-quicksand 
+                  className="font-bold uppercase text-[10.5px] md:text-[17px] lg:md:text-sm font-quicksand 
                   text-white md:text-black dark:text-[black] md:dark:text-[white]"
                 >
                   {account.displayName}

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react"
 import { useMeasure } from "react-use"
 import { useMediaQuery } from "usehooks-ts"
+import { useAccount } from "wagmi"
 import SectionContainer from "../../SectionContainer"
 import Title from "../../../Common/Title"
 import Content from "../../../Common/Content"
@@ -19,20 +20,26 @@ const MintBoard = () => {
     addToCart,
     removeFromCart,
     getCartTier,
+    hasWhitelist,
   } = useMintProvider()
   const [openModal, setOpenModal] = useState(false)
-
+  const { isConnected } = useAccount()
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
 
+  const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
+
   const automaticOpenModal = useMemo(
-    () => (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily,
-    [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily],
+    () =>
+      isFreeMintModal ||
+      (!isFreeMintModal && hasWhitelist) ||
+      (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist),
+    [isFreeMintModal, hasWhitelist, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily],
   )
 
   useEffect(() => {
-    setOpenModal(automaticOpenModal)
-  }, [automaticOpenModal])
+    setOpenModal(automaticOpenModal && isConnected)
+  }, [automaticOpenModal, isConnected])
 
   const increaseQuantity = (type: number) => {
     addToCart(type)
