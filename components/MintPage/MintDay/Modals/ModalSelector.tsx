@@ -24,6 +24,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     leftQuantityCount,
     cart,
     publicSaleActive,
+    presaleActive,
     loadingSaleStatus,
     hasWhitelist,
   } = useMintProvider()
@@ -92,7 +93,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
     }
 
-    if (!(publicSaleActive || loadingSaleStatus) || (hasWhitelist && !hasPassport)) {
+    if (!(publicSaleActive || loadingSaleStatus || presaleActive) || (hasWhitelist && !hasPassport)) {
       return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
     }
 

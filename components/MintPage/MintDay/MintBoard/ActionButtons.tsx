@@ -35,7 +35,7 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
           rounded-[5px] xl:rounded-[15px]"
             onClick={handleClick}
           >
-            {leftQuantityCount ? "Mint Now" : "Max Minted"}
+            {leftQuantityCount === 0 ? "Max Minted" : "Mint Now"}
           </Button>
         </div>
       ) : (
