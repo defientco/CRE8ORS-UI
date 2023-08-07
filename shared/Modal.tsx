@@ -35,7 +35,7 @@ function Modal({
       }
     >
         
-      <div className={`bg-white rounded-lg relative ${containerClassName || ""}`}>
+      <div className={`mt-[50px] bg-white rounded-lg relative ${containerClassName || ""}`}>
         {showCloseButton && (
           <div
             className={`bg-white dark:bg-[black] absolute 

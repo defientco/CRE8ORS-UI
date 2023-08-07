@@ -67,7 +67,7 @@ export const ProfileProvider = ({ children }) => {
       process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
     )
 
-    if (response.length) {
+    if (response?.ownedNfts.length) {
       const lastCre8or = response.ownedNfts[response.totalCount - 1]
       const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
       return setCre8orNumber(tokenId)
