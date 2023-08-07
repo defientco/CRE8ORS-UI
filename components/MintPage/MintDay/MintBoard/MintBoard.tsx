@@ -35,7 +35,7 @@ const MintBoard = () => {
       (isFreeMintModal ||
         (!isFreeMintModal && hasWhitelist) ||
         (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist)) &&
-      !oneTimeAutomaticOpen,
+      (!oneTimeAutomaticOpen || (oneTimeAutomaticOpen && isFreeMintModal)),
     [
       isFreeMintModal,
       hasWhitelist,
