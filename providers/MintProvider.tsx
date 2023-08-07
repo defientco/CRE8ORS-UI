@@ -40,7 +40,7 @@ interface mintProps {
   removeFromCart: (tier: number) => void
   getCartTier: (tier: number) => number
   merkleRoot: string | null
-  hasWhitelist: boolean
+  hasWhitelist: any
 }
 
 interface Props {
@@ -71,7 +71,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
     if (merkleRoot?.length > 0) {
       hasProof = await hasMerkleProof(address, merkleRoot)
     }
-    setHasWhitelist(hasProof)
+    const status = isWhitelisted(address) || hasProof
+    setHasWhitelist(status)
   }, [address, merkleRoot])
 
   useEffect(() => {

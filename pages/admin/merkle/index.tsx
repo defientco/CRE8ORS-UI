@@ -9,11 +9,14 @@ const Merkle = () => {
   const [input, setInput] = useState<string>("")
   const [reset, setReset] = useState<boolean>(false)
   const [copied, setCopied] = useState<boolean>(false)
+  const [buttonClicked, setButtonClicked] = useState<boolean>(false)
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value.toLowerCase().replace(/['"]+/g, ""))
   }
   const handleGenerate = async () => {
-    const addresses = input.split(",")
+    setButtonClicked(true)
+    const values = input.split(",")
+    const addresses = values.map((value) => value.trim())
     const result = await axios.post(
       "/api/v2/create/merkle",
       { addresses },
@@ -23,9 +26,27 @@ const Merkle = () => {
         },
       },
     )
-    setMerkle(result.data.result.root)
+    setMerkle(result?.data?.result?.root)
     setInput("")
     setReset(true)
+    setButtonClicked(false)
+  }
+
+  const handleGenerateFromDatabase = async () => {
+    setButtonClicked(true)
+    const result = await axios.post(
+      "/api/v2/create/merkle",
+      { getFromDB: true },
+      {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      },
+    )
+    setMerkle(result?.data?.result?.root)
+    setInput("")
+    setReset(true)
+    setButtonClicked(false)
   }
   const handleReset = () => {
     setMerkle("")
@@ -80,11 +101,21 @@ const Merkle = () => {
             )}
             <button
               type="button"
-              className="px-10 py-4 mt-10 text-white bg-purple-400 rounded-lg border-lg"
+              className="px-10 py-4 mt-10 text-white bg-purple-600 rounded-lg border-lg disabled:cursor-not-allowed disabled:opacity-50"
               id="merkle"
               onClick={!reset ? handleGenerate : handleReset}
+              disabled={buttonClicked}
             >
               {reset ? "Retry" : "Generate"}
+            </button>
+            <button
+              type="button"
+              className="px-10 py-4 mt-10 text-white bg-green-600 rounded-lg border-lg disabled:cursor-not-allowed disabled:opacity-50"
+              id="merkle"
+              onClick={!reset ? handleGenerateFromDatabase : handleReset}
+              disabled={buttonClicked}
+            >
+              {reset ? "Retry" : "Generate From Database"}
             </button>
           </div>
         </div>
