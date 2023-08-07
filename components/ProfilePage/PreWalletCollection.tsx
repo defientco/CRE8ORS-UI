@@ -87,21 +87,28 @@ const PreWalletCollection = () => {
           xl:min-w-[641px]`}
           >
             {!isMobile && expandedMore && (
-              <div className="flex justify-center w-16 h-6 cursor-pointer md:ml-[100px]">
-                <button
-                  type="button"
-                  className="flex items-center bg-[white] rounded-full w-full h-6 pl-2"
-                  onClick={() => setIsViewAll(!isViewAll)}
-                >
-                  <div
-                    className={`${
-                      !isViewAll ? "translate-x-[calc(100%+11px)]" : "translate-x-[-5px]"
-                    } 
-                    bg-[black]
-                    w-5 h-5 rounded-full 
-                    transition duration-[300ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]`}
-                  />
-                </button>
+              <div
+                className="flex font-quicksand font-bold
+              gap-[15px]"
+              >
+                <div className="text-white uppercase">Wallet</div>
+                <div className="flex justify-center w-16 h-6 cursor-pointer">
+                  <button
+                    type="button"
+                    className="flex items-center bg-[white] rounded-full w-full h-6 pl-2"
+                    onClick={() => setIsViewAll(!isViewAll)}
+                  >
+                    <div
+                      className={`${
+                        !isViewAll ? "translate-x-[calc(100%+11px)]" : "translate-x-[-5px]"
+                      } 
+                      bg-[black]
+                      w-5 h-5 rounded-full 
+                      transition duration-[300ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]`}
+                    />
+                  </button>
+                </div>
+                <div className="text-white uppercase">CRE8ORS</div>
               </div>
             )}
             <div className="flex gap-x-[10px] items-center">

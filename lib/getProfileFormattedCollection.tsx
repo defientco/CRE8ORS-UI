@@ -1,3 +1,4 @@
+import { CRE8OR } from "../components/ProfilePage/types"
 import getNFTs from "./alchemy/getNFTs"
 
 const getProfileFormattedCollection = async (address, type) => {
@@ -24,7 +25,10 @@ const getProfileFormattedCollection = async (address, type) => {
 
   const formattedData = collection.map((nft) => ({
     label: nft.contractMetadata.name,
-    type: nft.contract.address === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS ? "cre8or" : undefined,
+    type:
+      nft.contract.address.toLowerCase() === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS.toLowerCase()
+        ? CRE8OR
+        : undefined,
     isLocked: true,
     image: nft.media[0].thumbnail,
     tokenId: parseInt(nft.id.tokenId, 16),

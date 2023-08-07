@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
+import { CRE8OR } from "./types"
 
 const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll }) => {
   const router = useRouter()
@@ -55,9 +56,9 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll 
           >
             <div className="w-full break-words">
               {data.label}
-              {data.type === "cre8or" ? ` #${data.tokenId}` : ""}
+              {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
             </div>
-            {isEditable && data.type === "cre8or" && (
+            {isEditable && data.type === CRE8OR && (
               <div>
                 {data.isLocked ? (
                   <button type="button" onClick={() => setOpenUnlockModal(true)}>
