@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import _ from "lodash"
 import { Button } from "../../../../shared/Button"
 import WalletConnectButton from "../../../WalletConnectButton"
@@ -9,17 +9,27 @@ import useShakeEffect from "../../../../hooks/useShakeEffect"
 const MintBoardButtons = ({ setOpenModal }: any) => {
   const { isConnected } = useAccount()
 
-  const { cart, leftQuantityCount } = useMintProvider()
+  const { cart, leftQuantityCount, hasPassport, hasFriendAndFamily, hasUnclaimedFreeMint } =
+    useMintProvider()
 
   const shakeRef = useRef()
 
+  const canNotClickMint = useMemo(
+    () =>
+      (_.sum(cart) === 0 || leftQuantityCount === 0) &&
+      !hasFriendAndFamily &&
+      !hasPassport &&
+      !hasUnclaimedFreeMint,
+    [leftQuantityCount, cart, hasFriendAndFamily, hasPassport, hasUnclaimedFreeMint],
+  )
+
   useShakeEffect({
     ref: shakeRef,
-    isEnabled: _.sum(cart) === 0 || leftQuantityCount === 0,
+    isEnabled: canNotClickMint,
   })
 
   const handleClick = () => {
-    if (_.sum(cart)) setOpenModal(true)
+    if (!canNotClickMint) setOpenModal(true)
   }
 
   return (

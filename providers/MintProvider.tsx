@@ -33,7 +33,6 @@ interface mintProps {
   presaleStart: number
   publicSaleStart: number
   getFFAndPassportsInformation: () => Promise<void>
-  getLockedAndQuantityInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>
   addToCart: (tier: number) => void
@@ -42,6 +41,7 @@ interface mintProps {
   merkleRoot: string | null
   hasWhitelist: any
   isLoadingChainData: boolean
+  isReloadingChainData: boolean
 }
 
 interface Props {
@@ -64,7 +64,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { switchNetwork } = useSwitchNetwork()
   const [merkleRoot, setMerkleRoot] = useState(null)
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
-  const [hasWhitelist, setHasWhitelist] = useState(false)
+  const [hasWhitelist, setHasWhitelist] = useState<boolean | null>(null)
+  const [isReloadingChainData, setIsReloadingChaindData] = useState(false)
 
   const saleStatus = useSaleStatus()
 
@@ -74,22 +75,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
       hasUnclaimedFreeMint === null ||
       hasFriendAndFamily === null ||
       saleStatus.presaleActive === null ||
-      saleStatus.publicSaleActive === null
+      saleStatus.publicSaleActive === null ||
+      hasWhitelist === null
     )
-  }, [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, saleStatus])
-
-  const setWhitelistStatus = useCallback(async () => {
-    let hasProof = false
-    if (merkleRoot?.length > 0) {
-      hasProof = await hasMerkleProof(address, merkleRoot)
-    }
-    const status = isWhitelisted(address) || hasProof
-    setHasWhitelist(status)
-  }, [address, merkleRoot])
-
-  useEffect(() => {
-    setWhitelistStatus()
-  }, [merkleRoot, setWhitelistStatus])
+  }, [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, saleStatus, hasWhitelist])
 
   const [initialData, setInitialData] = useState<{
     passports: Array<number | string>
@@ -98,19 +87,25 @@ export const MintProvider: FC<Props> = ({ children }) => {
     merkleRoot?: string
   } | null>(null)
 
-  const getLockedAndQuantityInformation = useCallback(async () => {
-    if (!address) return
+  const getInitialData = useCallback(async () => {
     const lockedCnt = await getLockedCount(address)
     setLockedCntOfCre8or(lockedCnt)
-  }, [address])
 
-  const getInitialData = useCallback(async () => {
     const passportsArray = await getPassportIds(address)
     setHasPassport(passportsArray?.length > 0)
+
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+
     setMerkleRoot(results?.merkleRoot)
+    let hasProof = false
+    if (results?.merkleRoot?.length > 0) {
+      hasProof = await hasMerkleProof(address, results?.merkleRoot)
+    }
+    const status = isWhitelisted(address) || hasProof
+    setHasWhitelist(status)
+
     setInitialData(results)
   }, [address])
 
@@ -136,14 +131,16 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }
 
   const refetchInformation = async () => {
+    setIsReloadingChaindData(true)
     await getInitialData()
-    await getLockedAndQuantityInformation()
+    setIsReloadingChaindData(false)
   }
 
   useEffect(() => {
     if (!address) return
     getInitialData()
-  }, [address, getInitialData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address])
 
   useEffect(() => {
     if (!initialData) return
@@ -154,14 +151,11 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setAvailablePassportIds(initialData?.passports)
   }, [initialData])
 
-  useEffect(() => {
-    getLockedAndQuantityInformation()
-  }, [getLockedAndQuantityInformation])
-
   const provider = useMemo(
     () => ({
       ...saleStatus,
       isLoadingChainData,
+      isReloadingChainData,
       availablePassportIds,
       cart,
       freeMintCount,
@@ -171,7 +165,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       hasPassport,
       hasUnclaimedFreeMint,
       hasFriendAndFamily,
-      getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
       addToCart,
@@ -183,6 +176,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     [
       saleStatus,
       isLoadingChainData,
+      isReloadingChainData,
       availablePassportIds,
       cart,
       freeMintCount,
@@ -192,7 +186,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       hasPassport,
       hasUnclaimedFreeMint,
       hasFriendAndFamily,
-      getLockedAndQuantityInformation,
       checkNetwork,
       refetchInformation,
       addToCart,

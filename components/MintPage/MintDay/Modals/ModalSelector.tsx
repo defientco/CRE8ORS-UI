@@ -27,6 +27,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     loadingSaleStatus,
     hasWhitelist,
     isLoadingChainData,
+    isReloadingChainData,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -95,7 +96,10 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
     }
 
-    if (!(publicSaleActive || loadingSaleStatus) || (hasWhitelist && !hasPassport)) {
+    if (
+      (!(publicSaleActive || loadingSaleStatus) || (hasWhitelist && hasPassport === false)) &&
+      !isReloadingChainData
+    ) {
       return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
     }
 

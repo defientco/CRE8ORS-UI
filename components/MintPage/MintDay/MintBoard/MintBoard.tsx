@@ -26,19 +26,31 @@ const MintBoard = () => {
   const { isConnected } = useAccount()
   const [boardRef, { height }] = useMeasure()
   const isXs = useMediaQuery("max-width: 393px")
+  const [oneTimeAutomaticOpen, setOneTimeAutomaticOpen] = useState(false)
 
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const automaticOpenModal = useMemo(
     () =>
-      isFreeMintModal ||
-      (!isFreeMintModal && hasWhitelist) ||
-      (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist),
-    [isFreeMintModal, hasWhitelist, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily],
+      (isFreeMintModal ||
+        (!isFreeMintModal && hasWhitelist) ||
+        (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist)) &&
+      !oneTimeAutomaticOpen,
+    [
+      isFreeMintModal,
+      hasWhitelist,
+      hasPassport,
+      hasUnclaimedFreeMint,
+      hasFriendAndFamily,
+      oneTimeAutomaticOpen,
+    ],
   )
 
   useEffect(() => {
-    setOpenModal(automaticOpenModal && isConnected)
+    if (automaticOpenModal && isConnected) {
+      setOpenModal(true)
+      setOneTimeAutomaticOpen(true)
+    }
   }, [automaticOpenModal, isConnected])
 
   const increaseQuantity = (type: number) => {
