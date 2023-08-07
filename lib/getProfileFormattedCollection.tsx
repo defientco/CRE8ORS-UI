@@ -1,5 +1,7 @@
 import { CRE8OR } from "../components/ProfilePage/types"
 import getNFTs from "./alchemy/getNFTs"
+import { isMatchAddress } from "./isMatchAddress"
+import { getLockedAndUnlockedResults } from "./lockup"
 
 const getProfileFormattedCollection = async (address, type) => {
   const collection = []
@@ -23,13 +25,22 @@ const getProfileFormattedCollection = async (address, type) => {
     collection.push(...response.ownedNfts)
   }
 
+  const tokenIds = collection
+    .filter((nft) => isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS))
+    .map((nft) => parseInt(nft.id.tokenId, 16))
+
+  const lockedAndUnlockedResults = await getLockedAndUnlockedResults(tokenIds)
+
   const formattedData = collection.map((nft) => ({
     label: nft.contractMetadata.name,
-    type:
-      nft.contract.address.toLowerCase() === process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS.toLowerCase()
-        ? CRE8OR
-        : undefined,
-    isLocked: true,
+    type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
+      ? CRE8OR
+      : undefined,
+    isLocked: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
+      ? lockedAndUnlockedResults.filter(
+          (result) => result.tokenId === parseInt(nft.id.tokenId, 16),
+        )[0].isLocked
+      : undefined,
     image: nft.media[0].thumbnail,
     tokenId: parseInt(nft.id.tokenId, 16),
   }))

@@ -58,7 +58,7 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll 
               {data.label}
               {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
             </div>
-            {isEditable && data.type === CRE8OR && (
+            {isEditable && data.type === CRE8OR && data.isLocked !== undefined && (
               <div>
                 {data.isLocked ? (
                   <button type="button" onClick={() => setOpenUnlockModal(true)}>
