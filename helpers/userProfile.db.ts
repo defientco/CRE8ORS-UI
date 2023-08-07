@@ -89,13 +89,14 @@ export const updateUserProfile = async (body: UserProfile) => {
       avatarUrl: doc.avatarUrl
     }
 
-    if(doc.twitterHandle !== body.twitterHandle) {
+    if((doc.twitterHandle !== body.twitterHandle) || (doc.twitterHandle && !newProfile.avatarUrl)) {
       const avatarUrl = await getUserAvatar(body.walletAddress, body.twitterHandle)
 
-      newProfile['avatarUrl'] = avatarUrl
+      newProfile.avatarUrl = avatarUrl
     }
-
+    
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, newProfile)
+
     return { success: true, results }
   } catch (e) {
     throw new Error(e)
@@ -106,7 +107,15 @@ export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
-    const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+
+    if(!doc) throw new Error("Profile is not existed!") 
+
+    if(!doc.avatarUrl) {
+      const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
+
+      if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
+    }
 
     return { success: true, doc }
   } catch (e) {
