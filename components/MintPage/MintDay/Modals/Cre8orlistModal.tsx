@@ -15,8 +15,8 @@ const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openS
       handleLoading(true)
       try {
         await mint(cart)
-        await refetchInformation()
         openSuccessModal()
+        await refetchInformation()
         handleLoading(false)
       } catch (err) {
         handleTxError(err)
