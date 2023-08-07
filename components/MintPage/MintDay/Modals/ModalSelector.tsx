@@ -24,7 +24,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     leftQuantityCount,
     cart,
     publicSaleActive,
-    presaleActive,
     loadingSaleStatus,
     hasWhitelist,
   } = useMintProvider()
