@@ -32,7 +32,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
   const whitelisted = useMemo(async () => {
     let hasProof = false
-    if (merkleRoot.length > 0) {
+    if (merkleRoot?.length > 0) {
       hasProof = await hasMerkleProof(address, merkleRoot)
     }
     return isWhitelisted(address) || hasProof
