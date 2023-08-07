@@ -31,8 +31,10 @@ const MintBoard = () => {
 
   const automaticOpenModal = useMemo(
     () =>
-      isFreeMintModal || (!isFreeMintModal && hasWhitelist) || (!isFreeMintModal && !hasWhitelist),
-    [isFreeMintModal, hasWhitelist],
+      isFreeMintModal ||
+      (!isFreeMintModal && hasWhitelist) ||
+      (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist),
+    [isFreeMintModal, hasWhitelist, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily],
   )
 
   useEffect(() => {
