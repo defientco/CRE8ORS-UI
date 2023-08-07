@@ -4,9 +4,9 @@ import cre8orsAbi from "../../lib/abi-cre8ors.json"
 import getDefaultProvider from "../../lib/getDefaultProvider"
 
 const useSaleStatus = () => {
-  const [presaleActive, setPresaleActive] = useState(false)
+  const [presaleActive, setPresaleActive] = useState<any>(null)
   const [presaleStart, setPresaleStart] = useState(0)
-  const [publicSaleActive, setPublicSaleActive] = useState(false)
+  const [publicSaleActive, setPublicSaleActive] = useState<any>(null)
   const [publicSaleStart, setPublicSaleStart] = useState(0)
   const [loading, setLoading] = useState(true)
   const cre8orsContract = useMemo(
