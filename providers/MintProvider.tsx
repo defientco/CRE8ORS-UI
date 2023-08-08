@@ -42,6 +42,7 @@ interface mintProps {
   hasWhitelist: any
   isLoadingChainData: boolean
   isReloadingChainData: boolean
+  isLoadingInitialize: boolean
 }
 
 interface Props {
@@ -66,6 +67,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
   const [hasWhitelist, setHasWhitelist] = useState<boolean | null>(null)
   const [isReloadingChainData, setIsReloadingChaindData] = useState(false)
+  const [isLoadingInitialize, setIsLoadingInitialize] = useState(false)
 
   const saleStatus = useSaleStatus()
 
@@ -138,9 +140,25 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setIsReloadingChaindData(false)
   }
 
+  const initializeInformation = async () => {
+    setIsLoadingInitialize(true)
+    await saleStatus.initializeStatus()
+    setFreeMintClaimedCount(null)
+    setHasUnclaimedFreeMint(null)
+    setHasFriendAndFamily(null)
+    setLeftQuantityCount(null)
+    setAvailablePassportIds(null)
+    await getInitialData()
+    setIsLoadingInitialize(true)
+  }
+
   useEffect(() => {
     if (!address) return
-    getInitialData()
+    const init = async () => {
+      await initializeInformation()
+    }
+
+    init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
@@ -158,6 +176,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       ...saleStatus,
       isLoadingChainData,
       isReloadingChainData,
+      isLoadingInitialize,
       availablePassportIds,
       cart,
       freeMintCount,
@@ -179,6 +198,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       saleStatus,
       isLoadingChainData,
       isReloadingChainData,
+      isLoadingInitialize,
       availablePassportIds,
       cart,
       freeMintCount,
