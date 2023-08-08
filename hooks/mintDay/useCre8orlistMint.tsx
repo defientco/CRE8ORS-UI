@@ -26,7 +26,6 @@ const useCre8orlistMint = () => {
       signer,
     )
 
-    console.log("SWEETS PROOF ", proof || [])
     const tx = await contract.mintPfp(address, cart, proof || [], { value })
     await tx.wait()
   }
