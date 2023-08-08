@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { error } from "console"
+import _ from "lodash"
 import { ApplicantDTO } from "../DTO/applicant.dto"
 import { ContactFormDTO } from "../DTO/contactform.dto"
 import AllowList from "../Models/AllowList"
@@ -72,7 +72,9 @@ export const getAllowListApplicantByResponseId = async (responseId: string) => {
 export const getAllowListApplicantByWalletAddress = async (walletAddress: string) => {
   try {
     await dbConnect()
-    const result = await AllowList.findOne({ walletAddress }).lean()
+    const result = await AllowList.findOne({
+      walletAddress: { $regex: walletAddress, $options: "i" },
+    }).lean()
     return result
   } catch (e) {
     error(e)
