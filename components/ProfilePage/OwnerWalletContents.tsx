@@ -71,8 +71,8 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll 
                               w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center
                               flex flex-col items-center gap-y-[2px]"
           >
-            <div className="w-full break-words">
-              {data.label}
+            <div className="w-full break-words uppercase">
+              {data.type === CRE8OR ? "CRE8ORS" : data.label}
               {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
             </div>
             {isEditable && data.type === CRE8OR && data.isLocked !== undefined && (
