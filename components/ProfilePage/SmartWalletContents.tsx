@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
-import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
+import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
 
 const SmartWalletContents = () => {
@@ -12,7 +12,7 @@ const SmartWalletContents = () => {
   useEffect(() => {
     const init = async () => {
       const smartWalletAddress = await getSmartWallet(cre8orNumber)
-      const nftResponse = await getProfileFormattedCollection(smartWalletAddress, 0)
+      const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
       setOwnedNfts(nftResponse)
     }
 
@@ -48,8 +48,8 @@ const SmartWalletContents = () => {
             // eslint-disable-next-line react/no-array-index-key
             <div className="flex justify-center" key={i}>
               <Media
-                link={nft.media[0].gateway}
-                blurLink={nft.media[0].gateway}
+                link={nft.image}
+                blurLink={nft.image}
                 type="image"
                 alt={nft.label} // Add an alt text if you have one
                 className="w-[30px] h-[30px] 

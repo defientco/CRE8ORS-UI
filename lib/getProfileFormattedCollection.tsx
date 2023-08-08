@@ -3,10 +3,15 @@ import getNFTs from "./alchemy/getNFTs"
 import { isMatchAddress } from "./isMatchAddress"
 import { getLockedAndUnlockedResults } from "./lockup"
 
-const getProfileFormattedCollection = async (address, type) => {
-  const collection = []
+export const SPECIALNFTS = "special"
+export const ALLNFTS = "all"
 
-  if (type === 1) {
+type GETTYPE = "special" | "all"
+
+const getProfileFormattedCollection = async (address, type: GETTYPE) => {
+  const collection: any = []
+
+  if (type === SPECIALNFTS) {
     const [cre8ors, passport] = await Promise.all([
       getNFTs(
         address,
@@ -20,10 +25,11 @@ const getProfileFormattedCollection = async (address, type) => {
       ),
     ])
     collection.push(...cre8ors.ownedNfts, ...passport.ownedNfts)
-  } else {
+  }
+
+  if (type === ALLNFTS) {
     const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
     collection.push(...response.ownedNfts)
-    return response.ownedNfts
   }
 
   const tokenIds = collection
@@ -33,7 +39,7 @@ const getProfileFormattedCollection = async (address, type) => {
   const lockedAndUnlockedResults = await getLockedAndUnlockedResults(tokenIds)
 
   const formattedData = collection.map((nft) => ({
-    label: nft.metadata.name,
+    label: nft.metadata.name || nft.contractMetadata.name,
     type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
       ? CRE8OR
       : undefined,
