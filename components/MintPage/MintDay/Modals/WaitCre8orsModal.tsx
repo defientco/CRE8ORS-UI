@@ -55,7 +55,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 samsungS8:pt-[8px] samsungS8:pb-[15px]
                 pt-[5px] pb-[10px]"
         >
-          Mint starts in:
+          Public Mint starts in:
         </pre>
         {!loadingSaleStatus && <ModalTimer endDay={endDay} />}
         {notWhitelistPresaleActive && (

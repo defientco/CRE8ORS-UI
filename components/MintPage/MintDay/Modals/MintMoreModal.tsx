@@ -1,7 +1,6 @@
 import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { useAccount } from "wagmi"
-import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
@@ -17,9 +16,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
 
   const { leftQuantityCount, lockedCntOfCre8or } = useMintProvider()
 
-  const handleClick = async () => {
-    toggleIsVisible()
-  }
+  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.`
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -64,42 +61,21 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
           className="font-quicksand 
             text-[15px] xl:text-[25px]
             text-center 
-            xl:py-[25px]
+            xl:pt-[25px]
+            xl:pb-[40px]
             py-[15px]
-            leading-[90.3%]
+            leading-[110.3%]
             dark:text-black text-white"
         >
-          {`You have ${leftQuantityCount || 0} more\nmints available`}
+          {`You have ${leftQuantityCount || 0} mints available\nClose popup to mint more`}
         </pre>
-        {leftQuantityCount ? (
-          <div>
-            <Button
-              id="mint_now"
-              className="!px-0 !py-0
-              xl:!w-[192.3px] xl:!h-[50px] 
-              !w-[150px] !h-[40px]
-              !font-eigerdals font-bold !bg-black 
-              text-[15px] xl:text-[20px] 
-              !rounded-[10px]
-              !text-black dark:!text-white
-              dark:!bg-black !bg-white"
-              onClick={handleClick}
-            >
-              Mint More
-            </Button>
-            <pre
-              className="font-quicksand 
-                text-[15px] xl:text-[20px]
-                py-[10px]
-                text-center"
-            >
-              OR
-            </pre>
-          </div>
-        ) : (
-          // eslint-disable-next-line react/jsx-no-useless-fragment
-          <></>
-        )}
+        <MintModalCTAButton
+          id="share_tweet_btn"
+          label="Share tweet"
+          link={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`}
+          target="_blank"
+          className="mb-[15px]"
+        />
         {lockedCntOfCre8or ? (
           <MintModalCTAButton link="/staking" id="stake_link_btn" label="Enter warehouse" />
         ) : (
