@@ -44,10 +44,14 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     if (address) setShouldOpenSuccessModal(false)
   }, [address])
 
+  console.log("SWEETS hasPassport ", hasPassport)
+  console.log("SWEETS hasUnclaimedFreeMint ", hasUnclaimedFreeMint)
+  console.log("SWEETS hasFriendAndFamily ", hasFriendAndFamily)
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
+  console.log("SWEETS isFreeMintModal ", isFreeMintModal)
 
   const selectModal = () => {
-    if (isLoadingChainData || isLoadingInitialize) return null
+    // if (isLoadingChainData || isLoadingInitialize) return null
 
     if (shouldOpenSuccessModal)
       return (
@@ -64,7 +68,8 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (isFreeMintModal && !isReloadingChainData)
+    if (isFreeMintModal && !isReloadingChainData) {
+      console.log("SWEETS OPEN POPUP")
       return (
         <CombinationModal
           isModalVisible={isVisibleModal}
@@ -77,6 +82,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
           handleLoading={handleMintLoading}
         />
       )
+    }
 
     if (leftQuantityCount > 0 && _.sum(cart) > 0) {
       if (hasWhitelist) {

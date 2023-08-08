@@ -99,6 +99,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+    console.log("SWEETS getAvailableFreeMints", results)
+
     setMerkleRoot(results?.merkleRoot)
 
     let hasProof = false
@@ -109,6 +111,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
     const status = isWhitelisted(address) || hasProof
     setHasWhitelist(status)
+    console.log("SWEETS setInitialData", results)
 
     setInitialData(results)
   }, [address])
@@ -163,6 +166,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
   }, [address])
 
   useEffect(() => {
+    console.log("SWEETS initial data", initialData)
+    console.log("SWEETS initialData?.passports?.length > 0", initialData?.passports?.length > 0)
     if (!initialData) return
     setFreeMintClaimedCount(initialData?.passports?.length)
     setHasUnclaimedFreeMint(initialData?.passports?.length > 0)
