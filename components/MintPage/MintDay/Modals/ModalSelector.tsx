@@ -65,16 +65,18 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
 
     if (isFreeMintModal && !isReloadingChainData)
-      <CombinationModal
-        isModalVisible={isVisibleModal}
-        toggleIsVisible={toggleModal}
-        coreMintFunc={
-          hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
-        }
-        openSuccessModal={() => setShouldOpenSuccessModal(true)}
-        loading={mintLoading}
-        handleLoading={handleMintLoading}
-      />
+      return (
+        <CombinationModal
+          isModalVisible={isVisibleModal}
+          toggleIsVisible={toggleModal}
+          coreMintFunc={
+            hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
+          }
+          openSuccessModal={() => setShouldOpenSuccessModal(true)}
+          loading={mintLoading}
+          handleLoading={handleMintLoading}
+        />
+      )
 
     if (leftQuantityCount > 0 && _.sum(cart) > 0) {
       if (hasWhitelist) {
