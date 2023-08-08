@@ -9,7 +9,7 @@ export const ALLNFTS = "all"
 const getProfileFormattedCollection = async (address, type) => {
   const collection = []
 
-  if (type === 1) {
+  if (type === SPECIALNFTS) {
     const [cre8ors, passport] = await Promise.all([
       getNFTs(
         address,
@@ -23,7 +23,8 @@ const getProfileFormattedCollection = async (address, type) => {
       ),
     ])
     collection.push(...cre8ors.ownedNfts, ...passport.ownedNfts)
-  } else {
+  }
+  if (type === ALLNFTS) {
     const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
     collection.push(...response.ownedNfts)
   }
