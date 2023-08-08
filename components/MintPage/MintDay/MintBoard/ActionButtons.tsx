@@ -9,18 +9,13 @@ import useShakeEffect from "../../../../hooks/useShakeEffect"
 const MintBoardButtons = ({ setOpenModal }: any) => {
   const { isConnected } = useAccount()
 
-  const { cart, leftQuantityCount, hasPassport, hasFriendAndFamily, hasUnclaimedFreeMint } =
-    useMintProvider()
+  const { cart, leftQuantityCount } = useMintProvider()
 
   const shakeRef = useRef()
 
   const canNotClickMint = useMemo(
-    () =>
-      (_.sum(cart) === 0 || leftQuantityCount === 0) &&
-      !hasFriendAndFamily &&
-      !hasPassport &&
-      !hasUnclaimedFreeMint,
-    [leftQuantityCount, cart, hasFriendAndFamily, hasPassport, hasUnclaimedFreeMint],
+    () => _.sum(cart) === 0 || leftQuantityCount === 0,
+    [leftQuantityCount, cart],
   )
 
   useShakeEffect({

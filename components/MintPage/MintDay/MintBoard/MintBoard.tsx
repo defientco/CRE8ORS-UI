@@ -17,6 +17,7 @@ const MintBoard = () => {
     hasPassport,
     hasUnclaimedFreeMint,
     hasFriendAndFamily,
+    presaleActive,
     addToCart,
     removeFromCart,
     getCartTier,
@@ -32,25 +33,19 @@ const MintBoard = () => {
 
   const automaticOpenModal = useMemo(
     () =>
-      (isFreeMintModal ||
-        (!isFreeMintModal && hasWhitelist) ||
-        (!hasPassport && !hasFriendAndFamily && !hasUnclaimedFreeMint && !hasWhitelist)) &&
+      (isFreeMintModal || (!isFreeMintModal && hasWhitelist && !presaleActive)) &&
       (!oneTimeAutomaticOpen || (oneTimeAutomaticOpen && isFreeMintModal)),
-    [
-      isFreeMintModal,
-      hasWhitelist,
-      hasPassport,
-      hasUnclaimedFreeMint,
-      hasFriendAndFamily,
-      oneTimeAutomaticOpen,
-    ],
+    [isFreeMintModal, hasWhitelist, oneTimeAutomaticOpen, presaleActive],
   )
 
   useEffect(() => {
     if (automaticOpenModal && isConnected) {
       setOpenModal(true)
       setOneTimeAutomaticOpen(true)
+      return
     }
+
+    setOpenModal(false)
   }, [automaticOpenModal, isConnected])
 
   const increaseQuantity = (type: number) => {

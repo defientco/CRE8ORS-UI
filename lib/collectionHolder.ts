@@ -23,13 +23,20 @@ export const getPassportIds = async (address: string) => {
   return response
 }
 
-export const freeMintClaimed = async (passportId: Array<number | string>) => {
-  const contractInterface = new ethers.utils.Interface(collectionHolderAbi)
-  const calls = passportId.map((id) => ({
-    target: process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
-    callData: contractInterface.encodeFunctionData("freeMintClaimed", [id]),
-  }))
-  return calls
+export const checkFreeMintClaimed = async (passportId: string) => {
+  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const contract = new ethers.Contract(
+    process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
+    collectionHolderAbi,
+    provider,
+  )
+  try {
+    const response = await contract.freeMintClaimed(parseInt(passportId, 10))
+    return response
+  } catch (err) {
+    handleTxError(err)
+    return 0
+  }
 }
 
 export const aggregateReads = async (passportIds: Array<number | string>, address: string) => {

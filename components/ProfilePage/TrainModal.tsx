@@ -2,6 +2,8 @@ import { FC, useState } from "react"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
 
 interface TrainModalProps {
   isModalVisible: boolean
@@ -9,12 +11,17 @@ interface TrainModalProps {
 }
 const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [loading, setLoading] = useState(false)
+  const { selectedTokenIdForTrain, refetchProfileFormattedCollection } =
+    useWalletCollectionProvider()
+  const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
 
-  const trainFunc = () => {
+  const trainFunc = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000)
+    if (selectedTokenIdForTrain !== null && signer) {
+      await refetchProfileFormattedCollection()
+    }
+    toggleIsVisible()
+    setLoading(false)
   }
 
   return (

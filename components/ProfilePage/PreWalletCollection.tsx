@@ -6,13 +6,15 @@ import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import SmartWalletContents from "./SmartWalletContents"
 import OwnerWalletContents from "./OwnerWalletContents"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
   const { expandedMore, setExpandedMore } = useProfileProvider()
   const [openUnlockModal, setOpenUnlockModal] = useState(false)
   const [openTraninModal, setOpenTrainModal] = useState(false)
-  const [isViewAll, setIsViewAll] = useState(false)
+
+  const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
 
   const toggleUnlockModal = () => {
     setOpenUnlockModal(!openUnlockModal)
@@ -141,7 +143,6 @@ const PreWalletCollection = () => {
           <OwnerWalletContents
             setOpenUnlockModal={setOpenUnlockModal}
             setOpenTrainModal={setOpenTrainModal}
-            isViewAll={isViewAll}
           />
         </div>
       </div>

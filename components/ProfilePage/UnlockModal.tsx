@@ -2,20 +2,35 @@ import { FC, useState } from "react"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import { payToUnlock } from "../../lib/lockup"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
 
 interface UnlockModalProps {
   isModalVisible: boolean
   toggleIsVisible: () => void
 }
+
 const UnlockModal: FC<UnlockModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [loading, setLoading] = useState(false)
+  const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
 
-  const unlockFunc = () => {
+  const { selectedTokenIdForUnlock, refetchProfileFormattedCollection } =
+    useWalletCollectionProvider()
+
+  const unlockFunc = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 1500)
+
+    if (selectedTokenIdForUnlock !== null && signer) {
+      const response = await payToUnlock(selectedTokenIdForUnlock, signer)
+      if (!response?.err) {
+        await refetchProfileFormattedCollection()
+      }
+    }
+    toggleIsVisible()
+    setLoading(false)
   }
+
   return (
     <Modal
       isVisible={isModalVisible}
