@@ -85,7 +85,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     let hasProof = false
 
     if (results?.merkleRoot?.length > 0) {
-      hasProof = await hasMerkleProof(address, results?.merkleRoot)
+      hasProof = await hasMerkleProof(address, results?.merkleRoot) 
     }
 
     const status = isWhitelisted(address) || hasProof
