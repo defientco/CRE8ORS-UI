@@ -1,43 +1,12 @@
-import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
 import { CRE8OR } from "./types"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 
-const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll }) => {
-  const router = useRouter()
+const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
   const { isEditable } = useProfileProvider()
 
-  const { address } = router.query as any
-  const [ownedNfts, setOwnedNfts] = useState([])
-  const [walletNfts, setWalletNfts] = useState(null)
-  const [cre8ors, setCre8ors] = useState(null)
-
-  const toggleProfileFormattedCollection = useCallback(async () => {
-    if (isViewAll) {
-      if (walletNfts === null) {
-        const response = await getProfileFormattedCollection(address, 2)
-        setWalletNfts(response)
-        setOwnedNfts(response)
-        return
-      }
-      setOwnedNfts([...walletNfts])
-    } else {
-      if (cre8ors === null) {
-        const response = await getProfileFormattedCollection(address, 1)
-        setCre8ors(response)
-        setOwnedNfts(response)
-        return
-      }
-      setOwnedNfts([...cre8ors])
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isViewAll])
-
-  useEffect(() => {
-    toggleProfileFormattedCollection()
-  }, [toggleProfileFormattedCollection])
+  const { ownedNfts, setSelectedTokenIdForUnlock } = useWalletCollectionProvider()
 
   return (
     <div
@@ -78,7 +47,13 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal, isViewAll 
             {isEditable && data.type === CRE8OR && data.isLocked !== undefined && (
               <div>
                 {data.isLocked ? (
-                  <button type="button" onClick={() => setOpenUnlockModal(true)}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenUnlockModal(true)
+                      setSelectedTokenIdForUnlock(data.tokenId)
+                    }}
+                  >
                     <Media
                       type="image"
                       containerClasses="w-[13.54px] h-[16.83px]"

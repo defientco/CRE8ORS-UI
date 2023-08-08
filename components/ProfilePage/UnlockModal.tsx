@@ -1,7 +1,12 @@
 import { FC, useState } from "react"
+import { useAccount } from "wagmi"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import { payToUnlock } from "../../lib/lockup"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
+import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
 
 interface UnlockModalProps {
   isModalVisible: boolean
@@ -9,13 +14,29 @@ interface UnlockModalProps {
 }
 const UnlockModal: FC<UnlockModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [loading, setLoading] = useState(false)
+  const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
+  const { address } = useAccount()
 
-  const unlockFunc = () => {
+  const { selectedTokenIdForUnlock, setWalletNfts, setCre8ors, setOwnedNfts, isViewAll } =
+    useWalletCollectionProvider()
+
+  const unlockFunc = async () => {
     setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 1500)
+
+    if (selectedTokenIdForUnlock !== null && signer) {
+      const response = await payToUnlock(selectedTokenIdForUnlock, signer)
+      if(!response?.err) {
+        const walletNfts = await getProfileFormattedCollection(address, 2)
+        setWalletNfts(walletNfts)
+        const cre8ors = await getProfileFormattedCollection(address, 1)
+        setCre8ors(cre8ors)
+        setOwnedNfts(isViewAll ? walletNfts : cre8ors)
+      }
+    }
+    toggleIsVisible()
+    setLoading(false)
   }
+
   return (
     <Modal
       isVisible={isModalVisible}
