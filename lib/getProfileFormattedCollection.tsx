@@ -6,12 +6,10 @@ import { getLockedAndUnlockedResults } from "./lockup"
 export const SPECIALNFTS = "special"
 export const ALLNFTS = "all"
 
-type GETTYPE = "special" | "all"
+const getProfileFormattedCollection = async (address, type) => {
+  const collection = []
 
-const getProfileFormattedCollection = async (address, type: GETTYPE) => {
-  const collection: any = []
-
-  if (type === SPECIALNFTS) {
+  if (type === 1) {
     const [cre8ors, passport] = await Promise.all([
       getNFTs(
         address,
@@ -25,9 +23,7 @@ const getProfileFormattedCollection = async (address, type: GETTYPE) => {
       ),
     ])
     collection.push(...cre8ors.ownedNfts, ...passport.ownedNfts)
-  }
-
-  if (type === ALLNFTS) {
+  } else {
     const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
     collection.push(...response.ownedNfts)
   }
@@ -39,7 +35,7 @@ const getProfileFormattedCollection = async (address, type: GETTYPE) => {
   const lockedAndUnlockedResults = await getLockedAndUnlockedResults(tokenIds)
 
   const formattedData = collection.map((nft) => ({
-    label: nft.metadata.name || nft.contractMetadata.name,
+    label: nft.metadata.name,
     type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
       ? CRE8OR
       : undefined,
