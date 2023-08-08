@@ -1,5 +1,4 @@
-import { useState, ReactNode, useEffect } from 'react'
-import { useMediaQuery } from 'usehooks-ts'
+import { useState, ReactNode, useEffect } from "react"
 
 interface IPopoverFucChild {
   toggleModal: () => void
@@ -12,12 +11,7 @@ interface PopoverProps {
   open?: boolean
 }
 
-export default function Popover({
-  id,
-  open,
-  children,
-  className
-}: PopoverProps) {
+export default function Popover({ id, open, children, className }: PopoverProps) {
   const [openModal, setOpenModal] = useState(open || false)
 
   const toggleModal = () => {
@@ -26,28 +20,28 @@ export default function Popover({
 
       return
     }
-    setOpenModal(prev => !prev)
+    setOpenModal((prev) => !prev)
   }
 
   useEffect(() => {
     setOpenModal(open)
   }, [open])
-  
+
   return (
-    <div className='relative z-[52]'>
+    <div className="relative z-[52]">
       <div onClick={toggleModal}>{children && children[0]}</div>
       {openModal && (
         <div
-          className={`${className || ''} fixed w-screen h-screen bottom-0 left-0 flex justify-center items-center z-[51]`}
+          className={`${
+            className || ""
+          } fixed w-screen h-screen bottom-0 left-0 flex justify-center items-center z-[51]`}
           id={id}
         >
+          {children && typeof children[1] !== "function" && children[1]}
           {children &&
-            typeof children[1] !== 'function' &&
-            children[1]}
-          {children &&
-            typeof children[1] === 'function' &&
+            typeof children[1] === "function" &&
             (children[1] as any)({
-              toggleModal
+              toggleModal,
             })}
         </div>
       )}

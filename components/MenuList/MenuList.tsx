@@ -2,6 +2,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useAccount } from "wagmi"
 import CustomConnectWallet from "../CustomConnectWallet"
 import DiscordIcon from "../DiscordIcon"
 import { useTheme } from "../../providers/ThemeProvider"
@@ -11,9 +12,10 @@ const MenuList = ({ toggleMenu }) => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const router = useRouter()
-  const isHidden = router.pathname.includes("/mint")
+  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
   const [isDarkMode, setIsDarkMode] = useState(false)
+  const { isConnected, address } = useAccount()
 
   const onToggle = () => {
     setIsDarkMode(!isDarkMode)
@@ -27,7 +29,7 @@ const MenuList = ({ toggleMenu }) => {
   return (
     <div
       className="fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-[9.5px] p-4 
-      dark:bg-white bg-[black] to-90% rounded-lg md:text-lg w-[200px]"
+      dark:bg-white bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[530px] overflow-y-scroll"
     >
       <div className="dark:bg-[black] bg-white absolute top-0 right-0 w-6 h-6 m-2 rounded-full">
         <svg
@@ -73,6 +75,9 @@ const MenuList = ({ toggleMenu }) => {
       <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Passports</div>
       </a>
+      <Link href="/checkpassport" target="_blank" rel="noreferrer">
+        <div className="ml-4 dark:text-[black] text-white">CHECK</div>
+      </Link>
       <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">Relics</div>
       </a>
@@ -88,7 +93,13 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/faq" target="_blank" rel="noreferrer">
         <div className="ml-4 dark:text-[black] text-white">FAQ</div>
       </Link>
-      <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
+      {isConnected ? (
+        <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+          <div className="ml-4 dark:text-[black] text-white">Profile</div>
+        </Link>
+      ) : (
+        <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
+      )}
       <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
       <div className="flex flex-row items-center justify-around">
         <DiscordIcon />

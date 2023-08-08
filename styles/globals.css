@@ -50,7 +50,7 @@
 }
 html,
 body {
-  background-color: #010e17;
+  background-color: black;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
@@ -59,6 +59,23 @@ body {
 
 body::-webkit-scrollbar {
   display: none;
+}
+
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+  border-radius: 10px;
+  border: 1px solid white;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  background-color: white;
 }
 
 a {
@@ -90,6 +107,23 @@ a {
   transform: none;
 }
 
+.fade_in_text {
+  animation: fade_in_text 0.3s ease-in-out;
+}
+
+/* Fade-in background animation on scroll */
+@keyframes fade_in_text {
+  0% {
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Fade-in background animation on scroll */
 @keyframes fade_in_bg {
   0% {
@@ -111,15 +145,58 @@ a {
   }
 }
 
-@keyframes fade_in_modal {
+@keyframes expand_more_animation {
   0% {
-    opacity: 0.5;
-    transform: translateY(70px);
+    height: 70px;
   }
   100% {
-    opacity: 1;
-    transform: translateY(0px);
+    height: 415px;
   }
+}
+
+@keyframes mobile_expand_more_animation {
+  0% {
+    height: 55px;
+  }
+  100% {
+    height: 220px;
+  }
+}
+
+@keyframes mobile_un_expand_more_animation {
+  0% {
+    height: 220px;
+    background: black;
+  }
+  100% {
+    height: 55px;
+  }
+}
+
+@keyframes un_expand_more_animation {
+  0% {
+    height: 415px;
+    background: black;
+  }
+  100% {
+    height: 70px;
+  }
+}
+
+.mobile_expand_more {
+  animation: mobile_expand_more_animation 0.5s ease-in-out;
+}
+
+.mobile_un_expand_more {
+  animation: mobile_un_expand_more_animation 0.5s ease-in-out;
+}
+
+.expand_more {
+  animation: expand_more_animation 0.5s ease-in-out;
+}
+
+.un_expand_more {
+  animation: un_expand_more_animation 0.5s ease-in-out;
 }
 
 .fade_bg.show {
@@ -221,6 +298,7 @@ a {
   margin: 0 auto !important;
   width: 100vw !important;
 }
+
 * {
   box-sizing: border-box;
 }

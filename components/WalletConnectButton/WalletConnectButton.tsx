@@ -26,6 +26,7 @@ const WalletConnectButton: FC<WalletConnectButtonProps> = ({ children }) => (
         account &&
         chain &&
         (!authenticationStatus || authenticationStatus === "authenticated")
+
       return (
         <div
           {...(!ready && {

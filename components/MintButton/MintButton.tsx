@@ -1,12 +1,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Image from "next/image"
 import { FC, useState } from "react"
-import { useSigner } from "wagmi"
 import Confetti from "react-confetti"
 import { ContractInterface } from "ethers/lib/ethers"
 import purchase from "../../lib/purchase"
 import useWindowSize from "../../lib/useWindowSize"
 import customLoader from "../../lib/customLoader"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
 
 interface MintButtonProps {
   contractAddress: string
@@ -17,7 +17,7 @@ interface MintButtonProps {
 const MintButton: FC<MintButtonProps> = ({ contractAddress, abi }) => {
   const [loading, setLoading] = useState(false)
   const [startConfetti, setStartConfetti] = useState(false)
-  const { data: signer } = useSigner()
+  const signer = useEthersSigner()
   const { width, height } = useWindowSize()
 
   const handleClick = async () => {
