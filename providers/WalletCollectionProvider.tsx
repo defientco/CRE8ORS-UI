@@ -49,6 +49,14 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isViewAll])
 
+  const refetchProfileFormattedCollection = async () => {
+    let response = await getProfileFormattedCollection(address, 2)
+    setWalletNfts(walletNfts)
+    response = await getProfileFormattedCollection(address, 1)
+    setCre8ors(cre8ors)
+    setOwnedNfts(isViewAll ? walletNfts : cre8ors)
+  }
+
   useEffect(() => {
     toggleProfileFormattedCollection()
   }, [toggleProfileFormattedCollection])
@@ -66,6 +74,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       selectedTokenIdForUnlock,
       selectedTokenIdForTrain,
       toggleProfileFormattedCollection,
+      refetchProfileFormattedCollection,
     }),
     [
       ownedNfts,
@@ -79,6 +88,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       selectedTokenIdForTrain,
       selectedTokenIdForUnlock,
       toggleProfileFormattedCollection,
+      refetchProfileFormattedCollection,
     ],
   )
 

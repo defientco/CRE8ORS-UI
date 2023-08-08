@@ -9,7 +9,6 @@ import DNALoading from "./DNALoading"
 import EditPanel from "./EditPanel"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import { WallectCollectionProvider } from "../../providers/WalletCollectionProvider"
 
 const PreDesktopProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -121,9 +120,7 @@ const PreDesktopProfileView = () => {
             <PreSimilarProfiles />
           </div>
         </div>
-        <WallectCollectionProvider>
-          <PreWalletCollection />
-        </WallectCollectionProvider>
+        <PreWalletCollection />
       </div>
     </div>
   )

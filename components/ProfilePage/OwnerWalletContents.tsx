@@ -6,7 +6,8 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
   const { isEditable } = useProfileProvider()
 
-  const { ownedNfts, setSelectedTokenIdForUnlock } = useWalletCollectionProvider()
+  const { ownedNfts, setSelectedTokenIdForUnlock, setSelectedTokenIdForTrain } =
+    useWalletCollectionProvider()
 
   return (
     <div
@@ -62,7 +63,13 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
                     />
                   </button>
                 ) : (
-                  <button onClick={() => setOpenTrainModal(true)} type="button">
+                  <button
+                    onClick={() => {
+                      setOpenTrainModal(true)
+                      setSelectedTokenIdForTrain(data.tokenId)
+                    }}
+                    type="button"
+                  >
                     <Media
                       type="image"
                       containerClasses="w-[14.8px] h-[17px]"

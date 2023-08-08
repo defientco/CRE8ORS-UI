@@ -10,7 +10,9 @@ export const payToUnlock = async (tokenId: number, signer: Signer) => {
   try {
     const unlockInfo = await contract.unlockInfo(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId)
 
-    const tx = await contract.payToUnlock(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId, { value: unlockInfo.priceToUnlock.toString() })
+    const tx = await contract.payToUnlock(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId, {
+      value: unlockInfo.priceToUnlock.toString(),
+    })
 
     const receipt = await tx.wait()
     return receipt
