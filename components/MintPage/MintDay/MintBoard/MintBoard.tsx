@@ -44,7 +44,6 @@ const MintBoard = () => {
       setOneTimeAutomaticOpen(true)
       return
     }
-
     setOpenModal(false)
   }, [automaticOpenModal, isConnected])
 
