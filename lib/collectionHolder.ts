@@ -9,7 +9,11 @@ import minterUtilitiesAbi from "./abi-minter-utilities.json"
 import cre8orsAbi from "./abi-cre8ors.json"
 
 export const getPassports = async (address: string) => {
-  const res = await getNFTs(address, process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const res = await getNFTs(
+    address,
+    process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
+    process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+  )
   return res?.ownedNfts
 }
 
