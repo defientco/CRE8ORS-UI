@@ -11,7 +11,7 @@ const SmartWalletContents = () => {
   useEffect(() => {
     const init = async () => {
       const smartWalletAddress = await getSmartWallet(cre8orNumber)
-      const nftResponse = await getProfileFormattedCollection(smartWalletAddress, 1)
+      const nftResponse = await getProfileFormattedCollection(smartWalletAddress, 0)
       setOwnedNfts(nftResponse)
     }
 

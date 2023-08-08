@@ -7,6 +7,7 @@ const getProfileFormattedCollection = async (address, type) => {
   const collection = []
 
   if (type === 1) {
+    console.log("SWEETS TYPE 1")
     const [cre8ors, passport] = await Promise.all([
       getNFTs(
         address,
@@ -23,6 +24,7 @@ const getProfileFormattedCollection = async (address, type) => {
   } else {
     const response = await getNFTs(address, null, process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
     collection.push(...response.ownedNfts)
+    return response.ownedNfts
   }
 
   const tokenIds = collection
