@@ -44,11 +44,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     if (address) setShouldOpenSuccessModal(false)
   }, [address])
 
-  console.log("SWEETS hasPassport ", hasPassport)
-  console.log("SWEETS hasUnclaimedFreeMint ", hasUnclaimedFreeMint)
-  console.log("SWEETS hasFriendAndFamily ", hasFriendAndFamily)
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
-  console.log("SWEETS isFreeMintModal ", isFreeMintModal)
 
   const selectModal = () => {
     // if (isLoadingChainData || isLoadingInitialize) return null
@@ -68,21 +64,17 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (isFreeMintModal && !isReloadingChainData) {
-      console.log("SWEETS OPEN POPUP")
-      return (
-        <CombinationModal
-          isModalVisible={isVisibleModal}
-          toggleIsVisible={toggleModal}
-          coreMintFunc={
-            hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
-          }
-          openSuccessModal={() => setShouldOpenSuccessModal(true)}
-          loading={mintLoading}
-          handleLoading={handleMintLoading}
-        />
-      )
-    }
+    if (isFreeMintModal && !isReloadingChainData)
+      <CombinationModal
+        isModalVisible={isVisibleModal}
+        toggleIsVisible={toggleModal}
+        coreMintFunc={
+          hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
+        }
+        openSuccessModal={() => setShouldOpenSuccessModal(true)}
+        loading={mintLoading}
+        handleLoading={handleMintLoading}
+      />
 
     if (leftQuantityCount > 0 && _.sum(cart) > 0) {
       if (hasWhitelist) {
