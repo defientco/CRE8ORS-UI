@@ -99,6 +99,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+
     setMerkleRoot(results?.merkleRoot)
 
     let hasProof = false
