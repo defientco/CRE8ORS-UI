@@ -65,30 +65,26 @@ export const MintProvider: FC<Props> = ({ children }) => {
     if (!address) return
 
     const lockedCnt = await getLockedCount(address)
-    setLockedCntOfCre8or(lockedCnt)
 
     const passportsArray = await getPassportIds(address)
-    setHasPassport(passportsArray?.length > 0)
-
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
 
+    let hasProof = false
+    if (results?.merkleRoot?.length > 0) {
+      hasProof = await hasMerkleProof(address, results?.merkleRoot)
+    }
+    const status = isWhitelisted(address) || hasProof
+
+    setLockedCntOfCre8or(lockedCnt)
+    setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
     setHasFriendAndFamily(results?.discount)
     setLeftQuantityCount(results?.quantityLeft)
     setAvailablePassportIds(results?.passports)
-
     setMerkleRoot(results?.merkleRoot)
-
-    let hasProof = false
-
-    if (results?.merkleRoot?.length > 0) {
-      hasProof = await hasMerkleProof(address, results?.merkleRoot) 
-    }
-
-    const status = isWhitelisted(address) || hasProof
     setHasWhitelist(status)
   }
 
@@ -127,6 +123,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setHasFriendAndFamily(null)
     setLeftQuantityCount(null)
     setAvailablePassportIds(null)
+    setMerkleRoot(null)
+    setHasWhitelist(null)
     await getInitialData()
     setIsLoadingInitialize(false)
   }
