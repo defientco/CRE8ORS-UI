@@ -27,7 +27,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     loadingSaleStatus,
     hasWhitelist,
     isReloadingChainData,
-    isLoadingInitialize
+    isLoadingInitialize,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
