@@ -9,11 +9,7 @@ import minterUtilitiesAbi from "./abi-minter-utilities.json"
 import cre8orsAbi from "./abi-cre8ors.json"
 
 export const getPassports = async (address: string) => {
-  const res = await getNFTs(
-    address,
-    process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS,
-    process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
-  )
+  const res = await getNFTs(address, process.env.NEXT_PUBLIC_CLAIM_PASSPORT_ADDRESS, 1)
   return res?.ownedNfts
 }
 
@@ -24,7 +20,7 @@ export const getPassportIds = async (address: string) => {
 }
 
 export const checkFreeMintClaimed = async (passportId: string) => {
-  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const provider = getDefaultProvider(1)
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
@@ -73,7 +69,7 @@ export const aggregateReads = async (passportIds: Array<number | string>, addres
     },
   ]
   const multicall = new Multicall({
-    ethersProvider: getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
+    ethersProvider: getDefaultProvider(1),
     tryAggregate: true,
   })
   const contractCallContext: ContractCallContext[] = [
