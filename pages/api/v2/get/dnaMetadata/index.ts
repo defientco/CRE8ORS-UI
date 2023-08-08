@@ -23,7 +23,7 @@ const mapEvilToGood = (evil: string) => {
     case "The Generator":
       return "designer"
     default:
-      return null
+      return "OTHER"
   }
 }
 const DNA_CARDS = {
@@ -58,7 +58,11 @@ class DnaMetaData {
       dnaCard = _.sample(Object.values(DNA_CARDS))
     }
     if (data?.creatorType) {
-      dnaCard = DNA_CARDS[mapEvilToGood(data?.creatorType)]
+      const cre8orType = mapEvilToGood(data?.creatorType)
+      dnaCard =
+        cre8orType === "OTHER"
+          ? _.sample(Object.values(DNA_CARDS))
+          : DNA_CARDS[mapEvilToGood(data?.creatorType)]
     }
     return dnaCard
   }
