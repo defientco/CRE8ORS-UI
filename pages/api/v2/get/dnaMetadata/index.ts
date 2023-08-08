@@ -64,7 +64,12 @@ class DnaMetaData {
           ? _.sample(Object.values(DNA_CARDS))
           : DNA_CARDS[mapEvilToGood(data?.creatorType)]
     }
-    return dnaCard
+    const metadataObject = {
+      name: "Cre8ors DNA Cards",
+      description: "Against all odds, we shall live in color. ",
+      image: `ipfs://${dnaCard}`,
+    }
+    return metadataObject
   }
 }
 
