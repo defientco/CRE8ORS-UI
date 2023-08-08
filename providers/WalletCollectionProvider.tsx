@@ -8,7 +8,10 @@ import {
   useCallback,
   useEffect,
 } from "react"
-import getProfileFormattedCollection from "../lib/getProfileFormattedCollection"
+import getProfileFormattedCollection, {
+  ALLNFTS,
+  SPECIALNFTS,
+} from "../lib/getProfileFormattedCollection"
 import { useRouter } from "next/router"
 
 interface Props {
@@ -31,7 +34,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   const toggleProfileFormattedCollection = useCallback(async () => {
     if (isViewAll) {
       if (walletNfts === null) {
-        const response = await getProfileFormattedCollection(address, 2)
+        const response = await getProfileFormattedCollection(address, ALLNFTS)
         setWalletNfts(response)
         setOwnedNfts(response)
         return
@@ -39,7 +42,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setOwnedNfts([...walletNfts])
     } else {
       if (cre8ors === null) {
-        const response = await getProfileFormattedCollection(address, 1)
+        const response = await getProfileFormattedCollection(address, SPECIALNFTS)
         setCre8ors(response)
         setOwnedNfts(response)
         return
@@ -50,10 +53,10 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   }, [isViewAll])
 
   const refetchProfileFormattedCollection = async () => {
-    let response = await getProfileFormattedCollection(address, 2)
-    setWalletNfts(walletNfts)
-    response = await getProfileFormattedCollection(address, 1)
-    setCre8ors(cre8ors)
+    let response = await getProfileFormattedCollection(address, ALLNFTS)
+    setWalletNfts(response)
+    response = await getProfileFormattedCollection(address, SPECIALNFTS)
+    setCre8ors(response)
     setOwnedNfts(isViewAll ? walletNfts : cre8ors)
   }
 
