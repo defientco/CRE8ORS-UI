@@ -52,7 +52,7 @@ const SmartWalletContents = () => {
                 blurLink={nft.image}
                 type="image"
                 alt={nft.label} // Add an alt text if you have one
-                className="w-[30px] h-[30px] 
+                containerClasses="w-[30px] h-[30px] 
                 samsungS8:w-[35px] samsungS8:h-[35px] 
                 lg:w-[69px] lg:h-[67px] 
                 rounded-[5px] lg:rounded-[8px] 
