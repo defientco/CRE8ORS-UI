@@ -134,7 +134,9 @@ export const mintByCollectionHolder = async (signer: Signer, passportIds: any, t
     signer,
   )
   try {
-    const tx = await contract.mint(passportIds, to)
+    const tx = await contract.mint(passportIds, to, {
+      gasLimit: 500000 * passportIds.length,
+    })
     await tx.wait()
 
     return { error: false }
