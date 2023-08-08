@@ -8,12 +8,13 @@ export const payToUnlock = async (tokenId: number, signer: Signer) => {
   const contract = new ethers.Contract(process.env.NEXT_PUBLIC_LOCK_UP, lockupAbi, signer)
 
   try {
-    const tx = await contract.payToUnlock(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId)
+    const unlockInfo = await contract.unlockInfo(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId)
+
+    const tx = await contract.payToUnlock(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, tokenId, { value: unlockInfo.priceToUnlock.toString() })
 
     const receipt = await tx.wait()
     return receipt
   } catch (err) {
-    console.log(err)
     handleTxError(err)
     return false
   }
