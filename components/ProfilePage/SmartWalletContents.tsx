@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection from "../../lib/getProfileFormattedCollection"
+import Media from "../../shared/Media"
 
 const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
@@ -12,7 +13,6 @@ const SmartWalletContents = () => {
     const init = async () => {
       const smartWalletAddress = await getSmartWallet(cre8orNumber)
       const nftResponse = await getProfileFormattedCollection(smartWalletAddress, 0)
-      console.log("SWEETS NFTS", nftResponse)
       setOwnedNfts(nftResponse)
     }
 
@@ -47,11 +47,17 @@ const SmartWalletContents = () => {
           {ownedNfts?.map((nft, i) => (
             // eslint-disable-next-line react/no-array-index-key
             <div className="flex justify-center" key={i}>
-              <img
-                src={nft.media[0].gateway}
+              <Media
+                link={nft.media[0].gateway}
+                blurLink={nft.media[0].gateway}
+                type="image"
                 alt={nft.label} // Add an alt text if you have one
-                className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[69px] lg:h-[67px] rounded-[5px] lg:rounded-[8px] bg-[#ffffffb5]
-                      drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]"
+                className="w-[30px] h-[30px] 
+                samsungS8:w-[35px] samsungS8:h-[35px] 
+                lg:w-[69px] lg:h-[67px] 
+                rounded-[5px] lg:rounded-[8px] 
+                bg-[#ffffffb5]
+                drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]"
               />
             </div>
           ))}

@@ -32,21 +32,19 @@ const getProfileFormattedCollection = async (address, type) => {
 
   const lockedAndUnlockedResults = await getLockedAndUnlockedResults(tokenIds)
 
-  const formattedData = collection.map((nft) => {
-    return {
-      label: nft.metadata.name,
-      type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
-        ? CRE8OR
-        : undefined,
-      isLocked: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
-        ? lockedAndUnlockedResults.filter(
-            (result) => result.tokenId === parseInt(nft.id.tokenId, 16),
-          )[0].isLocked
-        : undefined,
-      image: nft.media[0].gateway,
-      tokenId: parseInt(nft.id.tokenId, 16),
-    }
-  })
+  const formattedData = collection.map((nft) => ({
+    label: nft.metadata.name,
+    type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
+      ? CRE8OR
+      : undefined,
+    isLocked: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
+      ? lockedAndUnlockedResults.filter(
+          (result) => result.tokenId === parseInt(nft.id.tokenId, 16),
+        )[0].isLocked
+      : undefined,
+    image: nft.media[0].gateway,
+    tokenId: parseInt(nft.id.tokenId, 16),
+  }))
 
   return formattedData
 }
