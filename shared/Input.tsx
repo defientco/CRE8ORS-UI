@@ -65,6 +65,7 @@ function Input({
             w-full 
             shadow-[0px_2px_2px_rgba(0,0,0,0.25)] dark:shadow-[0px_2px_2px_2px_rgba(255,255,255,0.25)]
             bg-[#F2F2F2]  rounded-[10px]
+            overflow-hidden
           `}
         onMouseOver={hoverEvent}
         onMouseOut={leaveEvent}
@@ -91,7 +92,7 @@ function Input({
                 ? formContext.register(name, {
                     onChange: e => onChange && onChange(e)
                   })
-                : {})}
+                : {onChange: e => onChange && onChange(e)})}
               value={value}
             />
           </div>

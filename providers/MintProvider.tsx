@@ -108,7 +108,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const status = isWhitelisted(address) || hasProof
     setHasWhitelist(status)
 
-    console.log(initialData)
     setInitialData(results)
   }, [address])
 

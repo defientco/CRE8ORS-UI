@@ -101,6 +101,9 @@ const DesktopMenu = () => {
             >
               <div className="cursor-pointer text-white dark:text-[black]">Passports</div>
             </a>
+            <Link href="/checkpassport" target="_blank" rel="noreferrer">
+              <div className="cursor-pointer text-white dark:text-[black]">Check</div>
+            </Link>
             <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Relics</div>
             </a>
