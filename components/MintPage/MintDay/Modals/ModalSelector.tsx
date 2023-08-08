@@ -24,6 +24,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     leftQuantityCount,
     cart,
     publicSaleActive,
+    presaleActive,
     loadingSaleStatus,
     hasWhitelist,
     isLoadingChainData,
@@ -98,7 +99,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
 
     if (
       (!(publicSaleActive || loadingSaleStatus) || (hasWhitelist && !hasPassport)) &&
-      !isReloadingChainData
+      !isReloadingChainData && presaleActive
     ) {
       return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
     }
