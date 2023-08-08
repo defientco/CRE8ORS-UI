@@ -58,12 +58,12 @@ const AdminPage = () => {
         return {
           _id,
           walletAddress,
-          isVerified,
+          isVerified: isVerified || false,
           twitterHandle,
           reason,
           status,
           creatorType,
-          isPassportHolder: passportHolders.includes(walletAddress),
+          isPassportHolder: passportHolders.includes(walletAddress) || false,
         }
       }),
     [data, passportHolders],
@@ -179,13 +179,13 @@ const AdminPage = () => {
       },
       {
         Header: "Tweet Verified",
-        accessor: (d) => d.isVerified.toString(),
+        accessor: (d) => d?.isVerified?.toString(),
         Filter: SelectColumnFilter,
         filter: "includes",
       },
       {
         Header: "Passport Holder",
-        accessor: (d) => d.isPassportHolder.toString(),
+        accessor: (d) => d?.isPassportHolder?.toString(),
         Filter: SelectColumnFilter,
         filter: "includes",
       },
