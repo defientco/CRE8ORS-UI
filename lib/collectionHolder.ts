@@ -20,7 +20,7 @@ export const getPassportIds = async (address: string) => {
 }
 
 export const checkFreeMintClaimed = async (passportId: string) => {
-  const provider = getDefaultProvider(1)
+  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
@@ -69,7 +69,7 @@ export const aggregateReads = async (passportIds: Array<number | string>, addres
     },
   ]
   const multicall = new Multicall({
-    ethersProvider: getDefaultProvider(1),
+    ethersProvider: getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
     tryAggregate: true,
   })
   const contractCallContext: ContractCallContext[] = [

@@ -63,6 +63,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const getInitialData = async () => {
     if (!address) return
+
     const lockedCnt = await getLockedCount(address)
     setLockedCntOfCre8or(lockedCnt)
 
