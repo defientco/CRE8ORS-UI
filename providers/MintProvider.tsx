@@ -1,13 +1,4 @@
-import {
-  useContext,
-  createContext,
-  ReactNode,
-  FC,
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-} from "react"
+import { useContext, createContext, ReactNode, FC, useState, useEffect, useMemo } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
