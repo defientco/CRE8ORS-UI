@@ -1,13 +1,4 @@
-import {
-  useContext,
-  createContext,
-  ReactNode,
-  FC,
-  useState,
-  useCallback,
-  useEffect,
-  useMemo,
-} from "react"
+import { useContext, createContext, ReactNode, FC, useState, useEffect, useMemo } from "react"
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
@@ -40,7 +31,6 @@ interface mintProps {
   getCartTier: (tier: number) => number
   merkleRoot: string | null
   hasWhitelist: any
-  isLoadingChainData: boolean
   isReloadingChainData: boolean
   isLoadingInitialize: boolean
 }
@@ -71,25 +61,8 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
   const saleStatus = useSaleStatus()
 
-  const isLoadingChainData = useMemo(() => {
-    return (
-      hasPassport === null ||
-      hasUnclaimedFreeMint === null ||
-      hasFriendAndFamily === null ||
-      saleStatus.presaleActive === null ||
-      saleStatus.publicSaleActive === null ||
-      hasWhitelist === null
-    )
-  }, [hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, saleStatus, hasWhitelist])
-
-  const [initialData, setInitialData] = useState<{
-    passports: Array<number | string>
-    discount: boolean
-    quantityLeft: number
-    merkleRoot?: string
-  } | null>(null)
-
-  const getInitialData = useCallback(async () => {
+  const getInitialData = async () => {
+    if (!address) return
     const lockedCnt = await getLockedCount(address)
     setLockedCntOfCre8or(lockedCnt)
 
@@ -99,6 +72,12 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+
+    setFreeMintClaimedCount(results?.passports?.length)
+    setHasUnclaimedFreeMint(results?.passports?.length > 0)
+    setHasFriendAndFamily(results?.discount)
+    setLeftQuantityCount(results?.quantityLeft)
+    setAvailablePassportIds(results?.passports)
 
     setMerkleRoot(results?.merkleRoot)
 
@@ -110,9 +89,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
 
     const status = isWhitelisted(address) || hasProof
     setHasWhitelist(status)
-
-    setInitialData(results)
-  }, [address])
+  }
 
   const freeMintCount = useMemo(() => {
     if (hasFriendAndFamily === null || hasPassport === null || hasUnclaimedFreeMint === null)
@@ -150,7 +127,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setLeftQuantityCount(null)
     setAvailablePassportIds(null)
     await getInitialData()
-    setIsLoadingInitialize(true)
+    setIsLoadingInitialize(false)
   }
 
   useEffect(() => {
@@ -163,19 +140,9 @@ export const MintProvider: FC<Props> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
-  useEffect(() => {
-    if (!initialData) return
-    setFreeMintClaimedCount(initialData?.passports?.length)
-    setHasUnclaimedFreeMint(initialData?.passports?.length > 0)
-    setHasFriendAndFamily(initialData?.discount)
-    setLeftQuantityCount(initialData?.quantityLeft)
-    setAvailablePassportIds(initialData?.passports)
-  }, [initialData])
-
   const provider = useMemo(
     () => ({
       ...saleStatus,
-      isLoadingChainData,
       isReloadingChainData,
       isLoadingInitialize,
       availablePassportIds,
@@ -197,7 +164,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     }),
     [
       saleStatus,
-      isLoadingChainData,
       isReloadingChainData,
       isLoadingInitialize,
       availablePassportIds,
