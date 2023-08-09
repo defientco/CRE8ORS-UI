@@ -5,7 +5,6 @@ import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
 import getDefaultProvider from "../../lib/getDefaultProvider"
-import { Button } from "../../shared/Button"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 
 const SmartWalletContents = () => {
