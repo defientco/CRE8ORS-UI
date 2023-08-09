@@ -47,7 +47,6 @@ const SmartWalletContents = () => {
         {!hasSmartWallet && !isHiddenEditable && (
           <Deploy6551AndMintDNAButton getDNAByCre8orNumber={getDNAByCre8orNumber} />
         )}
-
         <div
           className="absolute w-full h-full left-0 top-0 z-[2]
               bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"
