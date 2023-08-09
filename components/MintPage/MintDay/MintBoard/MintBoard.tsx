@@ -47,8 +47,8 @@ const MintBoard = () => {
   }, [automaticOpenModal, isConnected])
 
   useEffect(() => {
-    setOpenChainDataLoadingModal(isLoadingInitialize)
-  }, [isLoadingInitialize])
+    setOpenChainDataLoadingModal(isLoadingInitialize && isConnected)
+  }, [isLoadingInitialize, isConnected])
 
   return (
     <>
