@@ -12,7 +12,7 @@ function SeoHead(props: any) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:site" content="@Cre8orsNFT" />
-      <meta name="twitter:url" content="http://cre8ors.com/" />
+      <meta name="twitter:url" content="https://cre8ors.com/" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:image" content={image} />
       <link rel="icon" href={image} />
