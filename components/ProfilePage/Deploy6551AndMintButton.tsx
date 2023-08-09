@@ -42,7 +42,7 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
         setup smart wallet
       </Button>
       <SettingSmartWalletModal
-        isModalVisible
+        isModalVisible={openLoadingModal}
         toggleIsVisible={() => setOpenLoadingModal(!openLoadingModal)}
       />
     </>
