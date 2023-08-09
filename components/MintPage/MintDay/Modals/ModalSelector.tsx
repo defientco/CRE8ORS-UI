@@ -9,7 +9,6 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import PublicSaleModal from "./PublicSaleModal"
-import Cre8orlistModal from "./Cre8orlistModal"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
