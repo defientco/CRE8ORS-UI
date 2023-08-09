@@ -9,7 +9,6 @@ const Deploy6551AndMintDNAButton = () => {
   const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
 
   const onClick = async () => {
-    console.log("hack the planet")
     const dnaMinter = "0xeBBe9F31ef46ae687a60eB25F38eF8B8b2311E25"
     const contract = new Contract(dnaMinter, abi, signer)
     const tx = await contract.createTokenBoundAccountAndMintDNA(cre8orNumber)
