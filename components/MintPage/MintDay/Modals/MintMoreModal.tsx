@@ -13,7 +13,9 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
 
   const { leftQuantityCount } = useMintProvider()
 
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.🤫`
+  const urlToShare = "https://cre8ors.com/mint" // The URL you want to share
+  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.🤫 ${urlToShare}`
+  const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -66,12 +68,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
         >
           {`You have ${leftQuantityCount || 0} mints available.\nClose popup to mint more.`}
         </pre>
-        <MintModalCTAButton
-          id="share_tweet_btn"
-          link={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`}
-          target="_blank"
-          className="!w-"
-        >
+        <MintModalCTAButton id="share_tweet_btn" link={tweetLink} target="_blank" className="!w-">
           <div>
             <p className="!p-0 !m-0 !leading-[120.3%]">Share tweet</p>
             <p
