@@ -1,23 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
+import getDefaultProvider from "../../lib/getDefaultProvider"
+import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 
 const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
+  const [hasSmartWallet, setHasSmartWallet] = useState(true)
+  const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
 
   useEffect(() => {
     const init = async () => {
       const smartWalletAddress = await getSmartWallet(cre8orNumber)
+      const code = await provider.getCode(smartWalletAddress)
+      setHasSmartWallet(code !== "0x")
       const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
       setOwnedNfts(nftResponse)
     }
 
     init()
-  }, [cre8orNumber])
+  }, [cre8orNumber, provider])
 
   return (
     <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
@@ -36,6 +42,8 @@ const SmartWalletContents = () => {
                     after:absolute
                     after:left-0 after:top-0 after:z-[1]"
       >
+        {!hasSmartWallet && <Deploy6551AndMintDNAButton />}
+
         <div
           className="absolute w-full h-full left-0 top-0 z-[2]
               bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"
