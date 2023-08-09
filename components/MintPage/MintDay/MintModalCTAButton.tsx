@@ -1,21 +1,21 @@
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 import { useRouter } from "next/router"
 import { Button } from "../../../shared/Button"
 
 interface MintModalCTAButtonProps {
   id: string
   link: string
-  label: string
   className?: string
   target?: string
+  children?: ReactNode
 }
 
 const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
   id,
   link,
-  label,
   className,
   target,
+  children,
 }) => {
   const router = useRouter()
 
@@ -32,16 +32,16 @@ const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
     <Button
       id={id}
       className={`!px-0 !py-0
-              xl:!w-[260.3px] xl:!h-[50px] 
+              xl:!w-[260.3px] xl:!h-[80px] 
               !w-[220px] !h-[40px]
               !font-eigerdals font-bold !bg-black 
-              text-[15px] xl:text-[20px]  
+              text-[15px] xl:text-[25px]  
               !rounded-[10px]
               !text-black dark:!text-white
               dark:!bg-black !bg-white ${className || ""}`}
       onClick={goToLink}
     >
-      {label}
+      {children}
     </Button>
   )
 }

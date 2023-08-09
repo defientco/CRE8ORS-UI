@@ -45,6 +45,20 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const selectModal = () => {
+    return (
+      <MintMoreModal
+        isModalVisible
+        toggleIsVisible={() => {
+          setShouldOpenSuccessModal(!shouldOpenSuccessModal)
+          if (isVisibleModal) toggleModal()
+        }}
+        coreMintFunc={mintCre8ors}
+        loading={mintLoading}
+        handleLoading={handleMintLoading}
+        openSuccessModal={() => setShouldOpenSuccessModal(true)}
+      />
+    )
+
     if (isLoadingInitialize) return null
 
     if (shouldOpenSuccessModal)

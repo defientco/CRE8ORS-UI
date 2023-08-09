@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
-import { useAccount } from "wagmi"
 import Modal from "../../../../shared/Modal"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
@@ -10,20 +9,18 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 interface MintMoreModalProps extends IMintModal {}
 
 const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible }) => {
-  const { address } = useAccount()
-
   const isXl = useMediaQuery("(max-width: 1150px)")
 
-  const { leftQuantityCount, lockedCntOfCre8or } = useMintProvider()
+  const { leftQuantityCount } = useMintProvider()
 
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.`
+  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.🤫`
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
       <div
         className={`${
           leftQuantityCount ? "px-8" : "px-4"
-        } py-8 samsungS8:p-8 xl:py-16 xl:px-0 rounded-lg
+        } py-8 samsungS8:p-8 xl:py-12 xl:px-0 rounded-lg
         flex-col flex justify-center items-center
         bg-[url('/assets/Mint/MintNow/MintCoreModal/mint_more_bg.png')]
         bg-cover bg-black dark:bg-white`}
@@ -58,7 +55,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
       w-[125px] h-[125px]"
         />
         <pre
-          className="font-quicksand 
+          className="font-quicksand font-bold
             text-[15px] xl:text-[25px]
             text-center 
             xl:pt-[25px]
@@ -67,25 +64,24 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
             leading-[110.3%]
             dark:text-black text-white"
         >
-          {`You have ${leftQuantityCount || 0} mints available\nClose popup to mint more`}
+          {`You have ${leftQuantityCount || 0} mints available.\nClose popup to mint more.`}
         </pre>
         <MintModalCTAButton
           id="share_tweet_btn"
-          label="Share tweet"
           link={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`}
           target="_blank"
-          className="mb-[15px]"
-        />
-        {lockedCntOfCre8or ? (
-          <MintModalCTAButton link="/staking" id="stake_link_btn" label="Enter warehouse" />
-        ) : (
-          <MintModalCTAButton
-            link={`/profile/${address}`}
-            id="profile_link_btn"
-            label="set up profile"
-            target="_blank"
-          />
-        )}
+          className="!w-"
+        >
+          <div>
+            <p className="!p-0 !m-0 !leading-[120.3%]">Share tweet</p>
+            <p
+              className="!normal-case !font-quicksand !font-medium
+            !text-[19px] !leading-[120.3%]"
+            >
+              To win an NFT
+            </p>
+          </div>
+        </MintModalCTAButton>
       </div>
     </Modal>
   )
