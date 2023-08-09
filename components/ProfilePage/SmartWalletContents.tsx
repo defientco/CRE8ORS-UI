@@ -8,7 +8,7 @@ import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 
 const SmartWalletContents = () => {
-  const { cre8orNumber } = useProfileProvider()
+  const { cre8orNumber, isHiddenEditable } = useProfileProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
@@ -44,7 +44,7 @@ const SmartWalletContents = () => {
                     after:absolute
                     after:left-0 after:top-0 after:z-[1]"
       >
-        {!hasSmartWallet && (
+        {!hasSmartWallet && !isHiddenEditable && (
           <Deploy6551AndMintDNAButton getDNAByCre8orNumber={getDNAByCre8orNumber} />
         )}
 
