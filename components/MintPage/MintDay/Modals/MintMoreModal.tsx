@@ -86,7 +86,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
           className="!mt-[20px]"
         >
           <div>
-            <p className="!p-0 !m-0 !leading-[120.3%]">Set up profile</p>
+            <p className="!p-0 !m-0 !leading-[120.3%]">Setup profile</p>
             <p
               className="!normal-case !font-quicksand !font-medium
             !text-[19px] !leading-[120.3%]"
