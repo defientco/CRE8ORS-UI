@@ -40,7 +40,7 @@ const ProfilePage = () => {
         <div className="max-w-[1280px]">
           <WallectCollectionProvider>
             <div
-              className="relative pt-[8rem] px-2 samsungS8:px-4 lg:px-10
+              className="relative !z-[11] pt-[8rem] px-2 samsungS8:px-4 lg:px-10
                     w-full flex justify-center"
             >
               {isMobile ? (
