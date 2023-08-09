@@ -7,7 +7,7 @@ const Mint = () => (
     <SeoHead
       title="Cre8ors"
       description="Minting Now."
-      image="https://nftstorage.link/ipfs/bafybeigzsxieetgynpr3l4lsmtukjs25e3tijrnalojivblf2qumlrlp5a"
+      image="https://maroon-quickest-ocelot-736.mypinata.cloud/ipfs/Qmbur4p1Pz3E2cJgEq59QFHtggN6fyAzQK1ehhHV6EjWtm"
     />
     <MintPage type="mint" />
   </MintProvider>

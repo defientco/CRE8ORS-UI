@@ -14,7 +14,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
   const { leftQuantityCount } = useMintProvider()
 
   const urlToShare = "https://cre8ors.com/mint" // The URL you want to share
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.🤫 
+  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫 
   
 ${urlToShare}`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
