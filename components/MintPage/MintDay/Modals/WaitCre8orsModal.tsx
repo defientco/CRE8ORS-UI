@@ -44,7 +44,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 uppercase text-center
                 leading-[103.3%]"
         >
-          {hasWhitelist ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
+          {`You're not on\nthe cre8ors list.`}
         </pre>
         <pre
           className="font-quicksand font-bold
