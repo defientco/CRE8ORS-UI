@@ -46,7 +46,7 @@ const MenuList = ({ toggleMenu }) => {
       <div className="pt-6">
         <CustomConnectWallet />
       </div>
-      <Link href="/premint" target="_blank" rel="noreferrer">
+      <Link href="/mint" target="_blank" rel="noreferrer">
         <div className="ml-4 cursor-pointer text-white dark:text-[black]">Mint</div>
       </Link>
       <div className="font-bold dark:text-[black] text-white">Explore</div>
