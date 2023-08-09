@@ -16,7 +16,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
   const isXl = useMediaQuery("(max-width: 1150px)")
   const { presaleActive, loadingSaleStatus, hasWhitelist } = useMintProvider()
 
-  const endDay = !hasWhitelist ? "8/10/2023, 8:00:00 AM" : "08/09/2023, 8:00:00 AM" // epochToModalTimerString(hasWhitelist ? presaleStart : publicSaleStart)
+  const endDay = "8/10/2023, 8:00:00 AM"
   const notWhitelistPresaleActive = !hasWhitelist && presaleActive
 
   return (
@@ -44,7 +44,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 uppercase text-center
                 leading-[103.3%]"
         >
-          {hasWhitelist ? `You're on\nthe cre8ors list.` : `You're not on\nthe cre8ors list.`}
+          {`You're not on\nthe cre8ors list.`}
         </pre>
         <pre
           className="font-quicksand font-bold
@@ -55,7 +55,7 @@ const WaitCre8orsModal: FC<DetectedPassportModalProps> = ({ isModalVisible, togg
                 samsungS8:pt-[8px] samsungS8:pb-[15px]
                 pt-[5px] pb-[10px]"
         >
-          Mint starts in:
+          Public Mint starts in:
         </pre>
         {!loadingSaleStatus && <ModalTimer endDay={endDay} />}
         {notWhitelistPresaleActive && (
