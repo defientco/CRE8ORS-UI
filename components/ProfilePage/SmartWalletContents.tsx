@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
-import Media from "../../shared/Media"
 import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
+import ProfileToken from "./ProfileToken"
 
 const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
@@ -52,22 +52,8 @@ const SmartWalletContents = () => {
           className="grid grid-cols-3 w-full relative z-[2]
               gap-y-[5px] lg:gap-y-[15px]"
         >
-          {ownedNfts?.map((nft, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div className="flex justify-center" key={i}>
-              <Media
-                link={nft.image}
-                blurLink={nft.image}
-                type="image"
-                alt={nft.label} // Add an alt text if you have one
-                containerClasses="w-[30px] h-[30px] 
-                samsungS8:w-[35px] samsungS8:h-[35px] 
-                lg:w-[69px] lg:h-[67px] 
-                rounded-[5px] lg:rounded-[8px] 
-                bg-[#ffffffb5]
-                drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]"
-              />
-            </div>
+          {ownedNfts?.map((nft) => (
+            <ProfileToken token={nft} key={nft.label} />
           ))}
         </div>
       </div>

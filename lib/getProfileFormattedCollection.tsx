@@ -47,6 +47,7 @@ const getProfileFormattedCollection = async (address, type) => {
       : undefined,
     image: nft.media[0].gateway,
     tokenId: parseInt(nft.id.tokenId, 16),
+    contractAddress: nft.contract.address,
   }))
 
   return formattedData

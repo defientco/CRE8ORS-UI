@@ -2,6 +2,7 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 import Media from "../../shared/Media"
 import { CRE8OR } from "./types"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import ProfileToken from "./ProfileToken"
 
 const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
   const { isEditable } = useProfileProvider()
@@ -21,21 +22,7 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
       {ownedNfts.map((data, i) => (
         // eslint-disable-next-line react/no-array-index-key
         <div key={i} className="flex flex-col items-center gap-y-[5px]">
-          {data.image ? (
-            <Media
-              type="image"
-              blurLink={data.image}
-              link={data.image}
-              alt={data.label}
-              containerClasses="w-[30px] h-[30px] 
-              samsungS8:w-[35px] samsungS8:h-[35px] 
-              lg:w-[93px] lg:h-[93px] 
-              bg-white overflow-hidden
-              rounded-[5px] lg:rounded-[15px]"
-            />
-          ) : (
-            <div className="w-[30px] h-[30px] samsungS8:w-[35px] samsungS8:h-[35px] lg:w-[93px] lg:h-[93px] bg-white rounded-[5px] lg:rounded-[15px]" />
-          )}
+          <ProfileToken token={data} />
           <div
             className="text-[6px] samsungS8:text-[7px] xs:text-[8px] lg:text-[12px] font-quicksand font-bold text-white
                               w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center
