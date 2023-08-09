@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
@@ -11,27 +11,19 @@ const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
-  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
+  const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
+
   useEffect(() => {
     const init = async () => {
-      const smartWalletAddress = await getSmartWallet(85)
-      //
-      // Fetch the contract code
+      const smartWalletAddress = await getSmartWallet(cre8orNumber)
       const code = await provider.getCode(smartWalletAddress)
-
-      if (code === "0x") {
-        console.log(`No contract deployed at address: ${smartWalletAddress}`)
-      } else {
-        console.log(`Contract found at address: ${smartWalletAddress}`)
-      }
       setHasSmartWallet(code !== "0x")
-      //
       const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
       setOwnedNfts(nftResponse)
     }
 
     init()
-  }, [cre8orNumber])
+  }, [cre8orNumber, provider])
 
   return (
     <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
