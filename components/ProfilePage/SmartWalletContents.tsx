@@ -14,6 +14,8 @@ const SmartWalletContents = () => {
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
 
   const getDNAByCre8orNumber = useCallback(async () => {
+    if (!provider || !cre8orNumber) return
+
     const smartWalletAddress = await getSmartWallet(cre8orNumber)
     const code = await provider.getCode(smartWalletAddress)
     setHasSmartWallet(code !== "0x")
