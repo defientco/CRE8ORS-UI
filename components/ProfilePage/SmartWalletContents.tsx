@@ -4,14 +4,29 @@ import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import Media from "../../shared/Media"
+import getDefaultProvider from "../../lib/getDefaultProvider"
+import { Button } from "../../shared/Button"
+import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 
 const SmartWalletContents = () => {
   const { cre8orNumber } = useProfileProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
-
+  const [hasSmartWallet, setHasSmartWallet] = useState(true)
+  const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   useEffect(() => {
     const init = async () => {
-      const smartWalletAddress = await getSmartWallet(cre8orNumber)
+      const smartWalletAddress = await getSmartWallet(85)
+      //
+      // Fetch the contract code
+      const code = await provider.getCode(smartWalletAddress)
+
+      if (code === "0x") {
+        console.log(`No contract deployed at address: ${smartWalletAddress}`)
+      } else {
+        console.log(`Contract found at address: ${smartWalletAddress}`)
+      }
+      setHasSmartWallet(code !== "0x")
+      //
       const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
       setOwnedNfts(nftResponse)
     }
@@ -36,6 +51,8 @@ const SmartWalletContents = () => {
                     after:absolute
                     after:left-0 after:top-0 after:z-[1]"
       >
+        {!hasSmartWallet && <Deploy6551AndMintDNAButton />}
+
         <div
           className="absolute w-full h-full left-0 top-0 z-[2]
               bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"

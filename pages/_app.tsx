@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css"
 import type { AppProps } from "next/app"
 import { RainbowKitProvider, getDefaultWallets, connectorsForWallets } from "@rainbow-me/rainbowkit"
 import { configureChains, createConfig, WagmiConfig } from "wagmi"
-import { mainnet } from "@wagmi/core/chains"
+import { goerli, mainnet } from "@wagmi/core/chains"
 import { ToastContainer } from "react-toastify"
 import { SessionProvider } from "next-auth/react"
 import * as React from "react"
@@ -17,7 +17,7 @@ import { ThemeProvider } from "../providers/ThemeProvider"
 import { AdminProvider } from "../providers/AdminProvider"
 import { UserProvider } from "../providers/UserProvider"
 
-const myChains = [mainnet]
+const myChains = [process.env.NEXT_PUBLIC_TESTNET ? goerli : mainnet]
 const { chains, publicClient, webSocketPublicClient } = configureChains(myChains, [
   alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
   publicProvider(),
