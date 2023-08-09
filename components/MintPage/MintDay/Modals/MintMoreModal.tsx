@@ -12,8 +12,8 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
   const isXl = useMediaQuery("(max-width: 1150px)")
 
   const { leftQuantityCount } = useMintProvider()
-
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the cabal.🤫`
+  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
+  const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
@@ -66,12 +66,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
         >
           {`You have ${leftQuantityCount || 0} mints available.\nClose popup to mint more.`}
         </pre>
-        <MintModalCTAButton
-          id="share_tweet_btn"
-          link={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`}
-          target="_blank"
-          className="!w-"
-        >
+        <MintModalCTAButton id="share_tweet_btn" link={tweetLink} target="_blank" className="!w-">
           <div>
             <p className="!p-0 !m-0 !leading-[120.3%]">Share tweet</p>
             <p
