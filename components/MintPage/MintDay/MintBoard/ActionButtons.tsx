@@ -13,6 +13,7 @@ import minterUtilitiesAbi from "../../../../lib/abi-minter-utilities.json"
 import getDefaultProvider from "../../../../lib/getDefaultProvider"
 import MintingModal from "../Modals/MintingModal"
 import FreeMintModal from "../Modals/FreeMintModal"
+import usePublicMint from "../../../../hooks/mintDay/usePublicMint"
 
 const MintBoardButtons = () => {
   const [isMinting, setIsMinting] = useState(false)
@@ -21,6 +22,8 @@ const MintBoardButtons = () => {
   const [quantityLeft, setQuantityLeft] = useState()
   const { isConnected, address } = useAccount()
   const { mint } = useCre8orlistMint()
+  const { mint: publicMint } = usePublicMint()
+
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
   const { cart, leftQuantityCount, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } =
     useMintProvider()
@@ -62,7 +65,11 @@ const MintBoardButtons = () => {
       setIsMinting(true)
       await mint(cart, onSuccess)
       setIsMinting(false)
+      return
     }
+    setIsMinting(true)
+    await publicMint(cart, onSuccess)
+    setIsMinting(false)
   }
 
   useEffect(() => {
