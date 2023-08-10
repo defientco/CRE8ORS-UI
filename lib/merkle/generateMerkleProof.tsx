@@ -10,7 +10,6 @@ const generateMerkleProof = (minter) => {
     newEntry.hash = hashMerkleEntry(entry)
     return newEntry
   })
-  console.log("SWEETS MINTER ", entries.length)
 
   const newtree = new MerkleTree(
     entries.map((entry) => entry.hash),
@@ -25,8 +24,6 @@ const generateMerkleProof = (minter) => {
   })
 
   const whitelistedUser = entries.find((entry) => entry.minter === minter)
-
-  console.log("SWEETS whitelistedUser ", whitelistedUser)
 
   return whitelistedUser.proof
 }
