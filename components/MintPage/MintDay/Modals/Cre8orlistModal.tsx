@@ -7,14 +7,12 @@ import useCre8orlistMint from "../../../../hooks/mintDay/useCre8orlistMint"
 
 const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openSuccessModal }) => {
   const { checkNetwork, refetchInformation, cart } = useMintProvider()
-  const { mint } = useCre8orlistMint()
 
   useEffect(() => {
     const handleMint = async () => {
       if (!checkNetwork()) return
       handleLoading(true)
       try {
-        await mint(cart)
         openSuccessModal()
         await refetchInformation()
         handleLoading(false)

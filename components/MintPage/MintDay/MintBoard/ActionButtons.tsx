@@ -1,13 +1,18 @@
 import { useAccount } from "wagmi"
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useState } from "react"
 import _ from "lodash"
 import { Button } from "../../../../shared/Button"
 import WalletConnectButton from "../../../WalletConnectButton"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import useShakeEffect from "../../../../hooks/useShakeEffect"
+import { isWhitelisted } from "../../../../lib/merkle/isWhitelisted"
+import Cre8orlistModal from "../Modals/Cre8orlistModal"
+import useCre8orlistMint from "../../../../hooks/mintDay/useCre8orlistMint"
 
 const MintBoardButtons = ({ setOpenModal }: any) => {
-  const { isConnected } = useAccount()
+  const [isWhitelistModalOpen, setIsWhitelistModalOpen] = useState(false)
+  const { isConnected, address } = useAccount()
+  const { mint } = useCre8orlistMint()
 
   const { cart, leftQuantityCount } = useMintProvider()
 
@@ -23,7 +28,13 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
     isEnabled: canNotClickMint,
   })
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    if (isWhitelisted(address)) {
+      setIsWhitelistModalOpen(true)
+      await mint(cart)
+      setIsWhitelistModalOpen(false)
+      return
+    }
     if (!canNotClickMint) setOpenModal(true)
   }
 
@@ -61,6 +72,14 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
             Connect Wallet
           </div>
         </WalletConnectButton>
+      )}
+      {isWhitelistModalOpen && (
+        <Cre8orlistModal
+          isModalVisible={isWhitelistModalOpen}
+          toggleIsVisible={setIsWhitelistModalOpen}
+          openSuccessModal={() => null}
+          handleLoading={() => null}
+        />
       )}
     </div>
   )
