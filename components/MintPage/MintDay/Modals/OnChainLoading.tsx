@@ -28,7 +28,7 @@ const OnChainLoading: FC<MintMoreModalProps> = ({ isModalVisible }) => {
             leading-[90.3%]
             dark:text-black text-white"
         >
-          {`Loading\nmint info...`}
+          MAINTENANCE
         </pre>
         <Media
           type="image"
