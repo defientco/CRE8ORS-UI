@@ -16,20 +16,22 @@ import FreeMintModal from "../Modals/FreeMintModal"
 import usePublicMint from "../../../../hooks/mintDay/usePublicMint"
 
 const MintBoardButtons = () => {
-  const [isMinting, setIsMinting] = useState(false)
-  const [isSuccessfulMint, setIsSuccessfulMint] = useState(false)
-  const [isFreeMintModalOpen, setIsFreeMintModalOpen] = useState(false)
-  const [isAreadyFreeMint, setIsAlreadyFreeMint] = useState(true)
-  const [quantityLeft, setQuantityLeft] = useState()
-  const { isConnected, address } = useAccount()
   const { mint } = useCre8orlistMint()
   const { mint: publicMint } = usePublicMint()
 
-  const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
+  const [isMinting, setIsMinting] = useState(false)
+  const [isSuccessfulMint, setIsSuccessfulMint] = useState(false)
+  const [isFreeMintModalOpen, setIsFreeMintModalOpen] = useState(false)
+  const [quantityLeft, setQuantityLeft] = useState()
+  const { isConnected, address } = useAccount()
+
   const { cart, leftQuantityCount, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } =
     useMintProvider()
   const shakeRef = useRef()
   const isPassportMint = hasPassport && hasUnclaimedFreeMint
+  const [isAreadyFreeMint, setIsAlreadyFreeMint] = useState(true)
+
+  const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
 
   const isFreeMint = useMemo(() => {
     if (isPassportMint || hasFriendAndFamily) setIsAlreadyFreeMint(false)
@@ -70,14 +72,8 @@ const MintBoardButtons = () => {
   const handleClick = async () => {
     if (canNotClickMint) return
 
-    if (isWhitelisted(address)) {
-      setIsMinting(true)
-      await mint(cart, onSuccess)
-      setIsMinting(false)
-      return
-    }
     setIsMinting(true)
-    await publicMint(cart, onSuccess)
+    await (isWhitelisted(address) ? mint(cart, onSuccess) : publicMint(cart, onSuccess))
     setIsMinting(false)
   }
 
