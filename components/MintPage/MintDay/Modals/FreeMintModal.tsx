@@ -1,33 +1,34 @@
-import { FC } from "react"
+import { useState } from "react"
 import { Button } from "../../../../shared/Button"
 import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
-import IMintModal from "./IMintModal"
 import { useMintProvider } from "../../../../providers/MintProvider"
+import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 
-interface CombinationModalModalProps extends IMintModal {}
-
-const CombinationModal: FC<CombinationModalModalProps> = ({
-  isModalVisible,
-  toggleIsVisible,
-  coreMintFunc,
-  handleLoading,
-  loading,
-  openSuccessModal,
-}) => {
-  const { checkNetwork, refetchInformation, freeMintCount } = useMintProvider()
+const FreeMintModal = ({ handleClose, onSuccess }) => {
+  const [isMinting, setIsMinting] = useState(false)
+  const { checkNetwork, freeMintCount, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } =
+    useMintProvider()
+  const { freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay()
+  const isPassportMint = hasPassport && hasUnclaimedFreeMint
 
   const handleMint = async () => {
     if (!checkNetwork()) return
-    handleLoading(true)
-    const response: any = await coreMintFunc()
-    if (!response?.error) openSuccessModal()
-    await refetchInformation()
-    handleLoading(false)
+    if (isPassportMint) {
+      setIsMinting(true)
+      await freeMintPassportHolder(onSuccess)
+      setIsMinting(false)
+    }
+    if (hasFriendAndFamily) {
+      setIsMinting(true)
+      await freeMintFamilyAndFriend(onSuccess)
+      setIsMinting(false)
+    }
+    handleClose()
   }
 
   return (
-    <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
+    <Modal isVisible onClose={isMinting ? null : handleClose} showCloseButton>
       <div
         className="rounded-lg
                   flex-col flex justify-center items-center
@@ -38,7 +39,7 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
                   xs:w-[320px] xs:h-[250px]
                   xl:w-[750px] xl:h-[530px]"
       >
-        {loading ? (
+        {isMinting ? (
           <MintLoading />
         ) : (
           <>
@@ -83,4 +84,4 @@ const CombinationModal: FC<CombinationModalModalProps> = ({
   )
 }
 
-export default CombinationModal
+export default FreeMintModal

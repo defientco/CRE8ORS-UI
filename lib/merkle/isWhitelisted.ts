@@ -1,9 +1,11 @@
 import { getAddress } from "ethers/lib/utils.js"
 import axios from "axios"
-import whitelistedUsers from "./whitelistedUsers"
+import { getWhitelistedUsers } from "./getWhitelistedUsers"
 
 export const isWhitelisted = (address: string) =>
-  address ? Boolean(whitelistedUsers.find((user) => user.minter === getAddress(address))) : false
+  address
+    ? Boolean(getWhitelistedUsers().find((user) => user.minter === getAddress(address)))
+    : false
 
 export const hasMerkleProof = async (address: string, root: string) => {
   const params = {

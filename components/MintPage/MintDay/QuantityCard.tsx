@@ -1,5 +1,4 @@
-import _ from "lodash"
-import { FC, useMemo, useRef, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Media from "../../../shared/Media"
 import InfographicModal from "../InfographicModal"
@@ -35,19 +34,9 @@ const QuantityCard: FC<MintCardProps> = ({
 
   const [openInfographicModal, setOpenInfographicModal] = useState(false)
 
-  const { cart, leftQuantityCount } = useMintProvider()
-
   const minusShakeRef = useRef()
-  const plusShakeRef = useRef()
 
   const { getCartTier } = useMintProvider()
-
-  const canIncrease = useMemo(() => _.sum(cart) < leftQuantityCount, [cart, leftQuantityCount])
-
-  useShakeEffect({
-    ref: plusShakeRef,
-    isEnabled: !canIncrease,
-  })
 
   useShakeEffect({
     ref: minusShakeRef,
@@ -160,21 +149,17 @@ const QuantityCard: FC<MintCardProps> = ({
               >
                 {quantity}
               </div>
-              <div ref={plusShakeRef}>
-                <button
-                  type="button"
-                  style={{
-                    width: isXl ? `${(20 / mobileMaxWidth) * height}px` : "40px",
-                    color: canIncrease ? "black" : "gray",
-                  }}
-                  onClick={() => {
-                    if (!canIncrease) return
-                    increaseQuantity(type)
-                  }}
-                >
-                  +
-                </button>
-              </div>
+              <button
+                type="button"
+                style={{
+                  width: isXl ? `${(20 / mobileMaxWidth) * height}px` : "40px",
+                }}
+                onClick={() => {
+                  increaseQuantity(type)
+                }}
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
