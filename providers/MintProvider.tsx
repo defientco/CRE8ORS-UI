@@ -67,11 +67,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const results = await getAvailableFreeMints(tokenIds, address)
     setLeftQuantityCount(results?.quantityLeft)
 
-    // let hasProof = false
-    // if (results?.merkleRoot?.length > 0) {
-    //   hasProof = await hasMerkleProof(address, results?.merkleRoot)
-    // }
-
     const status = isWhitelisted(address)
 
     setHasPassport(passportsArray?.length > 0)
