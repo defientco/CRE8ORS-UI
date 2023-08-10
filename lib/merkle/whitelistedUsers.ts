@@ -1,4 +1,16 @@
 import { getAddress, parseEther } from "ethers/lib/utils.js"
+import whitelist from "./response.json"
+
+const getWhitelistedUsers = () => {
+  const maxCount = 8;
+  const price = parseEther("0.15");
+
+  return whitelist.map((address) => ({
+    minter: getAddress(address),
+    maxCount,
+    price
+  }));
+}
 
 const whitelistedUsers = [
   {
