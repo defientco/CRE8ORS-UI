@@ -19,6 +19,7 @@ const MintBoardButtons = () => {
   const [isMinting, setIsMinting] = useState(false)
   const [isSuccessfulMint, setIsSuccessfulMint] = useState(false)
   const [isFreeMintModalOpen, setIsFreeMintModalOpen] = useState(false)
+  const [isAreadyFreeMint, setIsAlreadyFreeMint] = useState(true)
   const [quantityLeft, setQuantityLeft] = useState()
   const { isConnected, address } = useAccount()
   const { mint } = useCre8orlistMint()
@@ -29,7 +30,12 @@ const MintBoardButtons = () => {
     useMintProvider()
   const shakeRef = useRef()
   const isPassportMint = hasPassport && hasUnclaimedFreeMint
-  const isFreeMint = isPassportMint || hasFriendAndFamily
+
+  const isFreeMint = useMemo(() => {
+    if (isPassportMint || hasFriendAndFamily) setIsAlreadyFreeMint(false)
+    return isPassportMint || hasFriendAndFamily
+  }, [isPassportMint, hasFriendAndFamily])
+
   const canNotClickMint = useMemo(
     () => _.sum(cart) === 0 || leftQuantityCount === 0,
     [leftQuantityCount, cart],
@@ -57,10 +63,13 @@ const MintBoardButtons = () => {
 
   const onSuccess = async () => {
     await getRemainingMint()
+    if (isFreeMint) setIsAlreadyFreeMint(true)
     setIsSuccessfulMint(true)
   }
 
   const handleClick = async () => {
+    if (canNotClickMint) return
+
     if (isWhitelisted(address)) {
       setIsMinting(true)
       await mint(cart, onSuccess)
@@ -73,10 +82,10 @@ const MintBoardButtons = () => {
   }
 
   useEffect(() => {
-    if (isFreeMint) {
+    if (isFreeMint && !isMinting && !isAreadyFreeMint) {
       setIsFreeMintModalOpen(true)
     }
-  }, [isFreeMint])
+  }, [isFreeMint, isMinting, isAreadyFreeMint])
 
   return (
     <div className="flex justify-center">
