@@ -15,9 +15,9 @@ const MintLoading = () => (
       type="image"
       link="/assets/Common/loading.svg"
       containerClasses="w-[80px] h-[80px] 
-      samsungS8:w-[130px] samsungS8:h-[130px] 
+      samsungS8:w-[100px] samsungS8:h-[100px] 
       xs:w-[130px] xs:h-[130px] 
-      md:w-[250px] md:h-[250px] 
+      xl:w-[250px] xl:h-[250px]
       z-[3]"
     />
     <div

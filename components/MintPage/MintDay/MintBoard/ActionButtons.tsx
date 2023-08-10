@@ -70,7 +70,7 @@ const MintBoardButtons = () => {
   }
 
   const handleClick = async () => {
-    if (canNotClickMint) return
+    if (_.sum(cart) === 0) return
 
     setIsMinting(true)
     await (isWhitelisted(address) ? mint(cart, onSuccess) : publicMint(cart, onSuccess))
