@@ -45,14 +45,14 @@ const MintBoardButtons = () => {
     return isPassportMint || hasFriendAndFamily
   }, [isPassportMint, hasFriendAndFamily])
 
-  const canNotClickMint = useMemo(
-    () => _.sum(cart) === 0 || leftQuantityCount === 0,
+  const canMintClick = useMemo(
+    () => _.sum(cart) > 0 || leftQuantityCount > 0 || isFreeMint,
     [leftQuantityCount, cart],
   )
 
   useShakeEffect({
     ref: shakeRef,
-    isEnabled: canNotClickMint,
+    isEnabled: !canMintClick,
   })
 
   const getRemainingMint = async () => {
@@ -77,7 +77,8 @@ const MintBoardButtons = () => {
   }
 
   const handleClick = async () => {
-    if (_.sum(cart) === 0) return
+    if (_.sum(cart) === 0 && !isFreeMint) return
+    
     if (isFreeMint && !isAreadyFreeMint) {
       setIsFreeMintModalOpen(true)
       return
