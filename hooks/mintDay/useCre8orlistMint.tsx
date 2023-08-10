@@ -5,7 +5,7 @@ import cre8orlistMinterAbi from "../../lib/abi-cre8orlist-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
 import { useEthersSigner } from "../useEthersSigner"
 import { useMintProvider } from "../../providers/MintProvider"
-import generateMerkleProof from "../../lib/merkle/generateMerkleProof"
+import createMerkleProof from "../../lib/merkle/createMerkleProof"
 
 const useCre8orlistMint = () => {
   const signer = useEthersSigner()
@@ -18,8 +18,9 @@ const useCre8orlistMint = () => {
       walletAddress: address,
     }
     // if (!response.data.success) throw new Error("Merkle proof not found")
-    const { proof } = generateMerkleProof(address)
-    console.log("SWWEETS PRROOOF ", proof)
+    const { proof, root } = createMerkleProof(address)
+    console.log("SWEETS PRROOOF ", proof)
+    console.log("SWEETS root ", root)
     const value = await getCartPrice(cart)
     const contract = new Contract(
       process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,
