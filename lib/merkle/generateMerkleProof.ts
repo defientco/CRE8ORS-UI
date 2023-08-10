@@ -2,7 +2,6 @@ import MerkleTree from "merkletreejs"
 import keccak256 from "keccak256"
 import { hexValue } from "ethers/lib/utils.js"
 import hashMerkleEntry from "./hashMerkleEntry"
-import whitelistedUsers from "./whitelistedUsers"
 import { getWhitelistedUsers } from "./getWhitelistedUsers"
 
 const generateMerkleProof = (minter) => {
