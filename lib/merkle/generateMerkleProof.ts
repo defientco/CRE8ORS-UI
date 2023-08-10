@@ -3,13 +3,16 @@ import keccak256 from "keccak256"
 import { hexValue } from "ethers/lib/utils.js"
 import hashMerkleEntry from "./hashMerkleEntry"
 import whitelistedUsers from "./whitelistedUsers"
+import { getWhitelistedUsers } from "./getWhitelistedUsers"
 
 const generateMerkleProof = (minter) => {
-  let entries = whitelistedUsers.map((entry) => {
+  let entries = getWhitelistedUsers().map((entry) => {
     const newEntry = entry as any
     newEntry.hash = hashMerkleEntry(entry)
     return newEntry
   })
+  console.log("SWEETS MINTER ", entries.length)
+
   const newtree = new MerkleTree(
     entries.map((entry) => entry.hash),
     keccak256,
@@ -23,6 +26,8 @@ const generateMerkleProof = (minter) => {
   })
 
   const whitelistedUser = entries.find((entry) => entry.minter === minter)
+
+  console.log("SWEETS whitelistedUser ", whitelistedUser)
 
   return whitelistedUser.proof
 }

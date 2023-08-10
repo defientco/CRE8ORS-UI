@@ -5,6 +5,7 @@ import cre8orlistMinterAbi from "../../lib/abi-cre8orlist-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
 import { useEthersSigner } from "../useEthersSigner"
 import { useMintProvider } from "../../providers/MintProvider"
+import generateMerkleProof from "../../lib/merkle/generateMerkleProof"
 
 const useCre8orlistMint = () => {
   const signer = useEthersSigner()
@@ -16,9 +17,9 @@ const useCre8orlistMint = () => {
       root: merkleRoot,
       walletAddress: address,
     }
-    const response = await axios.get(`/api/v2/get/merkle`, { params })
     // if (!response.data.success) throw new Error("Merkle proof not found")
-    const { proof } = response.data
+    const { proof } = generateMerkleProof(address)
+    console.log("SWWEETS PRROOOF ", proof)
     const value = await getCartPrice(cart)
     const contract = new Contract(
       process.env.NEXT_PUBLIC_ALLOWLIST_MINTER_ADDRESS,
