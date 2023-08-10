@@ -20,7 +20,7 @@ const usePublicMint = () => {
       )
 
       const quantity = _.sum(cart)
-      const tx = await contract.mintPfp(address, cart, { value, gasLimit: 268332 * quantity })
+      const tx = await contract.mintPfp(address, cart, { value, gasLimit: 300293 * quantity })
       await tx.wait()
       await onSuccess()
     } catch (err) {
