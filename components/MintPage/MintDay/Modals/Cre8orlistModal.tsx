@@ -3,10 +3,9 @@ import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import handleTxError from "../../../../lib/handleTxError"
-import useCre8orlistMint from "../../../../hooks/mintDay/useCre8orlistMint"
 
 const Cre8orlistModal = ({ isModalVisible, toggleIsVisible, handleLoading, openSuccessModal }) => {
-  const { checkNetwork, refetchInformation, cart } = useMintProvider()
+  const { checkNetwork, refetchInformation } = useMintProvider()
 
   useEffect(() => {
     const handleMint = async () => {

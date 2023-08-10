@@ -7,9 +7,7 @@ import WaitCre8orsModal from "./WaitCre8orsModal"
 import usePassportMintDay from "../../../../hooks/mintDay/usePassportMintDay"
 import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
-import Cre8orlistModal from "./Cre8orlistModal"
 import PublicSaleModal from "./PublicSaleModal"
-import OnChainLoading from "./OnChainLoading"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -26,7 +24,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     cart,
     publicSaleActive,
     loadingSaleStatus,
-    hasWhitelist,
     isReloadingChainData,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
@@ -75,16 +72,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       )
 
     if (leftQuantityCount > 0 && _.sum(cart) > 0) {
-      if (hasWhitelist) {
-        return (
-          <Cre8orlistModal
-            isModalVisible={isVisibleModal}
-            toggleIsVisible={toggleModal}
-            openSuccessModal={() => setShouldOpenSuccessModal(true)}
-            handleLoading={handleMintLoading}
-          />
-        )
-      }
       return (
         <PublicSaleModal
           isModalVisible={isVisibleModal}
