@@ -1,5 +1,6 @@
 import { Contract } from "ethers"
 import { useAccount } from "wagmi"
+import _ from "lodash"
 import publicMinterAbi from "../../lib/abi-public-minter.json"
 import getCartPrice from "../../lib/getCartPrice"
 import { useEthersSigner } from "../useEthersSigner"
@@ -18,7 +19,8 @@ const usePublicMint = () => {
         signer,
       )
 
-      const tx = await contract.mintPfp(address, cart, { value })
+      const quantity = _.sum(cart)
+      const tx = await contract.mintPfp(address, cart, { value, gasLimit: 268332 * quantity })
       await tx.wait()
       await onSuccess()
     } catch (err) {
