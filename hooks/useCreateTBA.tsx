@@ -10,7 +10,9 @@ const useCreateTBA = () => {
     try {
       const dnaMinter = process.env.NEXT_PUBLIC_DNA_MINTER
       const contract = new Contract(dnaMinter, abi, signer)
-      const tx = await contract.createTokenBoundAccountAndMintDNA(cre8orNumber)
+      const tx = await contract.createTokenBoundAccountAndMintDNA(cre8orNumber, {
+        gasLimit: 200000,
+      })
       await tx.wait()
     } catch (err) {
       handleTxError(err)
