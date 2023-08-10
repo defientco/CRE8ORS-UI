@@ -2,7 +2,7 @@ import Modal from "../../../../shared/Modal"
 import MintLoading from "../MintLoading"
 
 const MintingModal = () => (
-  <Modal isVisible onClose={null} showCloseButton>
+  <Modal isVisible onClose={null}>
     <div
       className="px-14 py-8 samsungS8:px-20 samsungS8:py-10 rounded-lg
                       flex-col flex justify-center items-center
