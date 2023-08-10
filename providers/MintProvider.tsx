@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
 import useMintCart from "../hooks/useMintCart"
 import useSaleStatus from "../hooks/mintDay/useSaleStatus"
-import { hasMerkleProof, isWhitelisted } from "../lib/merkle/isWhitelisted"
+import { isWhitelisted } from "../lib/merkle/isWhitelisted"
 
 interface mintProps {
   leftQuantityCount: number | null
@@ -67,11 +67,12 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const results = await getAvailableFreeMints(tokenIds, address)
     setLeftQuantityCount(results?.quantityLeft)
 
-    let hasProof = false
-    if (results?.merkleRoot?.length > 0) {
-      hasProof = await hasMerkleProof(address, results?.merkleRoot)
-    }
-    const status = isWhitelisted(address) || hasProof
+    // let hasProof = false
+    // if (results?.merkleRoot?.length > 0) {
+    //   hasProof = await hasMerkleProof(address, results?.merkleRoot)
+    // }
+
+    const status = isWhitelisted(address)
 
     setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
