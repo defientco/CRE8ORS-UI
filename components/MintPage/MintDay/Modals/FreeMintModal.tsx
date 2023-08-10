@@ -18,7 +18,6 @@ const FreeMintModal = ({ handleClose, onSuccess }) => {
       setIsMinting(true)
       await freeMintPassportHolder(onSuccess)
       setIsMinting(false)
-      return
     }
     if (hasFriendAndFamily) {
       setIsMinting(true)
