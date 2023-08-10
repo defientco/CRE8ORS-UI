@@ -4,7 +4,7 @@ import Modal from "../../../../shared/Modal"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
 
-const MintMoreModal = ({ isModalVisible, toggleIsVisible, quantityLeft = 0 }) => {
+const SuccessModal = ({ isModalVisible, toggleIsVisible, quantityLeft = 0 }) => {
   const isXl = useMediaQuery("(max-width: 1150px)")
   const { address } = useAccount()
   const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
@@ -91,4 +91,4 @@ const MintMoreModal = ({ isModalVisible, toggleIsVisible, quantityLeft = 0 }) =>
   )
 }
 
-export default MintMoreModal
+export default SuccessModal
