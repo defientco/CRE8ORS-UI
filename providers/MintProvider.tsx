@@ -3,13 +3,11 @@ import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
 import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
-import { getLockedCount } from "../lib/cre8or"
 import useMintCart from "../hooks/useMintCart"
 import useSaleStatus from "../hooks/mintDay/useSaleStatus"
 import { hasMerkleProof, isWhitelisted } from "../lib/merkle/isWhitelisted"
 
 interface mintProps {
-  lockedCntOfCre8or: number | null
   leftQuantityCount: number | null
   passportIds: any
   availablePassportIds: any
@@ -47,7 +45,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [hasPassport, setHasPassport] = useState<boolean | null>(null)
   const [hasUnclaimedFreeMint, setHasUnclaimedFreeMint] = useState<boolean | null>(null)
   const [passportIds, setPassportIds] = useState(null)
-  const [lockedCntOfCre8or, setLockedCntOfCre8or] = useState<number | null>(null)
   const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(null)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
   const [availablePassportIds, setAvailablePassportIds] = useState([] as any)
@@ -64,8 +61,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const getInitialData = async () => {
     if (!address) return
 
-    const lockedCnt = await getLockedCount(address)
-
     const passportsArray = await getPassportIds(address)
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
@@ -77,7 +72,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     }
     const status = isWhitelisted(address) || hasProof
 
-    setLockedCntOfCre8or(lockedCnt)
     setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
@@ -147,7 +141,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       availablePassportIds,
       cart,
       freeMintCount,
-      lockedCntOfCre8or,
       leftQuantityCount,
       passportIds,
       hasPassport,
@@ -168,7 +161,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
       availablePassportIds,
       cart,
       freeMintCount,
-      lockedCntOfCre8or,
       leftQuantityCount,
       passportIds,
       hasPassport,
