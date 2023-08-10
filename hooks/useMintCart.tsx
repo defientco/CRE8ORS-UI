@@ -3,6 +3,10 @@ import { useState } from "react"
 const useMintCart = () => {
   const [cart, setCart] = useState<number[]>([0, 0, 0]) // Initialize with three zeros
 
+  const initCart = () => {
+    setCart([0, 0, 0])
+  }
+
   const addToCart = (type: number) => {
     setCart((prevCart) => {
       const newCart = [...prevCart]
@@ -25,7 +29,7 @@ const useMintCart = () => {
     return cart[tierNumber - 1] || 0
   }
 
-  return { cart, addToCart, removeFromCart, getCartTier }
+  return { cart, addToCart, removeFromCart, getCartTier, initCart }
 }
 
 export default useMintCart

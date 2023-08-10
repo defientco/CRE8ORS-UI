@@ -27,6 +27,7 @@ interface mintProps {
   addToCart: (tier: number) => void
   removeFromCart: (tier: number) => void
   getCartTier: (tier: number) => number
+  initCart: () => void
   merkleRoot: string | null
   hasWhitelist: any
   isReloadingChainData: boolean
@@ -51,7 +52,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
   const [merkleRoot, setMerkleRoot] = useState(null)
-  const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
+  const { cart, addToCart, removeFromCart, getCartTier, initCart } = useMintCart()
   const [hasWhitelist, setHasWhitelist] = useState<boolean | null>(null)
   const [isReloadingChainData, setIsReloadingChaindData] = useState(false)
   const [isLoadingInitialize, setIsLoadingInitialize] = useState(false)
@@ -146,6 +147,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       refetchInformation,
       addToCart,
       removeFromCart,
+      initCart,
       getCartTier,
       merkleRoot,
       hasWhitelist,
@@ -167,6 +169,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
       addToCart,
       removeFromCart,
       getCartTier,
+      initCart,
       merkleRoot,
       hasWhitelist,
     ],

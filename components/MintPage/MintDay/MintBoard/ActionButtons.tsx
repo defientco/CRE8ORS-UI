@@ -25,8 +25,15 @@ const MintBoardButtons = () => {
   const [quantityLeft, setQuantityLeft] = useState()
   const { isConnected, address } = useAccount()
 
-  const { cart, leftQuantityCount, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } =
-    useMintProvider()
+  const {
+    cart,
+    initCart,
+    leftQuantityCount,
+    hasPassport,
+    hasUnclaimedFreeMint,
+    hasFriendAndFamily,
+  } = useMintProvider()
+
   const shakeRef = useRef()
   const isPassportMint = hasPassport && hasUnclaimedFreeMint
   const [isAreadyFreeMint, setIsAlreadyFreeMint] = useState(true)
@@ -71,10 +78,15 @@ const MintBoardButtons = () => {
 
   const handleClick = async () => {
     if (_.sum(cart) === 0) return
+    if (isFreeMint && !isAreadyFreeMint) {
+      setIsFreeMintModalOpen(true)
+      return
+    }
 
     setIsMinting(true)
     await (isWhitelisted(address) ? mint(cart, onSuccess) : publicMint(cart, onSuccess))
     setIsMinting(false)
+    initCart()
   }
 
   useEffect(() => {
