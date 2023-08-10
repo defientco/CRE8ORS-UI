@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useEffect, useMemo, useState } from "react"
 import { useAccount } from "wagmi"
 
 import _ from "lodash"
@@ -9,13 +9,13 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import PublicSaleModal from "./PublicSaleModal"
+import { isWhitelisted } from "../../../../lib/merkle/isWhitelisted"
 
 interface ModalSelectorProps {
-  isVisibleModal: boolean
   toggleModal: () => void
 }
 
-const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) => {
+const ModalSelector: FC<ModalSelectorProps> = ({ toggleModal }) => {
   const { address } = useAccount()
   const {
     hasPassport,
@@ -25,12 +25,11 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     cart,
     publicSaleActive,
     loadingSaleStatus,
-    hasWhitelist,
     isReloadingChainData,
-    isLoadingInitialize,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
+  const hasWhitelist = useMemo(() => isWhitelisted(address), [address])
 
   const handleMintLoading = (isMintLoading: boolean) => {
     setMintLoading(isMintLoading)
@@ -43,17 +42,17 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   }, [address])
 
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
+  const openMintModal = leftQuantityCount > 0 && _.sum(cart) > 0
+  console.log("SWEETS OPEN MINT MODAL hasWhitelist", hasWhitelist)
 
   const selectModal = () => {
-    if (isLoadingInitialize) return null
-
     if (shouldOpenSuccessModal)
       return (
         <MintMoreModal
           isModalVisible={shouldOpenSuccessModal}
           toggleIsVisible={() => {
             setShouldOpenSuccessModal(!shouldOpenSuccessModal)
-            if (isVisibleModal) toggleModal()
+            toggleModal()
           }}
           coreMintFunc={mintCre8ors}
           loading={mintLoading}
@@ -65,7 +64,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     if (isFreeMintModal && !isReloadingChainData)
       return (
         <CombinationModal
-          isModalVisible={isVisibleModal}
+          isModalVisible
           toggleIsVisible={toggleModal}
           coreMintFunc={
             hasPassport && hasUnclaimedFreeMint ? freeMintPassportHolder : freeMintFamilyAndFriend
@@ -76,11 +75,11 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
         />
       )
 
-    if (leftQuantityCount > 0 && _.sum(cart) > 0) {
+    if (openMintModal) {
       if (hasWhitelist) {
         return (
           <Cre8orlistModal
-            isModalVisible={isVisibleModal}
+            isModalVisible
             toggleIsVisible={toggleModal}
             openSuccessModal={() => setShouldOpenSuccessModal(true)}
             handleLoading={handleMintLoading}
@@ -89,7 +88,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
       }
       return (
         <PublicSaleModal
-          isModalVisible={isVisibleModal}
+          isModalVisible
           toggleIsVisible={toggleModal}
           openSuccessModal={() => setShouldOpenSuccessModal(true)}
           handleLoading={handleMintLoading}
@@ -98,7 +97,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     }
 
     if (!(publicSaleActive || loadingSaleStatus) && !isReloadingChainData)
-      return <WaitCre8orsModal isModalVisible={isVisibleModal} toggleIsVisible={toggleModal} />
+      return <WaitCre8orsModal isModalVisible toggleIsVisible={toggleModal} />
 
     return null
   }

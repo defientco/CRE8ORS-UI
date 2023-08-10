@@ -24,7 +24,7 @@ const MintBoardButtons = ({ setOpenModal }: any) => {
   })
 
   const handleClick = () => {
-    if (!canNotClickMint) setOpenModal(true)
+    setOpenModal(true)
   }
 
   return (
