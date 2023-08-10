@@ -1,5 +1,6 @@
 import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
+import { useAccount } from "wagmi"
 import Modal from "../../../../shared/Modal"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
@@ -10,6 +11,7 @@ interface MintMoreModalProps extends IMintModal {}
 
 const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const isXl = useMediaQuery("(max-width: 1150px)")
+  const { address } = useAccount()
 
   const { leftQuantityCount } = useMintProvider()
   const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
@@ -66,7 +68,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
         >
           {`You have ${leftQuantityCount || 0} mints available.\nClose popup to mint more.`}
         </pre>
-        <MintModalCTAButton id="share_tweet_btn" link={tweetLink} target="_blank" className="!w-">
+        <MintModalCTAButton id="share_tweet_btn" link={tweetLink} target="_blank">
           <div>
             <p className="!p-0 !m-0 !leading-[120.3%]">Share tweet</p>
             <p
@@ -74,6 +76,22 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
             !text-[19px] !leading-[120.3%]"
             >
               To win an NFT
+            </p>
+          </div>
+        </MintModalCTAButton>
+        <MintModalCTAButton
+          id="share_tweet_btn"
+          link={`/profile/${address}`}
+          target="_blank"
+          className="!mt-[20px]"
+        >
+          <div>
+            <p className="!p-0 !m-0 !leading-[120.3%]">Setup profile</p>
+            <p
+              className="!normal-case !font-quicksand !font-medium
+            !text-[19px] !leading-[120.3%]"
+            >
+              Enter the warehouse
             </p>
           </div>
         </MintModalCTAButton>
