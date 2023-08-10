@@ -28,7 +28,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
     loadingSaleStatus,
     hasWhitelist,
     isReloadingChainData,
-    isLoadingInitialize,
   } = useMintProvider()
   const [mintLoading, setMintLoading] = useState(false)
   const [shouldOpenSuccessModal, setShouldOpenSuccessModal] = useState(false)
@@ -46,8 +45,6 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const selectModal = () => {
-    if (isLoadingInitialize) return <OnChainLoading isModalVisible={isVisibleModal} />
-
     if (shouldOpenSuccessModal)
       return (
         <MintMoreModal
