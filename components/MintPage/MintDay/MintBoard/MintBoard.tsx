@@ -1,42 +1,14 @@
-import { useState, useMemo, useEffect } from "react"
 import { useMeasure } from "react-use"
-import { useAccount } from "wagmi"
 import SectionContainer from "../../SectionContainer"
 import Title from "../../../Common/Title"
 import Content from "../../../Common/Content"
 import Character from "../../Character"
 import Media from "../../../../shared/Media"
-import ModalSelector from "../Modals/ModalSelector"
-import { useMintProvider } from "../../../../providers/MintProvider"
 import MintBoardButtons from "./ActionButtons"
 import QuantityCards from "./QuantityCards"
 
 const MintBoard = () => {
-  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily, publicSaleActive, hasWhitelist } =
-    useMintProvider()
-
-  const [openModal, setOpenModal] = useState(false)
-  const { isConnected } = useAccount()
   const [boardRef, { height }] = useMeasure()
-  const [oneTimeAutomaticOpen, setOneTimeAutomaticOpen] = useState(false)
-
-  const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
-
-  const automaticOpenModal = useMemo(
-    () =>
-      (isFreeMintModal || (!isFreeMintModal && !hasWhitelist && !publicSaleActive)) &&
-      (!oneTimeAutomaticOpen || (oneTimeAutomaticOpen && isFreeMintModal)),
-    [isFreeMintModal, hasWhitelist, oneTimeAutomaticOpen, publicSaleActive],
-  )
-
-  useEffect(() => {
-    if (automaticOpenModal && isConnected) {
-      setOpenModal(true)
-      setOneTimeAutomaticOpen(true)
-      return
-    }
-    setOpenModal(false)
-  }, [automaticOpenModal, isConnected])
 
   return (
     <SectionContainer>
@@ -70,7 +42,7 @@ const MintBoard = () => {
           >
             <QuantityCards height={height} />
           </div>
-          <MintBoardButtons setOpenModal={setOpenModal} />
+          <MintBoardButtons />
           <div
             className="pt-[15px] xs:pt-[20px] xl:pt-[27px] 
             flex justify-center items-center gap-x-[10px]"
@@ -83,7 +55,6 @@ const MintBoard = () => {
               blurLink="/assets/Mint/MintNow/down-arrow.svg"
             />
           </div>
-          <ModalSelector isVisibleModal={openModal} toggleModal={() => setOpenModal(!openModal)} />
         </div>
       </div>
       <div>

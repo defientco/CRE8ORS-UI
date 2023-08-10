@@ -10,7 +10,7 @@ const useCre8orlistMint = () => {
   const signer = useEthersSigner()
   const { address } = useAccount()
 
-  const mint = async (cart) => {
+  const mint = async (cart, onSuccess = async () => null) => {
     try {
       const { proof } = createMerkleProof(address)
       const value = await getCartPrice(cart)
@@ -22,6 +22,7 @@ const useCre8orlistMint = () => {
 
       const tx = await contract.mintPfp(address, cart, proof || [], { value })
       await tx.wait()
+      await onSuccess?.()
     } catch (err) {
       handleTxError(err)
     }

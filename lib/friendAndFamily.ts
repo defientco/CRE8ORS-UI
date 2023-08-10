@@ -35,7 +35,7 @@ export const maxClaimedFree = async (address: string) => {
   }
 }
 
-export const mintByFriendsAndFamily = async (signer: Signer) => {
+export const mintByFriendsAndFamily = async (signer: Signer, onSuccess: any) => {
   const address = await signer.getAddress()
 
   const contract = new ethers.Contract(
@@ -47,7 +47,7 @@ export const mintByFriendsAndFamily = async (signer: Signer) => {
   try {
     const tx = await contract.mint(address)
     const receipt = await tx.wait()
-
+    await onSuccess?.();
     return receipt
   } catch (err) {
     handleTxError(err)

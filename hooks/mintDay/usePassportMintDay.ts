@@ -11,17 +11,17 @@ const usePassportMintDay = () => {
   const signer = useEthersSigner()
   const { address } = useAccount()
 
-  const freeMintFamilyAndFriend = async () => {
+  const freeMintFamilyAndFriend = async (onSuccess = async() => null) => {
     if (!signer) return null
 
-    const response = await mintByFriendsAndFamily(signer)
+    const response = await mintByFriendsAndFamily(signer, onSuccess)
     return response
   }
 
-  const freeMintPassportHolder = async () => {
+  const freeMintPassportHolder = async (onSuccess) => {
     if (!signer) return null
 
-    const response = await mintByCollectionHolder(signer, availablePassportIds, address)
+    const response = await mintByCollectionHolder(signer, availablePassportIds, address, onSuccess)
     return response
   }
 

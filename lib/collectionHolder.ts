@@ -131,7 +131,7 @@ export const getAvailableFreeMints = async (
   }
 }
 
-export const mintByCollectionHolder = async (signer: Signer, passportIds: any, to: string) => {
+export const mintByCollectionHolder = async (signer: Signer, passportIds: any, to: string, onSuccess: any) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
@@ -142,7 +142,7 @@ export const mintByCollectionHolder = async (signer: Signer, passportIds: any, t
       gasLimit: 500000 * passportIds.length,
     })
     await tx.wait()
-
+    await onSuccess?.()
     return { error: false }
   } catch (err) {
     handleTxError(err)

@@ -24,6 +24,7 @@ const createMerkleProof = (address) => {
   }
 
   const proof = tree.getHexProof(entryToProve.hash)
+  console.log("SWEETS PROOF", tree.getHexRoot())
   return {
     root: tree.getHexRoot(),
     proof,

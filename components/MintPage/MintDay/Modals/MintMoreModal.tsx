@@ -1,28 +1,19 @@
-import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { useAccount } from "wagmi"
 import Modal from "../../../../shared/Modal"
 import Media from "../../../../shared/Media"
 import MintModalCTAButton from "../MintModalCTAButton"
-import IMintModal from "./IMintModal"
-import { useMintProvider } from "../../../../providers/MintProvider"
 
-interface MintMoreModalProps extends IMintModal {}
-
-const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible }) => {
+const MintMoreModal = ({ isModalVisible, toggleIsVisible, quantityLeft = 0 }) => {
   const isXl = useMediaQuery("(max-width: 1150px)")
   const { address } = useAccount()
-
-  const { leftQuantityCount } = useMintProvider()
   const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
   return (
     <Modal isVisible={isModalVisible} onClose={toggleIsVisible} showCloseButton>
       <div
-        className={`${
-          leftQuantityCount ? "px-8" : "px-4"
-        } py-8 samsungS8:p-8 xl:py-12 xl:px-0 rounded-lg
+        className={`${quantityLeft ? "px-8" : "px-4"} py-8 samsungS8:p-8 xl:py-12 xl:px-0 rounded-lg
         flex-col flex justify-center items-center
         bg-[url('/assets/Mint/MintNow/MintCoreModal/mint_more_bg.png')]
         bg-cover bg-black dark:bg-white`}
@@ -66,7 +57,7 @@ const MintMoreModal: FC<MintMoreModalProps> = ({ isModalVisible, toggleIsVisible
             leading-[110.3%]
             dark:text-black text-white"
         >
-          {`You have ${leftQuantityCount || 0} mints available.\nClose popup to mint more.`}
+          {`You have ${quantityLeft} mints available.\nClose popup to mint more.`}
         </pre>
         <MintModalCTAButton id="share_tweet_btn" link={tweetLink} target="_blank">
           <div>
