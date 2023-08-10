@@ -9,6 +9,7 @@ import { useMintProvider } from "../../../../providers/MintProvider"
 import CombinationModal from "./CombinationModal"
 import Cre8orlistModal from "./Cre8orlistModal"
 import PublicSaleModal from "./PublicSaleModal"
+import OnChainLoading from "./OnChainLoading"
 
 interface ModalSelectorProps {
   isVisibleModal: boolean
@@ -45,7 +46,7 @@ const ModalSelector: FC<ModalSelectorProps> = ({ isVisibleModal, toggleModal }) 
   const isFreeMintModal = (hasPassport && hasUnclaimedFreeMint) || hasFriendAndFamily
 
   const selectModal = () => {
-    if (isLoadingInitialize) return null
+    if (isLoadingInitialize) return <OnChainLoading isModalVisible={isVisibleModal} />
 
     if (shouldOpenSuccessModal)
       return (

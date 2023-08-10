@@ -65,6 +65,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
+    setLeftQuantityCount(results?.quantityLeft)
 
     let hasProof = false
     if (results?.merkleRoot?.length > 0) {
@@ -76,7 +77,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
     setHasFriendAndFamily(results?.discount)
-    setLeftQuantityCount(results?.quantityLeft)
     setAvailablePassportIds(results?.passports)
     setMerkleRoot(results?.merkleRoot)
     setHasWhitelist(status)
