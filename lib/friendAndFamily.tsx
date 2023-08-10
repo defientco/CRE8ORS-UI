@@ -47,7 +47,7 @@ export const mintByFriendsAndFamily = async (signer: Signer, onSuccess: any) => 
   try {
     const tx = await contract.mint(address)
     const receipt = await tx.wait()
-    await onSuccess?.();
+    await onSuccess?.()
     return receipt
   } catch (err) {
     handleTxError(err)

@@ -131,7 +131,12 @@ export const getAvailableFreeMints = async (
   }
 }
 
-export const mintByCollectionHolder = async (signer: Signer, passportIds: any, to: string, onSuccess: any) => {
+export const mintByCollectionHolder = async (
+  signer: Signer,
+  passportIds: any,
+  to: string,
+  onSuccess: any,
+) => {
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_COLLECTION_HOLDER,
     collectionHolderAbi,
