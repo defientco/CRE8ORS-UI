@@ -67,7 +67,6 @@ const MintBoardButtons = () => {
       setIsMinting(false)
       return
     }
-    console.log("SWEETS PUBLIC MINT")
     setIsMinting(true)
     await publicMint(cart, onSuccess)
     setIsMinting(false)
