@@ -9,7 +9,6 @@ import LandingContent from "./LandingContent"
 import Layout from "../Layout"
 import Footer from "../Footer"
 import SectionContainer from "./SectionContainer"
-import MintLiveModal from "./MintLiveModal"
 
 const LandingPage = () => {
   const [email, setEmail] = useState("")
@@ -21,8 +20,6 @@ const LandingPage = () => {
 
   const isMobile = useMediaQuery("(max-width: 758px)")
   const isIphone = useMediaQuery("(max-width: 390px)")
-
-  const [openMintLiveModal, setOpenMintLiveModal] = useState(true)
 
   const { width } = useWindowSize()
 
@@ -138,10 +135,6 @@ const LandingPage = () => {
           </div>
         </div>
       </AutoPerfectArea>
-      <MintLiveModal
-        isModalVisible={openMintLiveModal}
-        toggleIsVisible={() => setOpenMintLiveModal(!openMintLiveModal)}
-      />
     </Layout>
   )
 }
