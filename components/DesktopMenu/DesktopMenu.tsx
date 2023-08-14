@@ -3,15 +3,18 @@ import Image from "next/image"
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useAccount } from "wagmi"
 import CustomConnectWallet from "../CustomConnectWallet"
 import DiscordIcon from "../DiscordIcon"
 import { ToggleButton } from "../../shared/Button"
 import { useTheme } from "../../providers/ThemeProvider"
+import WalletConnectButton from "../WalletConnectButton"
 
 const DesktopMenu = () => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const router = useRouter()
+  const { isConnected, address } = useAccount()
 
   const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
 
@@ -25,25 +28,23 @@ const DesktopMenu = () => {
   return (
     <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
-        <>
-          <div className="flex items-center font-bold font-quicksand">
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("light")}
-            >
-              light
-            </button>
-            <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("dark")}
-            >
-              dark
-            </button>
-          </div>
-        </>
+        <div className="flex items-center font-bold font-quicksand">
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("light")}
+          >
+            light
+          </button>
+          <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("dark")}
+          >
+            dark
+          </button>
+        </div>
       )}
       <div className="relative">
         <button
@@ -59,9 +60,6 @@ const DesktopMenu = () => {
         </button>
         {isMenuOpen && (
           <div className="absolute right-0 top-[45px] z-200 inline-flex flex-col items-start uppercase justify-between space-y-4 p-4 bg-[black] dark:bg-white shadow-md rounded-lg  font-quicksand text-sm">
-            <a href="https://everythingcorp.cre8ors.com/quiz" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Allowlist</div>
-            </a>
             <Link href="/status" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Status</div>
             </Link>
@@ -106,6 +104,15 @@ const DesktopMenu = () => {
             <Link href="/faq" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">FAQ</div>
             </Link>
+            {isConnected ? (
+              <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+                <div className="cursor-pointer text-white dark:text-[black]">Profile</div>
+              </Link>
+            ) : (
+              <WalletConnectButton>
+                <div className="cursor-pointer text-white dark:text-[black] uppercase">Connect</div>
+              </WalletConnectButton>
+            )}
             <div className="text-gray-400 cursor-not-allowed">Warehouse</div>
           </div>
         )}

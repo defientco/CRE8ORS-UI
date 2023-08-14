@@ -47,9 +47,6 @@ const MenuList = ({ toggleMenu }) => {
         <CustomConnectWallet />
       </div>
       <div className="font-bold dark:text-[black] text-white">Explore</div>
-      <a href="https://everythingcorp.cre8ors.com/quiz" target="_blank" rel="noreferrer">
-        <div className="ml-4 dark:text-[black] text-white">Allowlist</div>
-      </a>
       <Link href="/status" target="_blank" rel="noreferrer">
         <div className="ml-4 cursor-pointer text-white dark:text-[black]">Status</div>
       </Link>
