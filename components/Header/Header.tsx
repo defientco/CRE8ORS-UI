@@ -2,6 +2,7 @@ import Image from "next/image"
 import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import MobileMenu from "../MobileMenu"
 import DesktopMenu from "../DesktopMenu"
 import { useTheme } from "../../providers/ThemeProvider"
@@ -10,8 +11,11 @@ interface HeaderProps {
   connect?: boolean
 }
 const Header: FC<HeaderProps> = () => {
+  const router = useRouter()
+
   const isMobile = useMediaQuery("(max-width: 768px)")
   const { themeMode } = useTheme()
+  const isMintpage = router.pathname.includes("mint")
 
   return (
     <nav
@@ -24,7 +28,9 @@ const Header: FC<HeaderProps> = () => {
             <div>
               <Image
                 src={`${
-                  themeMode === "light" ? "/CRE8ORS_LOGO.svg" : "/assets/Header/white_logo.svg"
+                  themeMode === "light" || isMintpage
+                    ? "/CRE8ORS_LOGO.svg"
+                    : "/assets/Header/white_logo.svg"
                 }`}
                 alt="cre8ors logo"
                 width={87}
