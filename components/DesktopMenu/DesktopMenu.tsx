@@ -26,13 +26,6 @@ const DesktopMenu = () => {
     <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
         <>
-          <div className="flex items-center pr-4 gap-x-8">
-            <Link href="/status" target="_blank" rel="noreferrer">
-              <div className="font-bold cursor-pointer dark:text-white text-black">
-                Allowlist Status
-              </div>
-            </Link>
-          </div>
           <div className="flex items-center font-bold font-quicksand">
             <button
               type="button"
