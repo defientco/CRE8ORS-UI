@@ -25,25 +25,23 @@ const DesktopMenu = () => {
   return (
     <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
-        <>
-          <div className="flex items-center font-bold font-quicksand">
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("light")}
-            >
-              light
-            </button>
-            <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("dark")}
-            >
-              dark
-            </button>
-          </div>
-        </>
+        <div className="flex items-center font-bold font-quicksand">
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("light")}
+          >
+            light
+          </button>
+          <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("dark")}
+          >
+            dark
+          </button>
+        </div>
       )}
       <div className="relative">
         <button
