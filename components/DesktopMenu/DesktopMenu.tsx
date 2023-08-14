@@ -28,35 +28,23 @@ const DesktopMenu = () => {
   return (
     <div className="flex flex-row text-sm uppercase font-quicksand gap-x-6">
       {!isHidden && (
-        <>
-          <div className="flex items-center pr-4 gap-x-8">
-            <Link href="/mint" target="_blank" rel="noreferrer">
-              <div className="font-bold cursor-pointer dark:text-white text-black">Mint</div>
-            </Link>
-            <Link href="/status" target="_blank" rel="noreferrer">
-              <div className="font-bold cursor-pointer dark:text-white text-black">
-                Allowlist Status
-              </div>
-            </Link>
-          </div>
-          <div className="flex items-center font-bold font-quicksand">
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("light")}
-            >
-              light
-            </button>
-            <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
-            <button
-              type="button"
-              className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-              onClick={() => onChangeThemeConfig("dark")}
-            >
-              dark
-            </button>
-          </div>
-        </>
+        <div className="flex items-center font-bold font-quicksand">
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("light")}
+          >
+            light
+          </button>
+          <ToggleButton onClick={onToggle} value={themeMode === "dark"} id="light_dark_switch" />
+          <button
+            type="button"
+            className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+            onClick={() => onChangeThemeConfig("dark")}
+          >
+            dark
+          </button>
+        </div>
       )}
       <div className="relative">
         <button
@@ -72,9 +60,6 @@ const DesktopMenu = () => {
         </button>
         {isMenuOpen && (
           <div className="absolute right-0 top-[45px] z-200 inline-flex flex-col items-start uppercase justify-between space-y-4 p-4 bg-[black] dark:bg-white shadow-md rounded-lg  font-quicksand text-sm">
-            <a href="https://everythingcorp.cre8ors.com/quiz" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Allowlist</div>
-            </a>
             <Link href="/status" target="_blank" rel="noreferrer">
               <div className="cursor-pointer text-white dark:text-[black]">Status</div>
             </Link>
