@@ -36,11 +36,11 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
                 <button
                   type="button"
                   onClick={() => {
-                    setOpenTrainModal(true)
                     setSelectedTrainTokenData({
                       id: data.tokenId,
                       isStake: !data.getCre8ingStarted,
                     })
+                    setOpenTrainModal(true)
                   }}
                 >
                   <Media
