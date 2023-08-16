@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { FC, useState } from "react"
+import { toast } from "react-toastify"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
@@ -20,12 +21,11 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
   const trainFunc = async () => {
     setLoading(true)
     if (selectedTrainTokenData?.id !== null && signer) {
-      const response = await toggleCre8ingTokens(
-        signer,
-        selectedTrainTokenData?.id,
-        selectedTrainTokenData?.isStake,
-      )
-      if (!response?.err) await refetchProfileFormattedCollection()
+      const response = await toggleCre8ingTokens(signer, selectedTrainTokenData?.id)
+      if (!response?.err) {
+        await refetchProfileFormattedCollection()
+        toast.success(`Successfully ${selectedTrainTokenData?.isStake ? "staked" : "unstaked"}!`)
+      }
     }
     toggleIsVisible()
     setLoading(false)
