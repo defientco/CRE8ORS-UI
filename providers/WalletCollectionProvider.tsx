@@ -53,11 +53,11 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   }, [isViewAll])
 
   const refetchProfileFormattedCollection = async () => {
-    let response = await getProfileFormattedCollection(address, ALLNFTS)
-    setWalletNfts(response)
-    response = await getProfileFormattedCollection(address, SPECIALNFTS)
-    setCre8ors(response)
-    setOwnedNfts(isViewAll ? walletNfts : cre8ors)
+    const walletResponse = await getProfileFormattedCollection(address, ALLNFTS)
+    setWalletNfts(walletResponse)
+    const cre8orResponse = await getProfileFormattedCollection(address, SPECIALNFTS)
+    setCre8ors(cre8orResponse)
+    setOwnedNfts(isViewAll ? walletResponse : cre8orResponse)
   }
 
   useEffect(() => {

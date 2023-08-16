@@ -95,7 +95,7 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
               !p-0"
               onClick={trainFunc}
             >
-              start {selectedTrainTokenData?.isStake ? "training" : "unstake"}
+              {selectedTrainTokenData?.isStake ? "start training" : "unstake"}
             </Button>
           </>
         )}
