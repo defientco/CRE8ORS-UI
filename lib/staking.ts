@@ -24,13 +24,12 @@ export const processStaking = async (
   }
 }
 
-export const toggleCre8ingTokens = async (signer: Signer, tokenId: number, isStakeTx: boolean) => {
+export const toggleCre8ingTokens = async (signer: Signer, tokenId: number) => {
   try {
     const contract = new Contract(process.env.NEXT_PUBLIC_STAKING_ADDRESS, stakingAbi, signer)
     const tx = await contract.toggleCre8ingTokens(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, [
       tokenId,
     ])
-    toast.success(`Successfully ${isStakeTx ? "staked" : "unstaked"}!`)
     const receipt = await tx.wait()
     return receipt
   } catch (err) {
