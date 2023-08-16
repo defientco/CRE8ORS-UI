@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Media from "../../shared/Media"
-import UnlockModal from "./UnlockModal"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import SmartWalletContents from "./SmartWalletContents"
@@ -11,14 +10,9 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 const PreWalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
   const { expandedMore, setExpandedMore } = useProfileProvider()
-  const [openUnlockModal, setOpenUnlockModal] = useState(false)
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
-
-  const toggleUnlockModal = () => {
-    setOpenUnlockModal(!openUnlockModal)
-  }
 
   const toggleTraninModal = () => {
     setOpenTrainModal(!openTraninModal)
@@ -140,13 +134,9 @@ const PreWalletCollection = () => {
               </button>
             </div>
           </div>
-          <OwnerWalletContents
-            setOpenUnlockModal={setOpenUnlockModal}
-            setOpenTrainModal={setOpenTrainModal}
-          />
+          <OwnerWalletContents setOpenTrainModal={setOpenTrainModal} />
         </div>
       </div>
-      <UnlockModal isModalVisible={openUnlockModal} toggleIsVisible={toggleUnlockModal} />
       <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
     </>
   )
