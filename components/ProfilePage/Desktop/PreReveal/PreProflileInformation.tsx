@@ -46,7 +46,7 @@ const PreProfileInformation = () => {
                   leading-[99.3%]
                   text-center lg:text-right
                   max-w-[220px]
-                  break-all"
+                  break-words"
           dangerouslySetInnerHTML={{
             __html:
               userInfo?.bio.replace("\n", "<br/>") ||
