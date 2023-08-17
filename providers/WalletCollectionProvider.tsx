@@ -23,8 +23,8 @@ const WalletCollectionContext = createContext<Partial<any> | null>(null)
 export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
 
-  const [selectedTokenIdForUnlock, setSelectedTokenIdForUnlock] = useState(null)
-  const [selectedTokenIdForTrain, setSelectedTokenIdForTrain] = useState(null)
+  const [selectedTrainTokenData, setSelectedTrainTokenData] = useState<any>(null)
+
   const [isViewAll, setIsViewAll] = useState(null)
   const [walletNfts, setWalletNfts] = useState(null)
   const [cre8ors, setCre8ors] = useState(null)
@@ -53,11 +53,11 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   }, [isViewAll])
 
   const refetchProfileFormattedCollection = async () => {
-    let response = await getProfileFormattedCollection(address, ALLNFTS)
-    setWalletNfts(response)
-    response = await getProfileFormattedCollection(address, SPECIALNFTS)
-    setCre8ors(response)
-    setOwnedNfts(isViewAll ? walletNfts : cre8ors)
+    const walletResponse = await getProfileFormattedCollection(address, ALLNFTS)
+    setWalletNfts(walletResponse)
+    const cre8orResponse = await getProfileFormattedCollection(address, SPECIALNFTS)
+    setCre8ors(cre8orResponse)
+    setOwnedNfts(isViewAll ? walletResponse : cre8orResponse)
   }
 
   useEffect(() => {
@@ -72,10 +72,8 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setWalletNfts,
       setCre8ors,
       setOwnedNfts,
-      setSelectedTokenIdForTrain,
-      setSelectedTokenIdForUnlock,
-      selectedTokenIdForUnlock,
-      selectedTokenIdForTrain,
+      setSelectedTrainTokenData,
+      selectedTrainTokenData,
       toggleProfileFormattedCollection,
       refetchProfileFormattedCollection,
     }),
@@ -86,10 +84,8 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setWalletNfts,
       setCre8ors,
       setOwnedNfts,
-      setSelectedTokenIdForTrain,
-      setSelectedTokenIdForUnlock,
-      selectedTokenIdForTrain,
-      selectedTokenIdForUnlock,
+      setSelectedTrainTokenData,
+      selectedTrainTokenData,
       toggleProfileFormattedCollection,
       refetchProfileFormattedCollection,
     ],
