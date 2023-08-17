@@ -122,9 +122,11 @@ const DesktopMenu = () => {
         <div className="pt-2 pl-10 cursor-pointer ">
           <Image
             src={`${
-              themeMode === "light" ? "/Icons/TWITTER.svg" : "/assets/Header/white_twitter.png"
+              themeMode === "light"
+                ? "/assets/Header/new_twitter.png"
+                : "/assets/Header/white_twitter.png"
             }`}
-            width={24}
+            width={19}
             height={19}
             alt="twitter"
           />
