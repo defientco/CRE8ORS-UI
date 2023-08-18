@@ -118,7 +118,7 @@ const MintV2Page = () => {
           >
             1352 / 4444
           </pre>
-          <div ref={mintRef} >
+          <div ref={mintRef}>
             <Button
               id="mint_btn"
               className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
