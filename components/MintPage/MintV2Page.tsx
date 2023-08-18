@@ -6,41 +6,47 @@ import MintCTAButton from "./MintCTAButton"
 import useShakeEffect from "../../hooks/useShakeEffect"
 import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
+import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 
 const MintV2Page = () => {
-  const [mintCount, setMintCount] = useState(0)
+  const [mintQuantity, setMintQuantity] = useState(0)
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
+  const { mint } = useCre8orMintV2()
 
   const increateAmount = () => {
-    setMintCount(mintCount + 1)
+    setMintQuantity(mintQuantity + 1)
   }
 
   const decreaseAmount = () => {
-    if (mintCount === 0) return
-    setMintCount(mintCount - 1)
+    if (mintQuantity === 0) return
+    setMintQuantity(mintQuantity - 1)
   }
 
-  const mintNFT = () => {
-    if (!mintCount) return
+  const mintNFT = async () => {
+    if (!mintQuantity) return
 
     setIsMintLoading(true)
-    setTimeout(() => {
+    const response = await mint(mintQuantity)
+    if (!response.err) {
       setIsMintLoading(false)
       setOpenSuccessModal(true)
-    }, 3000)
+      return
+    }
+
+    setIsMintLoading(false)
   }
 
   useShakeEffect({
     ref: minusRef,
-    isEnabled: mintCount === 0,
+    isEnabled: mintQuantity === 0,
   })
 
   useShakeEffect({
     ref: mintRef,
-    isEnabled: mintCount === 0,
+    isEnabled: mintQuantity === 0,
   })
 
   return (
@@ -54,8 +60,8 @@ const MintV2Page = () => {
         >
           <Media
             type="image"
-            link="/assets/Mint/mint2.0_logo.svg"
-            blurLink="/assets/Mint/mint2.0_logo.png"
+            link="/assets/MintV2/mint-here.png"
+            blurLink="/assets/MintV2/mint-here.png"
             containerClasses="md:w-[500px] md:h-[172px]
                         w-[300px] h-[103px]"
           />
@@ -96,7 +102,7 @@ const MintV2Page = () => {
                             w-[70px] h-[70px]
                             rounded-[16px]"
             >
-              {mintCount}
+              {mintQuantity}
             </div>
             <Button
               id="plus_btn"

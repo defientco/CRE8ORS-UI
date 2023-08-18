@@ -4,8 +4,7 @@ import MintLoading from "./MintLoading"
 const MintingModal = () => (
   <Modal
     isVisible
-    onClose={null}
-    showCloseButton
+    onClose={() => {}}
     containerClassName="!rounded-[15px] md:!rounded-[20px] overflow-hidden"
   >
     <div
