@@ -4,11 +4,7 @@ import { MintProvider } from "../../providers/MintProvider"
 
 const Mint = () => (
   <MintProvider>
-    <SeoHead
-      title="Cre8ors"
-      description="Minting Now."
-      image="/assets/SeoHead/v2-logo.jpg"
-    />
+    <SeoHead title="Cre8ors" description="Minting Now." image="/assets/SeoHead/v2-logo.jpg" />
     <MintPage />
   </MintProvider>
 )
