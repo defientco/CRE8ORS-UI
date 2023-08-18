@@ -1,5 +1,5 @@
 import { Contract } from "ethers"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import cre8orsAbi from "../../lib/abi-cre8ors.json"
 import getDefaultProvider from "../../lib/getDefaultProvider"
 
@@ -8,6 +8,7 @@ const useSaleStatus = () => {
   const [presaleStart, setPresaleStart] = useState(0)
   const [publicSaleActive, setPublicSaleActive] = useState<any>(null)
   const [publicSaleStart, setPublicSaleStart] = useState(0)
+  const [publicSalePrice, setPublicSalePrice] = useState(0)
   const [loading, setLoading] = useState(true)
   const cre8orsContract = useMemo(
     () =>
@@ -19,7 +20,7 @@ const useSaleStatus = () => {
     [],
   )
 
-  const initializeStatus = async () => {
+  const initializeStatus = useCallback(async () => {
     setPresaleActive(null)
     setPublicSaleActive(null)
     setPublicSaleStart(0)
@@ -31,12 +32,13 @@ const useSaleStatus = () => {
     setPresaleActive(details.presaleActive)
     setPresaleStart(Math.floor(parseInt(details.presaleStart, 10) / 1000000))
     setPublicSaleStart(Math.floor(parseInt(details.publicSaleStart, 10) / 1000000))
+    setPublicSalePrice(details.publicSalePrice)
     setLoading(false)
-  }
+  }, [cre8orsContract])
 
   useEffect(() => {
     initializeStatus()
-  }, [cre8orsContract])
+  }, [cre8orsContract, initializeStatus])
 
   return {
     loadingSaleStatus: loading,
@@ -44,6 +46,7 @@ const useSaleStatus = () => {
     presaleActive,
     publicSaleActive,
     publicSaleStart,
+    publicSalePrice,
     initializeStatus,
   }
 }
