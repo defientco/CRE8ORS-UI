@@ -1,4 +1,4 @@
-import { Contract } from "ethers"
+import { BigNumber, Contract } from "ethers"
 import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useEthersSigner } from "../useEthersSigner"
 import handleTxError from "../../lib/handleTxError"
@@ -22,7 +22,7 @@ const useCre8orMintV2 = () => {
       const contract = new Contract(process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS, cre8orAbi, signer)
 
       const tx = await contract.purchase(quantity, {
-        value: publicSalePrice,
+        value: BigNumber.from(publicSalePrice).mul(quantity).toString(),
         gasLimit: 300293 * quantity,
       })
       const receipt = await tx.wait()
