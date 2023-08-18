@@ -9,7 +9,6 @@ const useCre8orMintV2 = () => {
   const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
   const { publicSalePrice } = useMintProvider()
   const { checkNetwork } = useCheckNetwork()
-  console.log("sweets publicSalePrice", publicSalePrice)
 
   const mint = async (quantity) => {
     try {

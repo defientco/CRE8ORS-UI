@@ -32,7 +32,7 @@ const useSaleStatus = () => {
     setPresaleActive(details.presaleActive)
     setPresaleStart(Math.floor(parseInt(details.presaleStart, 10) / 1000000))
     setPublicSaleStart(Math.floor(parseInt(details.publicSaleStart, 10) / 1000000))
-    setPublicSalePrice(details.publicSalePrice)
+    setPublicSalePrice(details.publicSalePrice.toString())
     setLoading(false)
   }, [cre8orsContract])
 
