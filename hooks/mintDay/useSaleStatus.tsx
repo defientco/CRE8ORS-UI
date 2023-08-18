@@ -8,7 +8,7 @@ const useSaleStatus = () => {
   const [presaleStart, setPresaleStart] = useState(0)
   const [publicSaleActive, setPublicSaleActive] = useState<any>(null)
   const [publicSaleStart, setPublicSaleStart] = useState(0)
-  const [publicSalePrice, setPublicSalePrice] = useState("")
+  const [publicSalePrice, setPublicSalePrice] = useState("0")
   const [loading, setLoading] = useState(true)
   const cre8orsContract = useMemo(
     () =>
