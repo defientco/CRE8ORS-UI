@@ -128,7 +128,7 @@ const MintV2Page = () => {
               Mint Now
             </Button>
           </div>
-          <div className="flex justify-center gap-x-[20px] pt-[30px] md:pt-[20px] fade_in_text">
+          <div className="flex justify-center gap-x-[20px] pt-[30px] fade_in_text">
             <MintCTAButton
               id="open_sea"
               bgLink="/assets/MintV2/opensea.svg"
