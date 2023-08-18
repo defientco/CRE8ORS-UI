@@ -17,7 +17,7 @@ const MintCTAButton = ({ id, bgLink, blurBgLink, link }: MintCTAButtonProps) => 
       type="image"
       link={bgLink}
       blurLink={blurBgLink}
-      containerClasses="xs:w-[50px] xs:h-[50px]
+      containerClasses="md:w-[50px] md:h-[50px]
             w-[35px] h-[35px]"
     />
   </Button>
