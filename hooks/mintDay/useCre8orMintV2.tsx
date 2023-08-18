@@ -2,12 +2,12 @@ import { Contract } from "ethers"
 import cre8orAbi from "../../lib/abi-cre8ors.json"
 import { useEthersSigner } from "../useEthersSigner"
 import handleTxError from "../../lib/handleTxError"
-import { useMintProvider } from "../../providers/MintProvider"
 import useCheckNetwork from "../useCheckNetwork"
+import useSaleStatus from "./useSaleStatus"
 
 const useCre8orMintV2 = () => {
   const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
-  const { publicSalePrice } = useMintProvider()
+  const { publicSalePrice } = useSaleStatus()
   const { checkNetwork } = useCheckNetwork()
 
   const mint = async (quantity) => {
