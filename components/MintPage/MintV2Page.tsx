@@ -31,9 +31,7 @@ const MintV2Page = () => {
     setIsMintLoading(true)
     const response = await mint(mintQuantity)
     if (!response.err) {
-      setIsMintLoading(false)
       setOpenSuccessModal(true)
-      return
     }
 
     setIsMintLoading(false)
@@ -136,19 +134,19 @@ const MintV2Page = () => {
           </div>
           <div className="flex justify-center gap-x-[20px] pt-[30px] fade_in_text">
             <MintCTAButton
-              id="open_sea"
+              id="opensea_cta_btn"
               bgLink="/assets/MintV2/opensea.svg"
               blurBgLink="/assets/MintV2/opensea.png"
               link="https://opensea.io/collection/cre8orsaipeps"
             />
             <MintCTAButton
-              id="open_sea"
+              id="twitter_cta_btn"
               bgLink="/assets/MintV2/twitter.svg"
               blurBgLink="/assets/MintV2/twitter.png"
               link="https://twitter.com/Cre8orsNFT"
             />
             <MintCTAButton
-              id="open_sea"
+              id="discord_cta_btn"
               bgLink="/assets/MintV2/discord.svg"
               blurBgLink="/assets/MintV2/discord.png"
               link="https://discord.gg/ZpZBHCrqHQ"
