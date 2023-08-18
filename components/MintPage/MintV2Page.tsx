@@ -60,7 +60,7 @@ const MintV2Page = () => {
         >
           <Media
             type="image"
-            link="/assets/MintV2/mint-here.png"
+            link="/assets/MintV2/mint-here.svg"
             blurLink="/assets/MintV2/mint-here.png"
             containerClasses="md:w-[500px] md:h-[172px]
                         w-[300px] h-[103px]"

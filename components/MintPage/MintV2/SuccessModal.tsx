@@ -24,7 +24,7 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible }) => {
           type="image"
           link="/assets/MintV2/congrate.svg"
           blurLink="/assets/MintV2/congrate.png"
-          containerClasses="md:w-[400px] md:h-[130px]
+          containerClasses="md:w-[400px] md:h-[160px]
           w-[280px] h-[100px]"
         />
         <pre
