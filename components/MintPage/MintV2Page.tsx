@@ -118,17 +118,17 @@ const MintV2Page = () => {
           >
             1352 / 4444
           </pre>
-          <div ref={mintRef} className="fade_in_text">
+          <div ref={mintRef} >
             <Button
               id="mint_btn"
               className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
-                          h-[40px] w-[130px]"
+                          h-[40px] w-[130px] fade_in_text"
               onClick={mintNFT}
             >
               Mint Now
             </Button>
           </div>
-          <div className="flex justify-center gap-x-[20px] pt-[10px] md:pt-[20px] fade_in_text">
+          <div className="flex justify-center gap-x-[20px] pt-[30px] md:pt-[20px] fade_in_text">
             <MintCTAButton
               id="open_sea"
               bgLink="/assets/MintV2/opensea.svg"
