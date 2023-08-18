@@ -4,7 +4,6 @@ import metadata from "../../../../../public/metadata/metadata.json"
 class GetMetadata {
   @Get()
   async getMerkle(@Query("tokenId") tokenId: string) {
-
     return { ...metadata.data[tokenId] }
   }
 }
