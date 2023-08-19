@@ -15,7 +15,7 @@ const Header: FC<HeaderProps> = () => {
 
   const isMobile = useMediaQuery("(max-width: 768px)")
   const { themeMode } = useTheme()
-  const isMintpage = router.pathname.includes("mint")
+  const isMintPage = router.pathname.includes("mint")
 
   return (
     <nav
@@ -24,7 +24,7 @@ const Header: FC<HeaderProps> = () => {
     >
       <div
         className={`flex flex-row items-center justify-between ${
-          isMintpage ? "w-[1000px]" : "w-[1280px]"
+          isMintPage ? "w-[1000px]" : "w-[1280px]"
         } md:px-12 
       pt-2 md:pt-3`}
       >
@@ -33,7 +33,7 @@ const Header: FC<HeaderProps> = () => {
             <div className="relative">
               <Image
                 src={`${
-                  themeMode === "light" || isMintpage
+                  themeMode === "light" || isMintPage
                     ? "/CRE8ORS_LOGO.svg"
                     : "/assets/Header/white_logo.svg"
                 }`}
@@ -42,7 +42,7 @@ const Header: FC<HeaderProps> = () => {
                 height={16}
                 className="cursor-pointer"
               />
-              {isMintpage && (
+              {isMintPage && (
                 <div className="absolute">
                   <Image
                     src="/assets/Header/v2.svg"

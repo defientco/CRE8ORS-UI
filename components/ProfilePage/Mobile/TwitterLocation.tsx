@@ -1,7 +1,7 @@
-import Media from "../../../../shared/Media"
+import Media from "../../../shared/Media"
 
-import { useProfileProvider } from "../../../../providers/ProfileContext"
-import { useUserProvider } from "../../../../providers/UserProvider"
+import { useProfileProvider } from "../../../providers/ProfileContext"
+import { useUserProvider } from "../../../providers/UserProvider"
 
 const TwitterLocation = () => {
   const { userInfo } = useUserProvider()

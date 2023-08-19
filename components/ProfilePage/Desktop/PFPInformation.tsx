@@ -1,6 +1,6 @@
-import { useProfileProvider } from "../../../../providers/ProfileContext"
+import { useProfileProvider } from "../../../providers/ProfileContext"
 
-const PrePFPInformation = () => {
+const PFPInformation = () => {
   const { cre8orNumber } = useProfileProvider()
 
   return (
@@ -15,4 +15,4 @@ const PrePFPInformation = () => {
   )
 }
 
-export default PrePFPInformation
+export default PFPInformation

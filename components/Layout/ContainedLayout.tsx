@@ -8,17 +8,16 @@ import Footer from "../Footer/Footer"
 const ContainedLayout = ({ children }: ILayout) => {
   const router = useRouter()
 
-  const seoText = router.pathname.includes("mint")
-    ? "Minting Now."
-    : "Welcome to the next generation of creativity."
-  const seoLogo = router.pathname.includes("mint") ? "/v2-logo.png" : "/SEO_LOGO_ICON.png"
+  const isMintPage = router.pathname.includes("mint")
+  const seoText = isMintPage ? "Minting Now." : "Welcome to the next generation of creativity."
+  const seoLogo = isMintPage ? "/v2-logo.png" : "/SEO_LOGO_ICON.png"
 
   return (
     <div className="min-h-[100vh] w-screen text-black bg-transparent dark:bg-[black] relative overflow-hidden">
       <div
-        className="dark:hidden absolute left-0 top-[0px] z-[1]
-          w-full h-[calc(100%+500px)]
-          bg-[url('/assets/Layout/whitepaper.svg')] bg-cover bg-[center_center]"
+        className={`dark:hidden absolute left-0 top-[0px] z-[1]
+        w-full h-[calc(100%+500px)]
+        bg-[url('/assets/Layout/whitepaper.svg')] bg-cover bg-[center_center]`}
       />
       <SeoHead title="Cre8ors" description={seoText} image={seoLogo} />
       <Header />

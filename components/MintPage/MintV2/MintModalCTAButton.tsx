@@ -34,11 +34,11 @@ const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
       className={`!p-0
               md:w-[250px] md:h-[60px]
               w-[150px] h-[40px]
-              !font-eigerdals font-bold !bg-black 
+              !font-eigerdals font-bold 
               text-[15px] md:text-[25px]  
               !rounded-[10px]
-              !text-black dark:!text-white
-              dark:!bg-black !bg-white ${className || ""}`}
+              !text-black
+              !bg-white ${className || ""}`}
       onClick={goToLink}
     >
       {children}

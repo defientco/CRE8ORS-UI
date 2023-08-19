@@ -1,69 +1,97 @@
-import { useState } from "react"
 import Media from "../../shared/Media"
-import PFPInformation from "./Desktop/Reveal/PFPInfomation"
-import TwitterLocation from "./Desktop/Reveal/TwitterLocation"
-import ProfileInformation from "./Desktop/Reveal/ProfileInformation"
-import SimilarProfiles from "./Desktop/Reveal/SimilarProfiles"
-import PFPImage from "./Desktop/Reveal/PFPImage"
-import WalletCollection from "./WalletCollection"
 import Tooltip from "../../shared/Tooltip"
+import TwitterLocation from "./Desktop/TwitterLocation"
+import PFPInformation from "./Desktop/PFPInformation"
+import ProfileInformation from "./Desktop/ProflileInformation"
+import SimilarProfiles from "./Desktop/SimilarProfiles"
+import WalletCollection from "./WalletCollection"
+import DNALoading from "./DNALoading"
+import EditPanel from "./EditPanel"
+import { useUserProvider } from "../../providers/UserProvider"
+import { useProfileProvider } from "../../providers/ProfileContext"
 
 const DesktopProfileView = () => {
-  const [expandedMore, setExpandedMore] = useState(false)
+  const { userInfo } = useUserProvider()
+
+  const { expandedMore, isEditable, editedUserName, setEditedUserName } = useProfileProvider()
 
   return (
     <div
       className="relative w-full
-        bg-[url('/assets/Profile/background.png')] bg-cover
+        bg-[white]
         rounded-[10px]
         overflow-hidden"
     >
-      <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-l from-[#000000db] via-[transparent] to-[transparent]"
-      />
-      <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-t from-[#000000db] via-[transparent] to-[transparent]"
-      />
-      <PFPImage />
+      <DNALoading />
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
             pt-6`}
       >
         <div className="w-full flex justify-between items-center px-10">
-          <div className="">
-            <div className="font-eigerdals text-[75px]">Stargirl</div>
-          </div>
-          <div className="flex items-center gap-x-[10px]">
+          {isEditable ? (
+            <>
+              <input
+                className="relative z-[105] 
+            font-eigerdals text-[75px] w-[320px]
+            ring-0 outline-none
+            border-[lightgray] border-[1px]
+            mb-[20px] bg-[#D9D9D9]
+            px-[10px] py-[2px]
+            leading-[110.3%]
+            rounded-[4px]"
+                value={editedUserName}
+                onChange={(e) => setEditedUserName(e.target.value)}
+                type="text"
+              />
+
+              <EditPanel />
+            </>
+          ) : (
             <div
-              className="w-[26px] h-[26px] bg-[white] 
+              className="font-eigerdals text-[75px]
+            pb-[30px] py-[10px]
+            leading-[90.3%]"
+            >
+              {userInfo?.username
+                ? `${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`
+                : ""}
+            </div>
+          )}
+          <div className="flex items-center gap-x-[10px]">
+            <button
+              type="button"
+              className="w-[26px] h-[26px] bg-[black] 
+                        hover:scale-[1.3] scale-[1] transition duration-[300ms]
                         flex items-center justify-center
+                        drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                         rounded-[3px] cursor-pointer"
             >
               <Media
                 type="image"
-                link="/assets/Profile/home.svg"
-                blurLink="/assets/Profile/home.png"
+                link="/assets/Profile/white_home.svg"
+                blurLink="/assets/Profile/white_home.png"
                 containerClasses="w-[17px] h-[17px]"
               />
-            </div>
+            </button>
             <Tooltip
               id="comming_soon_btn"
               message="BADGES,<br />EMBLEMS, &<br />AWARDS<br />COMING SOON"
               place="top"
               style={{
-                backgroundColor: "#6C6C6C",
+                backgroundColor: "#DADADA",
                 color: "black",
                 fontFamily: "quicksand",
                 fontSize: "10px",
                 fontWeight: "bold",
               }}
             >
-              <div
-                className="w-[26px] h-[26px] bg-[#6C6C6C] 
+              <button
+                type="button"
+                className="w-[26px] h-[26px] bg-[white] 
                             flex items-center justify-center
+                            hover:scale-[1.3] scale-[1] transition duration-[300ms]
+                            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
                             rounded-[3px] cursor-pointer"
               >
                 <Media
@@ -72,7 +100,7 @@ const DesktopProfileView = () => {
                   blurLink="/assets/Profile/three_dot.png"
                   containerClasses="w-[17px] h-[17px]"
                 />
-              </div>
+              </button>
             </Tooltip>
           </div>
         </div>
@@ -82,9 +110,9 @@ const DesktopProfileView = () => {
             <div
               className={`flex ${
                 expandedMore ? "items-end gap-x-[35px]" : "items-center"
-              } pt-[20px]`}
+              } pt-[70px]`}
             >
-              <PFPInformation expandMore={expandedMore} />
+              <PFPInformation />
             </div>
           </div>
           <div className="flex flex-col gap-y-[40px]">
@@ -92,10 +120,7 @@ const DesktopProfileView = () => {
             <SimilarProfiles />
           </div>
         </div>
-        <WalletCollection
-          handleExpandMore={(expanded: boolean) => setExpandedMore(expanded)}
-          expandMore={expandedMore}
-        />
+        <WalletCollection />
       </div>
     </div>
   )

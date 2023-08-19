@@ -200,7 +200,7 @@ const MintV2Page = () => {
       </Layout>
       {isMintLoading && <MintingModal />}
       <SuccessModal
-        isModalVisible={openSuccessModal}
+        isModalVisible
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
         securedNumber={securedNumber}
       />

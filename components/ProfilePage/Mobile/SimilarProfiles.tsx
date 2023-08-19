@@ -1,8 +1,8 @@
-import { useUserProvider } from "../../../../providers/UserProvider"
-import Media from "../../../../shared/Media"
-import Tooltip from "../../../../shared/Tooltip"
+import { useUserProvider } from "../../../providers/UserProvider"
+import Media from "../../../shared/Media"
+import Tooltip from "../../../shared/Tooltip"
 
-const PreSimilarProfiles = () => {
+const SimilarProfiles = () => {
   const { similarProfiles } = useUserProvider()
 
   return (
@@ -51,4 +51,4 @@ const PreSimilarProfiles = () => {
   )
 }
 
-export default PreSimilarProfiles
+export default SimilarProfiles

@@ -1,8 +1,8 @@
 /* eslint-disable react/no-danger */
-import { useProfileProvider } from "../../../../providers/ProfileContext"
-import { useUserProvider } from "../../../../providers/UserProvider"
+import { useProfileProvider } from "../../../providers/ProfileContext"
+import { useUserProvider } from "../../../providers/UserProvider"
 
-const PreProfileInformation = () => {
+const ProfileInformation = () => {
   const { userInfo } = useUserProvider()
   const {
     isEditable,
@@ -128,4 +128,4 @@ const PreProfileInformation = () => {
   )
 }
 
-export default PreProfileInformation
+export default ProfileInformation

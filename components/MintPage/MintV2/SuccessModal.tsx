@@ -1,10 +1,8 @@
-import { useAccount } from "wagmi"
 import Modal from "../../../shared/Modal"
 import Media from "../../../shared/Media"
 import MintModalCTAButton from "./MintModalCTAButton"
 
 const SuccessModal = ({ isModalVisible, toggleIsVisible, securedNumber }) => {
-  const { address } = useAccount()
   const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
@@ -52,7 +50,7 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible, securedNumber }) => {
         </MintModalCTAButton>
         <MintModalCTAButton
           id="share_tweet_btn"
-          link={`/profile/${address}`}
+          link="/profile/"
           target="_blank"
           className="!mt-[10px]"
         >

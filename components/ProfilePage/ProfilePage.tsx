@@ -3,8 +3,8 @@ import { useAccount } from "wagmi"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import Layout from "../Layout"
-import PreDesktopProfileView from "./PreDesktopProfileView"
-import PreMobileProfileView from "./PreMobileProfileView"
+import DesktopProfileView from "./DesktopProfileView"
+import MobileProfileView from "./MobileProfileView"
 import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
@@ -80,10 +80,10 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   )}
-                  <PreMobileProfileView />
+                  <MobileProfileView />
                 </>
               ) : (
-                <PreDesktopProfileView />
+                <DesktopProfileView />
               )}
             </div>
           </WallectCollectionProvider>

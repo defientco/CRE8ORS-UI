@@ -1,4 +1,13 @@
-import { useContext, createContext, ReactNode, FC, useState, useCallback, useMemo } from "react"
+import {
+  useContext,
+  createContext,
+  ReactNode,
+  FC,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react"
 
 import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
@@ -50,6 +59,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
     },
     [address],
   )
+
+  useEffect(() => {
+    getUserData()
+  }, [getUserData])
 
   const provider = useMemo(
     () => ({

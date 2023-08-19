@@ -16,7 +16,8 @@ const DesktopMenu = () => {
   const router = useRouter()
   const { isConnected, address } = useAccount()
 
-  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
+  const isMintPage = router.pathname.includes("/mint")
+  const isHidden = isMintPage || router.pathname.includes("/staking")
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)

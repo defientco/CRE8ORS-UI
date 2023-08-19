@@ -1,4 +1,4 @@
-import Media from "../../../../shared/Media"
+import Media from "../../../shared/Media"
 
 const PFPImage = () => (
   <div

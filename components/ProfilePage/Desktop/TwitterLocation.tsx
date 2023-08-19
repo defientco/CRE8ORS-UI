@@ -1,9 +1,9 @@
-import Media from "../../../../shared/Media"
-import Tooltip from "../../../../shared/Tooltip"
-import { useUserProvider } from "../../../../providers/UserProvider"
-import { useProfileProvider } from "../../../../providers/ProfileContext"
+import Media from "../../../shared/Media"
+import Tooltip from "../../../shared/Tooltip"
+import { useUserProvider } from "../../../providers/UserProvider"
+import { useProfileProvider } from "../../../providers/ProfileContext"
 
-const PreTwitterLocation = () => {
+const TwitterLocation = () => {
   const { userInfo } = useUserProvider()
   const {
     isEditable,
@@ -112,4 +112,4 @@ const PreTwitterLocation = () => {
   )
 }
 
-export default PreTwitterLocation
+export default TwitterLocation

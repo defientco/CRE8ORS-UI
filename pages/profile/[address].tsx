@@ -49,10 +49,10 @@ export const getServerSideProps: GetServerSideProps<ProfileProps> = async ({ par
   }
 }
 
-const Profile = () => (
+const PublicProfile = () => (
   <ProfileProvider>
     <ProfilePage />
   </ProfileProvider>
 )
 
-export default Profile
+export default PublicProfile
