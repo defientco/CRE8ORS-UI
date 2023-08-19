@@ -1,8 +1,10 @@
 import { ProfileProvider } from "../../providers/ProfileContext"
-import ProfilePage from "./ProfilePage"
+import ProfileView from "./ProfilePage"
 
-export default (
+const ProfilePage = () => (
   <ProfileProvider>
-    <ProfilePage />
+    <ProfileView />
   </ProfileProvider>
 )
+
+export default ProfilePage
