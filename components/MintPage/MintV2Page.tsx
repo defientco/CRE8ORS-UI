@@ -1,4 +1,6 @@
 import { useRef, useState } from "react"
+import { useAccount } from "wagmi"
+import { BigNumber } from "ethers"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import Layout from "../Layout"
@@ -7,14 +9,19 @@ import useShakeEffect from "../../hooks/useShakeEffect"
 import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
+import WalletConnectButton from "../WalletConnectButton"
+import getNFTs from "../../lib/alchemy/getNFTs"
 
 const MintV2Page = () => {
-  const [mintQuantity, setMintQuantity] = useState(0)
+  const [mintQuantity, setMintQuantity] = useState(1)
+  const [securedNumber, setSecuredNumber] = useState(null)
+
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
-  const { mint } = useCre8orMintV2()
+  const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
+  const { isConnected, address } = useAccount()
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -25,12 +32,28 @@ const MintV2Page = () => {
     setMintQuantity(mintQuantity - 1)
   }
 
+  const getSecuredNumber = async () => {
+    const response = await getNFTs(
+      address as string,
+      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+    )
+
+    if (response?.ownedNfts.length) {
+      const lastCre8or = response.ownedNfts[response.totalCount - 1]
+      const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
+      setSecuredNumber(tokenId)
+    }
+  }
+
   const mintNFT = async () => {
     if (!mintQuantity) return
 
     setIsMintLoading(true)
     const response = await mint(mintQuantity)
     if (!response.err) {
+      await getTotalSupply()
+      await getSecuredNumber()
       setOpenSuccessModal(true)
     }
 
@@ -120,18 +143,39 @@ const MintV2Page = () => {
             className="text-[16px] md:text-[21px] font-quicksand font-medium
                     pt-[15px] md:pt-[20px]"
           >
-            1352 / 4444
+            {totalSupply || "---"} / 4444
           </pre>
-          <div ref={mintRef}>
-            <Button
-              id="mint_btn"
-              className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
+          {isConnected ? (
+            <div ref={mintRef}>
+              <Button
+                id="mint_btn"
+                className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
                           h-[40px] w-[130px] fade_in_text"
-              onClick={mintNFT}
-            >
-              Mint Now
-            </Button>
-          </div>
+                onClick={mintNFT}
+              >
+                Mint Now
+              </Button>
+            </div>
+          ) : (
+            <WalletConnectButton>
+              <div
+                className="uppercase
+            text-[16px] text-white
+            rounded-[5px]
+            hover:scale-[1.1] scale-[1] transition duration-[300ms]
+            bg-[black] 
+            shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
+            flex items-center justify-center gap-[10px]
+            font-quicksand
+            my-[15px] md:my-[20px] 
+            !p-0 
+            md:w-[200px] md:h-[50px]
+            h-[40px] w-[130px] fade_in_text"
+              >
+                Connect Wallet
+              </div>
+            </WalletConnectButton>
+          )}
           <div className="flex justify-center gap-x-[20px] pt-[30px] fade_in_text">
             <MintCTAButton
               id="opensea_cta_btn"
@@ -158,6 +202,7 @@ const MintV2Page = () => {
       <SuccessModal
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
+        securedNumber={securedNumber}
       />
     </>
   )
