@@ -3,7 +3,7 @@ import Modal from "../../../shared/Modal"
 import Media from "../../../shared/Media"
 import MintModalCTAButton from "./MintModalCTAButton"
 
-const SuccessModal = ({ isModalVisible, toggleIsVisible }) => {
+const SuccessModal = ({ isModalVisible, toggleIsVisible, securedNumber }) => {
   const { address } = useAccount()
   const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
@@ -34,11 +34,11 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible }) => {
             dark:text-black text-white
             leading-[103.3%]"
         >
-          Cre8or DNA Secured.
+          {`#${securedNumber}`} Cre8or DNA Secured.
         </pre>
         <Media
-          link="/assets/Mint/MintNow/MintCoreModal/mint_avatar.svg"
-          blurLink="/assets/Mint/MintNow/MintCoreModal/mint_avatar.png"
+          link="/assets/Common/dna_animation.gif"
+          blurLink="/assets/Common/dna_animation.gif"
           type="image"
           containerClasses="xl:w-[192.3px] xl:h-[192.3px]
       w-[125px] h-[125px] 
