@@ -1,6 +1,5 @@
 import { useRef, useState } from "react"
 import { useAccount } from "wagmi"
-import { BigNumber } from "ethers"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import Layout from "../Layout"
@@ -10,18 +9,18 @@ import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
-import getNFTs from "../../lib/alchemy/getNFTs"
+import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 
 const MintV2Page = () => {
   const [mintQuantity, setMintQuantity] = useState(1)
-  const [securedNumber, setSecuredNumber] = useState(null)
 
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
+  const { cre8orNumber, getCre8orNumber } = useCre8orNumber()
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -32,20 +31,6 @@ const MintV2Page = () => {
     setMintQuantity(mintQuantity - 1)
   }
 
-  const getSecuredNumber = async () => {
-    const response = await getNFTs(
-      address as string,
-      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
-      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
-    )
-
-    if (response?.ownedNfts.length) {
-      const lastCre8or = response.ownedNfts[response.totalCount - 1]
-      const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
-      setSecuredNumber(tokenId)
-    }
-  }
-
   const mintNFT = async () => {
     if (!mintQuantity) return
 
@@ -53,7 +38,7 @@ const MintV2Page = () => {
     const response = await mint(mintQuantity)
     if (!response.err) {
       await getTotalSupply()
-      await getSecuredNumber()
+      await getCre8orNumber()
       setOpenSuccessModal(true)
     }
 
@@ -200,9 +185,9 @@ const MintV2Page = () => {
       </Layout>
       {isMintLoading && <MintingModal />}
       <SuccessModal
-        isModalVisible
+        isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
-        securedNumber={securedNumber}
+        cre8orNumber={cre8orNumber}
       />
     </>
   )

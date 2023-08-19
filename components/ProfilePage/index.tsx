@@ -1,3 +1,8 @@
+import { ProfileProvider } from "../../providers/ProfileContext"
 import ProfilePage from "./ProfilePage"
 
-export default ProfilePage
+export default (
+  <ProfileProvider>
+    <ProfilePage />
+  </ProfileProvider>
+)
