@@ -9,7 +9,6 @@ import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
 import { WallectCollectionProvider } from "../../providers/WalletCollectionProvider"
-import Footer from "../Footer"
 
 const ProfilePage = () => {
   const routerAddress = useRouter().query.address as string
@@ -35,7 +34,7 @@ const ProfilePage = () => {
   }, [routerAddress, getUserData, getUserSimilarProfiles])
 
   return (
-    <Layout type="base">
+    <Layout type="contained">
       <div className="flex justify-center">
         <div className="max-w-[1280px]">
           <WallectCollectionProvider>
@@ -87,7 +86,6 @@ const ProfilePage = () => {
               )}
             </div>
           </WallectCollectionProvider>
-          <Footer className="!pt-6 !pb-0 !bg-transparent relative !z-[10]" />
         </div>
       </div>
     </Layout>

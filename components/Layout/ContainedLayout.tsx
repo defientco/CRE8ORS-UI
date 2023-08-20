@@ -25,7 +25,7 @@ const ContainedLayout = ({ children }: ILayout) => {
         <div className="md:w-[1280px] relative">{children}</div>
       </div>
 
-      <div className="relative z-[3]">
+      <div className="relative z-[1]">
         <Footer className="!pt-6" />
       </div>
     </div>
