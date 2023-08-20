@@ -11,6 +11,7 @@ import {
 
 import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
+import { useRouter } from "next/router"
 
 interface userProps {
   getUserData: (address?: string) => Promise<void>
@@ -26,6 +27,7 @@ interface Props {
 const UserContext = createContext<Partial<userProps> | null>(null)
 
 export const UserProvider: FC<Props> = ({ children }) => {
+  const routerAddress = useRouter().query.address as string
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
@@ -61,8 +63,8 @@ export const UserProvider: FC<Props> = ({ children }) => {
   )
 
   useEffect(() => {
-    getUserData()
-  }, [getUserData])
+    if (!routerAddress) getUserData()
+  }, [getUserData, routerAddress])
 
   const provider = useMemo(
     () => ({

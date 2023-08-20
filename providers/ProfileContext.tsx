@@ -4,14 +4,15 @@ import { useRouter } from "next/router"
 import { useUserProvider } from "./UserProvider"
 import { updateUserInfo } from "../lib/userInfo"
 import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
+import { useAccount } from "wagmi"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
 
 export const ProfileProvider = ({ children }) => {
-  const router = useRouter()
-  const { address } = router.query
+  const routerAddress = useRouter().query.address as string
   const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
-  const { cre8orNumber } = useCre8orNumber()
+  const { address } = useAccount()
+  const { cre8orNumber } = useCre8orNumber({ address: routerAddress || address })
 
   const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
@@ -28,7 +29,7 @@ export const ProfileProvider = ({ children }) => {
     setIsEditable(false)
     setLoading(true)
     const response = await updateUserInfo({
-      address,
+      address: routerAddress,
       twitterHandle: editedTwitterHandle,
       location: editedLocation,
       iNeedHelpWith: editedINeedHelpWith,
@@ -38,8 +39,8 @@ export const ProfileProvider = ({ children }) => {
     })
 
     if (response) {
-      await getUserData(address as string)
-      await getUserSimilarProfiles(address as string)
+      await getUserData(routerAddress)
+      await getUserSimilarProfiles(routerAddress)
     }
     setLoading(false)
   }

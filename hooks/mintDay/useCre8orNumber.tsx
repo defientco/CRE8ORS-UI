@@ -1,11 +1,9 @@
 import { useCallback, useState, useEffect } from "react"
 import getNFTs from "../../lib/alchemy/getNFTs"
-import { useAccount } from "wagmi"
 import { BigNumber } from "ethers"
 
-const useCre8orNumber = () => {
+const useCre8orNumber = ({ address }) => {
   const [cre8orNumber, setCre8orNumber] = useState("")
-  const { address } = useAccount()
 
   const getCre8orNumber = useCallback(async () => {
     if (!address) return null
