@@ -50,9 +50,11 @@ const DesktopMenu = () => {
       <div className="relative">
         <button
           type="button"
-          className={`font-bold rounded-lg bg-[black] dark:bg-white dark:text-[black] text-white uppercase text-sm w-[134px] h-[40px] ${
-            isMenuOpen && "shadow-md"
-          } ${!isMenuOpen && "!bg-transparent dark:!text-[white] !text-[black]"}`}
+          className={`font-bold rounded-lg bg-[black] dark:bg-white ${
+            !isMintPage && "dark:text-[black]"
+          } text-white uppercase text-sm w-[134px] h-[40px] ${isMenuOpen && "shadow-md"} ${
+            !isMenuOpen && "!bg-transparent dark:!text-[white] !text-[black]"
+          }`}
           onClick={toggleMenu}
         >
           Explore

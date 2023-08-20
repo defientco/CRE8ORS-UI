@@ -20,9 +20,9 @@ const MintV2Page = () => {
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { publicSalePrice } = useMintProvider()
   const { isConnected, address } = useAccount()
   const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address })
+  const { publicSalePrice } = useMintProvider()
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)

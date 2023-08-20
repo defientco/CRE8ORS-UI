@@ -1,10 +1,6 @@
+import { NextPage } from "next"
 import MintPage from "../../components/MintPage"
-import { MintProvider } from "../../providers/MintProvider"
 
-const Mint = () => (
-  <MintProvider>
-    <MintPage />
-  </MintProvider>
-)
+const Mint: NextPage = () => <MintPage />
 
 export default Mint
