@@ -15,7 +15,7 @@ const ContainedLayout = ({ children }: ILayout) => {
   return (
     <div className="min-h-[100vh] w-screen text-black bg-transparent dark:bg-[black] relative overflow-hidden">
       <div
-        className={`dark:hidden absolute left-0 top-[0px] z-[1]
+        className={`${!isMintPage && "dark:hidden"} absolute left-0 top-[0px] z-[1]
         w-full h-[calc(100%+500px)]
         bg-[url('/assets/Layout/whitepaper.svg')] bg-cover bg-[center_center]`}
       />

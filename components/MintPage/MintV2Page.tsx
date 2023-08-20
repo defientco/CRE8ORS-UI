@@ -96,7 +96,8 @@ const MintV2Page = () => {
                           !bg-[white] !text-black
                           text-[30px] md:text-[50px]
                           font-bold font-quicksand
-                          rounded-[10px]"
+                          rounded-[10px]
+                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
                 onClick={decreaseAmount}
               >
                 -
@@ -104,8 +105,8 @@ const MintV2Page = () => {
             </div>
             <div
               className="font-bold font-eigerdals 
-                            uppercase text-black dark:text-[white] rounded bg-[white] dark:bg-[black] 
-                            shadow-[0px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[0px_4px_4px_rgb(255,255,255,0.25)]
+                            uppercase text-black rounded bg-[white] 
+                            shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
                             flex items-center justify-center gap-[10px]
                             text-[35px] md:text-[50px] 
                             md:w-[120px] md:h-[120px]
@@ -122,7 +123,8 @@ const MintV2Page = () => {
                         !bg-[white] !text-black
                         text-[30px] md:text-[50px]
                         font-bold font-quicksand.
-                        rounded-[10px]"
+                        rounded-[10px]
+                        !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
               onClick={increateAmount}
             >
               +
@@ -139,7 +141,8 @@ const MintV2Page = () => {
               <Button
                 id="mint_btn"
                 className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
-                          h-[40px] w-[130px] fade_in_text"
+                          h-[40px] w-[130px] fade_in_text
+                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
                 onClick={mintNFT}
               >
                 Mint Now
