@@ -2,6 +2,7 @@ import Media from "../../../shared/Media"
 import Tooltip from "../../../shared/Tooltip"
 import { useUserProvider } from "../../../providers/UserProvider"
 import { useProfileProvider } from "../../../providers/ProfileContext"
+import Skeleton from "../Sketelon"
 
 const TwitterLocation = () => {
   const { userInfo } = useUserProvider()
@@ -45,7 +46,11 @@ const TwitterLocation = () => {
               target="_blank"
               rel="noreferrer"
             >
-              @{userInfo?.twitterHandle}
+              {userInfo?.twitterHandle ? (
+                `@${userInfo?.twitterHandle}`
+              ) : (
+                <Skeleton className="w-[150px] h-[30px]" />
+              )}
             </a>
           </p>
         )}
@@ -73,7 +78,7 @@ const TwitterLocation = () => {
           />
         ) : (
           <p className="font-quicksand font-bold text-[22px] leading-[99.3%]">
-            {userInfo?.location}
+            {userInfo?.location ? userInfo?.location : <Skeleton className="w-[100px] h-[30px]" />}
           </p>
         )}
       </div>

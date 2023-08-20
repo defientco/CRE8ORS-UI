@@ -9,6 +9,7 @@ import DNALoading from "./DNALoading"
 import EditPanel from "./EditPanel"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
+import Skeleton from "./Sketelon"
 
 const DesktopProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -53,9 +54,11 @@ const DesktopProfileView = () => {
             pb-[30px] py-[10px]
             leading-[90.3%]"
             >
-              {userInfo?.username
-                ? `${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`
-                : ""}
+              {userInfo?.username ? (
+                `${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`
+              ) : (
+                <Skeleton className="w-[258px] h-[67.5px]" />
+              )}
             </div>
           )}
           <div className="flex items-center gap-x-[10px]">

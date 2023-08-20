@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import { useProfileProvider } from "../../../providers/ProfileContext"
 import { useUserProvider } from "../../../providers/UserProvider"
+import Skeleton from "../Sketelon"
 
 const ProfileInformation = () => {
   const { userInfo } = useUserProvider()
@@ -40,19 +41,25 @@ const ProfileInformation = () => {
           onChange={(e) => setEditedBio(e.target.value.slice(0, 160))}
         />
       ) : (
-        <div
-          className="text-[16px] font-quicksand font-medium
-                  pt-[15px]
-                  leading-[99.3%]
-                  text-center lg:text-right
-                  max-w-[220px]
-                  break-words"
-          dangerouslySetInnerHTML={{
-            __html:
-              userInfo?.bio.replace("\n", "<br/>") ||
-              `Lorem ipsum dolor sit amet,<br/>consectetur adipiscing elit,<br/>sed do eiusmod tempor<br/>incididunt ut labore et dolore<br/>magna aliqua. Ut enim ad<br/>minim veniam, quis nostrud<br/>exercitation.`,
-          }}
-        />
+        <div>
+          {userInfo?.bio ? (
+            <div
+              className="text-[16px] font-quicksand font-medium
+                    pt-[15px]
+                    leading-[99.3%]
+                    text-center lg:text-right
+                    max-w-[220px]
+                    break-words"
+              dangerouslySetInnerHTML={{
+                __html:
+                  userInfo?.bio.replace("\n", "<br/>") ||
+                  `Lorem ipsum dolor sit amet,<br/>consectetur adipiscing elit,<br/>sed do eiusmod tempor<br/>incididunt ut labore et dolore<br/>magna aliqua. Ut enim ad<br/>minim veniam, quis nostrud<br/>exercitation.`,
+              }}
+            />
+          ) : (
+            <Skeleton className="w-[200px] h-[125px]" type="multi" rowSpans={3} />
+          )}
+        </div>
       )}
       <div
         className="text-[16px] font-bold font-quicksand
