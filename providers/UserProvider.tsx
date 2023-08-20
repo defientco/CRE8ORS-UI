@@ -27,7 +27,11 @@ interface Props {
 const UserContext = createContext<Partial<userProps> | null>(null)
 
 export const UserProvider: FC<Props> = ({ children }) => {
-  const routerAddress = useRouter().query.address as string
+  const router = useRouter()
+  const routerAddress = router.query.address as string
+
+  const isProfilePage = router.pathname.includes("/profile")
+
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
@@ -52,7 +56,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
       if (walletAddress || address) {
         const info: any = await getUserInfo(walletAddress || address)
 
-        if (!info?.doc) return setUserInfo(null)
+        if (!info?.doc) {
+          setUserInfo(null)
+          if (isProfilePage) router.push("/save-profile")
+          return
+        }
 
         return setUserInfo(info.doc)
       }
