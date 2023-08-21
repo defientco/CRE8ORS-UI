@@ -10,6 +10,7 @@ import EditPanel from "./EditPanel"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import Skeleton from "./Sketelon"
+import DownloadAssetsButton from "./DownlodAssetsButton"
 
 const DesktopProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -62,6 +63,7 @@ const DesktopProfileView = () => {
             </div>
           )}
           <div className="flex items-center gap-x-[10px]">
+            <DownloadAssetsButton />
             <button
               type="button"
               className="w-[26px] h-[26px] bg-[black] 

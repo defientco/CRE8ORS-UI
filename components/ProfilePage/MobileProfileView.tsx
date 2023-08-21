@@ -6,6 +6,7 @@ import WalletCollection from "./WalletCollection"
 import DNALoading from "./DNALoading"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
+import DownloadAssetsButton from "./DownlodAssetsButton"
 
 const MobileProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -95,6 +96,9 @@ const MobileProfileView = () => {
               />
             </button>
           )}
+        </div>
+        <div className="w-full flex justify-center pt-[15px]">
+          <DownloadAssetsButton />
         </div>
         <DNALoading />
 
