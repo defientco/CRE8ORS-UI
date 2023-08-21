@@ -22,7 +22,7 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
 
     setOpenLoadingModal(true)
     await createTbaAndMintDna(cre8orNumber)
-    getDNAByCre8orNumber()
+    await getDNAByCre8orNumber()
     setOpenLoadingModal(false)
   }
 

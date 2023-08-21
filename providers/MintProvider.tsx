@@ -21,6 +21,7 @@ interface mintProps {
   presaleActive: boolean | null
   presaleStart: number
   publicSaleStart: number
+  publicSalePrice: string
   getFFAndPassportsInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>

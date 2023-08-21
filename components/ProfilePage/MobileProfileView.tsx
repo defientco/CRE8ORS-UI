@@ -1,41 +1,64 @@
-import { useState } from "react"
 import Media from "../../shared/Media"
-import ProfileInformation from "./Desktop/Reveal/ProfileInformation"
-import SimilarProfiles from "./Mobile/Reveal/SimilarProfiles"
+import ProfileInformation from "./Desktop/ProflileInformation"
+import TwitterLocation from "./Mobile/TwitterLocation"
+import SimilarProfiles from "./Mobile/SimilarProfiles"
 import WalletCollection from "./WalletCollection"
-// import TwitterLocation from "./Mobile/Reveal/TwitterLocation"
-import PFPImage from "./Mobile/Reveal/PFPImage"
+import DNALoading from "./DNALoading"
+import { useUserProvider } from "../../providers/UserProvider"
+import { useProfileProvider } from "../../providers/ProfileContext"
 
 const MobileProfileView = () => {
-  const [expandedMore, setExpandedMore] = useState(false)
+  const { userInfo } = useUserProvider()
+  const { isEditable, editedUserName, setEditedUserName, setIsEditable, isHiddenEditable } =
+    useProfileProvider()
 
   return (
     <div
-      className="relative w-full
-        bg-[url('/assets/Profile/background.png')] bg-cover
-        rounded-[10px]
-        overflow-hidden"
+      className="relative 
+          w-[300px]
+          samsungS8:w-[325px]
+          xs:w-[360px]
+          bg-[white]
+          rounded-[10px]
+          overflow-hidden"
     >
       <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-l from-[#000000db] via-[transparent] to-[transparent]"
-      />
-      <div
-        className="absolute z-[1] left-0 top-0 w-full h-full
-            bg-gradient-to-t from-[#000000db] via-[transparent] to-[transparent]"
-      />
-      <div
         className={`relative z-[3] left-0 top-0 w-full h-full
-            flex flex-col
-            pt-6`}
+              flex flex-col
+              pt-6`}
       >
-        <div className="font-eigerdals text-[40px] text-center">Stargirl</div>
-        {/* <TwitterLocation /> */}
+        {isEditable ? (
+          <div className="flex justify-center">
+            <input
+              className="relative z-[105] 
+          text-[40px] leading-[99.3%] 
+          font-eigerdals font-bold
+          w-[190px]
+          ring-0 outline-none
+          border-[lightgray] border-[1px]
+          bg-[#D9D9D9]
+          px-[10px] py-[2px]
+          rounded-[4px]"
+              onChange={(e) => setEditedUserName(e.target.value)}
+              value={editedUserName}
+            />{" "}
+          </div>
+        ) : (
+          <div className="flex justify-center ">
+            <div
+              className="font-eigerdals text-[27px] samsungS8:text-[30px] xs:text-[33px] text-center
+          leading-[100%]"
+            >
+              {`${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`}
+            </div>
+          </div>
+        )}
+        <TwitterLocation />
         <div className="w-full flex justify-center items-center px-10 gap-x-[10px] pt-[15px]">
           <div
             className="w-[26px] h-[26px] bg-[#DBDBDB] 
-                        flex items-center justify-center
-                        rounded-[3px] cursor-pointer"
+                          flex items-center justify-center
+                          rounded-[3px] cursor-pointer"
           >
             <Media
               type="image"
@@ -46,8 +69,8 @@ const MobileProfileView = () => {
           </div>
           <div
             className="w-[26px] h-[26px] bg-[#DBDBDB] 
-                        flex items-center justify-center
-                        rounded-[3px] cursor-pointer"
+                          flex items-center justify-center
+                          rounded-[3px] cursor-pointer"
           >
             <Media
               type="image"
@@ -56,29 +79,29 @@ const MobileProfileView = () => {
               containerClasses="w-[17px] h-[17px]"
             />
           </div>
-          <button
-            className="w-[26px] h-[26px] bg-[#DBDBDB]
-                        flex items-center justify-center
-                        rounded-[2px] cursor-pointer"
-            type="button"
-          >
-            <Media
-              type="image"
-              link="/assets/Profile/edit.svg"
-              blurLink="/assets/Profile/edit.png"
-              containerClasses="w-[17px] h-[17px]"
-            />
-          </button>
+          {!isHiddenEditable && (
+            <button
+              className="w-[26px] h-[26px] bg-[#DBDBDB]
+                          flex items-center justify-center
+                          rounded-[2px] cursor-pointer"
+              type="button"
+              onClick={() => setIsEditable(!isEditable)}
+            >
+              <Media
+                type="image"
+                link="/assets/Profile/edit.svg"
+                blurLink="/assets/Profile/edit.png"
+                containerClasses="w-[17px] h-[17px]"
+              />
+            </button>
+          )}
         </div>
-        <PFPImage />
+        <DNALoading />
 
         <ProfileInformation />
         <SimilarProfiles />
 
-        <WalletCollection
-          handleExpandMore={(expanded: boolean) => setExpandedMore(expanded)}
-          expandMore={expandedMore}
-        />
+        <WalletCollection />
       </div>
     </div>
   )

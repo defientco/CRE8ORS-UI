@@ -1,19 +1,18 @@
-import { createContext, useState, useEffect, useMemo, useContext, useCallback } from "react"
+import { createContext, useState, useEffect, useMemo, useContext } from "react"
 
 import { useRouter } from "next/router"
-import { BigNumber } from "ethers"
 import { useUserProvider } from "./UserProvider"
 import { updateUserInfo } from "../lib/userInfo"
-import getNFTs from "../lib/alchemy/getNFTs"
+import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
+import { useAccount } from "wagmi"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
 
 export const ProfileProvider = ({ children }) => {
-  const router = useRouter()
-
-  const { address } = router.query
-
+  const routerAddress = useRouter().query.address as string
   const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
+  const { address } = useAccount()
+  const { cre8orNumber } = useCre8orNumber({ address: routerAddress || address })
 
   const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
@@ -25,13 +24,12 @@ export const ProfileProvider = ({ children }) => {
   const [editedINeedHelpWith, setEditedINeedHelpWith] = useState("")
   const [editedBio, setEditedBio] = useState("")
   const [loading, setLoading] = useState(false)
-  const [cre8orNumber, setCre8orNumber] = useState("")
 
   const saveProfile = async () => {
     setIsEditable(false)
     setLoading(true)
     const response = await updateUserInfo({
-      address,
+      address: routerAddress,
       twitterHandle: editedTwitterHandle,
       location: editedLocation,
       iNeedHelpWith: editedINeedHelpWith,
@@ -41,8 +39,8 @@ export const ProfileProvider = ({ children }) => {
     })
 
     if (response) {
-      await getUserData(address as string)
-      await getUserSimilarProfiles(address as string)
+      await getUserData(routerAddress)
+      await getUserSimilarProfiles(routerAddress)
     }
     setLoading(false)
   }
@@ -57,28 +55,6 @@ export const ProfileProvider = ({ children }) => {
       setEditedBio(userInfo.bio)
     }
   }, [isEditable, userInfo])
-
-  const getCre8orInformation = useCallback(async () => {
-    if (!address) return null
-
-    const response = await getNFTs(
-      address as string,
-      process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
-      process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
-    )
-
-    if (response?.ownedNfts.length) {
-      const lastCre8or = response.ownedNfts[response.totalCount - 1]
-      const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
-      return setCre8orNumber(tokenId)
-    }
-
-    return setCre8orNumber("")
-  }, [address])
-
-  useEffect(() => {
-    getCre8orInformation()
-  }, [getCre8orInformation])
 
   const provider = useMemo(
     () => ({

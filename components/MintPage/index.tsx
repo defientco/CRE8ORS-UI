@@ -1,3 +1,3 @@
-import PausedMint from "./PausedMint"
+import MintV2Page from "./MintV2Page"
 
-export default PausedMint
+export default MintV2Page

@@ -16,10 +16,13 @@ const DesktopMenu = () => {
   const router = useRouter()
   const { isConnected, address } = useAccount()
 
-  const isHidden = router.pathname.includes("/mint") || router.pathname.includes("/staking")
+  const isMintPage = router.pathname.includes("/mint")
+  const isHidden = isMintPage || router.pathname.includes("/staking")
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+
+  const menuItemClassName = `cursor-pointer text-white ${!isMintPage && "dark:text-[black]"}`
 
   const onToggle = () => {
     onChangeThemeConfig()
@@ -49,9 +52,11 @@ const DesktopMenu = () => {
       <div className="relative">
         <button
           type="button"
-          className={`font-bold rounded-lg bg-[black] dark:bg-white dark:text-[black] text-white uppercase text-sm w-[134px] h-[40px] ${
-            isMenuOpen && "shadow-md"
-          } ${!isMenuOpen && "!bg-transparent dark:!text-[white] !text-[black]"}`}
+          className={`font-bold rounded-lg bg-[black] ${
+            !isMintPage && "dark:text-[black] dark:bg-white"
+          } text-white uppercase text-sm w-[134px] h-[40px] ${isMenuOpen && "shadow-md"} ${
+            !isMenuOpen && `!bg-transparent ${!isMintPage && "dark:!text-[white]"} !text-[black]`
+          }`}
           onClick={toggleMenu}
         >
           Explore
@@ -59,58 +64,62 @@ const DesktopMenu = () => {
           {isMenuOpen && <ChevronUpIcon className="inline w-4 h-5 align-middle" />}
         </button>
         {isMenuOpen && (
-          <div className="absolute right-0 top-[45px] z-200 inline-flex flex-col items-start uppercase justify-between space-y-4 p-4 bg-[black] dark:bg-white shadow-md rounded-lg  font-quicksand text-sm">
+          <div
+            className={`absolute right-0 top-[45px] z-200 inline-flex flex-col items-start uppercase justify-between space-y-4 p-4 
+          bg-[black] ${!isMintPage && "dark:bg-white"} 
+          shadow-md rounded-lg  font-quicksand text-sm`}
+          >
             <Link href="/status" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Status</div>
+              <div className={menuItemClassName}>Status</div>
             </Link>
             <Link href="/manifesto" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Manifesto</div>
+              <div className={menuItemClassName}>Manifesto</div>
             </Link>
             <Link href="/roadmap" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Roadmap</div>
+              <div className={menuItemClassName}>Roadmap</div>
             </Link>
             <Link
               href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
               target="_blank"
               rel="noreferrer"
             >
-              <div className="cursor-pointer text-white dark:text-[black]">ERC721H</div>
+              <div className={menuItemClassName}>ERC721H</div>
             </Link>
             <Link href="/leaderboard" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Leaderboard</div>
+              <div className={menuItemClassName}>Leaderboard</div>
             </Link>
             <a
               href="https://opensea.io/collection/cre8ors-passports"
               target="_blank"
               rel="noreferrer"
             >
-              <div className="cursor-pointer text-white dark:text-[black]">Passports</div>
+              <div className={menuItemClassName}>Passports</div>
             </a>
             <Link href="/checkpassport" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Check</div>
+              <div className={menuItemClassName}>Check</div>
             </Link>
             <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Relics</div>
+              <div className={menuItemClassName}>Relics</div>
             </a>
             <Link href="/claim" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Claim</div>
+              <div className={menuItemClassName}>Claim</div>
             </Link>
             <a href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Blog</div>
+              <div className={menuItemClassName}>Blog</div>
             </a>
             <Link href="/teams" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">Team</div>
+              <div className={menuItemClassName}>Team</div>
             </Link>
             <Link href="/faq" target="_blank" rel="noreferrer">
-              <div className="cursor-pointer text-white dark:text-[black]">FAQ</div>
+              <div className={menuItemClassName}>FAQ</div>
             </Link>
             {isConnected ? (
               <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
-                <div className="cursor-pointer text-white dark:text-[black]">Profile</div>
+                <div className={menuItemClassName}>Profile</div>
               </Link>
             ) : (
               <WalletConnectButton>
-                <div className="cursor-pointer text-white dark:text-[black] uppercase">Connect</div>
+                <div className={`${menuItemClassName} uppercase`}>Connect</div>
               </WalletConnectButton>
             )}
             <div className="text-gray-400 cursor-not-allowed">Warehouse</div>
@@ -122,9 +131,11 @@ const DesktopMenu = () => {
         <div className="pt-2 pl-10 cursor-pointer ">
           <Image
             src={`${
-              themeMode === "light" ? "/Icons/TWITTER.svg" : "/assets/Header/white_twitter.png"
+              themeMode === "dark" && !isMintPage
+                ? "/assets/Header/white_twitter.png"
+                : "/assets/Header/new_twitter.png"
             }`}
-            width={24}
+            width={19}
             height={19}
             alt="twitter"
           />

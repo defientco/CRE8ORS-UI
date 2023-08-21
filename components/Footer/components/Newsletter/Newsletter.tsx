@@ -1,9 +1,12 @@
 import axios from "axios"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import { toast } from "react-toastify"
 
 const Newsletter = () => {
   const [email, setEmail] = useState("")
+  const isMintPage = useRouter().pathname.includes("/mint")
+
   const handleClick = async (e) => {
     e.preventDefault()
     await axios.post("/api/newsletter", { email })
@@ -16,7 +19,11 @@ const Newsletter = () => {
 
   return (
     <div className="flex flex-col items-start pl-4 md:p-0 md:block col-span-4 md:col-span-1">
-      <div className="font-quicksand text-[8px] md:text-[16px] dark:text-[white] text-[black]">
+      <div
+        className={`font-quicksand text-[8px] md:text-[16px] ${
+          !isMintPage && "dark:text-[white]"
+        } text-[black]`}
+      >
         Join our newsletter
       </div>
       <div className="relative p-0 md:pt-[0.5rem] w-[116px] md:w-[250px]">
