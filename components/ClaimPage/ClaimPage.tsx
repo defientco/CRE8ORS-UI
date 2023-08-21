@@ -12,7 +12,6 @@ import Media from "../../shared/Media"
 import Footer from "../Footer"
 import { useTheme } from "../../providers/ThemeProvider"
 import useGradualFadeEffect from "../../hooks/useGradualFade"
-import Popover from "../../shared/Popover"
 import ConnectWallet from "./ConnetWallet"
 import Mint from "./Mint"
 import { getLatestClaimTicket } from "../../lib/alchemy/getClaimTickets"
@@ -28,18 +27,26 @@ const ClaimPage = () => {
   const router = useRouter()
   const { address } = useAccount()
   const signer = useEthersSigner()
-  const [containerRef, { width }] = useMeasure()
   const [latestClaimTicketId, setLatestClaimTicketId] = useState<number | string>(null)
   const [ticketCount, setTicketCount] = useState(0)
+
   const isResponsive = useMediaQuery("(max-width: 1429px)")
   const isScrollUp = useReadLocalStorage<boolean>("isScrollUp")
   const isMobile = useMediaQuery("(max-width: 768px)")
+
   const { themeMode } = useTheme()
+  const [containerRef, { width }] = useMeasure()
+
   const titleRef = useRef()
   const contentRef = useRef()
   const buttonRef = useRef()
 
+  const [openModal, setOpenModal] = useState(false)
   const [modalStatus, setModalStatus] = useState(ModalStatus.INITIAL)
+
+  const toggleModal = () => {
+    setOpenModal(!openModal)
+  }
 
   const handleMint = async () => {
     if (!signer) return
@@ -178,33 +185,18 @@ const ClaimPage = () => {
                     </SectionContent>
                   </div>
                   <div className="px-12 flex justify-center md:justify-start md:mt-[15px]">
-                    <Popover className="w-full" id="connect_popver_claim">
-                      <div ref={buttonRef}>
-                        <Button
-                          id="redeem_passport_btn"
-                          className="mt-[20px] md:mt-[40px] lg:px-[70px]"
-                          onClick={() => {
-                            if (modalStatus === ModalStatus.APPROVED) handleMint()
-                          }}
-                        >
-                          Mint Passport
-                        </Button>
-                      </div>
-                      {({ toggleModal }) => (
-                        <div>
-                          {modalStatus !== ModalStatus.INITIAL && (
-                            <Mint
-                              handleClose={toggleModal}
-                              handleBurn={handleBurn}
-                              handleMint={handleMint}
-                              modalStatus={modalStatus}
-                            />
-                          )}
-                          {hasNoClaimTicket && <NoTicket handleClose={toggleModal} />}
-                          {!address && <ConnectWallet handleClose={toggleModal} />}
-                        </div>
-                      )}
-                    </Popover>
+                    <div ref={buttonRef}>
+                      <Button
+                        id="redeem_passport_btn"
+                        className="mt-[20px] md:mt-[40px] lg:px-[70px]"
+                        onClick={() => {
+                          toggleModal()
+                          if (modalStatus === ModalStatus.APPROVED) handleMint()
+                        }}
+                      >
+                        Mint Passport
+                      </Button>
+                    </div>
                   </div>
                 </div>
                 <div className="justify-center md:flex hidden md:translate-y-[30px]">
@@ -226,6 +218,16 @@ const ClaimPage = () => {
           </div>
         )}
       </div>
+      {modalStatus !== ModalStatus.INITIAL && (
+        <Mint
+          handleClose={toggleModal}
+          handleBurn={handleBurn}
+          handleMint={handleMint}
+          modalStatus={modalStatus}
+        />
+      )}
+      {hasNoClaimTicket && <NoTicket handleClose={toggleModal} />}
+      {!address && <ConnectWallet handleClose={toggleModal} />}
     </Layout>
   )
 }
