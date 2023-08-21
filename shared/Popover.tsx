@@ -1,40 +1,48 @@
-import { useState, ReactNode, useEffect } from "react"
+/* eslint-disable */
+import { useState } from "react"
+import useClickOutside from "../hooks/useClickOutside"
 
 interface IPopoverFucChild {
-  toggleModal: () => void
+  toggleModal?: () => void
+  openModal?: boolean
 }
 
 interface PopoverProps {
   id: string
-  children?: [ReactNode, (props: IPopoverFucChild) => any]
+  children?: [(props: IPopoverFucChild) => any, (props: IPopoverFucChild) => any]
   className?: string
   open?: boolean
 }
 
-export default function Popover({ id, open, children, className }: PopoverProps) {
-  const [openModal, setOpenModal] = useState(open || false)
+export default function Popover({ id, children, className }: PopoverProps) {
+  const [openModal, setOpenModal] = useState(false)
 
-  const toggleModal = () => {
-    if (openModal) {
-      setOpenModal(false)
-
-      return
-    }
-    setOpenModal((prev) => !prev)
+  const toggleModal = (e: any) => {
+    e.stopPropagation()
+    if (openModal) return setOpenModal(false)
+    setOpenModal(prev => !prev)
   }
 
-  useEffect(() => {
-    setOpenModal(open)
-  }, [open])
+  const { ref: modalRef } = useClickOutside({
+    shouldRegister: openModal,
+    onOutsideClick: () => setOpenModal(false)
+  })
 
   return (
-    <div className="relative z-[52]">
-      <div onClick={toggleModal}>{children && children[0]}</div>
+    <div className="relative" ref={modalRef}>
+      <div onClick={toggleModal} className="cursor-pointer">
+        {children && typeof children[0] !== "function" && children[0]}
+        {children &&
+          typeof children[0] === "function" &&
+          (children[0] as any)({
+            openModal
+          })}
+      </div>
       {openModal && (
         <div
-          className={`${
-            className || ""
-          } fixed w-screen h-screen bottom-0 left-0 flex justify-center items-center z-[51]`}
+          className={`absolute top-[calc(100%+5px)] min-w-full z-10 ${
+            className || ''
+          }`}
           id={id}
         >
           {children && typeof children[1] !== "function" && children[1]}
