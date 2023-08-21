@@ -33,6 +33,7 @@ const MenuList = ({ toggleMenu }) => {
   return (
     <div
       className={`fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-[9.5px] p-4 
+      no-scrollbar
       ${
         !isMintPage && "dark:bg-white"
       } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[530px] overflow-y-scroll`}
@@ -76,15 +77,9 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/leaderboard" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Leaderboard</div>
       </Link>
-      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Passports</div>
-      </a>
       <Link href="/checkpassport" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>CHECK</div>
       </Link>
-      <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Relics</div>
-      </a>
       <Link href="/claim" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Claim</div>
       </Link>
@@ -105,6 +100,25 @@ const MenuList = ({ toggleMenu }) => {
         <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
       )}
       <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
+      <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>
+        Collections
+      </div>
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Cre8ors</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Dna cards</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Passports</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Tickets</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Relics</div>
+      </a>
+
       <div className="flex flex-row items-center justify-around">
         <DiscordIcon />
         <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
@@ -112,12 +126,12 @@ const MenuList = ({ toggleMenu }) => {
             <Image
               src={`${
                 themeMode === "dark"
-                  ? "/assets/Header/twitter.png"
+                  ? "/assets/Header/new_twitter.png"
                   : "/assets/Header/white_twitter.png"
               }`}
-              width={24}
+              width={19}
               height={19}
-              alt="discord"
+              alt="twitter"
             />
           </div>
         </a>
