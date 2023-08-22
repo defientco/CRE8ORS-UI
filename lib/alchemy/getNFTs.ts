@@ -20,7 +20,7 @@ const getNFTs = async (address: string, contractAddress: string, chainId: number
     )
 
     if (data.ownedNfts.length) nfts = nfts.concat(data.ownedNfts)
-    if (!totalCount) totalCount = data.totalCount
+    if (data.totalCount) totalCount = data.totalCount
 
     if (!data.pageKey) break
     pageKey = data.pageKey
