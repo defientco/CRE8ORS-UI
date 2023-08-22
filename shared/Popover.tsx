@@ -25,7 +25,7 @@ export default function Popover({ id, children, className }: PopoverProps) {
 
   const { ref: modalRef } = useClickOutside({
     shouldRegister: openModal,
-    onOutsideClick: () => setOpenModal(false)
+    onOutsideClick: () => setOpenModal(false),
   })
 
   return (

@@ -11,7 +11,7 @@ function useClickOutside({ shouldRegister, onOutsideClick }: IClickOutsideHook) 
   const handleMouseClick = async (e: MouseEvent) => {
     const node = e.target as Node
 
-    if (ref && ref.current && ref.current.contains(node)) return
+    if (ref?.current?.contains(node)) return
 
     await onOutsideClick()
   }
