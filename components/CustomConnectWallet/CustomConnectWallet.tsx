@@ -112,7 +112,9 @@ const CustomConnectWallet = () => {
                     }`}
                   >
                     {account.displayName}
-                    {account.displayBalance ? ` (${account.displayBalance})` : ""}
+                    {Number(parseFloat(account.displayBalance).toFixed(3)) > 0
+                      ? ` (${parseFloat(account.displayBalance).toFixed(3)})`
+                      : ""}
                   </button>
                 </div>
               )
