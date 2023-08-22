@@ -74,9 +74,6 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/manifesto" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Manifesto</div>
       </Link>
-      <Link href="/leaderboard" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Leaderboard</div>
-      </Link>
       <Link href="/checkpassport" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>CHECK</div>
       </Link>

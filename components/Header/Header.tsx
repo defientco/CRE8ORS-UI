@@ -3,7 +3,7 @@ import { FC } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import DesktopExplorer from "../DesktopExplorer"
+import DesktopExplore from "../DesktopExplore"
 import { useTheme } from "../../providers/ThemeProvider"
 import DiscordIcon from "../DiscordIcon"
 import CustomConnectWallet from "../CustomConnectWallet"
@@ -96,7 +96,7 @@ const Header: FC<HeaderProps> = () => {
             </div>
           )}
           {isMobile && <MobileMenu />}
-          {!isMobile && <DesktopExplorer />}
+          {!isMobile && <DesktopExplore />}
           {!isMobile && <DesktopCollections />}
           {!isMobile && (
             <>
