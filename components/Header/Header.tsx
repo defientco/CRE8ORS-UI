@@ -106,10 +106,10 @@ const Header: FC<HeaderProps> = () => {
               )}
             </div>
           )}
-          {!isMobile && <DesktopExplore />}
-          {!isMobile && <DesktopCollections />}
           {!isMobile && (
             <>
+              <DesktopExplore />
+              <DesktopCollections />
               <DiscordIcon />
               <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
                 <div className="cursor-pointer ">
