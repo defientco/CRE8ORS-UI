@@ -148,6 +148,7 @@ const MintV2Page = () => {
                 id="mint_btn"
                 className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
                           h-[40px] w-[130px] fade_in_text
+                          !bg-black !text-white
                           !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
                 onClick={mintNFT}
               >
