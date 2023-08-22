@@ -32,7 +32,7 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible, quantity }) => {
             dark:text-black text-white
             leading-[103.3%]"
         >
-          {`${quantity}`} Cre8or{`${quantity > 0 ? "s" : ""}`} DNA Minted.
+          {`${quantity}`} Cre8or{`${quantity > 1 ? "s" : ""}`} DNA Minted.
         </pre>
         <Media
           link="/assets/Common/dna_animation.gif"
