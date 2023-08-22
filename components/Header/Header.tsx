@@ -19,6 +19,8 @@ const Header: FC<HeaderProps> = () => {
   const { onChangeThemeConfig, themeMode } = useTheme()
 
   const isMobile = useMediaQuery("(max-width: 768px)")
+  const isLaptop = useMediaQuery("(max-width: 1024px)")
+
   const isMintPage = router.pathname.includes("mint")
 
   const isHidden = isMintPage || router.pathname.includes("/staking")
@@ -29,14 +31,19 @@ const Header: FC<HeaderProps> = () => {
 
   return (
     <nav
-      className="fixed top-0 z-50 w-screen p-4 text-black bg-transparent flex justify-center"
+      className="fixed top-0 z-50 w-screen
+      text-black bg-transparent 
+      flex justify-center"
       id="header_nav_bar"
     >
       <div
         className={`flex flex-row items-center justify-between ${
           isMintPage ? "w-[1100px]" : "w-[1280px]"
-        } md:px-12 
-      pt-2 md:pt-3`}
+        } 
+        px-8 md:px-5 lg:px-16
+        lg:pt-8 lg:pb-3
+        md:pb-2 md:pt-6
+        py-4`}
       >
         <span className="relative items-center flex-shrink-0 w-20 mr-6 cursor-auto lg:md:mt-6 lg:mt-0 lg:md:w-36 lg:flex">
           <Link href="/">
@@ -70,32 +77,35 @@ const Header: FC<HeaderProps> = () => {
         <div
           className="text-sm font-quicksand 
         flex flex-row items-center
-        gap-x-[40px]"
+        md:gap-x-[25px] xl:gap-x-[40px]"
         >
           {!isHidden && !isMobile && (
             <div className="flex items-center font-bold font-quicksand">
-              <button
-                type="button"
-                className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-                onClick={() => onChangeThemeConfig("light")}
-              >
-                light
-              </button>
+              {!isLaptop && (
+                <button
+                  type="button"
+                  className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+                  onClick={() => onChangeThemeConfig("light")}
+                >
+                  light
+                </button>
+              )}
               <ToggleButton
                 onClick={onToggle}
                 value={themeMode === "dark"}
                 id="light_dark_switch"
               />
-              <button
-                type="button"
-                className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
-                onClick={() => onChangeThemeConfig("dark")}
-              >
-                dark
-              </button>
+              {!isLaptop && (
+                <button
+                  type="button"
+                  className="px-2 text-[#9C9C9C] cursor-pointer text-[15px] font-quicksand uppercase"
+                  onClick={() => onChangeThemeConfig("dark")}
+                >
+                  dark
+                </button>
+              )}
             </div>
           )}
-          {isMobile && <MobileMenu />}
           {!isMobile && <DesktopExplore />}
           {!isMobile && <DesktopCollections />}
           {!isMobile && (
@@ -119,6 +129,7 @@ const Header: FC<HeaderProps> = () => {
             </>
           )}
         </div>
+        {isMobile && <MobileMenu />}
       </div>
     </nav>
   )

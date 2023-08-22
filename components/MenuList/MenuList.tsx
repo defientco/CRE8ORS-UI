@@ -34,6 +34,7 @@ const MenuList = ({ toggleMenu }) => {
     <div
       className={`fixed right-2 top-2 z-200 
       uppercase 
+      font-quicksand
       flex flex-col items-left 
       justify-between gap-y-[12px] p-4 
       no-scrollbar
@@ -121,7 +122,6 @@ const MenuList = ({ toggleMenu }) => {
       <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Relics</div>
       </a>
-
       <div className="flex flex-row items-center justify-around">
         <DiscordIcon />
         <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
