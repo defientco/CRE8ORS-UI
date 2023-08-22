@@ -141,7 +141,7 @@ const MintV2Page = () => {
             className="text-[16px] md:text-[21px] font-quicksand font-medium
                     pt-[15px] md:pt-[20px]"
           >
-            {totalSupply || "---"} / 4444
+            {totalSupply || "---"} / {MAX_SUPPLY}
           </pre>
           {isConnected ? (
             <div ref={mintRef}>
