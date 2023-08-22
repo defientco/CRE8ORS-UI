@@ -9,7 +9,6 @@ import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
-import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { useMintProvider } from "../../providers/MintProvider"
 import SoldoutModal from "./MintV2/SoldoutModal"
 
@@ -23,8 +22,7 @@ const MintV2Page = () => {
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { isConnected, address } = useAccount()
-  const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address })
+  const { isConnected } = useAccount()
   const { publicSalePrice } = useMintProvider()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === 44444, [totalSupply])
@@ -45,7 +43,6 @@ const MintV2Page = () => {
     const response = await mint(mintQuantity)
     if (!response.err) {
       await getTotalSupply()
-      await getCre8orNumber()
       setOpenSuccessModal(true)
     }
 
@@ -203,7 +200,7 @@ const MintV2Page = () => {
       <SuccessModal
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
-        cre8orNumber={cre8orNumber}
+        quantity={mintQuantity}
       />
       <SoldoutModal
         isModalVisible={openSoldOutModal}
