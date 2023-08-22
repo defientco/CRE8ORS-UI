@@ -44,6 +44,9 @@ const DesktopCollections = () => {
           >
             <div className={menuItemClassName}>Passports</div>
           </a>
+          <a href="https://opensea.io/collection/cre8ors-claim-tickets" target="_blank" rel="noreferrer">
+            <div className={menuItemClassName}>Tickets</div>
+          </a>
           <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
             <div className={menuItemClassName}>Relics</div>
           </a>
