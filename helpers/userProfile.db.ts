@@ -109,7 +109,7 @@ export const getUserProfile = async (walletAddress: string) => {
 
     let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
 
-    if(doc && !doc?.avatarUrl) {
+    if(doc) {
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
       if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
