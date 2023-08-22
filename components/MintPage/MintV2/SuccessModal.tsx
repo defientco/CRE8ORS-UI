@@ -2,8 +2,8 @@ import Modal from "../../../shared/Modal"
 import Media from "../../../shared/Media"
 import MintModalCTAButton from "./MintModalCTAButton"
 
-const SuccessModal = ({ isModalVisible, toggleIsVisible, cre8orNumber }) => {
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
+const SuccessModal = ({ isModalVisible, toggleIsVisible, quantity }) => {
+  const text = `Just minted my @cre8orsNFT`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
   return (
@@ -32,7 +32,7 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible, cre8orNumber }) => {
             dark:text-black text-white
             leading-[103.3%]"
         >
-          {`#${cre8orNumber}`} Cre8or DNA Secured.
+          {`${quantity}`} Cre8or{`${quantity > 1 ? "s" : ""}`} DNA Minted
         </pre>
         <Media
           link="/assets/Common/dna_animation.gif"

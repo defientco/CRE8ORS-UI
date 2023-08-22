@@ -23,7 +23,7 @@ const DiscordIcon = () => {
             alt="discord"
           />
         </div>
-        <div className="pt-2 cursor-pointer md:block hidden">
+        <div className="cursor-pointer md:block hidden">
           <Image
             src={`${
               themeMode === "dark" && !isMintPage

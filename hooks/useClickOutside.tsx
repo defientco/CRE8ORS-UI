@@ -1,18 +1,17 @@
 import { useEffect, useRef } from "react"
 
 interface IClickOutsideHook {
-  id: string
   shouldRegister: boolean
   onOutsideClick: () => any
 }
 
-function useClickOutside({ id, shouldRegister, onOutsideClick }: IClickOutsideHook) {
-  const ref = useRef<HTMLDivElement | null>(null)
+function useClickOutside({ shouldRegister, onOutsideClick }: IClickOutsideHook) {
+  const ref = useRef<HTMLDivElement | any | null>(null)
 
   const handleMouseClick = async (e: MouseEvent) => {
-    const node = e.target as any
+    const node = e.target as Node
 
-    if (id !== node?.id) return
+    if (ref?.current?.contains(node)) return
 
     await onOutsideClick()
   }

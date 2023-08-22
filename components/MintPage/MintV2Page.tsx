@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useAccount } from "wagmi"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
@@ -9,20 +9,24 @@ import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
-import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { useMintProvider } from "../../providers/MintProvider"
+import SoldoutModal from "./MintV2/SoldoutModal"
 
 const MintV2Page = () => {
+  const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
 
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
+  const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
+
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { isConnected, address } = useAccount()
-  const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address })
+  const { isConnected } = useAccount()
   const { publicSalePrice } = useMintProvider()
+
+  const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -40,7 +44,6 @@ const MintV2Page = () => {
     const response = await mint(mintQuantity)
     if (!response.err) {
       await getTotalSupply()
-      await getCre8orNumber()
       setOpenSuccessModal(true)
     }
 
@@ -56,6 +59,10 @@ const MintV2Page = () => {
     ref: mintRef,
     isEnabled: mintQuantity === 0,
   })
+
+  useEffect(() => {
+    setOpenSoldOutModal(isSoldout)
+  }, [isSoldout])
 
   return (
     <>
@@ -134,7 +141,7 @@ const MintV2Page = () => {
             className="text-[16px] md:text-[21px] font-quicksand font-medium
                     pt-[15px] md:pt-[20px]"
           >
-            {totalSupply || "---"} / 4444
+            {totalSupply || "---"} / {MAX_SUPPLY}
           </pre>
           {isConnected ? (
             <div ref={mintRef}>
@@ -142,6 +149,7 @@ const MintV2Page = () => {
                 id="mint_btn"
                 className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
                           h-[40px] w-[130px] fade_in_text
+                          !bg-black !text-white
                           !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
                 onClick={mintNFT}
               >
@@ -194,7 +202,11 @@ const MintV2Page = () => {
       <SuccessModal
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
-        cre8orNumber={cre8orNumber}
+        quantity={mintQuantity}
+      />
+      <SoldoutModal
+        isModalVisible={openSoldOutModal}
+        toggleIsVisible={() => setOpenSoldOutModal(!openSoldOutModal)}
       />
     </>
   )

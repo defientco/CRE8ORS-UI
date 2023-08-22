@@ -44,7 +44,7 @@ const CustomConnectWallet = () => {
                 return (
                   <button
                     className={`font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm 
-                    font-quicksand pl-[15px] md:pl-[0px]
+                    font-quicksand
                     text-white md:text-black ${
                       !isMintPage && "dark:text-[black] md:dark:text-[white]"
                     }`}
@@ -61,7 +61,7 @@ const CustomConnectWallet = () => {
                   <button
                     onClick={openChainModal}
                     type="button"
-                    className={`font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand pl-[15px] md:pl-[0px]
+                    className={`font-bold uppercase text-[14px] md:text-[17px] lg:md:text-sm font-quicksand
                     text-white md:text-black ${
                       !isMintPage && "dark:text-[black] md:dark:text-[white]"
                     }`}
@@ -112,7 +112,9 @@ const CustomConnectWallet = () => {
                     }`}
                   >
                     {account.displayName}
-                    {account.displayBalance ? ` (${account.displayBalance})` : ""}
+                    {Number(parseFloat(account.displayBalance).toFixed(3)) > 0
+                      ? ` (${parseFloat(account.displayBalance).toFixed(3)})`
+                      : ""}
                   </button>
                 </div>
               )

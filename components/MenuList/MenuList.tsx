@@ -32,15 +32,19 @@ const MenuList = ({ toggleMenu }) => {
 
   return (
     <div
-      className={`fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-[9.5px] p-4 
+      className={`fixed right-2 top-2 z-200 
+      uppercase 
+      font-quicksand
+      flex flex-col items-left 
+      justify-between gap-y-[12px] p-4 
+      no-scrollbar
       ${
         !isMintPage && "dark:bg-white"
-      } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[530px] overflow-y-scroll`}
+      } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[490px] overflow-y-scroll`}
     >
       <div
-        className={`${
-          !isMintPage && "dark:bg-[black]"
-        } bg-white absolute top-0 right-0 w-6 h-6 m-2 rounded-full`}
+        className={`${!isMintPage && "dark:bg-[black]"} bg-white absolute top-2 right-2
+          w-6 h-6 m-2 rounded-full`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,18 +77,9 @@ const MenuList = ({ toggleMenu }) => {
       <Link href="/manifesto" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Manifesto</div>
       </Link>
-      <Link href="/leaderboard" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Leaderboard</div>
-      </Link>
-      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Passports</div>
-      </a>
       <Link href="/checkpassport" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>CHECK</div>
       </Link>
-      <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Relics</div>
-      </a>
       <Link href="/claim" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Claim</div>
       </Link>
@@ -105,19 +100,41 @@ const MenuList = ({ toggleMenu }) => {
         <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
       )}
       <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
+      <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>
+        Collections
+      </div>
+      <a href="https://opensea.io/collection/cre8orsaipeps" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Cre8ors</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-dna" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Dna cards</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Passports</div>
+      </a>
+      <a
+        href="https://opensea.io/collection/cre8ors-claim-tickets"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div className={menuItemClassName}>Tickets</div>
+      </a>
+      <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Relics</div>
+      </a>
       <div className="flex flex-row items-center justify-around">
         <DiscordIcon />
         <a href="https://twitter.com/Cre8orsNFT" target="_blank" rel="noreferrer">
           <div className="pt-2 cursor-pointer ">
             <Image
               src={`${
-                themeMode === "dark"
-                  ? "/assets/Header/twitter.png"
+                themeMode === "dark" && !isMintPage
+                  ? "/assets/Header/new_twitter.png"
                   : "/assets/Header/white_twitter.png"
               }`}
-              width={24}
+              width={19}
               height={19}
-              alt="discord"
+              alt="twitter"
             />
           </div>
         </a>

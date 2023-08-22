@@ -8,7 +8,7 @@ const MobileMenu = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   return (
     <>
-      {!isMenuOpen && <MenuButton toggleMenu={toggleMenu} />}
+      <MenuButton toggleMenu={toggleMenu} />
       {isMenuOpen && <MenuList toggleMenu={toggleMenu} />}
     </>
   )

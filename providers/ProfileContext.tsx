@@ -29,7 +29,7 @@ export const ProfileProvider = ({ children }) => {
     setIsEditable(false)
     setLoading(true)
     const response = await updateUserInfo({
-      address: routerAddress,
+      address: routerAddress || address,
       twitterHandle: editedTwitterHandle,
       location: editedLocation,
       iNeedHelpWith: editedINeedHelpWith,
@@ -39,8 +39,8 @@ export const ProfileProvider = ({ children }) => {
     })
 
     if (response) {
-      await getUserData(routerAddress)
-      await getUserSimilarProfiles(routerAddress)
+      await getUserData(routerAddress || address)
+      await getUserSimilarProfiles(routerAddress || address)
     }
     setLoading(false)
   }
