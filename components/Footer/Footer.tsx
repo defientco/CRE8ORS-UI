@@ -64,7 +64,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
   const router = useRouter()
 
-  const isMintPage = router.pathname
+  const isMintPage = router.pathname.includes("/mint")
   const { themeMode } = useTheme()
 
   return (
