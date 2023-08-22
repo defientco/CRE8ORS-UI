@@ -3,7 +3,7 @@ import Media from "../../../shared/Media"
 import MintModalCTAButton from "./MintModalCTAButton"
 
 const SuccessModal = ({ isModalVisible, toggleIsVisible, cre8orNumber }) => {
-  const text = `The first rule of the @cre8orsNFT cabal is don't tweet about the @cre8orsNFT cabal. 🤫`
+  const text = `Just minted my @cre8orsNFT`
   const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
   return (
