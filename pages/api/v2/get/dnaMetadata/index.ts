@@ -68,6 +68,9 @@ class DnaMetaData {
       name: "Cre8ors DNA Cards",
       description: "Against all odds, we shall live in color. ",
       image: `ipfs://${dnaCard}`,
+      attributes: {
+        ARCHETYPE: data.creatorType
+      }
     }
     return metadataObject
   }
