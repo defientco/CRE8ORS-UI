@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useAccount } from "wagmi"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
@@ -11,6 +11,7 @@ import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
 import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { useMintProvider } from "../../providers/MintProvider"
+import SoldoutModal from "./MintV2/SoldoutModal"
 
 const MintV2Page = () => {
   const [mintQuantity, setMintQuantity] = useState(1)
@@ -19,10 +20,14 @@ const MintV2Page = () => {
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
+  const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
+
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
   const { isConnected, address } = useAccount()
   const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address })
   const { publicSalePrice } = useMintProvider()
+
+  const isSoldout = useMemo(() => parseInt(totalSupply, 10) === 44444, [totalSupply])
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -56,6 +61,10 @@ const MintV2Page = () => {
     ref: mintRef,
     isEnabled: mintQuantity === 0,
   })
+
+  useEffect(() => {
+    setOpenSoldOutModal(isSoldout)
+  }, [isSoldout])
 
   return (
     <>
@@ -195,6 +204,10 @@ const MintV2Page = () => {
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
         cre8orNumber={cre8orNumber}
+      />
+      <SoldoutModal
+        isModalVisible={openSoldOutModal}
+        toggleIsVisible={() => setOpenSoldOutModal(!openSoldOutModal)}
       />
     </>
   )
