@@ -34,20 +34,10 @@ const WalletCollection = () => {
           mt-[20px] pt-[20px]
           samsungS8:gap-x-[10px]
           lg:px-10 lg:pb-10
-          px-2 pb-2`}
+          px-2 pb-6`}
       >
         <div>
           <div className="flex items-center gap-x-[5px] samsungS8:gap-x-[10px]">
-            <Media
-              type="image"
-              containerClasses="w-[15px] h-[15px] lg:w-[25px] lg:h-[25px]"
-              link={`${
-                expandedMore ? "/assets/Profile/help.svg" : "/assets/Profile/black_help.svg"
-              }`}
-              blurLink={`${
-                expandedMore ? "/assets/Profile/help.png" : "/assets/Profile/black_help.png"
-              }`}
-            />
             <p
               className={`${
                 expandedMore ? "text-white" : "text-black"
