@@ -39,7 +39,7 @@ const MenuList = ({ toggleMenu }) => {
       no-scrollbar
       ${
         !isMintPage && "dark:bg-white"
-      } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[530px] overflow-y-scroll`}
+      } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[490px] overflow-y-scroll`}
     >
       <div
         className={`${!isMintPage && "dark:bg-[black]"} bg-white absolute top-2 right-2
