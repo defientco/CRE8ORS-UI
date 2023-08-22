@@ -32,16 +32,18 @@ const MenuList = ({ toggleMenu }) => {
 
   return (
     <div
-      className={`fixed right-2 top-2 z-200 inline-flex flex-col items-left uppercase justify-between space-y-[9.5px] p-4 
+      className={`fixed right-2 top-2 z-200 
+      uppercase 
+      flex flex-col items-left 
+      justify-between gap-y-[12px] p-4 
       no-scrollbar
       ${
         !isMintPage && "dark:bg-white"
       } bg-[black] to-90% rounded-lg md:text-lg w-[200px] h-[530px] overflow-y-scroll`}
     >
       <div
-        className={`${
-          !isMintPage && "dark:bg-[black]"
-        } bg-white absolute top-0 right-0 w-6 h-6 m-2 rounded-full`}
+        className={`${!isMintPage && "dark:bg-[black]"} bg-white absolute top-2 right-2
+          w-6 h-6 m-2 rounded-full`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +128,7 @@ const MenuList = ({ toggleMenu }) => {
           <div className="pt-2 cursor-pointer ">
             <Image
               src={`${
-                themeMode === "dark"
+                themeMode === "dark" && !isMintPage
                   ? "/assets/Header/new_twitter.png"
                   : "/assets/Header/white_twitter.png"
               }`}
