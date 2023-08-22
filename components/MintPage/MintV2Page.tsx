@@ -13,6 +13,7 @@ import { useMintProvider } from "../../providers/MintProvider"
 import SoldoutModal from "./MintV2/SoldoutModal"
 
 const MintV2Page = () => {
+  const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
 
   const minusRef = useRef()
@@ -25,7 +26,7 @@ const MintV2Page = () => {
   const { isConnected } = useAccount()
   const { publicSalePrice } = useMintProvider()
 
-  const isSoldout = useMemo(() => parseInt(totalSupply, 10) === 44444, [totalSupply])
+  const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
