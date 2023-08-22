@@ -31,7 +31,8 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
       <Button
         onClick={onClick}
         id="deploy-wallet"
-        className="absolute w-full h-full left-0 top-0 z-[3]"
+        className="absolute w-full h-full left-0 top-0 z-[3]
+        !bg-[white] !text-[black]"
       >
         setup smart wallet
       </Button>
