@@ -31,22 +31,14 @@ const DesktopCollections = () => {
                 bg-[black] ${!isMintPage && "dark:bg-white"} 
                 shadow-md rounded-lg  font-quicksand text-sm`}
         >
-          <a
-            href="https://opensea.io/collection/cre8ors-passports"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://opensea.io/collection/cre8orsaipeps" target="_blank" rel="noreferrer">
             <div className={menuItemClassName}>Cre8ors</div>
           </a>
-          <a
-            href="https://opensea.io/collection/cre8ors-passports"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://opensea.io/collection/cre8ors-dna" target="_blank" rel="noreferrer">
             <div className={menuItemClassName}>Dna cards</div>
           </a>
           <a
-            href="https://opensea.io/collection/cre8ors-passports"
+            href="https://opensea.io/collection/cre8ors-claim-tickets"
             target="_blank"
             rel="noreferrer"
           >

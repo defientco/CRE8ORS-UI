@@ -103,16 +103,20 @@ const MenuList = ({ toggleMenu }) => {
       <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>
         Collections
       </div>
-      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+      <a href="https://opensea.io/collection/cre8orsaipeps" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Cre8ors</div>
       </a>
-      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+      <a href="https://opensea.io/collection/cre8ors-dna" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Dna cards</div>
       </a>
       <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Passports</div>
       </a>
-      <a href="https://opensea.io/collection/cre8ors-passports" target="_blank" rel="noreferrer">
+      <a
+        href="https://opensea.io/collection/cre8ors-claim-tickets"
+        target="_blank"
+        rel="noreferrer"
+      >
         <div className={menuItemClassName}>Tickets</div>
       </a>
       <a href="https://opensea.io/collection/cre8ors-relics" target="_blank" rel="noreferrer">
