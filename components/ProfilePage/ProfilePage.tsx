@@ -24,7 +24,7 @@ const ProfilePage = () => {
     getUserData(routerAddress)
     getUserSimilarProfiles(routerAddress)
 
-    if (address?.toLowerCase() !== routerAddress?.toLowerCase()) {
+    if (address?.toLowerCase() !== routerAddress?.toLowerCase() && routerAddress) {
       setIsHiddenEditable(true)
       return
     }
