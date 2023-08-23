@@ -190,7 +190,6 @@ const ClaimPage = () => {
                         id="redeem_passport_btn"
                         className="mt-[20px] md:mt-[40px] lg:px-[70px]"
                         onClick={() => {
-                          toggleModal()
                           if (modalStatus === ModalStatus.APPROVED) handleMint()
                         }}
                       >
@@ -218,16 +217,20 @@ const ClaimPage = () => {
           </div>
         )}
       </div>
-      {modalStatus !== ModalStatus.INITIAL && (
-        <Mint
-          handleClose={toggleModal}
-          handleBurn={handleBurn}
-          handleMint={handleMint}
-          modalStatus={modalStatus}
-        />
+      {openModal && (
+        <>
+          {modalStatus !== ModalStatus.INITIAL && (
+            <Mint
+              handleClose={toggleModal}
+              handleBurn={handleBurn}
+              handleMint={handleMint}
+              modalStatus={modalStatus}
+            />
+          )}
+          {hasNoClaimTicket && <NoTicket handleClose={toggleModal} />}
+          {!address && <ConnectWallet handleClose={toggleModal} />}
+        </>
       )}
-      {hasNoClaimTicket && <NoTicket handleClose={toggleModal} />}
-      {!address && <ConnectWallet handleClose={toggleModal} />}
     </Layout>
   )
 }
