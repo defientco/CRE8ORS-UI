@@ -92,7 +92,7 @@ const MintV2Page = () => {
             className="fade_in_text text-[15px] md:text-[20px] font-quicksand font-medium
                     text-center leading-[99.3%]"
           >
-            No lockup. No allowlist.\nFirst come, first serve.\nPrice: 0.05 ETH
+            {`No lockup. No allowlist.\nFirst come, first serve.\nPrice: 0.05 ETH`}
           </pre>
           <div
             className="flex justify-center items-center
