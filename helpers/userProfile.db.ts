@@ -1,3 +1,4 @@
+import { UpdateCre8orNumberDTO } from "../DTO/updateCre8orNumber.dto"
 import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
 import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
@@ -96,6 +97,29 @@ export const updateUserProfile = async (body: UserProfile) => {
     }
     
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(body.walletAddress) }, newProfile)
+
+    return { success: true, results }
+  } catch (e) {
+    throw new Error(e)
+  }
+}
+
+export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
+  try {
+    const { cre8orNumber, walletAddress } = body
+    
+    await dbConnect()
+
+    const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    if (!doc) {
+      throw new Error("No user found")
+    }
+    
+    const newProfile = {
+      cre8orNumber
+    }
+
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(walletAddress) }, newProfile)
 
     return { success: true, results }
   } catch (e) {
