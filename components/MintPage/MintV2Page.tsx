@@ -85,7 +85,7 @@ const MintV2Page = () => {
 
   useShakeEffect({
     ref: mintRef,
-    isEnabled: mintQuantity === 0,
+    isEnabled: isSoldout,
   })
 
   useEffect(() => {

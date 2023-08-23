@@ -32,37 +32,39 @@ const FreeMintModal = ({ isModalVisible, toggleModal, onSuccess, setIsMintLoadin
   }
 
   return (
-    <Modal isVisible={isModalVisible} onClose={toggleModal} showCloseButton>
-      <div
-        className="rounded-[15px] md:rounded-[20px]
-                  md:px-16 md:py-20
-                  p-10
-                  flex-col flex justify-center items-center
-                  gap-y-[30px]
-                  bg-[url('/assets/Mint/MintNow/MintCoreModal/combination_bg.png')]
-                  bg-cover bg-black dark:bg-white"
+    <Modal
+      isVisible={isModalVisible}
+      onClose={toggleModal}
+      showCloseButton
+      containerClassName="rounded-[15px] md:rounded-[20px]
+      md:px-16 md:py-20
+      p-10
+      flex-col flex justify-center items-center
+      gap-y-[40px] md:gap-y-[80px]
+      bg-[url('/assets/Mint/MintNow/MintCoreModal/combination_bg.png')]
+      bg-cover !bg-black"
+    >
+      <pre
+        className="font-eigerdals 
+                text-[28px] xl:text-[55px] 
+                uppercase text-center
+                leading-[103.3%] dark:text-black text-white"
       >
-        <pre
-          className="font-eigerdals 
-                  text-[22px] samsungS8:text-[25px] xs:text-[28px] xl:text-[45px] 
-                  uppercase text-center
-                  leading-[103.3%] dark:text-black text-white"
-        >
-          {`You have ${freeMintCount || 0}\nfree mint${freeMintCount > 1 ? "s" : ""}`}
-        </pre>
-        <Button
-          id="mint_now"
-          className="!w-[200px] !h-[50px]
-                  !font-eigerdals font-bold !bg-black 
-                  text-[15px] xl:text-[24px] 
-                  !rounded-[10px]
-                  !text-black dark:!text-white
-                  dark:!bg-black !bg-white"
-          onClick={handleMint}
-        >
-          Mint Now
-        </Button>
-      </div>
+        {`You have ${freeMintCount || 0}\nfree mint${freeMintCount > 1 ? "s" : ""}`}
+      </pre>
+      <Button
+        id="mint_now"
+        className="!w-[150px] md:!w-[200px] 
+                !h-[40px] md:!h-[60px]
+                !font-eigerdals font-bold !bg-black 
+                text-[15px] xl:text-[26px] 
+                !rounded-[10px]
+                !text-black dark:!text-white
+                dark:!bg-black !bg-white"
+        onClick={handleMint}
+      >
+        Mint Now
+      </Button>
     </Modal>
   )
 }
