@@ -1,7 +1,6 @@
 import { CRE8OR } from "../components/ProfilePage/types"
 import getNFTs from "./alchemy/getNFTs"
 import { isMatchAddress } from "./isMatchAddress"
-import { getStakedAndUnstakedResults } from "./staking"
 
 export const SPECIALNFTS = "special"
 export const ALLNFTS = "all"
