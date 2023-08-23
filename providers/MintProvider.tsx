@@ -68,14 +68,13 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const results = await getAvailableFreeMints(tokenIds, address)
     setLeftQuantityCount(results?.quantityLeft)
 
-    const status = isWhitelisted(address)
-
     setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
     setHasFriendAndFamily(results?.discount)
     setAvailablePassportIds(results?.passports)
     setMerkleRoot(results?.merkleRoot)
+    const status = isWhitelisted(address)
     setHasWhitelist(status)
   }
 
