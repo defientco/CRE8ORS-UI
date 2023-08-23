@@ -3,7 +3,6 @@ import { useAccount } from "wagmi"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import Layout from "../Layout"
-import MintCTAButton from "./MintCTAButton"
 import useShakeEffect from "../../hooks/useShakeEffect"
 import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
@@ -11,29 +10,36 @@ import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
 import { useMintProvider } from "../../providers/MintProvider"
 import SoldoutModal from "./MintV2/SoldoutModal"
+import CTAButtons from "./MintV2/CTAButtons"
+import AmountButton from "./MintV2/AmountButton"
+import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
+import { updateUserCre8orNumber } from "../../lib/userInfo"
 
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
+  const { isConnected, address } = useAccount()
 
+  const { getCre8orNumber } = useCre8orNumber({ address })
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
+
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { isConnected } = useAccount()
-  const { publicSalePrice } = useMintProvider()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
+
+  const { publicSalePrice } = useMintProvider()
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
   }
 
   const decreaseAmount = () => {
-    if (mintQuantity === 0) return
+    if (mintQuantity === 1) return
     setMintQuantity(mintQuantity - 1)
   }
 
@@ -44,6 +50,11 @@ const MintV2Page = () => {
     const response = await mint(mintQuantity)
     if (!response.err) {
       await getTotalSupply()
+      const cre8orNumber = await getCre8orNumber()
+      await updateUserCre8orNumber({
+        walletAddress: address,
+        cre8orNumber,
+      })
       setOpenSuccessModal(true)
     }
 
@@ -52,12 +63,12 @@ const MintV2Page = () => {
 
   useShakeEffect({
     ref: minusRef,
-    isEnabled: mintQuantity === 0,
+    isEnabled: mintQuantity === 1,
   })
 
   useShakeEffect({
     ref: mintRef,
-    isEnabled: mintQuantity === 0,
+    isEnabled: isSoldout,
   })
 
   useEffect(() => {
@@ -95,20 +106,7 @@ const MintV2Page = () => {
                     fade_in_text"
           >
             <div ref={minusRef}>
-              <Button
-                id="minus_btn"
-                className="!p-0 
-                          md:w-[55px] md:h-[55px]
-                          w-[40px] h-[40px]
-                          !bg-[white] !text-black
-                          text-[30px] md:text-[50px]
-                          font-bold font-quicksand
-                          rounded-[10px]
-                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
-                onClick={decreaseAmount}
-              >
-                -
-              </Button>
+              <AmountButton onClick={decreaseAmount}> - </AmountButton>
             </div>
             <div
               className="font-bold font-eigerdals 
@@ -122,20 +120,7 @@ const MintV2Page = () => {
             >
               {mintQuantity}
             </div>
-            <Button
-              id="plus_btn"
-              className="!p-0
-                        md:w-[55px] md:h-[55px]
-                        w-[40px] h-[40px]
-                        !bg-[white] !text-black
-                        text-[30px] md:text-[50px]
-                        font-bold font-quicksand.
-                        rounded-[10px]
-                        !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
-              onClick={increateAmount}
-            >
-              +
-            </Button>
+            <AmountButton onClick={increateAmount}>+</AmountButton>
           </div>
           <pre
             className="text-[16px] md:text-[21px] font-quicksand font-medium
@@ -149,9 +134,12 @@ const MintV2Page = () => {
                 id="mint_btn"
                 className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
                           h-[40px] w-[130px] fade_in_text
-                          !bg-black !text-white
-                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
+                          !text-white
+                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
+                          cursor-not-allowed
+                          !bg-[gray]"
                 onClick={mintNFT}
+                disabled
               >
                 Mint Now
               </Button>
@@ -166,7 +154,7 @@ const MintV2Page = () => {
             bg-[black] 
             shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
             flex items-center justify-center gap-[10px]
-            font-quicksand
+            font-quicksand font-bold
             my-[15px] md:my-[20px] 
             !p-0 
             md:w-[200px] md:h-[50px]
@@ -176,26 +164,7 @@ const MintV2Page = () => {
               </div>
             </WalletConnectButton>
           )}
-          <div className="flex justify-center gap-x-[20px] pt-[30px] fade_in_text">
-            <MintCTAButton
-              id="opensea_cta_btn"
-              bgLink="/assets/MintV2/opensea.svg"
-              blurBgLink="/assets/MintV2/opensea.png"
-              link="https://opensea.io/collection/cre8orsaipeps"
-            />
-            <MintCTAButton
-              id="twitter_cta_btn"
-              bgLink="/assets/MintV2/twitter.svg"
-              blurBgLink="/assets/MintV2/twitter.png"
-              link="https://twitter.com/Cre8orsNFT"
-            />
-            <MintCTAButton
-              id="discord_cta_btn"
-              bgLink="/assets/MintV2/discord.svg"
-              blurBgLink="/assets/MintV2/discord.png"
-              link="https://discord.gg/ZpZBHCrqHQ"
-            />
-          </div>
+          <CTAButtons />
         </div>
       </Layout>
       {isMintLoading && <MintingModal />}

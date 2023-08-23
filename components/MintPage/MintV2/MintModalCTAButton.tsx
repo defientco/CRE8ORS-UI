@@ -4,10 +4,11 @@ import { Button } from "../../../shared/Button"
 
 interface MintModalCTAButtonProps {
   id: string
-  link: string
+  link?: string
   className?: string
   target?: string
   children?: ReactNode
+  onClick?: () => void
 }
 
 const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
@@ -16,6 +17,7 @@ const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
   className,
   target,
   children,
+  onClick,
 }) => {
   const router = useRouter()
 
@@ -39,7 +41,7 @@ const MintModalCTAButton: FC<MintModalCTAButtonProps> = ({
               !rounded-[10px]
               !text-black
               !bg-white ${className || ""}`}
-      onClick={goToLink}
+      onClick={onClick || goToLink}
     >
       {children}
     </Button>

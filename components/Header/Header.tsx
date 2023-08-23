@@ -18,8 +18,8 @@ const Header: FC<HeaderProps> = () => {
   const router = useRouter()
   const { onChangeThemeConfig, themeMode } = useTheme()
 
-  const isMobile = useMediaQuery("(max-width: 768px)")
-  const isLaptop = useMediaQuery("(max-width: 1024px)")
+  const isMobile = useMediaQuery("(max-width: 850px)")
+  const isLaptop = useMediaQuery("(max-width: 1082px)")
 
   const isMintPage = router.pathname.includes("mint")
 
@@ -77,7 +77,7 @@ const Header: FC<HeaderProps> = () => {
         <div
           className="text-sm font-quicksand 
         flex flex-row items-center
-        md:gap-x-[25px] xl:gap-x-[40px]"
+        md:gap-x-[20px] xl:gap-x-[30px]"
         >
           {!isHidden && !isMobile && (
             <div className="flex items-center font-bold font-quicksand">
@@ -108,6 +108,18 @@ const Header: FC<HeaderProps> = () => {
           )}
           {!isMobile && (
             <>
+              {!isMintPage && (
+                <Link href="/mint" target="_blank" rel="noreferrer">
+                  <p
+                    className="uppercase dark:text-white
+                font-quicksand font-bold 
+                cursor-pointer
+                p-0"
+                  >
+                    Mint
+                  </p>
+                </Link>
+              )}
               <DesktopExplore />
               <DesktopCollections />
               <DiscordIcon />

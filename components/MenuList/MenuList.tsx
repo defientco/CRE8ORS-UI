@@ -17,9 +17,11 @@ const MenuList = ({ toggleMenu }) => {
   const isHidden = isMintPage || router.pathname.includes("/staking")
 
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
 
-  const menuItemClassName = `ml-4 ${!isMintPage && "dark:text-[black]"} text-white`
+  const menuItemClassName = `ml-4 ${
+    !isMintPage && "dark:text-[black]"
+  } text-white cursor-pointer text-[14px]`
 
   const onToggle = () => {
     setIsDarkMode(!isDarkMode)
@@ -57,49 +59,42 @@ const MenuList = ({ toggleMenu }) => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
-      <div className="pt-6">
+      <div className="pt-8">
         <CustomConnectWallet />
       </div>
+      <Link href="/mint" target="_blank" rel="noreferrer">
+        <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>Mint</div>
+      </Link>
       <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>Explore</div>
-      <Link href="/status" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Status</div>
-      </Link>
-      <Link href="/roadmap" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Roadmap</div>
-      </Link>
-      <Link
-        href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <div className={menuItemClassName}>ERC721H</div>
-      </Link>
+      <a href="https://everythingcorp.cre8ors.com/mysteries" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Everything Corp</div>
+      </a>
       <Link href="/manifesto" target="_blank" rel="noreferrer">
         <div className={menuItemClassName}>Manifesto</div>
       </Link>
-      <Link href="/checkpassport" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>CHECK</div>
-      </Link>
-      <Link href="/claim" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Claim</div>
-      </Link>
-      <Link href="/teams" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Team</div>
-      </Link>
-      <a href="https://cre8ors.beehiiv.com/" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Blog</div>
-      </a>
-      <Link href="/faq" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>FAQ</div>
-      </Link>
       {isConnected ? (
-        <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+        <Link href="/profile" target="_blank" rel="noreferrer">
           <div className={menuItemClassName}>Profile</div>
         </Link>
       ) : (
         <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
       )}
-      <div className="ml-4 text-gray-400 cursor-not-allowed">Warehouse</div>
+      <a
+        href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div className={menuItemClassName}>ERC721H</div>
+      </a>
+      <Link href="/checkpassport" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>CHECK</div>
+      </Link>
+      <Link href="/teams" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>Team</div>
+      </Link>
+      <Link href="/faq" target="_blank" rel="noreferrer">
+        <div className={menuItemClassName}>FAQ</div>
+      </Link>
       <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>
         Collections
       </div>

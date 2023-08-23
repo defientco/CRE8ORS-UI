@@ -17,10 +17,12 @@ const useCre8orNumber = ({ address }) => {
     if (response?.ownedNfts.length) {
       const lastCre8or = response.ownedNfts[response.totalCount - 1]
       const tokenId = BigNumber.from(lastCre8or.id.tokenId).toString()
-      return setCre8orNumber(tokenId)
+      setCre8orNumber(tokenId)
+      return tokenId
     }
 
-    return setCre8orNumber("")
+    setCre8orNumber("")
+    return ""
   }, [address])
 
   useEffect(() => {

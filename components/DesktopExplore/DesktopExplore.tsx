@@ -8,7 +8,7 @@ import Popover from "../../shared/Popover"
 
 const DesktopExplore = () => {
   const router = useRouter()
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
 
   const isMintPage = router.pathname.includes("/mint")
 
@@ -29,7 +29,7 @@ const DesktopExplore = () => {
           }`}
           onClick={toggleMenu}
         >
-          Explore
+          Explore&nbsp;
           {!openModal && <ChevronDownIcon className="inline w-4 h-5 align-middle" />}
           {openModal && <ChevronUpIcon className="inline w-4 h-5 align-middle" />}
         </button>
@@ -41,14 +41,8 @@ const DesktopExplore = () => {
           bg-[black] ${!isMintPage && "dark:bg-white"}
           shadow-md rounded-lg  font-quicksand text-sm`}
         >
-          <Link href="/status" target="_blank" rel="noreferrer">
-            <div className={menuItemClassName}>Status</div>
-          </Link>
           <Link href="/manifesto" target="_blank" rel="noreferrer">
             <div className={menuItemClassName}>Manifesto</div>
-          </Link>
-          <Link href="/roadmap" target="_blank" rel="noreferrer">
-            <div className={menuItemClassName}>Roadmap</div>
           </Link>
           <Link
             href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
@@ -73,7 +67,7 @@ const DesktopExplore = () => {
             <div className={menuItemClassName}>FAQ</div>
           </Link>
           {isConnected ? (
-            <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+            <Link href="/profile" target="_blank" rel="noreferrer">
               <div className={menuItemClassName}>Profile</div>
             </Link>
           ) : (

@@ -1,7 +1,7 @@
-import { useProfileProvider } from "../../../providers/ProfileContext"
+import { useUserProvider } from "../../../providers/UserProvider"
 
 const PFPInformation = () => {
-  const { cre8orNumber } = useProfileProvider()
+  const { userInfo } = useUserProvider()
 
   return (
     <div
@@ -10,7 +10,7 @@ const PFPInformation = () => {
             leading-[103.3%]
             rotate-[180deg]"
     >
-      {cre8orNumber ? `CRE8OR #${cre8orNumber}` : ""}
+      {userInfo?.cre8orNumber ? `CRE8OR #${userInfo?.cre8orNumber}` : ""}
     </div>
   )
 }

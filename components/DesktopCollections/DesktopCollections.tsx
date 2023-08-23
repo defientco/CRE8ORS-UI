@@ -19,7 +19,7 @@ const DesktopCollections = () => {
             !openModal && `!bg-transparent ${!isMintPage && "dark:!text-[white]"} !text-[black]`
           }`}
         >
-          Collections
+          Collections&nbsp;
           {!openModal && <ChevronDownIcon className="inline w-4 h-5 align-middle" />}
           {openModal && <ChevronUpIcon className="inline w-4 h-5 align-middle" />}
         </div>
