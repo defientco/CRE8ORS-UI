@@ -19,7 +19,7 @@ const MenuList = ({ toggleMenu }) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const { isConnected } = useAccount()
 
-  const menuItemClassName = `ml-4 ${!isMintPage && "dark:text-[black]"} text-white`
+  const menuItemClassName = `ml-4 ${!isMintPage && "dark:text-[black]"} text-white cursor-pointer`
 
   const onToggle = () => {
     setIsDarkMode(!isDarkMode)
@@ -57,9 +57,10 @@ const MenuList = ({ toggleMenu }) => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
-      <div className="pt-6">
-        <CustomConnectWallet />
-      </div>
+      <Link href="/mint" target="_blank" rel="noreferrer">
+        <div className={`${menuItemClassName} pt-6`}>MINT</div>
+      </Link>
+      <CustomConnectWallet />
       <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>Explore</div>
       <Link
         href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
