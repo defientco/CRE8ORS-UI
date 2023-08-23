@@ -73,7 +73,7 @@ const DesktopExplore = () => {
             <div className={menuItemClassName}>FAQ</div>
           </Link>
           {isConnected ? (
-            <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+            <Link href={`/profile`} target="_blank" rel="noreferrer">
               <div className={menuItemClassName}>Profile</div>
             </Link>
           ) : (

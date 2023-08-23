@@ -61,12 +61,6 @@ const MenuList = ({ toggleMenu }) => {
         <CustomConnectWallet />
       </div>
       <div className={`font-bold ${!isMintPage && "dark:text-[black]"} text-white`}>Explore</div>
-      <Link href="/status" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Status</div>
-      </Link>
-      <Link href="/roadmap" target="_blank" rel="noreferrer">
-        <div className={menuItemClassName}>Roadmap</div>
-      </Link>
       <Link
         href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
         target="_blank"
@@ -93,7 +87,7 @@ const MenuList = ({ toggleMenu }) => {
         <div className={menuItemClassName}>FAQ</div>
       </Link>
       {isConnected ? (
-        <Link href={`/profile/${address}`} target="_blank" rel="noreferrer">
+        <Link href="/profile" target="_blank" rel="noreferrer">
           <div className={menuItemClassName}>Profile</div>
         </Link>
       ) : (
