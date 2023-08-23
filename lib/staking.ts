@@ -59,10 +59,12 @@ export const aggregateReads = async (tokenIds: Array<number | string>) => {
       calls,
     })
   }
+
   const results: ContractCallResults = await multicall.call(contractCallContext)
 
   return results
 }
+
 export const getStakedAndUnstakedResults = async (tokenIds: Array<number | string>) => {
   if (!tokenIds.length) return []
 
