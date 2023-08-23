@@ -30,7 +30,7 @@ const MintV2Page = () => {
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
-
+      
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
   }
@@ -134,7 +134,6 @@ const MintV2Page = () => {
                           cursor-not-allowed
                           !bg-[gray]"
                 onClick={mintNFT}
-                disabled
               >
                 Mint Now
               </Button>
