@@ -14,11 +14,15 @@ import CTAButtons from "./MintV2/CTAButtons"
 import FreeMintModal from "./MintV2/FreeMintModal"
 import AmountButton from "./MintV2/AmountButton"
 import FreeSuccessModal from "./MintV2/FreeSuccessModal"
+import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
+import { updateUserCre8orNumber } from "../../lib/userInfo"
 
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
+  const { isConnected, address } = useAccount()
 
+  const { getCre8orNumber } = useCre8orNumber({ address })
   const minusRef = useRef()
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
@@ -29,7 +33,6 @@ const MintV2Page = () => {
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
-  const { isConnected } = useAccount()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
 
@@ -60,6 +63,11 @@ const MintV2Page = () => {
     const response = await mint(mintQuantity)
     if (!response.err) {
       await getTotalSupply()
+      const cre8orNumber = await getCre8orNumber()
+      await updateUserCre8orNumber({
+        walletAddress: address,
+        cre8orNumber,
+      })
       setOpenSuccessModal(true)
     }
 
