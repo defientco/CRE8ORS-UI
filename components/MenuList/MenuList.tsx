@@ -17,7 +17,7 @@ const MenuList = ({ toggleMenu }) => {
   const isHidden = isMintPage || router.pathname.includes("/staking")
 
   const [isDarkMode, setIsDarkMode] = useState(false)
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
 
   const menuItemClassName = `ml-4 ${!isMintPage && "dark:text-[black]"} text-white`
 

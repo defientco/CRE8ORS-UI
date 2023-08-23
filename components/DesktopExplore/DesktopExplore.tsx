@@ -8,7 +8,7 @@ import Popover from "../../shared/Popover"
 
 const DesktopExplore = () => {
   const router = useRouter()
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
 
   const isMintPage = router.pathname.includes("/mint")
 
@@ -73,7 +73,7 @@ const DesktopExplore = () => {
             <div className={menuItemClassName}>FAQ</div>
           </Link>
           {isConnected ? (
-            <Link href={`/profile`} target="_blank" rel="noreferrer">
+            <Link href="/profile" target="_blank" rel="noreferrer">
               <div className={menuItemClassName}>Profile</div>
             </Link>
           ) : (
