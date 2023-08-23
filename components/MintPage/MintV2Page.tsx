@@ -8,7 +8,6 @@ import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
-import { useMintProvider } from "../../providers/MintProvider"
 import SoldoutModal from "./MintV2/SoldoutModal"
 import CTAButtons from "./MintV2/CTAButtons"
 import AmountButton from "./MintV2/AmountButton"
@@ -31,8 +30,6 @@ const MintV2Page = () => {
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
-
-  const { publicSalePrice } = useMintProvider()
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -95,9 +92,7 @@ const MintV2Page = () => {
             className="fade_in_text text-[15px] md:text-[20px] font-quicksand font-medium
                     text-center leading-[99.3%]"
           >
-            {`No lockup. No allowlist.\nFirst come, first serve.\nPrice: ${
-              Number(publicSalePrice) / 10 ** 18
-            } ETH`}
+            {`No lockup. No allowlist.\nFirst come, first serve.\nPrice: 0.05 ETH`}
           </pre>
           <div
             className="flex justify-center items-center
