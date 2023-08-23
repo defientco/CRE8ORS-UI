@@ -41,14 +41,8 @@ const DesktopExplore = () => {
           bg-[black] ${!isMintPage && "dark:bg-white"}
           shadow-md rounded-lg  font-quicksand text-sm`}
         >
-          <Link href="/status" target="_blank" rel="noreferrer">
-            <div className={menuItemClassName}>Status</div>
-          </Link>
           <Link href="/manifesto" target="_blank" rel="noreferrer">
             <div className={menuItemClassName}>Manifesto</div>
-          </Link>
-          <Link href="/roadmap" target="_blank" rel="noreferrer">
-            <div className={menuItemClassName}>Roadmap</div>
           </Link>
           <Link
             href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
