@@ -69,7 +69,7 @@ class DnaMetaData {
       description: "Against all odds, we shall live in color. ",
       image: `ipfs://${dnaCard}`,
       attributes: {
-        ARCHETYPE: data.creatorType,
+        ARCHETYPE: mapEvilToGood(data?.creatorType),
       },
     }
     return metadataObject
