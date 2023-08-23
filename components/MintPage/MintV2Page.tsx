@@ -131,8 +131,7 @@ const MintV2Page = () => {
                           h-[40px] w-[130px] fade_in_text
                           !text-white
                           !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
-                          cursor-not-allowed
-                          !bg-[gray]"
+                          !bg-[black]"
                 onClick={mintNFT}
               >
                 Mint Now
