@@ -77,7 +77,7 @@ const Header: FC<HeaderProps> = () => {
         <div
           className="text-sm font-quicksand 
         flex flex-row items-center
-        md:gap-x-[25px] xl:gap-x-[40px]"
+        md:gap-x-[20px] xl:gap-x-[30px]"
         >
           {!isHidden && !isMobile && (
             <div className="flex items-center font-bold font-quicksand">
