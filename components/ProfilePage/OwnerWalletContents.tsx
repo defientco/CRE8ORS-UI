@@ -4,11 +4,10 @@ import { CRE8OR } from "./types"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import ProfileToken from "./ProfileToken"
 
-const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
+const OwnerWalletContents = ({ setOpenTrainModal }) => {
   const { isEditable } = useProfileProvider()
 
-  const { ownedNfts, setSelectedTokenIdForUnlock, setSelectedTokenIdForTrain } =
-    useWalletCollectionProvider()
+  const { ownedNfts, setSelectedTrainTokenData } = useWalletCollectionProvider()
 
   return (
     <div
@@ -32,39 +31,35 @@ const OwnerWalletContents = ({ setOpenUnlockModal, setOpenTrainModal }) => {
               {data.type === CRE8OR ? "CRE8ORS" : data.label}
               {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
             </div>
-            {isEditable && data.type === CRE8OR && data.isLocked !== undefined && (
+            {isEditable && data.type === CRE8OR && data.getCre8ingStarted !== undefined && (
               <div>
-                {data.isLocked ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setOpenUnlockModal(true)
-                      setSelectedTokenIdForUnlock(data.tokenId)
-                    }}
-                  >
-                    <Media
-                      type="image"
-                      containerClasses="w-[13.54px] h-[16.83px]"
-                      link="/assets/Profile/locked.svg"
-                      blurLink="/assets/Profile/locked.png"
-                    />
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setOpenTrainModal(true)
-                      setSelectedTokenIdForTrain(data.tokenId)
-                    }}
-                    type="button"
-                  >
-                    <Media
-                      type="image"
-                      containerClasses="w-[14.8px] h-[17px]"
-                      link="/assets/Profile/unlocked.svg"
-                      blurLink="/assets/Profile/unlocked.png"
-                    />
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedTrainTokenData({
+                      id: data.tokenId,
+                      isStake: !data.getCre8ingStarted,
+                    })
+                    setOpenTrainModal(true)
+                  }}
+                >
+                  <Media
+                    type="image"
+                    containerClasses={
+                      data.getCre8ingStarted ? "w-[13.54px] h-[16.83px]" : "w-[14.8px] h-[17px]"
+                    }
+                    link={
+                      data.getCre8ingStarted
+                        ? "/assets/Profile/locked.svg"
+                        : "/assets/Profile/unlocked.svg"
+                    }
+                    blurLink={
+                      data.getCre8ingStarted
+                        ? "/assets/Profile/locked.png"
+                        : "/assets/Profile/unlocked.png"
+                    }
+                  />
+                </button>
               </div>
             )}
           </div>

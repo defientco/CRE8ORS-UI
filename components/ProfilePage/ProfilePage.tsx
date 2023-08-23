@@ -3,13 +3,12 @@ import { useAccount } from "wagmi"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import Layout from "../Layout"
-import PreDesktopProfileView from "./PreDesktopProfileView"
-import PreMobileProfileView from "./PreMobileProfileView"
+import DesktopProfileView from "./DesktopProfileView"
+import MobileProfileView from "./MobileProfileView"
 import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
 import { WallectCollectionProvider } from "../../providers/WalletCollectionProvider"
-import Footer from "../Footer"
 
 const ProfilePage = () => {
   const routerAddress = useRouter().query.address as string
@@ -25,7 +24,7 @@ const ProfilePage = () => {
     getUserData(routerAddress)
     getUserSimilarProfiles(routerAddress)
 
-    if (address?.toLowerCase() !== routerAddress?.toLowerCase()) {
+    if (address?.toLowerCase() !== routerAddress?.toLowerCase() && routerAddress) {
       setIsHiddenEditable(true)
       return
     }
@@ -35,7 +34,7 @@ const ProfilePage = () => {
   }, [routerAddress, getUserData, getUserSimilarProfiles])
 
   return (
-    <Layout type="base">
+    <Layout type="contained">
       <div className="flex justify-center">
         <div className="max-w-[1280px]">
           <WallectCollectionProvider>
@@ -80,14 +79,13 @@ const ProfilePage = () => {
                       </div>
                     </div>
                   )}
-                  <PreMobileProfileView />
+                  <MobileProfileView />
                 </>
               ) : (
-                <PreDesktopProfileView />
+                <DesktopProfileView />
               )}
             </div>
           </WallectCollectionProvider>
-          <Footer className="!pt-6 !pb-0 !bg-transparent relative !z-[10]" />
         </div>
       </div>
     </Layout>

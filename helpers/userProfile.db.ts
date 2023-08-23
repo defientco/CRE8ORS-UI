@@ -1,3 +1,4 @@
+import { UpdateCre8orNumberDTO } from "../DTO/updateCre8orNumber.dto"
 import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
 import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
@@ -103,13 +104,36 @@ export const updateUserProfile = async (body: UserProfile) => {
   }
 }
 
+export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
+  try {
+    const { cre8orNumber, walletAddress } = body
+    
+    await dbConnect()
+
+    const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    if (!doc) {
+      throw new Error("No user found")
+    }
+    
+    const newProfile = {
+      cre8orNumber
+    }
+
+    const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(walletAddress) }, newProfile)
+
+    return { success: true, results }
+  } catch (e) {
+    throw new Error(e)
+  }
+}
+
 export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
     let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
 
-    if(doc && !doc?.avatarUrl) {
+    if(doc) {
       const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
 
       if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })

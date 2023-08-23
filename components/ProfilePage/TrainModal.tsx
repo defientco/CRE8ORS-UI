@@ -1,9 +1,12 @@
+/* eslint-disable no-nested-ternary */
 import { FC, useState } from "react"
+import { toast } from "react-toastify"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import { useEthersSigner } from "../../hooks/useEthersSigner"
+import { toggleCre8ingTokens } from "../../lib/staking"
 
 interface TrainModalProps {
   isModalVisible: boolean
@@ -11,14 +14,18 @@ interface TrainModalProps {
 }
 const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) => {
   const [loading, setLoading] = useState(false)
-  const { selectedTokenIdForTrain, refetchProfileFormattedCollection } =
+  const { selectedTrainTokenData, refetchProfileFormattedCollection } =
     useWalletCollectionProvider()
   const signer = useEthersSigner({ chainId: process.env.NEXT_PUBLIC_TESTNET ? 5 : 1 })
 
   const trainFunc = async () => {
     setLoading(true)
-    if (selectedTokenIdForTrain !== null && signer) {
-      await refetchProfileFormattedCollection()
+    if (selectedTrainTokenData?.id !== null && signer) {
+      const response = await toggleCre8ingTokens(signer, selectedTrainTokenData?.id)
+      if (!response?.err) {
+        await refetchProfileFormattedCollection()
+        toast.success(`Successfully ${selectedTrainTokenData?.isStake ? "staked" : "unstaked"}!`)
+      }
     }
     toggleIsVisible()
     setLoading(false)
@@ -43,7 +50,11 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
         >
-          {loading ? "Loading...." : "Soft-staking"}
+          {loading
+            ? "Loading...."
+            : selectedTrainTokenData?.isStake
+            ? "Soft-staking"
+            : "Soft-unstaking"}
         </div>
         {loading ? (
           <>
@@ -84,7 +95,7 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
               !p-0"
               onClick={trainFunc}
             >
-              start training
+              {selectedTrainTokenData?.isStake ? "start training" : "unstake"}
             </Button>
           </>
         )}

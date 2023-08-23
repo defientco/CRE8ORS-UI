@@ -1,8 +1,12 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useTheme } from "../../providers/ThemeProvider"
 
 const DiscordIcon = () => {
   const { themeMode } = useTheme()
+  const router = useRouter()
+
+  const isMintPage = router.pathname.includes("/mint")
 
   return (
     <a href="https://discord.gg/ZpZBHCrqHQ" target="_blank" rel="noreferrer">
@@ -10,7 +14,7 @@ const DiscordIcon = () => {
         <div className="pt-2 cursor-pointer md:hidden block">
           <Image
             src={`${
-              themeMode === "dark"
+              themeMode === "dark" && !isMintPage
                 ? "/assets/Header/discord.png"
                 : "/assets/Header/white_discord.png"
             }`}
@@ -19,10 +23,10 @@ const DiscordIcon = () => {
             alt="discord"
           />
         </div>
-        <div className="pt-2 cursor-pointer md:block hidden">
+        <div className="cursor-pointer md:block hidden">
           <Image
             src={`${
-              themeMode === "dark"
+              themeMode === "dark" && !isMintPage
                 ? "/assets/Header/white_discord.png"
                 : "/assets/Header/discord.png"
             }`}

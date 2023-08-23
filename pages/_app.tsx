@@ -16,6 +16,7 @@ import { ChatProvider } from "../providers/ChatProvider"
 import { ThemeProvider } from "../providers/ThemeProvider"
 import { AdminProvider } from "../providers/AdminProvider"
 import { UserProvider } from "../providers/UserProvider"
+import { MintProvider } from "../providers/MintProvider"
 
 const myChains = [process.env.NEXT_PUBLIC_TESTNET ? goerli : mainnet]
 const { chains, publicClient, webSocketPublicClient } = configureChains(myChains, [
@@ -43,15 +44,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       <RainbowKitProvider modalSize="compact" chains={chains}>
         <ThemeProvider>
           <UserProvider>
-            <SessionProvider>
-              <AdminProvider>
-                <ChatProvider>
-                  <Component {...pageProps} />
-                  <ToastContainer />
-                  <Analytics />
-                </ChatProvider>
-              </AdminProvider>
-            </SessionProvider>
+            <MintProvider>
+              <SessionProvider>
+                <AdminProvider>
+                  <ChatProvider>
+                    <Component {...pageProps} />
+                    <ToastContainer />
+                    <Analytics />
+                  </ChatProvider>
+                </AdminProvider>
+              </SessionProvider>
+            </MintProvider>
           </UserProvider>
         </ThemeProvider>
       </RainbowKitProvider>
