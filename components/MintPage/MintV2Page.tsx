@@ -8,14 +8,12 @@ import MintingModal from "./MintV2/MintingModal"
 import SuccessModal from "./MintV2/SuccessModal"
 import useCre8orMintV2 from "../../hooks/mintDay/useCre8orMintV2"
 import WalletConnectButton from "../WalletConnectButton"
-import { useMintProvider } from "../../providers/MintProvider"
 import SoldoutModal from "./MintV2/SoldoutModal"
 import CTAButtons from "./MintV2/CTAButtons"
-import FreeMintModal from "./MintV2/FreeMintModal"
 import AmountButton from "./MintV2/AmountButton"
-import FreeSuccessModal from "./MintV2/FreeSuccessModal"
 import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { updateUserCre8orNumber } from "../../lib/userInfo"
+import FreeSuccessModal from "./MintV2/FreeSuccessModal"
 
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
@@ -28,20 +26,13 @@ const MintV2Page = () => {
   const mintRef = useRef()
   const [isMintLoading, setIsMintLoading] = useState(false)
 
-  const [openFreeMintModal, setOpenFreeMintModal] = useState(false)
-  const [openFreeSuccessModal, setOpenFreeSuccessModal] = useState(false)
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
+  const [openFreeSuccessModal, setOpenFreeSuccessModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
-
-  const { publicSalePrice, hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } =
-    useMintProvider()
-
-  const isPassportMint = hasPassport && hasUnclaimedFreeMint
-  const isFreeMint = isPassportMint || hasFriendAndFamily
 
   const increateAmount = () => {
     setMintQuantity(mintQuantity + 1)
@@ -54,11 +45,6 @@ const MintV2Page = () => {
 
   const mintNFT = async () => {
     if (!mintQuantity) return
-
-    if (isFreeMint) {
-      setOpenFreeMintModal(true)
-      return
-    }
 
     setIsMintLoading(true)
     const response = await mint(mintQuantity)
@@ -94,10 +80,6 @@ const MintV2Page = () => {
     setOpenSoldOutModal(isSoldout)
   }, [isSoldout])
 
-  useEffect(() => {
-    setOpenFreeMintModal(isFreeMint)
-  }, [isFreeMint])
-
   return (
     <>
       <Layout type="contained">
@@ -118,9 +100,7 @@ const MintV2Page = () => {
             className="fade_in_text text-[15px] md:text-[20px] font-quicksand font-medium
                     text-center leading-[99.3%]"
           >
-            {`No lockup. No allowlist.\nFirst come, first serve.\nPrice: ${
-              Number(publicSalePrice) / 10 ** 18
-            } ETH`}
+            {`No lockup. No allowlist.\nFirst come, first serve.\nPrice: 0.05 ETH`}
           </pre>
           <div
             className="flex justify-center items-center
@@ -157,8 +137,9 @@ const MintV2Page = () => {
                 id="mint_btn"
                 className="my-[15px] md:my-[20px] !p-0 md:w-[150px] md:h-[55px]
                           h-[40px] w-[130px] fade_in_text
-                          !bg-black !text-white
-                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]"
+                          !text-white
+                          !shadow-[0px_4px_4px_rgb(0,0,0,0.25)]
+                          !bg-[black]"
                 onClick={mintNFT}
               >
                 Mint Now
@@ -188,14 +169,6 @@ const MintV2Page = () => {
         </div>
       </Layout>
       {isMintLoading && <MintingModal />}
-      {isFreeMint && (
-        <FreeMintModal
-          isModalVisible={openFreeMintModal}
-          toggleModal={() => setOpenFreeMintModal(!openFreeMintModal)}
-          onSuccess={onSuccessFreeMint}
-          setIsMintLoading={setIsMintLoading}
-        />
-      )}
       <SuccessModal
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
