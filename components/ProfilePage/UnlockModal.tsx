@@ -33,6 +33,7 @@ const UnlockModal: FC<UnlockModalProps> = ({ isModalVisible, toggleIsVisible }) 
 
   return (
     <Modal
+      id="unlock_modal"
       isVisible={isModalVisible}
       onClose={toggleIsVisible}
       containerClassName="rounded-[30px] md:rounded-[56px] overflow-hidden bg-black

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import { useTheme } from '../providers/ThemeProvider'
 
 interface IModal {
+  id: string
   onClose: () => any
   showCloseButton?: boolean
   children: ReactNode
@@ -12,6 +13,7 @@ interface IModal {
 }
 
 function Modal({
+  id,
   onClose,
   showCloseButton,
   children,
@@ -52,26 +54,26 @@ function Modal({
                 onClick={onClose}
             >
                 <line
-                x1="2.84836"
-                y1="1.77502"
-                x2="10.273"
-                y2="9.19965"
-                stroke="url(#paint0_linear_1383_155)"
-                strokeWidth="3"
-                strokeLinecap="round"
+                  x1="2.84836"
+                  y1="1.77502"
+                  x2="10.273"
+                  y2="9.19965"
+                  stroke={`url(#paint0_linear_${id})`}
+                  strokeWidth="3"
+                  strokeLinecap="round"
                 />
                 <line
-                x1="2.72705"
-                y1="9.1996"
-                x2="10.1517"
-                y2="1.77498"
-                stroke="url(#paint1_linear_1383_155)"
-                strokeWidth="3"
-                strokeLinecap="round"
+                  x1="2.72705"
+                  y1="9.1996"
+                  x2="10.1517"
+                  y2="1.77498"
+                  stroke={`url(#paint1_linear_${id})`}
+                  strokeWidth="3"
+                  strokeLinecap="round"
                 />
                 <defs>
                 <linearGradient
-                    id="paint0_linear_1383_155"
+                    id={`paint0_linear_${id}`}
                     x1="5.50001"
                     y1="6.548"
                     x2="4.7929"
@@ -82,7 +84,7 @@ function Modal({
                     <stop offset="0.578125" stopColor="#8D8DDA" />
                 </linearGradient>
                 <linearGradient
-                    id="paint1_linear_1383_155"
+                    id={`paint1_linear_${id}`}
                     x1="7.50002"
                     y1="6.54795"
                     x2="8.20713"

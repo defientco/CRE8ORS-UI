@@ -13,11 +13,20 @@ import CTAButtons from "./MintV2/CTAButtons"
 import AmountButton from "./MintV2/AmountButton"
 import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { updateUserCre8orNumber } from "../../lib/userInfo"
+import FreeSuccessModal from "./MintV2/FreeSuccessModal"
+import { useMintProvider } from "../../providers/MintProvider"
+import FreeMintModal from "./MintV2/FreeMintModal"
 
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
+  const [freeMintedCount, setFreeMintClaimedCount] = useState(1)
   const { isConnected, address } = useAccount()
+
+  const { hasPassport, hasUnclaimedFreeMint, hasFriendAndFamily } = useMintProvider()
+
+  const isPassportMint = hasPassport && hasUnclaimedFreeMint
+  const isFreeMint = isPassportMint || hasFriendAndFamily
 
   const { getCre8orNumber } = useCre8orNumber({ address })
   const minusRef = useRef()
@@ -26,6 +35,8 @@ const MintV2Page = () => {
 
   const [openSuccessModal, setOpenSuccessModal] = useState(false)
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
+  const [openFreeSuccessModal, setOpenFreeSuccessModal] = useState(false)
+  const [openFreeMintModal, setOpenFreeMintModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
 
@@ -43,6 +54,11 @@ const MintV2Page = () => {
   const mintNFT = async () => {
     if (!mintQuantity) return
 
+    if (isFreeMint) {
+      setOpenFreeMintModal(true)
+      return
+    }
+
     setIsMintLoading(true)
     const response = await mint(mintQuantity)
     if (!response.err) {
@@ -58,6 +74,11 @@ const MintV2Page = () => {
     setIsMintLoading(false)
   }
 
+  const onSuccessFreeMint = (mintedCount: number) => {
+    setFreeMintClaimedCount(mintedCount)
+    setOpenFreeSuccessModal(true)
+  }
+
   useShakeEffect({
     ref: minusRef,
     isEnabled: mintQuantity === 1,
@@ -71,6 +92,10 @@ const MintV2Page = () => {
   useEffect(() => {
     setOpenSoldOutModal(isSoldout)
   }, [isSoldout])
+
+  useEffect(() => {
+    setOpenFreeMintModal(isFreeMint)
+  }, [isFreeMint])
 
   return (
     <>
@@ -161,10 +186,23 @@ const MintV2Page = () => {
         </div>
       </Layout>
       {isMintLoading && <MintingModal />}
+      {isFreeMint && (
+        <FreeMintModal
+          isModalVisible={openFreeMintModal}
+          toggleModal={() => setOpenFreeMintModal(!openFreeMintModal)}
+          onSuccess={onSuccessFreeMint}
+          setIsMintLoading={setIsMintLoading}
+        />
+      )}
       <SuccessModal
         isModalVisible={openSuccessModal}
         toggleIsVisible={() => setOpenSuccessModal(!openSuccessModal)}
         quantity={mintQuantity}
+      />
+      <FreeSuccessModal
+        isModalVisible={openFreeMintModal}
+        toggleIsVisible={() => setOpenFreeSuccessModal(!openFreeSuccessModal)}
+        freeMintedCount={freeMintedCount}
       />
       <SoldoutModal
         isModalVisible={openSoldOutModal}
