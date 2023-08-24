@@ -4,6 +4,7 @@ import MintModalCTAButton from "./MintModalCTAButton"
 
 const FreeSuccessModal = ({ isModalVisible, toggleIsVisible, freeMintedCount }) => (
   <Modal
+    id="free_success_modal"
     isVisible={isModalVisible}
     onClose={toggleIsVisible}
     showCloseButton

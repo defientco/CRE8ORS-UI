@@ -7,7 +7,7 @@ interface ReserveProps {
 }
 
 const NoTicket = ({ handleClose }: ReserveProps) => (
-  <Modal onClose={handleClose} isVisible containerClassName="!p-0" showCloseButton>
+  <Modal id="no_ticket" onClose={handleClose} isVisible containerClassName="!p-0" showCloseButton>
     <div
       className="dark:bg-[url('/assets/Common/popup.png')] bg-[url('/assets/Common/dark_popup.png')] 
               dark:bg-center bg-cover

@@ -8,6 +8,7 @@ const SuccessModal = ({ isModalVisible, toggleIsVisible, quantity }) => {
 
   return (
     <Modal
+      id="mint_success_modal"
       isVisible={isModalVisible}
       onClose={toggleIsVisible}
       showCloseButton

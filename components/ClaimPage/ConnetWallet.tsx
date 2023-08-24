@@ -6,7 +6,13 @@ interface ConnectWalletProps {
 }
 
 const ConnectWallet = ({ handleClose }: ConnectWalletProps) => (
-  <Modal onClose={handleClose} isVisible containerClassName="!p-0" showCloseButton>
+  <Modal
+    id="connect_wallet_claim"
+    onClose={handleClose}
+    isVisible
+    containerClassName="!p-0"
+    showCloseButton
+  >
     <div
       className="dark:bg-[url('/assets/Common/popup.png')] bg-[url('/assets/Common/dark_popup.png')] 
               dark:bg-center bg-cover

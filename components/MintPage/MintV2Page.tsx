@@ -200,7 +200,7 @@ const MintV2Page = () => {
         quantity={mintQuantity}
       />
       <FreeSuccessModal
-        isModalVisible={openFreeSuccessModal}
+        isModalVisible={openFreeMintModal}
         toggleIsVisible={() => setOpenFreeSuccessModal(!openFreeSuccessModal)}
         freeMintedCount={freeMintedCount}
       />
