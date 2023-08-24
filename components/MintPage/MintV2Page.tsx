@@ -20,6 +20,7 @@ import { updateUserCre8orNumber } from "../../lib/userInfo"
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
+  const [freeMintedCount, setFreeMintClaimedCount] = useState(1)
   const { isConnected, address } = useAccount()
 
   const { getCre8orNumber } = useCre8orNumber({ address })
@@ -74,7 +75,8 @@ const MintV2Page = () => {
     setIsMintLoading(false)
   }
 
-  const onSuccessFreeMint = () => {
+  const onSuccessFreeMint = (mintedCount: number) => {
+    setFreeMintClaimedCount(mintedCount)
     setOpenFreeSuccessModal(true)
   }
 
@@ -202,6 +204,7 @@ const MintV2Page = () => {
       <FreeSuccessModal
         isModalVisible={openFreeSuccessModal}
         toggleIsVisible={() => setOpenFreeSuccessModal(!openFreeSuccessModal)}
+        freeMintedCount={freeMintedCount}
       />
       <SoldoutModal
         isModalVisible={openSoldOutModal}

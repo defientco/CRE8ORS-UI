@@ -2,34 +2,25 @@ import { useContext, createContext, ReactNode, FC, useState, useEffect, useMemo 
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
 import { toast } from "react-toastify"
-import { getPassportIds, getAvailableFreeMints } from "../lib/collectionHolder"
-import useMintCart from "../hooks/useMintCart"
+import { getAvailableFreeMints } from "../lib/freeMinter"
+import { getPassportIds } from "../lib/claimPassport"
 import useSaleStatus from "../hooks/mintDay/useSaleStatus"
-import { isWhitelisted } from "../lib/merkle/isWhitelisted"
 
 interface mintProps {
-  leftQuantityCount: number | null
   passportIds: any
   availablePassportIds: any
   hasFriendAndFamily: boolean | null
   hasPassport: boolean | null
   hasUnclaimedFreeMint: boolean | null
   freeMintCount: number | null
-  cart: any[]
   loadingSaleStatus: boolean
   publicSaleActive: boolean | null
   presaleActive: boolean | null
   presaleStart: number
   publicSaleStart: number
   publicSalePrice: string
-  getFFAndPassportsInformation: () => Promise<void>
   checkNetwork: () => boolean
   refetchInformation: () => Promise<void>
-  addToCart: (tier: number) => void
-  removeFromCart: (tier: number) => void
-  getCartTier: (tier: number) => number
-  merkleRoot: string | null
-  hasWhitelist: any
   isReloadingChainData: boolean
   isLoadingInitialize: boolean
 }
@@ -46,14 +37,10 @@ export const MintProvider: FC<Props> = ({ children }) => {
   const [hasPassport, setHasPassport] = useState<boolean | null>(null)
   const [hasUnclaimedFreeMint, setHasUnclaimedFreeMint] = useState<boolean | null>(null)
   const [passportIds, setPassportIds] = useState(null)
-  const [leftQuantityCount, setLeftQuantityCount] = useState<number | null>(18)
   const [freeMintClaimedCount, setFreeMintClaimedCount] = useState<number | null>(null)
   const [availablePassportIds, setAvailablePassportIds] = useState([] as any)
   const { chain: activeChain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
-  const [merkleRoot, setMerkleRoot] = useState(null)
-  const { cart, addToCart, removeFromCart, getCartTier } = useMintCart()
-  const [hasWhitelist, setHasWhitelist] = useState<boolean | null>(null)
   const [isReloadingChainData, setIsReloadingChaindData] = useState(false)
   const [isLoadingInitialize, setIsLoadingInitialize] = useState(false)
 
@@ -66,16 +53,13 @@ export const MintProvider: FC<Props> = ({ children }) => {
     const tokenIds = passportsArray?.map((passport: any) => passport?.id?.tokenId)
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
-    setLeftQuantityCount(results?.quantityLeft)
 
+    console.log(results)
     setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
     setHasFriendAndFamily(results?.discount)
     setAvailablePassportIds(results?.passports)
-    setMerkleRoot(results?.merkleRoot)
-    const status = isWhitelisted(address)
-    setHasWhitelist(status)
   }
 
   const freeMintCount = useMemo(() => {
@@ -111,10 +95,7 @@ export const MintProvider: FC<Props> = ({ children }) => {
     setFreeMintClaimedCount(null)
     setHasUnclaimedFreeMint(null)
     setHasFriendAndFamily(null)
-    setLeftQuantityCount(18)
     setAvailablePassportIds(null)
-    setMerkleRoot(null)
-    setHasWhitelist(null)
     await getInitialData()
     setIsLoadingInitialize(false)
   }
@@ -135,40 +116,26 @@ export const MintProvider: FC<Props> = ({ children }) => {
       isReloadingChainData,
       isLoadingInitialize,
       availablePassportIds,
-      cart,
       freeMintCount,
-      leftQuantityCount,
       passportIds,
       hasPassport,
       hasUnclaimedFreeMint,
       hasFriendAndFamily,
       checkNetwork,
       refetchInformation,
-      addToCart,
-      removeFromCart,
-      getCartTier,
-      merkleRoot,
-      hasWhitelist,
     }),
     [
       saleStatus,
       isReloadingChainData,
       isLoadingInitialize,
       availablePassportIds,
-      cart,
       freeMintCount,
-      leftQuantityCount,
       passportIds,
       hasPassport,
       hasUnclaimedFreeMint,
       hasFriendAndFamily,
       checkNetwork,
       refetchInformation,
-      addToCart,
-      removeFromCart,
-      getCartTier,
-      merkleRoot,
-      hasWhitelist,
     ],
   )
 

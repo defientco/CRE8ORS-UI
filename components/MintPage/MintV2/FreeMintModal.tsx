@@ -1,19 +1,11 @@
 import { Button } from "../../../shared/Button"
 import Modal from "../../../shared/Modal"
 import { useMintProvider } from "../../../providers/MintProvider"
-import usePassportMintDay from "../../../hooks/mintDay/usePassportMintDay"
+import useFreeMintV2 from "../../../hooks/mintDay/useFreeMintV2"
 
 const FreeMintModal = ({ isModalVisible, toggleModal, onSuccess, setIsMintLoading }) => {
-  const {
-    checkNetwork,
-    freeMintCount,
-    hasPassport,
-    hasUnclaimedFreeMint,
-    hasFriendAndFamily,
-    refetchInformation,
-  } = useMintProvider()
-  const { freeMintPassportHolder, freeMintFamilyAndFriend } = usePassportMintDay()
-  const isPassportMint = hasPassport && hasUnclaimedFreeMint
+  const { checkNetwork, freeMintCount, refetchInformation } = useMintProvider()
+  const { freeMintV2 } = useFreeMintV2()
 
   const handleMint = async () => {
     if (!checkNetwork()) return
@@ -21,14 +13,14 @@ const FreeMintModal = ({ isModalVisible, toggleModal, onSuccess, setIsMintLoadin
 
     setIsMintLoading(true)
 
-    if (isPassportMint || hasFriendAndFamily) {
-      const response = await (isPassportMint
-        ? freeMintPassportHolder(onSuccess)
-        : freeMintFamilyAndFriend(onSuccess))
-      if (!response?.error) await refetchInformation()
-    }
+    const response = await freeMintV2()
 
     setIsMintLoading(false)
+
+    if (!response?.error) {
+      onSuccess(freeMintCount)
+      await refetchInformation()
+    }
   }
 
   return (
