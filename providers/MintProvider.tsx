@@ -54,7 +54,6 @@ export const MintProvider: FC<Props> = ({ children }) => {
     if (tokenIds?.length > 0) setPassportIds(tokenIds)
     const results = await getAvailableFreeMints(tokenIds, address)
 
-    console.log(results)
     setHasPassport(passportsArray?.length > 0)
     setFreeMintClaimedCount(results?.passports?.length)
     setHasUnclaimedFreeMint(results?.passports?.length > 0)
