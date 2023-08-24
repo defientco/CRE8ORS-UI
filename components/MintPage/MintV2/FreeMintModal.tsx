@@ -25,6 +25,7 @@ const FreeMintModal = ({ isModalVisible, toggleModal, onSuccess, setIsMintLoadin
 
   return (
     <Modal
+      id="free_mint_modal"
       isVisible={isModalVisible}
       onClose={toggleModal}
       showCloseButton
