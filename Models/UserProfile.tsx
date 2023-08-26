@@ -9,6 +9,7 @@ interface UserProfile extends Document {
   iNeedHelpWith?: string;
   askMeAbout?: string;
   avatarUrl?: string;
+  cre8orNumber?: string;
 }
 
 const UserProfileSchema = new Schema<UserProfile>({
@@ -44,6 +45,10 @@ const UserProfileSchema = new Schema<UserProfile>({
   avatarUrl: {
     type: String,
     required: [false, "Please add a avatarUrl"],
+  },
+  cre8orNumber: {
+    type: String,
+    required: [false, "Please add a cre8orNumber"],
   }
 });
 

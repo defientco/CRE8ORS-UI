@@ -13,6 +13,7 @@ import getProfileFormattedCollection, {
   SPECIALNFTS,
 } from "../lib/getProfileFormattedCollection"
 import { useRouter } from "next/router"
+import { useAccount } from "wagmi"
 
 interface Props {
   children: ReactNode
@@ -29,12 +30,13 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   const [walletNfts, setWalletNfts] = useState(null)
   const [cre8ors, setCre8ors] = useState(null)
   const [ownedNfts, setOwnedNfts] = useState([])
-  const { address } = router.query as any
+  const { address } = useAccount()
+  const routerAddress = router.query.address as string
 
   const toggleProfileFormattedCollection = useCallback(async () => {
     if (isViewAll) {
       if (walletNfts === null) {
-        const response = await getProfileFormattedCollection(address, ALLNFTS)
+        const response = await getProfileFormattedCollection(routerAddress || address, ALLNFTS)
         setWalletNfts(response)
         setOwnedNfts(response)
         return
@@ -42,7 +44,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setOwnedNfts([...walletNfts])
     } else {
       if (cre8ors === null) {
-        const response = await getProfileFormattedCollection(address, SPECIALNFTS)
+        const response = await getProfileFormattedCollection(routerAddress || address, SPECIALNFTS)
         setCre8ors(response)
         setOwnedNfts(response)
         return
@@ -50,12 +52,15 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setOwnedNfts([...cre8ors])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isViewAll])
+  }, [isViewAll, address])
 
   const refetchProfileFormattedCollection = async () => {
-    const walletResponse = await getProfileFormattedCollection(address, ALLNFTS)
+    const walletResponse = await getProfileFormattedCollection(routerAddress || address, ALLNFTS)
     setWalletNfts(walletResponse)
-    const cre8orResponse = await getProfileFormattedCollection(address, SPECIALNFTS)
+    const cre8orResponse = await getProfileFormattedCollection(
+      routerAddress || address,
+      SPECIALNFTS,
+    )
     setCre8ors(cre8orResponse)
     setOwnedNfts(isViewAll ? walletResponse : cre8orResponse)
   }

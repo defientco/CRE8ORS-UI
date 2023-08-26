@@ -15,9 +15,9 @@ export const getLockedCount = async (address: string) => {
   const response = await getCre8ors(address)
   let count: number = 0
   for (let i = 0; i < response.length; i++) {
-    if (response?.id?.tokenId) {
+    if (response[i]?.id?.tokenId) {
       // eslint-disable-next-line no-await-in-loop
-      const isLocked = await getIsLocked(response?.id?.tokenId)
+      const isLocked = await getIsLocked(response[i]?.id?.tokenId)
       if (isLocked) count++
     }
   }

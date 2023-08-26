@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { ReactNode } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useTheme } from "../../providers/ThemeProvider"
 import Newsletter from "./components/Newsletter"
 
@@ -61,11 +62,16 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     },
   ]
 
+  const router = useRouter()
+
+  const isMintPage = router.pathname.includes("/mint")
   const { themeMode } = useTheme()
 
   return (
     <div
-      className={`dark:bg-[black] bg-transparent pt-[250px] md:pt-6 pb-6 w-full flex justify-center ${
+      className={`${
+        !isMintPage && "dark:bg-[black]"
+      } bg-transparent pt-[250px] md:pt-6 pb-6 w-full flex justify-center ${
         className || ""
       } footer`}
     >
@@ -86,7 +92,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           <div className="justify-start items-start hidden md:flex">
             <Image
               src={
-                themeMode === "light"
+                themeMode === "light" || isMintPage
                   ? "/assets/Landing/footer/logo.png"
                   : "/assets/Header/white_logo.svg"
               }
@@ -98,7 +104,9 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
           {Items.map((item: ItemData) => (
             <div
               key={item.key}
-              className="font-quicksand flex justify-start text[black] dark:text-white col-span-2 md:col-span-1"
+              className={`font-quicksand flex justify-start text[black] ${
+                !isMintPage && "dark:text-white"
+              } col-span-2 md:col-span-1`}
             >
               <div className="flex flex-col cursor-[pointer] text-[8px] md:text-[16px]">
                 {item.list.map((row: LinkType) => (

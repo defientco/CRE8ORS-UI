@@ -32,4 +32,8 @@ export class UserProfileDTO {
   @IsOptional()
   @IsString()
   avatarUrl?: string
+
+  @IsOptional()
+  @IsString()
+  cre8orNumber?: string
 }

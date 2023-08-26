@@ -62,3 +62,16 @@ export const updateUserInfo = async ({
     return null
   }
 }
+
+export const updateUserCre8orNumber = async ({ walletAddress, cre8orNumber }) => {
+  try {
+    const { data } = await axios.post("/api/v2/update/userprofile/updateCre8orNumber", {
+      walletAddress,
+      cre8orNumber,
+    })
+
+    return data
+  } catch (err) {
+    return null
+  }
+}

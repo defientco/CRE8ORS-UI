@@ -15,7 +15,6 @@ const SmartWalletContents = () => {
 
   const getDNAByCre8orNumber = useCallback(async () => {
     if (!provider || !cre8orNumber) return
-
     const smartWalletAddress = await getSmartWallet(cre8orNumber)
     const code = await provider.getCode(smartWalletAddress)
     setHasSmartWallet(code !== "0x")

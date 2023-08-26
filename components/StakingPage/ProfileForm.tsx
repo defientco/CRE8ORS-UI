@@ -43,7 +43,7 @@ const ProfileForm: FC<ProfileFormProps> = ({ handleStep }) => {
     await getUserData(address)
     await getUserSimilarProfiles(address)
 
-    router.push(`/profile/${address}`)
+    router.push(`/profile/`)
   }
 
   const [username, setUserName] = useState("")

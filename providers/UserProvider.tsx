@@ -1,7 +1,17 @@
-import { useContext, createContext, ReactNode, FC, useState, useCallback, useMemo } from "react"
+import {
+  useContext,
+  createContext,
+  ReactNode,
+  FC,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react"
 
 import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
+import { useRouter } from "next/router"
 
 interface userProps {
   getUserData: (address?: string) => Promise<void>
@@ -17,6 +27,11 @@ interface Props {
 const UserContext = createContext<Partial<userProps> | null>(null)
 
 export const UserProvider: FC<Props> = ({ children }) => {
+  const router = useRouter()
+  const routerAddress = router.query.address as string
+
+  const isProfilePage = router.pathname.includes("/profile")
+
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
@@ -41,7 +56,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
       if (walletAddress || address) {
         const info: any = await getUserInfo(walletAddress || address)
 
-        if (!info?.doc) return setUserInfo(null)
+        if (!info?.doc) {
+          setUserInfo(null)
+          if (isProfilePage) router.push("/save-profile")
+          return
+        }
 
         return setUserInfo(info.doc)
       }
@@ -50,6 +69,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
     },
     [address],
   )
+
+  useEffect(() => {
+    if (!routerAddress) getUserData()
+  }, [getUserData, routerAddress])
 
   const provider = useMemo(
     () => ({
