@@ -1,7 +1,5 @@
-import { FC, ReactNode, useRef } from "react"
+import { FC, ReactNode } from "react"
 import { useMediaQuery, useWindowSize } from "usehooks-ts"
-import { useScroll } from "framer-motion"
-import useAutoPerfectCursor from "../../hooks/useAutoPerfectCursor"
 import SectionContainer from "./SectionContainer"
 import Character from "./Character"
 import Brands from "./sections/Brands"
@@ -21,32 +19,15 @@ const AutoPerfectArea: FC<AutoPerfectAreaProps> = ({
   profileImageRef,
   openSoonImageRef,
 }) => {
-  const cursorRef = useRef(null)
-  const clipRef = useRef(null)
-  const containerRef = useRef(null)
-
   const isMobile = useMediaQuery("(max-width: 768px)")
   const isIphone = useMediaQuery("(max-width: 390px)")
 
   const { width } = useWindowSize()
 
-  const { scrollY } = useScroll({ container: containerRef })
-
-  useAutoPerfectCursor({
-    containerRef,
-    cursorRef: !isMobile && cursorRef,
-    clipRef,
-    scrollY,
-  })
-
   return (
-    <div
-      className="relative h-[100vh] overflow-y-scroll overflow-x-hidden z-[1]"
-      ref={containerRef}
-    >
+    <div className="relative h-[100vh] overflow-y-scroll overflow-x-hidden z-[1]">
       {!isMobile && (
         <div
-          ref={cursorRef}
           className="hidden 
             rounded-full 
             w-[152px] h-[152px] z-[30] 
@@ -205,7 +186,6 @@ const AutoPerfectArea: FC<AutoPerfectAreaProps> = ({
         </SectionContainer>
       </div>
       <div
-        ref={clipRef}
         className="absolute
           w-full
           z-[10] 
