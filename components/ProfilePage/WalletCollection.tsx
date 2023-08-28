@@ -38,7 +38,7 @@ const WalletCollection = () => {
           px-2 pb-6`}
       >
         <div>
-          <div className="flex items-center gap-x-[5px] samsungS8:gap-x-[10px]">
+          <div className="flex items-center gap-x-[5px] md:gap-x-[10px]">
             <SmartWalletButtons />
             <p
               className="text-[9px] text-white
@@ -52,14 +52,10 @@ const WalletCollection = () => {
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
                 link={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.svg"
-                    : "/assets/Profile/black_arrow_down.svg"
+                  expandedMore ? "/assets/Profile/arrow_up.svg" : "/assets/Profile/arrow_down.svg"
                 }`}
                 blurLink={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.png"
-                    : "/assets/Profile/black_arrow_down.png"
+                  expandedMore ? "/assets/Profile/arrow_up.png" : "/assets/Profile/arrow_down.png"
                 }`}
               />
             </button>
@@ -100,7 +96,7 @@ const WalletCollection = () => {
             )}
             <div className="flex gap-x-[10px] items-center">
               <p
-                className="text-white
+                className="text-[9px] text-white
                 samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
                 uppercase"
               >

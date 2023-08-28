@@ -3,9 +3,9 @@ import ProfileInformation from "./Desktop/ProflileInformation"
 import TwitterLocation from "./Mobile/TwitterLocation"
 import SimilarProfiles from "./Mobile/SimilarProfiles"
 import WalletCollection from "./WalletCollection"
-import DNALoading from "./DNALoading"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
+import Cre8orPFP from "./Cre8orPFP"
 
 const MobileProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -96,7 +96,7 @@ const MobileProfileView = () => {
             </button>
           )}
         </div>
-        <DNALoading />
+        <Cre8orPFP />
 
         <ProfileInformation />
         <SimilarProfiles />
