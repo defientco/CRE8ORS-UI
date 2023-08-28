@@ -12,12 +12,14 @@ import {
 import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
+import getMetadata from "../lib/getMetadata"
 
 interface userProps {
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
   similarProfiles: any
+  metaData: any
 }
 
 interface Props {
@@ -34,6 +36,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
+  const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
 
   const getUserSimilarProfiles = useCallback(
@@ -62,6 +65,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
           return
         }
 
+        const metaData: any = await getMetadata(parseInt(info?.doc.cre8orNumber, 10))
+
+        setMetaData(metaData)
+
         return setUserInfo(info.doc)
       }
 
@@ -80,8 +87,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
       userInfo,
       getUserData,
       getUserSimilarProfiles,
+      metaData,
     }),
-    [similarProfiles, userInfo, getUserData, getUserSimilarProfiles],
+    [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>

@@ -16,7 +16,10 @@ const ProfileInformation = () => {
   } = useProfileProvider()
 
   return (
-    <div className="flex flex-col text-black items-center lg:items-end pt-[50px]">
+    <div
+      className="flex flex-col text-black items-center lg:items-end pt-[50px]
+    text-white"
+    >
       <div
         className="text-[22px] font-bold font-quicksand
                   leading-[99.3%]

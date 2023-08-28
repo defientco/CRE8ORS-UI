@@ -6,9 +6,12 @@ import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileForm
 import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
+import { useUserProvider } from "../../providers/UserProvider"
+import getHttpIpfsLink from "../../lib/getHttpIpfsLink"
 
 const SmartWalletContents = () => {
   const { cre8orNumber, isHiddenEditable } = useProfileProvider()
+  const { metaData } = useUserProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
@@ -38,17 +41,24 @@ const SmartWalletContents = () => {
                     lg:w-[287px] lg:h-[287px]
                     samsungS8:w-[130px] samsungS8:h-[130px]
                     w-[120px] h-[120px]
-                    after:content-[''] after:bg-[white] after:opacity-[0.3]
+                    after:content-[''] 
+                    after:bg-[black] 
+                    after:opacity-[0.2]
                     after:w-full after:h-full
                     after:absolute
-                    after:left-0 after:top-0 after:z-[1]"
+                    after:left-0 
+                    after:top-0 
+                    after:z-[4]"
       >
         {!hasSmartWallet && !isHiddenEditable && (
           <Deploy6551AndMintDNAButton getDNAByCre8orNumber={getDNAByCre8orNumber} />
         )}
         <div
           className="absolute w-full h-full left-0 top-0 z-[2]
-              bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"
+              bg-cover"
+          style={{
+            backgroundImage: `url('${getHttpIpfsLink(metaData?.image)}')`,
+          }}
         />
         <div
           className="grid grid-cols-3 w-full relative z-[2]
