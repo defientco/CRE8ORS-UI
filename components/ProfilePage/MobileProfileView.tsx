@@ -6,6 +6,7 @@ import WalletCollection from "./WalletCollection"
 import { useUserProvider } from "../../providers/UserProvider"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import Cre8orPFP from "./Cre8orPFP"
+import Skeleton from "./Sketelon"
 
 const MobileProfileView = () => {
   const { userInfo } = useUserProvider()
@@ -49,7 +50,11 @@ const MobileProfileView = () => {
               className="font-eigerdals text-[27px] samsungS8:text-[30px] xs:text-[33px] text-center
           leading-[100%]"
             >
-              {`${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`}
+              {userInfo?.username ? (
+                `${userInfo?.username.slice(0, 15)}${userInfo?.username.length > 15 ? "..." : ""}`
+              ) : (
+                <Skeleton className="w-[200px] h-[40px]" />
+              )}
             </div>
           </div>
         )}
