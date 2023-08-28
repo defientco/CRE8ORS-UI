@@ -38,7 +38,7 @@ const DesktopCollections = () => {
             <div className={menuItemClassName}>Dna cards</div>
           </a>
           <a
-            href="https://opensea.io/collection/cre8ors-claim-tickets"
+            href="https://opensea.io/collection/cre8ors-passports"
             target="_blank"
             rel="noreferrer"
           >
