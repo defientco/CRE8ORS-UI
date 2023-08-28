@@ -19,7 +19,6 @@ const DesktopProfileView = () => {
   return (
     <div
       className="relative w-full
-        !bg-[red]
         bg-gradient-to-r from-[#000000e3] via-[white] to-[#000000e3]
         rounded-[10px]
         overflow-hidden"
