@@ -26,17 +26,6 @@ const AutoPerfectArea: FC<AutoPerfectAreaProps> = ({
 
   return (
     <div className="relative h-[100vh] overflow-y-scroll overflow-x-hidden z-[1]">
-      {!isMobile && (
-        <div
-          className="hidden 
-            rounded-full 
-            w-[152px] h-[152px] z-[30] 
-            absolute 
-            border-[5px] border-[black] 
-            dark:border-[white] 
-            pointer-events-none p-1"
-        />
-      )}
       <div
         className="absolute 
           left-0 top-0 z-[20] 
