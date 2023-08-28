@@ -19,11 +19,11 @@ const DesktopProfileView = () => {
   return (
     <div
       className="relative w-full
+        !bg-[red]
         bg-gradient-to-r from-[#000000e3] via-[white] to-[#000000e3]
         rounded-[10px]
         overflow-hidden"
     >
-      <Cre8orPFP />
       <div
         className={`relative z-[3] left-0 top-0 w-full h-full
             flex flex-col
@@ -109,16 +109,24 @@ const DesktopProfileView = () => {
             </Tooltip>
           </div>
         </div>
-        <div className="w-full flex justify-between items-start px-6">
-          <div className="flex flex-col">
-            <TwitterLocation />
-            <div className="flex items-center gap-x-[15px] pt-[70px]">
-              <PFPInformation />
+        <div className="px-6">
+          <div className="relative flex justify-between w-full">
+            <div
+              className="absolute bottom-[-20px]
+            w-full flex justify-center z-1"
+            >
+              <Cre8orPFP />
             </div>
-          </div>
-          <div className="flex flex-col gap-y-[40px]">
-            <ProfileInformation />
-            <SimilarProfiles />
+            <div className="flex flex-col relative z-[2]">
+              <TwitterLocation />
+              <div className="flex items-center gap-x-[15px] pt-[70px]">
+                <PFPInformation />
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-[40px] relative z-[2]">
+              <ProfileInformation />
+              <SimilarProfiles />
+            </div>
           </div>
         </div>
         <WalletCollection />

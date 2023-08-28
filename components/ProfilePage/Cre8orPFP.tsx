@@ -11,16 +11,16 @@ const Cre8orPFP: FC<Cre8orPFPProps> = ({ className }) => {
 
   return (
     <div
-      className={`relative lg:absolute 
-          w-full h-full flex justify-center
-          pt-[30px] lg:pt-[160px]
+      className={`relative 
+          mt-[30px] lg:m-0
+          flex justify-center
           z-[1] ${className || ""}`}
     >
       <Media
         type="image"
         link={getHttpIpfsLink(metaData?.image)}
         blurLink={getHttpIpfsLink(metaData?.image)}
-        containerClasses="w-[250px] h-[250px] lg:w-[600px] lg:h-[600px]"
+        containerClasses="w-[250px] h-[250px] lg:w-[500px] lg:h-[500px]"
       />
     </div>
   )

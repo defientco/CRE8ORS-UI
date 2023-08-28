@@ -26,7 +26,7 @@ const WalletCollection = () => {
           !expandedMore
             ? `${
                 isMobile ? "mobile_un_expand_more" : "un_expand_more"
-              } h-[55px] lg:h-[70px] overflow-hidden`
+              } h-[55px] lg:h-[70px] overflow-hidden bg-black`
             : `${isMobile ? "mobile_expand_more" : "expand_more"} h-[220px] lg:h-[415px]
               bg-black`
         } 

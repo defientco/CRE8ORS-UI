@@ -17,8 +17,9 @@ const ProfileInformation = () => {
 
   return (
     <div
-      className="flex flex-col text-black items-center lg:items-end pt-[50px]
-    text-black md:text-white"
+      className="flex flex-col text-black items-center lg:items-end 
+      pt-[20px] md:pt-[50px]
+      text-black md:text-white"
     >
       <div
         className="text-[22px] font-bold font-quicksand
