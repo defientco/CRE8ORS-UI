@@ -1,15 +1,18 @@
 import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import Media from "../../shared/Media"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import SmartWalletContents from "./SmartWalletContents"
 import OwnerWalletContents from "./OwnerWalletContents"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import SmartWalletButtons from "./SmartWalletButtons"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { expandedMore, setExpandedMore } = useProfileProvider()
+  const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
@@ -19,13 +22,13 @@ const WalletCollection = () => {
   }
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <div
         className={`${
           !expandedMore
             ? `${
                 isMobile ? "mobile_un_expand_more" : "un_expand_more"
-              } h-[55px] lg:h-[70px] overflow-hidden`
+              } h-[55px] lg:h-[70px] overflow-hidden bg-black`
             : `${isMobile ? "mobile_expand_more" : "expand_more"} h-[220px] lg:h-[415px]
               bg-black`
         } 
@@ -37,12 +40,12 @@ const WalletCollection = () => {
           px-2 pb-6`}
       >
         <div>
-          <div className="flex items-center gap-x-[5px] samsungS8:gap-x-[10px]">
+          <div className="flex items-center gap-x-[5px] md:gap-x-[10px]">
+            {!isHiddenEditable && <SmartWalletButtons />}
             <p
-              className={`${
-                expandedMore ? "text-white" : "text-black"
-              } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
-              uppercase`}
+              className="text-[9px] text-white
+              samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
+              uppercase"
             >
               SMART WALLET
             </p>
@@ -51,14 +54,10 @@ const WalletCollection = () => {
                 type="image"
                 containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
                 link={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.svg"
-                    : "/assets/Profile/black_arrow_down.svg"
+                  expandedMore ? "/assets/Profile/arrow_up.svg" : "/assets/Profile/arrow_down.svg"
                 }`}
                 blurLink={`${
-                  expandedMore
-                    ? "/assets/Profile/arrow_up.png"
-                    : "/assets/Profile/black_arrow_down.png"
+                  expandedMore ? "/assets/Profile/arrow_up.png" : "/assets/Profile/arrow_down.png"
                 }`}
               />
             </button>
@@ -99,10 +98,9 @@ const WalletCollection = () => {
             )}
             <div className="flex gap-x-[10px] items-center">
               <p
-                className={`${
-                  expandedMore ? "text-white" : "text-black"
-                } text-[9px] samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
-                uppercase`}
+                className="text-[9px] text-white
+                samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
+                uppercase"
               >
                 VIEW COLLECTION
               </p>
@@ -111,14 +109,10 @@ const WalletCollection = () => {
                   type="image"
                   containerClasses="w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
                   link={`${
-                    expandedMore
-                      ? "/assets/Profile/arrow_up.svg"
-                      : "/assets/Profile/black_arrow_down.svg"
+                    expandedMore ? "/assets/Profile/arrow_up.svg" : "/assets/Profile/arrow_down.svg"
                   }`}
                   blurLink={`${
-                    expandedMore
-                      ? "/assets/Profile/arrow_up.png"
-                      : "/assets/Profile/black_arrow_down.png"
+                    expandedMore ? "/assets/Profile/arrow_up.png" : "/assets/Profile/arrow_down.png"
                   }`}
                 />
               </button>
@@ -128,7 +122,7 @@ const WalletCollection = () => {
         </div>
       </div>
       <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
-    </>
+    </DndProvider>
   )
 }
 

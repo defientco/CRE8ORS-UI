@@ -33,6 +33,7 @@ const TrainModal: FC<TrainModalProps> = ({ isModalVisible, toggleIsVisible }) =>
 
   return (
     <Modal
+      id="train_modal"
       isVisible={isModalVisible}
       onClose={toggleIsVisible}
       containerClassName="rounded-[30px] md:rounded-[56px] overflow-hidden bg-black

@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
 import { Button } from "../../shared/Button"
-import { useProfileProvider } from "../../providers/ProfileContext"
 import SettingSmartWalletModal from "./SettingSmartWalletModal"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import useCreateTBA from "../../hooks/useCreateTBA"
+import { useUserProvider } from "../../providers/UserProvider"
 
 interface Deploy6551AndMintDNAButtonProps {
   getDNAByCre8orNumber: any
@@ -12,7 +12,7 @@ interface Deploy6551AndMintDNAButtonProps {
 const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
   getDNAByCre8orNumber,
 }) => {
-  const { cre8orNumber } = useProfileProvider()
+  const { cre8orNumber } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const { createTbaAndMintDna } = useCreateTBA()
   const [openLoadingModal, setOpenLoadingModal] = useState(false)
@@ -28,14 +28,23 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
 
   return (
     <>
-      <Button
-        onClick={onClick}
-        id="deploy-wallet"
-        className="absolute w-full h-full left-0 top-0 z-[3]
-        !bg-[white] !text-[black]"
+      <div
+        className="absolute left-0 top-0 z-[5]
+      w-full h-full
+      flex items-center justify-center"
       >
-        setup smart wallet
-      </Button>
+        <Button
+          onClick={onClick}
+          id="deploy-wallet"
+          className="w-[100px] h-[30px]
+          !p-0
+          md:w-[240px] md:h-[60px]
+          !bg-[white] !text-[black]
+          !text-[8px] md:!text-[18px]"
+        >
+          setup smart wallet
+        </Button>
+      </div>
       <SettingSmartWalletModal
         isModalVisible={openLoadingModal}
         toggleIsVisible={() => setOpenLoadingModal(!openLoadingModal)}

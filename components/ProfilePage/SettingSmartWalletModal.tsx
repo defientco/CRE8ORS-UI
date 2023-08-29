@@ -11,6 +11,7 @@ const SettingSmartWalletModal: FC<SettingSmartWalletModalProps> = ({
   toggleIsVisible,
 }) => (
   <Modal
+    id="setting_smart_wallet_modal"
     isVisible={isModalVisible}
     onClose={toggleIsVisible}
     containerClassName="rounded-[20px] md:rounded-[56px] overflow-hidden bg-black

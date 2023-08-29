@@ -6,7 +6,6 @@ import ProfileToken from "./ProfileToken"
 
 const OwnerWalletContents = ({ setOpenTrainModal }) => {
   const { isEditable } = useProfileProvider()
-
   const { ownedNfts, setSelectedTrainTokenData } = useWalletCollectionProvider()
 
   return (

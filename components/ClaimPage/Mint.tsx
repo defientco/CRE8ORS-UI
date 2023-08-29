@@ -16,7 +16,13 @@ const Mint: FC<MintProps> = ({ handleClose, handleBurn, handleMint, modalStatus 
   const router = useRouter()
 
   return (
-    <Modal onClose={handleClose} isVisible containerClassName="!p-0" showCloseButton>
+    <Modal
+      id="claim_passport"
+      onClose={handleClose}
+      isVisible
+      containerClassName="!p-0"
+      showCloseButton
+    >
       <div
         className="bg-[white]
               w-[290px] 

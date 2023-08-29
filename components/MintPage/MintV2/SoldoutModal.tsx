@@ -4,6 +4,7 @@ import MintModalCTAButton from "./MintModalCTAButton"
 
 const SoldoutModal = ({ isModalVisible, toggleIsVisible }) => (
   <Modal
+    id="sold_out_modal"
     isVisible={isModalVisible}
     onClose={toggleIsVisible}
     showCloseButton

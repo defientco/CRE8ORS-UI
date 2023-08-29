@@ -16,7 +16,11 @@ const ProfileInformation = () => {
   } = useProfileProvider()
 
   return (
-    <div className="flex flex-col text-black items-center lg:items-end pt-[50px]">
+    <div
+      className="flex flex-col text-black items-center lg:items-end 
+      pt-[20px] md:pt-[50px]
+      text-black md:text-white"
+    >
       <div
         className="text-[22px] font-bold font-quicksand
                   leading-[99.3%]
@@ -30,6 +34,7 @@ const ProfileInformation = () => {
          mt-[15px] 
          text-center md:text-right
          text-[16px] leading-[99.3%] 
+         text-black
          font-quicksand font-medium
          w-[220px] h-[80px] md:h-[140px]
          ring-0 outline-none
@@ -73,6 +78,7 @@ const ProfileInformation = () => {
         <input
           className="relative z-[105]
          mt-[15px] 
+         text-black
          text-center md:text-right 
          text-[16px] leading-[99.3%] 
          font-quicksand font-medium
@@ -108,6 +114,7 @@ const ProfileInformation = () => {
         <input
           className="relative z-[105]
          mt-[15px] 
+         text-black
          text-center md:text-right 
          text-[16px] leading-[99.3%] 
          font-quicksand font-medium

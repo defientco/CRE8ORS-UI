@@ -14,6 +14,7 @@ import getProfileFormattedCollection, {
 } from "../lib/getProfileFormattedCollection"
 import { useRouter } from "next/router"
 import { useAccount } from "wagmi"
+import _ from "lodash"
 
 interface Props {
   children: ReactNode
@@ -26,11 +27,14 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
 
   const [selectedTrainTokenData, setSelectedTrainTokenData] = useState<any>(null)
 
+  const [shouldSelectNewPFP, setShouldSelectNewPFP] = useState(false)
   const [isViewAll, setIsViewAll] = useState(null)
   const [walletNfts, setWalletNfts] = useState(null)
   const [cre8ors, setCre8ors] = useState(null)
   const [ownedNfts, setOwnedNfts] = useState([])
   const { address } = useAccount()
+  const [nftsMovedToSmartWallet, setNftsMovedToSmartWallet] = useState([])
+
   const routerAddress = router.query.address as string
 
   const toggleProfileFormattedCollection = useCallback(async () => {
@@ -69,10 +73,15 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
     toggleProfileFormattedCollection()
   }, [toggleProfileFormattedCollection])
 
+  useEffect(() => {
+    setOwnedNfts(_.difference(isViewAll ? walletNfts : cre8ors, nftsMovedToSmartWallet))
+  }, [nftsMovedToSmartWallet])
+
   const provider = useMemo(
     () => ({
       ownedNfts,
       isViewAll,
+      shouldSelectNewPFP,
       setIsViewAll,
       setWalletNfts,
       setCre8ors,
@@ -81,10 +90,14 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       selectedTrainTokenData,
       toggleProfileFormattedCollection,
       refetchProfileFormattedCollection,
+      setNftsMovedToSmartWallet,
+      nftsMovedToSmartWallet,
+      setShouldSelectNewPFP,
     }),
     [
       ownedNfts,
       isViewAll,
+      shouldSelectNewPFP,
       setIsViewAll,
       setWalletNfts,
       setCre8ors,
@@ -93,6 +106,9 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       selectedTrainTokenData,
       toggleProfileFormattedCollection,
       refetchProfileFormattedCollection,
+      setNftsMovedToSmartWallet,
+      nftsMovedToSmartWallet,
+      setShouldSelectNewPFP,
     ],
   )
 

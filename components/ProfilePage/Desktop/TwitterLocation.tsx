@@ -21,8 +21,8 @@ const TwitterLocation = () => {
       <div className="flex items-center gap-x-[5px]">
         <Media
           type="image"
-          link="/assets/Profile/black_twitter.svg"
-          blurLink="/assets/Profile/black_twitter.png"
+          link="/assets/Profile/twitter.svg"
+          blurLink="/assets/Profile/twitter.png"
           containerClasses="w-[23px] h-[19px]"
         />
         {isEditable ? (
@@ -40,7 +40,10 @@ const TwitterLocation = () => {
             value={editedTwitterHandle}
           />
         ) : (
-          <p className="font-quicksand font-bold text-[22px] leading-[99.3%]">
+          <p
+            className="font-quicksand font-bold text-[22px] leading-[99.3%] text-white
+          drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)]"
+          >
             <a
               href={`https://twitter.com/${userInfo?.twitterHandle}`}
               target="_blank"
@@ -58,8 +61,8 @@ const TwitterLocation = () => {
       <div className="flex items-center gap-x-[5px]">
         <Media
           type="image"
-          link="/assets/Profile/black_location.svg"
-          blurLink="/assets/Profile/black_location.png"
+          link="/assets/Profile/location.svg"
+          blurLink="/assets/Profile/location.png"
           containerClasses="w-[26px] h-[26px]"
         />
         {isEditable ? (
@@ -77,7 +80,10 @@ const TwitterLocation = () => {
             value={editedLocation}
           />
         ) : (
-          <p className="font-quicksand font-bold text-[22px] leading-[99.3%]">
+          <p
+            className="font-quicksand font-bold text-[22px] leading-[99.3%]
+          drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)] text-white"
+          >
             {userInfo?.location ? userInfo?.location : <Skeleton className="w-[100px] h-[30px]" />}
           </p>
         )}

@@ -3,6 +3,7 @@ import Modal from "../../../shared/Modal"
 
 const MintingModal = () => (
   <Modal
+    id="mint_loading_modal"
     isVisible
     onClose={() => {}}
     containerClassName="!rounded-[15px] md:!rounded-[20px] overflow-hidden"
