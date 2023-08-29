@@ -20,7 +20,7 @@ const Cre8orPFP: FC<Cre8orPFPProps> = ({ className }) => {
         type="image"
         link={getIpfsLink(metaData?.image)}
         blurLink={getIpfsLink(metaData?.image)}
-        containerClasses="w-[250px] h-[250px] lg:w-[500px] lg:h-[500px]"
+        containerClasses="w-[250px] h-[250px] lg:w-[680px] lg:h-[680px]"
       />
     </div>
   )
