@@ -3,7 +3,7 @@ import { useUserProvider } from "../../../providers/UserProvider"
 import AttributeCard from "./AttributeCard"
 
 const PFPInformation = () => {
-  const { userInfo, metaData } = useUserProvider()
+  const { metaData, cre8orNumber } = useUserProvider()
 
   return (
     <>
@@ -13,7 +13,7 @@ const PFPInformation = () => {
               leading-[103.3%]
               rotate-[180deg]"
       >
-        {userInfo?.cre8orNumber ? `CRE8OR #${userInfo?.cre8orNumber}` : ""}
+        {cre8orNumber ? `CRE8OR #${cre8orNumber}` : ""}
       </div>
       <div className="flex flex-col gap-y-[10px]">
         {getPFPAttributes(metaData?.attributes).map((attr) => (

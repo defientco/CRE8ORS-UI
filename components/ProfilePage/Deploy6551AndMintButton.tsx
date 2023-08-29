@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
 import { Button } from "../../shared/Button"
-import { useProfileProvider } from "../../providers/ProfileContext"
 import SettingSmartWalletModal from "./SettingSmartWalletModal"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import useCreateTBA from "../../hooks/useCreateTBA"
+import { useUserProvider } from "../../providers/UserProvider"
 
 interface Deploy6551AndMintDNAButtonProps {
   getDNAByCre8orNumber: any
@@ -12,7 +12,7 @@ interface Deploy6551AndMintDNAButtonProps {
 const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
   getDNAByCre8orNumber,
 }) => {
-  const { cre8orNumber } = useProfileProvider()
+  const { cre8orNumber } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const { createTbaAndMintDna } = useCreateTBA()
   const [openLoadingModal, setOpenLoadingModal] = useState(false)

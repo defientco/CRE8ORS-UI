@@ -12,8 +12,8 @@ import getHttpIpfsLink from "../../lib/getHttpIpfsLink"
 import { ItemTypes } from "./ItemTypes"
 
 const SmartWalletContents = () => {
-  const { cre8orNumber, isHiddenEditable } = useProfileProvider()
-  const { metaData } = useUserProvider()
+  const { isHiddenEditable } = useProfileProvider()
+  const { metaData, cre8orNumber } = useUserProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])

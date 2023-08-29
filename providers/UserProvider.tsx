@@ -13,6 +13,7 @@ import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
 import getMetadata from "../lib/getMetadata"
+import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
 
 interface attribute {
   value?: string
@@ -32,6 +33,7 @@ interface userProps {
   userInfo: any
   similarProfiles: any
   metaData: metadata
+  cre8orNumber: any
 }
 
 interface Props {
@@ -50,6 +52,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<any>(null)
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
+  const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address: routerAddress || address })
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -77,10 +80,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
           return
         }
 
-        const metaData: any = await getMetadata(parseInt(info?.doc.cre8orNumber, 10))
-
-        setMetaData(metaData)
-
+        await getCre8orNumber()
         return setUserInfo(info.doc)
       }
 
@@ -88,6 +88,18 @@ export const UserProvider: FC<Props> = ({ children }) => {
     },
     [address],
   )
+
+  const getUserMetaData = useCallback(async () => {
+    if (cre8orNumber) {
+      const metaData: any = await getMetadata(parseInt(cre8orNumber, 10))
+
+      setMetaData(metaData)
+    }
+  }, [cre8orNumber])
+
+  useEffect(() => {
+    getUserMetaData()
+  }, [getUserMetaData])
 
   useEffect(() => {
     if (!routerAddress) getUserData()
@@ -100,6 +112,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       getUserData,
       getUserSimilarProfiles,
       metaData,
+      cre8orNumber,
     }),
     [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
   )
