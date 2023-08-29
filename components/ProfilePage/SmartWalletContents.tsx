@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable */
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useDrop } from "react-dnd"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
@@ -8,6 +9,7 @@ import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
 import getHttpIpfsLink from "../../lib/getHttpIpfsLink"
+import { ItemTypes } from "./ItemTypes"
 
 const SmartWalletContents = () => {
   const { cre8orNumber, isHiddenEditable } = useProfileProvider()
@@ -29,8 +31,19 @@ const SmartWalletContents = () => {
     getDNAByCre8orNumber()
   }, [getDNAByCre8orNumber])
 
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: ItemTypes.CRE8OR,
+    drop: (item) => {
+      console.log(item)
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }))
+
   return (
-    <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
+    <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
       <div
         className="mt-[35px]
                     relative
