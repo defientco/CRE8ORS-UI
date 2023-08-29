@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDrop } from "react-dnd"
 import { useProfileProvider } from "../../providers/ProfileContext"
@@ -10,12 +9,10 @@ import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
 import getHttpIpfsLink from "../../lib/getHttpIpfsLink"
 import { ItemTypes } from "./ItemTypes"
-import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
   const { metaData, cre8orNumber } = useUserProvider()
-  const { setNftsMovedToSmartWallet } = useWalletCollectionProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
@@ -33,20 +30,14 @@ const SmartWalletContents = () => {
     getDNAByCre8orNumber()
   }, [getDNAByCre8orNumber])
 
-  const [{ canDrop, isOver }, drop] = useDrop(() => {
-    const nftsMovedToSmartWallet: any = []
-    return {
-      accept: ItemTypes.CRE8OR,
-      drop: (item: any) => {
-        nftsMovedToSmartWallet.push(item?.token)
-        setNftsMovedToSmartWallet([...nftsMovedToSmartWallet])
-      },
-      collect: (monitor) => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
-      }),
-    }
-  })
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.CRE8OR,
+    drop: () => {},
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }))
 
   return (
     <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
