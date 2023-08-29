@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
+import { DndProvider } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 import Media from "../../shared/Media"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
@@ -20,7 +22,7 @@ const WalletCollection = () => {
   }
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <div
         className={`${
           !expandedMore
@@ -120,7 +122,7 @@ const WalletCollection = () => {
         </div>
       </div>
       <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
-    </>
+    </DndProvider>
   )
 }
 
