@@ -3,7 +3,6 @@ const formatMetadata = (raw, tokenId, useIframe) => {
     ...raw,
     name: `Cre8ors #${tokenId}`,
     description: "A cult for creators.",
-    animation_url: process.env.NEXT_PUBLIC_IFRAME_URL,
   }
   if (useIframe) {
     metadata.animation_url = `${process.env.NEXT_PUBLIC_IFRAME_URL}${tokenId}`
