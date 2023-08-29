@@ -1,15 +1,17 @@
- import _ from 'lodash'
+import _ from "lodash"
 
- const getPFPAttributes = (attributes) => {
-    if (!attributes) return []
-    
-    const order = ["Environment", "Type", "Skin", "Face", "Cheeks", "Clothing", "Head"];
-    const orderMap = {};
-    _.each(order, (i) => { orderMap[i] = _.indexOf(order, i); });
+const getPFPAttributes = (attributes) => {
+  if (!attributes) return []
 
-    const sorted = _.sortBy(attributes, (obj) => orderMap[obj.trait_type]);
+  const order = ["Environment", "Type", "Skin", "Face", "Cheeks", "Clothing", "Head"]
+  const orderMap = {}
+  _.each(order, (i) => {
+    orderMap[i] = _.indexOf(order, i)
+  })
 
-    return _.map(sorted, (i) => i)
- }
- 
- export default getPFPAttributes
+  const sorted = _.sortBy(attributes, (obj) => orderMap[obj.trait_type])
+
+  return _.map(sorted, (i) => i)
+}
+
+export default getPFPAttributes

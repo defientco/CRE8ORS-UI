@@ -15,14 +15,14 @@ import { useRouter } from "next/router"
 import getMetadata from "../lib/getMetadata"
 
 interface attribute {
-  value?:string,
-  trait_type?:string
+  value?: string
+  trait_type?: string
 }
 
 interface metadata {
-  attributes?: attribute[],
-  description?: string,
-  image?: string,
+  attributes?: attribute[]
+  description?: string
+  image?: string
   name?: string
 }
 

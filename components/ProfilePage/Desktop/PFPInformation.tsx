@@ -4,7 +4,7 @@ import AttributeCard from "./AttributeCard"
 
 const PFPInformation = () => {
   const { userInfo, metaData } = useUserProvider()
-  
+
   return (
     <>
       <div
@@ -17,10 +17,7 @@ const PFPInformation = () => {
       </div>
       <div className="flex flex-col gap-y-[10px]">
         {getPFPAttributes(metaData?.attributes).map((attr) => (
-          <AttributeCard
-            key={attr.trait_type}
-            label={attr.trait_type}
-            attribute={ attr.value }/>
+          <AttributeCard key={attr.trait_type} label={attr.trait_type} attribute={attr.value} />
         ))}
       </div>
     </>
