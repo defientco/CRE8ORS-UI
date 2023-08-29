@@ -39,7 +39,7 @@ const ProfileToken = ({ token }) => {
   const opacity = isDragging ? 0.4 : 1
 
   const handleClickPFP = async () => {
-    if (!shouldSelectNewPFP) {
+    if (!shouldSelectNewPFP || token?.type !== CRE8OR) {
       window.open(`${openseaUrl}/${token.contractAddress}/${token.tokenId}`, "_blank")
       return
     }
