@@ -26,7 +26,8 @@ const MobileProfileView = () => {
       style={{
         backgroundImage: `url('/assets/Profile/MOBILE PROFILE BGS/${metaData?.attributes
           .filter((attr) => attr.trait_type === "Environment")[0]
-          .value.toUpperCase()}_MOBILE.png')`,
+          .value.toUpperCase()
+          .replaceAll(" ", "_")}_MOBILE.png')`,
       }}
     >
       <div

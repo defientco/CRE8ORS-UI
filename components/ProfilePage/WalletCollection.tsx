@@ -12,7 +12,7 @@ import SmartWalletButtons from "./SmartWalletButtons"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { expandedMore, setExpandedMore } = useProfileProvider()
+  const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
@@ -41,7 +41,7 @@ const WalletCollection = () => {
       >
         <div>
           <div className="flex items-center gap-x-[5px] md:gap-x-[10px]">
-            <SmartWalletButtons />
+            {!isHiddenEditable && <SmartWalletButtons />}
             <p
               className="text-[9px] text-white
               samsungS8:text-[12px] lg:text-[22px] font-quicksand font-bold
