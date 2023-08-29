@@ -2,25 +2,30 @@ import { useDrag } from "react-dnd"
 import Media from "../../shared/Media"
 import { ItemTypes } from "./ItemTypes"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import { useEffect, useState } from "react"
 
 const ProfileToken = ({ token }) => {
-  const { setNftsMovedToSmartWallet, nftsMovedToSmartWallet } = useWalletCollectionProvider()
+  const { setNftsMovedToSmartWallet } = useWalletCollectionProvider()
 
   const openseaUrl = process.env.NEXT_PUBLIC_TESTNET
     ? "https://testnets.opensea.io/assets/goerli"
     : "https://opensea.io/assets/ethereum"
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CRE8OR,
-    item: { token },
-    end: (item) => {
-      setNftsMovedToSmartWallet([...nftsMovedToSmartWallet, item.token])
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
-    }),
-  }))
+  const [{ isDragging }, drag] = useDrag(() => {
+    const nftsMovedToSmartWallet = []
+
+    return {
+      type: ItemTypes.CRE8OR,
+      item: { token },
+      end: (item) => {
+        setNftsMovedToSmartWallet([...nftsMovedToSmartWallet, item.token])
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        handlerId: monitor.getHandlerId(),
+      }),
+    }
+  })
 
   const opacity = isDragging ? 0.4 : 1
 
@@ -30,7 +35,7 @@ const ProfileToken = ({ token }) => {
       rel="noreferrer"
       href={`${openseaUrl}/${token.contractAddress}/${token.tokenId}`}
       style={{
-        zIndex: "1000",
+        zIndex: "10",
         borderRadius: "15px",
         opacity,
         backgroundColor: "white", // Add this line
