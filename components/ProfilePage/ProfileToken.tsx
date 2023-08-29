@@ -1,30 +1,21 @@
 import { useDrag } from "react-dnd"
 import Media from "../../shared/Media"
 import { ItemTypes } from "./ItemTypes"
-import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 
 const ProfileToken = ({ token }) => {
-  const { setNftsMovedToSmartWallet } = useWalletCollectionProvider()
-
   const openseaUrl = process.env.NEXT_PUBLIC_TESTNET
     ? "https://testnets.opensea.io/assets/goerli"
     : "https://opensea.io/assets/ethereum"
 
-  const [{ isDragging }, drag] = useDrag(() => {
-    const nftsMovedToSmartWallet = []
-
-    return {
-      type: ItemTypes.CRE8OR,
-      item: { token },
-      end: (item) => {
-        setNftsMovedToSmartWallet([...nftsMovedToSmartWallet, item.token])
-      },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-        handlerId: monitor.getHandlerId(),
-      }),
-    }
-  })
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CRE8OR,
+    item: { token },
+    end: () => {},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
+    }),
+  }))
 
   const opacity = isDragging ? 0.4 : 1
 

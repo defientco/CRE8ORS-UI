@@ -73,7 +73,6 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   }, [toggleProfileFormattedCollection])
 
   useEffect(() => {
-    console.log(_.difference(cre8ors, nftsMovedToSmartWallet))
     setOwnedNfts(_.difference(isViewAll ? walletNfts : cre8ors, nftsMovedToSmartWallet))
   }, [nftsMovedToSmartWallet])
 
