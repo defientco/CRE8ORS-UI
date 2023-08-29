@@ -7,6 +7,7 @@ import useShakeEffect from "../../hooks/useShakeEffect"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import { updateUserCre8orNumber } from "../../lib/userInfo"
 import { useUserProvider } from "../../providers/UserProvider"
+import { CRE8OR } from "./types"
 
 const ProfileToken = ({ token }) => {
   const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
@@ -18,7 +19,7 @@ const ProfileToken = ({ token }) => {
 
   useShakeEffect({
     ref: tokenRef,
-    isForever: shouldSelectNewPFP,
+    isForever: shouldSelectNewPFP && token?.type === CRE8OR,
   })
 
   const openseaUrl = process.env.NEXT_PUBLIC_TESTNET
