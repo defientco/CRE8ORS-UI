@@ -73,7 +73,7 @@ const ProfileToken = ({ token }) => {
             alt={token.label}
             containerClasses="w-[30px] h-[30px] 
             samsungS8:w-[35px] samsungS8:h-[35px] 
-            lg:w-[93px] lg:h-[93px] 
+            lg:w-[85px] lg:h-[85px] 
             bg-white overflow-hidden
             drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]"
           />
@@ -81,7 +81,7 @@ const ProfileToken = ({ token }) => {
           <div
             className="w-[30px] h-[30px] 
             samsungS8:w-[35px] samsungS8:h-[35px] 
-            lg:w-[93px] lg:h-[93px] 
+            lg:w-[85px] lg:h-[85px] 
             bg-white 
             rounded-[5px] lg:rounded-[15px]
             overflow-hidden"
