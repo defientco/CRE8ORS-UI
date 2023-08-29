@@ -3,7 +3,6 @@ import { createContext, useState, useEffect, useMemo, useContext } from "react"
 import { useRouter } from "next/router"
 import { useUserProvider } from "./UserProvider"
 import { updateUserInfo } from "../lib/userInfo"
-import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
 import { useAccount } from "wagmi"
 
 const ProfileContext = createContext<Partial<any> | null>(null)
@@ -12,7 +11,6 @@ export const ProfileProvider = ({ children }) => {
   const routerAddress = useRouter().query.address as string
   const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
   const { address } = useAccount()
-  const { cre8orNumber } = useCre8orNumber({ address: routerAddress || address })
 
   const [isHiddenEditable, setIsHiddenEditable] = useState(false)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
@@ -58,7 +56,6 @@ export const ProfileProvider = ({ children }) => {
 
   const provider = useMemo(
     () => ({
-      cre8orNumber,
       editedAskedMeAbout,
       editedUserName,
       editedBio,
@@ -81,7 +78,6 @@ export const ProfileProvider = ({ children }) => {
       loading,
     }),
     [
-      cre8orNumber,
       editedAskedMeAbout,
       editedUserName,
       editedBio,

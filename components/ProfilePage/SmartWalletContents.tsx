@@ -1,14 +1,18 @@
-/* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useDrop } from "react-dnd"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
+import { useUserProvider } from "../../providers/UserProvider"
+import getIpfsLink from "../../lib/getIpfsLink"
+import { ItemTypes } from "./ItemTypes"
 
 const SmartWalletContents = () => {
-  const { cre8orNumber, isHiddenEditable } = useProfileProvider()
+  const { isHiddenEditable } = useProfileProvider()
+  const { metaData, cre8orNumber } = useUserProvider()
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
@@ -26,8 +30,17 @@ const SmartWalletContents = () => {
     getDNAByCre8orNumber()
   }, [getDNAByCre8orNumber])
 
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.CRE8OR,
+    drop: () => {},
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }))
+
   return (
-    <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]">
+    <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
       <div
         className="mt-[35px]
                     relative
@@ -38,17 +51,24 @@ const SmartWalletContents = () => {
                     lg:w-[287px] lg:h-[287px]
                     samsungS8:w-[130px] samsungS8:h-[130px]
                     w-[120px] h-[120px]
-                    after:content-[''] after:bg-[white] after:opacity-[0.3]
+                    after:content-[''] 
+                    after:bg-[black] 
+                    after:opacity-[0.2]
                     after:w-full after:h-full
                     after:absolute
-                    after:left-0 after:top-0 after:z-[1]"
+                    after:left-0 
+                    after:top-0 
+                    after:z-[4]"
       >
         {!hasSmartWallet && !isHiddenEditable && (
           <Deploy6551AndMintDNAButton getDNAByCre8orNumber={getDNAByCre8orNumber} />
         )}
         <div
           className="absolute w-full h-full left-0 top-0 z-[2]
-              bg-[url('/assets/Profile/dna_animation.gif')] bg-cover"
+              bg-cover"
+          style={{
+            backgroundImage: `url('${getIpfsLink(metaData?.image)}')`,
+          }}
         />
         <div
           className="grid grid-cols-3 w-full relative z-[2]

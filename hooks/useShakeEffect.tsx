@@ -2,10 +2,11 @@ import { useEffect } from "react"
 
 interface Props {
   ref: any
-  isEnabled: boolean
+  isEnabled?: boolean
+  isForever?: boolean
 }
 
-const useShakeEffect = ({ ref, isEnabled }: Props) => {
+const useShakeEffect = ({ ref, isEnabled, isForever }: Props) => {
   useEffect(() => {
     const refCurrent = ref.current
 
@@ -26,12 +27,19 @@ const useShakeEffect = ({ ref, isEnabled }: Props) => {
       refCurrent.removeEventListener("click", handleShakeEffect)
     }
 
+    if (isForever && refCurrent) {
+      refCurrent.style.animation = "shake 3s infinite ease-in-out"
+    } else if (!isForever && refCurrent) {
+      refCurrent.style.animation = ""
+    }
+
     return () => {
       if (refCurrent) {
         refCurrent.removeEventListener("click", handleShakeEffect)
+        refCurrent.style.animation = ""
       }
     }
-  }, [isEnabled, ref])
+  }, [isEnabled, isForever, ref])
 }
 
 export default useShakeEffect
