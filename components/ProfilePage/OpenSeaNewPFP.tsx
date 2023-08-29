@@ -34,16 +34,6 @@ const OpenSeaNewPFP: FC<OpenSeaNewPFPProps> = ({ isModalVisible, toggleIsVisible
               !p-0
               !bg-black
               !text-white !text-[12px] md:!text-[23px]"
-        >
-          LOG IN TO OPENSEA VIA SMART WALLET
-        </Button>
-        <Button
-          id="opensea_via_smart_wallet"
-          className="!w-[250px] !h-[50px]
-              md:!w-[513px] md:!h-[103px]
-              !p-0
-              !bg-black
-              !text-white !text-[12px] md:!text-[23px]"
           onClick={() => {
             setIsViewAll(false)
             setShouldSelectNewPFP(true)

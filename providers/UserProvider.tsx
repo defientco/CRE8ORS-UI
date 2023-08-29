@@ -13,7 +13,6 @@ import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
 import getMetadata from "../lib/getMetadata"
-import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
 
 interface attribute {
   value?: string
@@ -52,8 +51,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<any>(null)
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
-  const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address: routerAddress || address })
-  const [dbCre8orNumber, setDBcre8orNumber] = useState("")
+  const [cre8orNumber, setCre8orNumber] = useState("")
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -81,9 +79,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
           return
         }
 
-        if (info?.doc.cre8orNumber) setDBcre8orNumber(info?.doc.cre8orNumber)
+        if (info?.doc.cre8orNumber) setCre8orNumber(info?.doc.cre8orNumber)
+        else setCre8orNumber("")
 
-        await getCre8orNumber()
         return setUserInfo(info.doc)
       }
 
@@ -93,12 +91,12 @@ export const UserProvider: FC<Props> = ({ children }) => {
   )
 
   const getUserMetaData = useCallback(async () => {
-    if (cre8orNumber || dbCre8orNumber) {
-      const metaData: any = await getMetadata(parseInt(dbCre8orNumber || cre8orNumber, 10))
+    if (cre8orNumber) {
+      const metaData: any = await getMetadata(parseInt(cre8orNumber, 10))
 
       setMetaData(metaData)
     }
-  }, [cre8orNumber, dbCre8orNumber])
+  }, [cre8orNumber])
 
   useEffect(() => {
     getUserMetaData()
@@ -115,7 +113,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       getUserData,
       getUserSimilarProfiles,
       metaData,
-      cre8orNumber: dbCre8orNumber || cre8orNumber,
+      cre8orNumber,
     }),
     [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
   )
