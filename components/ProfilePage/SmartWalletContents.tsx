@@ -7,7 +7,7 @@ import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
-import getHttpIpfsLink from "../../lib/getHttpIpfsLink"
+import getIpfsLink from "../../lib/getIpfsLink"
 import { ItemTypes } from "./ItemTypes"
 
 const SmartWalletContents = () => {
@@ -67,7 +67,7 @@ const SmartWalletContents = () => {
           className="absolute w-full h-full left-0 top-0 z-[2]
               bg-cover"
           style={{
-            backgroundImage: `url('${getHttpIpfsLink(metaData?.image)}')`,
+            backgroundImage: `url('${getIpfsLink(metaData?.image)}')`,
           }}
         />
         <div
