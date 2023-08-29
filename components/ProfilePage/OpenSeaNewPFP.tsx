@@ -2,6 +2,7 @@
 import { FC } from "react"
 import Modal from "../../shared/Modal"
 import { Button } from "../../shared/Button"
+import OpenSeaConnectButton from "./OpenSeaConnectButton"
 
 interface OpenSeaNewPFPProps {
   isModalVisible: boolean
@@ -23,16 +24,7 @@ const OpenSeaNewPFP: FC<OpenSeaNewPFPProps> = ({ isModalVisible, toggleIsVisible
           md:w-[620px] md:h-[320px]
           bg-white"
     >
-      <Button
-        id="opensea_via_smart_wallet"
-        className="!w-[250px] !h-[50px]
-            md:!w-[513px] md:!h-[103px]
-            !p-0
-            !bg-black
-            !text-white !text-[12px] md:!text-[23px]"
-      >
-        LOG IN TO OPENSEA VIA SMART WALLET
-      </Button>
+      <OpenSeaConnectButton />
       <Button
         id="opensea_via_smart_wallet"
         className="!w-[250px] !h-[50px]
