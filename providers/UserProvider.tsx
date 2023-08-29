@@ -8,11 +8,11 @@ import {
   useMemo,
   useEffect,
 } from "react"
-
 import { useAccount } from "wagmi"
-import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
+import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import getMetadata from "../lib/getMetadata"
+import isSmartWalletRegistered from "../lib/isSmartWalletRegistered"
 
 interface attribute {
   value?: string
@@ -76,7 +76,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
         if (!info?.doc) {
           setUserInfo(null)
           if (isProfilePage) router.push("/save-profile")
-          return
+          return null
         }
 
         if (info?.doc.cre8orNumber) setCre8orNumber(info?.doc.cre8orNumber)
@@ -92,9 +92,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const getUserMetaData = useCallback(async () => {
     if (cre8orNumber) {
-      const metaData: any = await getMetadata(parseInt(cre8orNumber, 10))
+      const tokenId = parseInt(cre8orNumber, 10)
+      const useIframe = isSmartWalletRegistered(tokenId)
+      const newMetadata: any = await getMetadata(tokenId, useIframe)
 
-      setMetaData(metaData)
+      setMetaData(newMetadata)
     }
   }, [cre8orNumber])
 

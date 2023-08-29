@@ -52,15 +52,15 @@ export const testGetMetadata = () => {
   }
 }
 
-const getMetadata = (tokenId) => {
+const getMetadata = (tokenId, useIframe) => {
   const metadataId = getDeterministicRandom(tokenId)
 
   if (metadataId <= HALF_MAX) {
-    return formatMetadata(feminine.data[metadataId - 1], tokenId) // Adjust for zero-based indexing
+    return formatMetadata(feminine.data[metadataId - 1], tokenId, useIframe) // Adjust for zero-based indexing
   }
   const index = metadataId - HALF_MAX - 1 // Adjust for zero-based indexing
 
-  return formatMetadata(masculineAndSpecial.data[index], tokenId)
+  return formatMetadata(masculineAndSpecial.data[index], tokenId, useIframe)
 }
 
 export default getMetadata
