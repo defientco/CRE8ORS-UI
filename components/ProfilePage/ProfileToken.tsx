@@ -2,7 +2,6 @@ import { useDrag } from "react-dnd"
 import Media from "../../shared/Media"
 import { ItemTypes } from "./ItemTypes"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
-import { useEffect, useState } from "react"
 
 const ProfileToken = ({ token }) => {
   const { setNftsMovedToSmartWallet } = useWalletCollectionProvider()
