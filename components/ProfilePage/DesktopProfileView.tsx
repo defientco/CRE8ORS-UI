@@ -24,9 +24,10 @@ const DesktopProfileView = () => {
         bg-center
         overflow-hidden"
       style={{
-        backgroundImage: `url('/assets/Profile/DESKTOP PROFILE BGS/${metaData?.attributes
+        backgroundImage: `url("/assets/Profile/DESKTOP PROFILE BGS/${metaData?.attributes
           .filter((attr) => attr.trait_type === "Environment")[0]
-          .value.toUpperCase()}_DESKTOP.png')`,
+          .value.toUpperCase()
+          .replaceAll(" ", "_")}_DESKTOP.png")`,
       }}
     >
       <div

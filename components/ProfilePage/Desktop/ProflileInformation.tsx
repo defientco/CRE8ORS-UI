@@ -34,6 +34,7 @@ const ProfileInformation = () => {
          mt-[15px] 
          text-center md:text-right
          text-[16px] leading-[99.3%] 
+         text-black
          font-quicksand font-medium
          w-[220px] h-[80px] md:h-[140px]
          ring-0 outline-none
@@ -77,6 +78,7 @@ const ProfileInformation = () => {
         <input
           className="relative z-[105]
          mt-[15px] 
+         text-black
          text-center md:text-right 
          text-[16px] leading-[99.3%] 
          font-quicksand font-medium
@@ -112,6 +114,7 @@ const ProfileInformation = () => {
         <input
           className="relative z-[105]
          mt-[15px] 
+         text-black
          text-center md:text-right 
          text-[16px] leading-[99.3%] 
          font-quicksand font-medium
