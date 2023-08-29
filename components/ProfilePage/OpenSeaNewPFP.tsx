@@ -13,7 +13,7 @@ const OpenSeaNewPFP: FC<OpenSeaNewPFPProps> = ({ isModalVisible, toggleIsVisible
 
   return (
     <Modal
-      id="help_snart_wallet"
+      id="help_smart_wallet"
       isVisible={isModalVisible}
       onClose={toggleIsVisible}
       containerClassName="!rounded-[20px] md:!rounded-[30px] overflow-hidden bg-white
