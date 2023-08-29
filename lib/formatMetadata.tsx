@@ -1,7 +1,14 @@
-const formatMetadata = (raw, tokenId) => ({
-  ...raw,
-  name: `Cre8ors #${tokenId}`,
-  description: "A cult for creators.",
-})
+const formatMetadata = (raw, tokenId, useIframe) => {
+  const metadata = {
+    ...raw,
+    name: `Cre8ors #${tokenId}`,
+    description: "A cult for creators.",
+    animation_url: process.env.NEXT_PUBLIC_IFRAME_URL,
+  }
+  if (useIframe) {
+    metadata.animation_url = `${process.env.NEXT_PUBLIC_IFRAME_URL}${tokenId}`
+  }
+  return metadata
+}
 
 export default formatMetadata
