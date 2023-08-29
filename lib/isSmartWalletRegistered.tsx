@@ -5,6 +5,7 @@ const isSmartWalletRegistered = async (tokenId) => {
   const provider = getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1)
   const smartWalletAddress = await getSmartWallet(tokenId)
   const code = await provider.getCode(smartWalletAddress)
+  console.log("SWEETS CODE")
   const hasTokenboundAccount = code !== "0x"
   return hasTokenboundAccount
 }
