@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDrop } from "react-dnd"
+import { useAccount } from "wagmi"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
@@ -9,13 +10,20 @@ import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
 import getIpfsLink from "../../lib/getIpfsLink"
 import { ItemTypes } from "./ItemTypes"
+import { transferCre8orToSmartWallet } from "../../lib/cre8or"
+import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
+import { useEthersSigner } from "../../hooks/useEthersSigner"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
   const { metaData, cre8orNumber } = useUserProvider()
+  const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
+
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
+  const { address } = useAccount()
+  const signer = useEthersSigner()
 
   const getDNAByCre8orNumber = useCallback(async () => {
     if (!provider || !cre8orNumber) return
@@ -30,14 +38,33 @@ const SmartWalletContents = () => {
     getDNAByCre8orNumber()
   }, [getDNAByCre8orNumber])
 
-  const [, drop] = useDrop(() => ({
-    accept: ItemTypes.CRE8OR,
-    drop: () => {},
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+  const [, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.CRE8OR,
+      drop: async (item: any) => {
+        if (!hasSmartWallet || isHiddenEditable || !signer || !cre8orNumber) return
+
+        const smartWalletAddress = await getSmartWallet(cre8orNumber)
+
+        const response = await transferCre8orToSmartWallet(
+          item?.token.contractAddress,
+          address,
+          smartWalletAddress,
+          item?.token.tokenId,
+          signer,
+        )
+        if (!response?.err) {
+          await toggleProfileFormattedCollection()
+          await getDNAByCre8orNumber()
+        }
+      },
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
     }),
-  }))
+    [signer, cre8orNumber],
+  )
 
   return (
     <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
@@ -45,7 +72,7 @@ const SmartWalletContents = () => {
         className="mt-[35px]
                     relative
                     flex items-center justify-center
-                    lg:px-4 lg:py-6 p-2
+                    lg:px-2 lg:py-6 p-2
                     rounded-[8px] lg:rounded-[15px]
                     overflow-hidden
                     lg:w-[287px] lg:h-[287px]
@@ -72,7 +99,7 @@ const SmartWalletContents = () => {
         />
         <div
           className="grid grid-cols-3 w-full relative z-[2]
-              gap-y-[5px] lg:gap-y-[15px]"
+              gap-[5px]"
         >
           {ownedNfts?.map((nft) => (
             <ProfileToken token={nft} key={nft.label} />

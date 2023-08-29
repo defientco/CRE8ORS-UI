@@ -1,6 +1,9 @@
 /* eslint-disable no-plusplus */
+import { Signer, ethers } from "ethers"
 import getNFTs from "./alchemy/getNFTs"
+import handleTxError from "./handleTxError"
 import { getIsLocked } from "./lockup"
+import cre8orAbi from "./abi-cre8ors.json"
 
 export const getCre8ors = async (address: string) => {
   const res = await getNFTs(
@@ -23,4 +26,22 @@ export const getLockedCount = async (address: string) => {
   }
 
   return count
+}
+
+export const transferCre8orToSmartWallet = async (
+  contractAddress: string,
+  from: string,
+  to: string,
+  tokenId: number,
+  signer: Signer,
+) => {
+  try {
+    const contract = new ethers.Contract(contractAddress, cre8orAbi, signer)
+    const tx = await contract.transferFrom(from, to, tokenId)
+    const receipt = await tx.wait()
+    return receipt
+  } catch (err) {
+    handleTxError(err)
+    return { err }
+  }
 }
