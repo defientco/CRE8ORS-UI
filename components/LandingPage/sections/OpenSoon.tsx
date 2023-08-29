@@ -75,7 +75,7 @@ const OpenSoon: FC<Props> = ({ contentHeight, characterHeight, desktopImageRef }
         }}
       >
         <SectionTitle
-          text="Allowlist Open Now"
+          text="Join The Resistance"
           className="w-[210px] md:w-[350px] leading-[105%] mb-0 md:text-left md:leading-[100%]"
         />
         <SectionContent className="!mt-[10px]">
@@ -95,9 +95,9 @@ const OpenSoon: FC<Props> = ({ contentHeight, characterHeight, desktopImageRef }
             className={`w-[242px] ${isMobile ? "py-[8px]" : ""}`}
             hasDoubleAnimation
           >
-            <a target="_blank" rel="noreferrer" href="https://everythingcorp.cre8ors.com/quiz">
-              Apply now
-            </a>
+            <Link href="/mint" target="_blank" rel="noreferrer">
+              Mint Now
+            </Link>
           </Button>
         </div>
       </div>
