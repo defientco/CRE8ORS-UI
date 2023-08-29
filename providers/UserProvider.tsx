@@ -14,12 +14,24 @@ import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
 import getMetadata from "../lib/getMetadata"
 
+interface attribute {
+  value?:string,
+  trait_type?:string
+}
+
+interface metadata {
+  attributes?: attribute[],
+  description?: string,
+  image?: string,
+  name?: string
+}
+
 interface userProps {
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
   similarProfiles: any
-  metaData: any
+  metaData: metadata
 }
 
 interface Props {
