@@ -6,10 +6,10 @@ const SimilarProfiles = () => {
   const { similarProfiles } = useUserProvider()
 
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-end text-white">
       <div
         className="text-[22px] font-bold font-quicksand
-                leading-[99.3%] text-black
+                leading-[99.3%]
                 pt-[20px] pb-[20px]
                 text-right"
       >

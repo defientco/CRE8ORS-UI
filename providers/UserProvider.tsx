@@ -12,12 +12,28 @@ import {
 import { useAccount } from "wagmi"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import { useRouter } from "next/router"
+import getMetadata from "../lib/getMetadata"
+import useCre8orNumber from "../hooks/mintDay/useCre8orNumber"
+
+interface attribute {
+  value?: string
+  trait_type?: string
+}
+
+interface metadata {
+  attributes?: attribute[]
+  description?: string
+  image?: string
+  name?: string
+}
 
 interface userProps {
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
   similarProfiles: any
+  metaData: metadata
+  cre8orNumber: any
 }
 
 interface Props {
@@ -34,7 +50,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const { address } = useAccount()
   const [userInfo, setUserInfo] = useState<any>(null)
+  const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
+  const { cre8orNumber, getCre8orNumber } = useCre8orNumber({ address: routerAddress || address })
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -62,6 +80,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
           return
         }
 
+        await getCre8orNumber()
         return setUserInfo(info.doc)
       }
 
@@ -69,6 +88,18 @@ export const UserProvider: FC<Props> = ({ children }) => {
     },
     [address],
   )
+
+  const getUserMetaData = useCallback(async () => {
+    if (cre8orNumber) {
+      const metaData: any = await getMetadata(parseInt(cre8orNumber, 10))
+
+      setMetaData(metaData)
+    }
+  }, [cre8orNumber])
+
+  useEffect(() => {
+    getUserMetaData()
+  }, [getUserMetaData])
 
   useEffect(() => {
     if (!routerAddress) getUserData()
@@ -80,8 +111,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
       userInfo,
       getUserData,
       getUserSimilarProfiles,
+      metaData,
+      cre8orNumber,
     }),
-    [similarProfiles, userInfo, getUserData, getUserSimilarProfiles],
+    [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>

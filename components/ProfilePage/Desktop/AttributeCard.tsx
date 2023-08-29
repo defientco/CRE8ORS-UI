@@ -9,8 +9,8 @@ const AttributeCard: FC<AttributeCardProps> = ({ label, attribute }) => (
   <div
     className="w-[200px] h-[52px]
         drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]
-        bg-[#ffffffbd] rounded-[8px]
-        p-2
+        bg-[#000000d1] rounded-[8px]
+        p-2 text-white
         flex flex-col justify-between"
   >
     <div
