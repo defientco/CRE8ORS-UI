@@ -59,17 +59,6 @@ const Header: FC<HeaderProps> = () => {
                 height={16}
                 className="cursor-pointer"
               />
-              {isMintPage && (
-                <div className="absolute">
-                  <Image
-                    src="/assets/Header/v2.svg"
-                    alt="cre8ors logo"
-                    width={87}
-                    height={41}
-                    className="cursor-pointer"
-                  />
-                </div>
-              )}
             </div>
           </Link>
         </span>
