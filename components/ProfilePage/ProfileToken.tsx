@@ -55,11 +55,15 @@ const ProfileToken = ({ token }) => {
   }
 
   return (
-    <div ref={tokenRef} className="rounded-[5px] lg:rounded-[15px] overflow-hidden">
+    <div
+      ref={tokenRef}
+      className="rounded-[5px] lg:rounded-[15px] overflow-hidden
+    z-[10]"
+    >
       <button
         type="button"
         onClick={handleClickPFP}
-        className="z-[10] rounded-[5px] lg:rounded-[15px] overflow-hidden"
+        className="rounded-[5px] lg:rounded-[15px] overflow-hidden"
         style={{
           opacity,
         }}
