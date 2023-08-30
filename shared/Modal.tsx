@@ -33,7 +33,7 @@ function Modal({
         ${modalClassName || ""}
       `}
       onClick={async e =>
-        e.target === e.currentTarget ? await onClose() : () => {}
+        (e.target === e.currentTarget && onClose) ? await onClose() : () => {}
       }
     >
         
