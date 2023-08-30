@@ -41,26 +41,29 @@ const SmartWalletContents = () => {
     afterTransfer: async () => {
       await toggleProfileFormattedCollection()
       await getDNAByCre8orNumber()
-    }
+    },
   })
 
-  const dropToSmartWallet = useCallback(async (item) => {
-    if (!hasSmartWallet || isHiddenEditable || !cre8orNumber) return
-    if (!checkNetwork()) return
+  const dropToSmartWallet = useCallback(
+    async (item) => {
+      if (!hasSmartWallet || isHiddenEditable || !cre8orNumber) return
+      if (!checkNetwork()) return
 
-    setIsTransferring(true)
-    const smartWalletAddress = await getSmartWallet(cre8orNumber)
+      setIsTransferring(true)
+      const smartWalletAddress = await getSmartWallet(cre8orNumber)
 
-    await transferERC721(
-      item?.token.contractAddress,
-      address,
-      smartWalletAddress,
-      item?.token.tokenId,
-    )
+      await transferERC721(
+        item?.token.contractAddress,
+        address,
+        smartWalletAddress,
+        item?.token.tokenId,
+      )
 
-    setIsTransferring(false)
-
-  }, [cre8orNumber, transferERC721, checkNetwork])
+      setIsTransferring(false)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [cre8orNumber, transferERC721, checkNetwork],
+  )
 
   useEffect(() => {
     getDNAByCre8orNumber()
@@ -76,7 +79,9 @@ const SmartWalletContents = () => {
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
       }),
-    }), [dropToSmartWallet])
+    }),
+    [dropToSmartWallet],
+  )
 
   return (
     <>

@@ -2,7 +2,7 @@ import { useCallback } from "react"
 import { transferFromERC721 } from "../lib/cre8or"
 import { useEthersSigner } from "./useEthersSigner"
 
-const useERC721Transfer = ({afterTransfer}) => {
+const useERC721Transfer = ({ afterTransfer }) => {
   const signer = useEthersSigner()
 
   const transferERC721 = useCallback(

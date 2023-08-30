@@ -23,7 +23,7 @@ function useCheckNetwork() {
   }, [switchNetwork, activeChain])
 
   return {
-    checkNetwork
+    checkNetwork,
   }
 }
 
