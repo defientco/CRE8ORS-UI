@@ -22,7 +22,7 @@ const TransferLoadingModal = () => (
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
       >
-        Loading....
+        Sending....
       </div>
       <Media
         type="image"
@@ -37,7 +37,7 @@ const TransferLoadingModal = () => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`Transfer transaction in\nwallet.`}
+        {`sign to send an item to \nyour smart wallet.`}
       </pre>
     </div>
   </Modal>
