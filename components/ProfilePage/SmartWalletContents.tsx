@@ -36,13 +36,12 @@ const SmartWalletContents = () => {
     const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
     setOwnedNfts(nftResponse)
   }, [cre8orNumber, provider])
+  const { transferERC721 } = useERC721Transfer()
 
-  const { transferERC721 } = useERC721Transfer({
-    afterTransfer: async () => {
-      await toggleProfileFormattedCollection()
-      await getDNAByCre8orNumber()
-    },
-  })
+  const afterTransfer = async () => {
+    await toggleProfileFormattedCollection()
+    await getDNAByCre8orNumber()
+  }
 
   const dropToSmartWallet = useCallback(
     async (item) => {
@@ -57,6 +56,7 @@ const SmartWalletContents = () => {
         address,
         smartWalletAddress,
         item?.token.tokenId,
+        afterTransfer,
       )
 
       setIsTransferring(false)
