@@ -26,15 +26,18 @@ const ProfileToken = ({ token }) => {
     ? "https://testnets.opensea.io/assets/goerli"
     : "https://opensea.io/assets/ethereum"
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CRE8OR,
-    item: { token },
-    end: () => {},
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.CRE8OR,
+      item: { token },
+      end: () => {},
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        handlerId: monitor.getHandlerId(),
+      }),
     }),
-  }), [token])
+    [token],
+  )
 
   const opacity = isDragging ? 0.4 : 1
 
