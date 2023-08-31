@@ -8,7 +8,7 @@ interface ICheckbox extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
 }
 
-const Checkbox = ({ checked, onChange, id, className, label }: ICheckbox) => {
+const Checkbox = ({ checked, onChange, id, className, label, ...rest }: ICheckbox) => {
   return (
     <>
       <input
@@ -18,6 +18,7 @@ const Checkbox = ({ checked, onChange, id, className, label }: ICheckbox) => {
         hidden
         id={id}
         className="hidden"
+        {...rest}
       />
       <label htmlFor={id} className="cursor-pointer flex gap-x-[10px] items-center">
         <div

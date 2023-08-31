@@ -3,7 +3,7 @@ import BuyCre8orButton from "./BuyCre8orButton"
 import CheckSmartWalletButton from "./CheckSmartWalletButton"
 import CopyLink from "./CopyLink"
 
-const AffiliatePage = () => (
+const AffiliatePage = ({ origin }) => (
   <Layout type="contained">
     <div
       className="relative w-[100%] min-h-[100vh]
@@ -12,7 +12,7 @@ const AffiliatePage = () => (
     >
       <BuyCre8orButton />
       <CheckSmartWalletButton />
-      <CopyLink />
+      <CopyLink origin={origin} />
     </div>
   </Layout>
 )
