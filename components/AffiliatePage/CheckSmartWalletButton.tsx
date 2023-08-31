@@ -7,7 +7,7 @@ const CheckSmartWalletButton = () => {
   const { hasSmartWallet } = useUserProvider()
 
   return (
-    <div className="flex gap-x-[15px]">
+    <div className="flex gap-x-[15px] w-[280px]">
       <Button
         id="set_smart_wallet"
         onClick={() => {
@@ -23,7 +23,7 @@ const CheckSmartWalletButton = () => {
       >
         Setup Smart Wallet
       </Button>
-      <Checkbox id="owned_cre8or" checked={hasSmartWallet} readOnly />
+      <Checkbox id="checked_smart_wallet" checked={hasSmartWallet} readOnly />
     </div>
   )
 }

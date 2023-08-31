@@ -18,7 +18,7 @@ const BuyCre8orButton = () => {
   }, [checkIsOwnedCre8ors])
 
   return (
-    <div className="flex gap-x-[15px]">
+    <div className="flex gap-x-[15px] w-[280px]">
       <Button
         id="buy_cre8or"
         onClick={() => window.open("/mint", "_blank")}

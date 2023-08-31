@@ -2,7 +2,7 @@ import { useAccount } from "wagmi"
 import Layout from "../Layout"
 import BuyCre8orButton from "./BuyCre8orButton"
 import CheckSmartWalletButton from "./CheckSmartWalletButton"
-import CopyLink from "./CopyLink"
+import CopyLinkButton from "./CopyLinkButton"
 import WalletConnectButton from "../WalletConnectButton"
 
 const AffiliatePage = ({ origin }) => {
@@ -19,7 +19,7 @@ const AffiliatePage = ({ origin }) => {
           <>
             <BuyCre8orButton />
             <CheckSmartWalletButton />
-            <CopyLink origin={origin} />
+            <CopyLinkButton origin={origin} />
           </>
         ) : (
           <WalletConnectButton>
