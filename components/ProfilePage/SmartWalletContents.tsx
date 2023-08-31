@@ -36,6 +36,7 @@ const SmartWalletContents = () => {
     const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
     setOwnedNfts(nftResponse)
   }, [cre8orNumber, provider])
+
   const { transferERC721 } = useERC721Transfer()
 
   const afterTransfer = async () => {
@@ -90,7 +91,7 @@ const SmartWalletContents = () => {
           className="mt-[35px]
                       relative
                       flex items-center justify-center
-                      lg:px-2 lg:py-6 p-2
+                      lg:px-2 lg:py-3 p-2
                       rounded-[8px] lg:rounded-[15px]
                       overflow-hidden
                       lg:w-[287px] lg:h-[287px]
@@ -116,7 +117,11 @@ const SmartWalletContents = () => {
             }}
           />
           <div
-            className="grid grid-cols-3 w-full relative z-[2]
+            className="grid grid-cols-3 
+                w-full h-full
+                overflow-y-auto
+                no-scrollbar
+                relative !z-[5]
                 gap-[5px]"
           >
             {ownedNfts?.map((nft) => (
