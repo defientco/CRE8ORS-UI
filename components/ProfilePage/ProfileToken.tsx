@@ -34,7 +34,7 @@ const ProfileToken = ({ token }) => {
       isDragging: monitor.isDragging(),
       handlerId: monitor.getHandlerId(),
     }),
-  }))
+  }), [token])
 
   const opacity = isDragging ? 0.4 : 1
 
