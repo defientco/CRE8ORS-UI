@@ -1,8 +1,10 @@
+import { log } from "console"
 import { createHandler, Get, Query } from "next-api-decorators"
 import axios from "axios"
 import _ from "lodash"
 import getAlchemyBaseUrl from "../../../../../lib/alchemy/getAlchemyBaseUrl"
 import { getAllowListApplicantByWalletAddress } from "../../../../../helpers/db"
+import { addDNAMetadata, getDNAMetadata } from "../../../../../helpers/dnaMetadata.db"
 
 const mapEvilToGood = (evil: string) => {
   switch (evil) {
@@ -47,29 +49,38 @@ class DnaMetaData {
       method: "get",
       url,
     }
+    const choices = await getDNAMetadata(tokenId)
+    let dnaType = _.sample(Object.keys(DNA_CARDS))
+    let dnaCard = DNA_CARDS[dnaType]
 
-    const result = await axios(config)
-    const owner = result?.data?.owners[0]
-    if (owner === "0x0000000000000000000000000000000000000000") return null
+    if (choices?.success) {
+      dnaType = choices?.result?.dnaType
+      dnaCard = DNA_CARDS[dnaType]
+    } else {
+      try {
+        const result = await axios(config)
+        const owner = result?.data?.owners[0]
+        if (owner === "0x0000000000000000000000000000000000000000") return null
+        const data = await getAllowListApplicantByWalletAddress(owner)
 
-    const data = await getAllowListApplicantByWalletAddress(owner)
-    let dnaCard = null
-    if (!data) {
-      dnaCard = _.sample(Object.values(DNA_CARDS))
+        if (data?.creatorType) {
+          const cre8orType = mapEvilToGood(data?.creatorType)
+          dnaCard = cre8orType !== "OTHER" && DNA_CARDS[mapEvilToGood(data?.creatorType)]
+          dnaType = mapEvilToGood(data?.creatorType)
+        }
+      } catch (e) {
+        log(e?.message)
+      }
+
+      await addDNAMetadata({ tokenId, dnaType })
     }
-    if (data?.creatorType) {
-      const cre8orType = mapEvilToGood(data?.creatorType)
-      dnaCard =
-        cre8orType === "OTHER"
-          ? _.sample(Object.values(DNA_CARDS))
-          : DNA_CARDS[mapEvilToGood(data?.creatorType)]
-    }
+
     const metadataObject = {
       name: "Cre8ors DNA Cards",
       description: "Against all odds, we shall live in color. ",
       image: `ipfs://${dnaCard}`,
       attributes: {
-        ARCHETYPE: mapEvilToGood(data?.creatorType),
+        ARCHETYPE: dnaType,
       },
     }
     return metadataObject
