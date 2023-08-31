@@ -1,3 +1,3 @@
-import AffiliatePage from "./AffiliatePage";
+import AffiliatePage from "./AffiliatePage"
 
 export default AffiliatePage
