@@ -13,6 +13,8 @@ import { useRouter } from "next/router"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import getMetadata from "../lib/getMetadata"
 import isSmartWalletRegistered from "../lib/isSmartWalletRegistered"
+import getSmartWallet from "../lib/getSmartWallet"
+import { getDefaultProvider } from "ethers"
 
 interface attribute {
   value?: string
@@ -33,6 +35,7 @@ interface userProps {
   similarProfiles: any
   metaData: metadata
   cre8orNumber: any
+  hasSmartWallet: any
 }
 
 interface Props {
@@ -45,6 +48,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const routerAddress = router.query.address as string
 
+  const chainProvider = useMemo(
+    () => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
+    [],
+  )
+
   const isProfilePage = router.pathname.includes("/profile")
 
   const { address } = useAccount()
@@ -52,6 +60,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
   const [cre8orNumber, setCre8orNumber] = useState("")
+  const [hasSmartWallet, setHasSmartWallet] = useState(true)
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -90,6 +99,13 @@ export const UserProvider: FC<Props> = ({ children }) => {
     [address],
   )
 
+  const checkSmartWallet = useCallback(async () => {
+    if (!provider || !cre8orNumber) return
+    const smartWalletAddress = await getSmartWallet(cre8orNumber)
+    const code = await chainProvider.getCode(smartWalletAddress)
+    setHasSmartWallet(code !== "0x")
+  }, [cre8orNumber, chainProvider])
+
   const getUserMetaData = useCallback(async () => {
     if (cre8orNumber) {
       const tokenId = parseInt(cre8orNumber, 10)
@@ -105,19 +121,26 @@ export const UserProvider: FC<Props> = ({ children }) => {
   }, [getUserMetaData])
 
   useEffect(() => {
-    if (!routerAddress) getUserData()
+    if (!routerAddress) {
+      getUserData()
+    }
   }, [getUserData, routerAddress])
+
+  useEffect(() => {
+    checkSmartWallet()
+  }, [checkSmartWallet])
 
   const provider = useMemo(
     () => ({
       similarProfiles,
+      hasSmartWallet,
       userInfo,
       getUserData,
       getUserSimilarProfiles,
       metaData,
       cre8orNumber,
     }),
-    [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
+    [similarProfiles, hasSmartWallet, userInfo, metaData, getUserData, getUserSimilarProfiles],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>
