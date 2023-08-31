@@ -1,5 +1,5 @@
 import { useDrag } from "react-dnd"
-import { useRef } from "react"
+import { FC, useRef } from "react"
 import { useAccount } from "wagmi"
 import Media from "../../shared/Media"
 import { ItemTypes } from "./ItemTypes"
@@ -9,7 +9,11 @@ import { updateUserCre8orNumber } from "../../lib/userInfo"
 import { useUserProvider } from "../../providers/UserProvider"
 import { CRE8OR } from "./types"
 
-const ProfileToken = ({ token }) => {
+interface ProfileTokenProps {
+  token: any
+  inSmartWallet?: boolean
+}
+const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet }) => {
   const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
   const { getUserData } = useUserProvider()
 
@@ -29,14 +33,17 @@ const ProfileToken = ({ token }) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: ItemTypes.CRE8OR,
-      item: { token },
+      item: {
+        ...token,
+        inSmartWallet,
+      },
       end: () => {},
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
         handlerId: monitor.getHandlerId(),
       }),
     }),
-    [token],
+    [token, inSmartWallet],
   )
 
   const opacity = isDragging ? 0.4 : 1

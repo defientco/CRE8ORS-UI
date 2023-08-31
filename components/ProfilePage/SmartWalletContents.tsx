@@ -14,9 +14,6 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 import useERC721Transfer from "../../hooks/useERC721Transfer"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import TransferLoadingModal from "./TransferLoadingModal"
-import { CRE8OR } from "./types"
-import ownerOfERC721 from "../../lib/ownerOfERC721"
-import { isMatchAddress } from "../../lib/isMatchAddress"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
@@ -25,6 +22,7 @@ const SmartWalletContents = () => {
 
   const [ownedNfts, setOwnedNfts] = useState([])
   const [hasSmartWallet, setHasSmartWallet] = useState(true)
+  const [smartWalletAddress, setSmartWalletAddress] = useState("")
   const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
   const { address } = useAccount()
   const { checkNetwork } = useCheckNetwork()
@@ -33,10 +31,11 @@ const SmartWalletContents = () => {
 
   const getDNAByCre8orNumber = useCallback(async () => {
     if (!provider || !cre8orNumber) return
-    const smartWalletAddress = await getSmartWallet(cre8orNumber)
-    const code = await provider.getCode(smartWalletAddress)
+    const walletAddress = await getSmartWallet(cre8orNumber)
+    const code = await provider.getCode(walletAddress)
     setHasSmartWallet(code !== "0x")
-    const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
+    setSmartWalletAddress(code !== "0x" ? walletAddress : "")
+    const nftResponse = await getProfileFormattedCollection(walletAddress, ALLNFTS)
     setOwnedNfts(nftResponse)
   }, [cre8orNumber, provider])
 
@@ -49,28 +48,30 @@ const SmartWalletContents = () => {
 
   const dropToSmartWallet = useCallback(
     async (item) => {
-      if (item?.token.type !== CRE8OR) return
-      const owner = await ownerOfERC721(item?.token.tokenId)
-      if (!isMatchAddress(owner, address)) return
-
-      if (!hasSmartWallet || isHiddenEditable || !cre8orNumber) return
+      if (
+        !hasSmartWallet ||
+        isHiddenEditable ||
+        !cre8orNumber ||
+        !smartWalletAddress ||
+        item?.inSmartWallet
+      )
+        return
       if (!checkNetwork()) return
 
       setIsTransferring(true)
-      const smartWalletAddress = await getSmartWallet(cre8orNumber)
 
       await transferERC721(
-        item?.token.contractAddress,
+        item?.contractAddress,
         address,
         smartWalletAddress,
-        item?.token.tokenId,
+        item?.tokenId,
         afterTransfer,
       )
 
       setIsTransferring(false)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cre8orNumber, transferERC721, checkNetwork],
+    [cre8orNumber, transferERC721, checkNetwork, smartWalletAddress],
   )
 
   useEffect(() => {
@@ -132,7 +133,7 @@ const SmartWalletContents = () => {
                 gap-[5px]"
           >
             {ownedNfts?.map((nft) => (
-              <ProfileToken token={nft} key={nft.label} />
+              <ProfileToken token={nft} key={nft.label} inSmartWallet />
             ))}
           </div>
         </div>
