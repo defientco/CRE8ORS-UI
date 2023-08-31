@@ -57,7 +57,7 @@ const ProfileToken = ({ token }) => {
   return (
     <div
       ref={tokenRef}
-      className="rounded-[5px] lg:rounded-[15px] overflow-hidden
+      className="flex justify-center items-center
     z-[10]"
     >
       <button
