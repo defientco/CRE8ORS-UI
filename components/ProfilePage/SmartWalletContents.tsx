@@ -14,6 +14,9 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 import useERC721Transfer from "../../hooks/useERC721Transfer"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import TransferLoadingModal from "./TransferLoadingModal"
+import { CRE8OR } from "./types"
+import ownerOfERC721 from "../../lib/ownerOfERC721"
+import { isMatchAddress } from "../../lib/isMatchAddress"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
@@ -46,6 +49,10 @@ const SmartWalletContents = () => {
 
   const dropToSmartWallet = useCallback(
     async (item) => {
+      if (item?.token.type !== CRE8OR) return
+      const owner = await ownerOfERC721(item?.token.tokenId)
+      if (!isMatchAddress(owner, address)) return
+
       if (!hasSmartWallet || isHiddenEditable || !cre8orNumber) return
       if (!checkNetwork()) return
 
