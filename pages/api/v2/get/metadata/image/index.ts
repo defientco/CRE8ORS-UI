@@ -1,9 +1,9 @@
 import { createHandler, Get, Query } from "next-api-decorators"
 import { Contract } from "ethers"
-import getMetadata from "../../../../../lib/getMetadata"
-import isSmartWalletRegistered from "../../../../../lib/isSmartWalletRegistered"
-import getDefaultProvider from "../../../../../lib/getDefaultProvider"
-import cre8orsAbi from "../../../../../lib/abi-cre8ors.json"
+import getMetadata from "../../../../../../lib/getMetadata"
+import getDefaultProvider from "../../../../../../lib/getDefaultProvider"
+import cre8orsAbi from "../../../../../../lib/abi-cre8ors.json"
+import getIpfsLink from "../../../../../../lib/getIpfsLink"
 
 class GetMetadata {
   @Get()
@@ -21,8 +21,8 @@ class GetMetadata {
         error: "Token not Minted Yet",
       }
     }
-    const hasTBA = await isSmartWalletRegistered(tokenId)
-    return getMetadata(tokenId, hasTBA)
+    const metadata = getMetadata(tokenId, false)
+    return getIpfsLink(metadata.image)
   }
 }
 

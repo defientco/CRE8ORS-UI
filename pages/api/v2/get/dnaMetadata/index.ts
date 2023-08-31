@@ -1,8 +1,11 @@
+import { log } from "console"
 import { createHandler, Get, Query } from "next-api-decorators"
 import axios from "axios"
 import _ from "lodash"
+import { kv } from "@vercel/kv"
 import getAlchemyBaseUrl from "../../../../../lib/alchemy/getAlchemyBaseUrl"
 import { getAllowListApplicantByWalletAddress } from "../../../../../helpers/db"
+import { addDNAMetadata, getDNAMetadata } from "../../../../../helpers/dnaMetadata.db"
 
 const mapEvilToGood = (evil: string) => {
   switch (evil) {
@@ -36,6 +39,15 @@ const DNA_CARDS = {
   thespian: "bafybeiha2fxgeokomi4xkefy2odu24ei6fnhmkmnm434rygnau62ogcaou",
   writer: "bafybeiedtc4lf33nfadcjrzjmhp6h7rxe6ivwijsozndtu5kwrdvib6uzm",
 }
+const formatMetadataObject = (dnaCard: string, dnaType: string) => ({
+  name: "Cre8ors DNA Cards",
+  description: "Against all odds, we shall live in color. ",
+  image: `ipfs://${dnaCard}`,
+  attributes: {
+    ARCHETYPE: dnaType,
+  },
+})
+
 class DnaMetaData {
   @Get()
   async get(@Query("tokenId") tokenId: string) {
@@ -47,32 +59,41 @@ class DnaMetaData {
       method: "get",
       url,
     }
+    const key = `dna-metadata-${tokenId}-${process.env.NEXT_PUBLIC_TESTNET ? "testnet" : "mainnet"}`
+    const cached = await kv.get<{ tokenId: string; dnaType: string }>(key)
 
-    const result = await axios(config)
-    const owner = result?.data?.owners[0]
-    if (owner === "0x0000000000000000000000000000000000000000") return null
+    let dnaType = _.sample(Object.keys(DNA_CARDS))
+    let dnaCard = DNA_CARDS[dnaType]
+    if (cached) {
+      dnaType = cached?.dnaType
+      dnaCard = DNA_CARDS[dnaType]
+      return formatMetadataObject(dnaCard, dnaType)
+    }
+    const choices = await getDNAMetadata(tokenId)
+    if (choices?.success) {
+      dnaType = choices?.result?.dnaType
+      dnaCard = DNA_CARDS[dnaType]
+      await kv.set(key, { tokenId, dnaType })
+      return formatMetadataObject(dnaCard, dnaType)
+    }
+    try {
+      const result = await axios(config)
+      const owner = result?.data?.owners[0]
+      if (owner === "0x0000000000000000000000000000000000000000") return null
+      const data = await getAllowListApplicantByWalletAddress(owner)
 
-    const data = await getAllowListApplicantByWalletAddress(owner)
-    let dnaCard = null
-    if (!data) {
-      dnaCard = _.sample(Object.values(DNA_CARDS))
+      if (data?.creatorType) {
+        const cre8orType = mapEvilToGood(data?.creatorType)
+        dnaCard = cre8orType !== "OTHER" && DNA_CARDS[mapEvilToGood(data?.creatorType)]
+        dnaType = mapEvilToGood(data?.creatorType)
+      }
+    } catch (e) {
+      log(e?.message)
     }
-    if (data?.creatorType) {
-      const cre8orType = mapEvilToGood(data?.creatorType)
-      dnaCard =
-        cre8orType === "OTHER"
-          ? _.sample(Object.values(DNA_CARDS))
-          : DNA_CARDS[mapEvilToGood(data?.creatorType)]
-    }
-    const metadataObject = {
-      name: "Cre8ors DNA Cards",
-      description: "Against all odds, we shall live in color. ",
-      image: `ipfs://${dnaCard}`,
-      attributes: {
-        ARCHETYPE: mapEvilToGood(data?.creatorType),
-      },
-    }
-    return metadataObject
+    await kv.set(key, { tokenId, dnaType })
+    await addDNAMetadata({ tokenId, dnaType })
+
+    return formatMetadataObject(dnaCard, dnaType)
   }
 }
 
