@@ -80,7 +80,7 @@ const SmartWalletContents = () => {
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.CRE8OR,
+      accept: ItemTypes.ERC721,
       drop: async (item: any) => {
         dropToSmartWallet(item)
       },

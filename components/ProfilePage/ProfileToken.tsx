@@ -32,7 +32,7 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet }) => {
 
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: ItemTypes.CRE8OR,
+      type: ItemTypes.ERC721,
       item: {
         ...token,
         inSmartWallet,
