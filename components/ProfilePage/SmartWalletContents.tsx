@@ -48,14 +48,7 @@ const SmartWalletContents = () => {
 
   const dropToSmartWallet = useCallback(
     async (item) => {
-      if (
-        !hasSmartWallet ||
-        isHiddenEditable ||
-        !cre8orNumber ||
-        !smartWalletAddress ||
-        item?.inSmartWallet
-      )
-        return
+      if (!hasSmartWallet || isHiddenEditable || !cre8orNumber || item?.inSmartWallet) return
       if (!checkNetwork()) return
 
       setIsTransferring(true)
