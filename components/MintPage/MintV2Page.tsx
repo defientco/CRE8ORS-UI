@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useAccount } from "wagmi"
+import { useRouter } from "next/router"
 import { Button } from "../../shared/Button"
 import Media from "../../shared/Media"
 import Layout from "../Layout"
@@ -13,10 +14,12 @@ import CTAButtons from "./MintV2/CTAButtons"
 import AmountButton from "./MintV2/AmountButton"
 import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { updateUserCre8orNumber } from "../../lib/userInfo"
+import useAffiliateMint from "../../hooks/mintDay/useAffilliateMint"
 
 const MintV2Page = () => {
   const MAX_SUPPLY = 4444
   const [mintQuantity, setMintQuantity] = useState(1)
+  const referralCre8orNumber = useRouter().query.referral as string
   const { isConnected, address } = useAccount()
 
   const { getCre8orNumber } = useCre8orNumber({ address })
@@ -28,6 +31,7 @@ const MintV2Page = () => {
   const [openSoldOutModal, setOpenSoldOutModal] = useState(false)
 
   const { mint, totalSupply, getTotalSupply } = useCre8orMintV2()
+  const { mintAffiliate } = useAffiliateMint()
 
   const isSoldout = useMemo(() => parseInt(totalSupply, 10) === MAX_SUPPLY, [totalSupply])
 
@@ -44,7 +48,9 @@ const MintV2Page = () => {
     if (!mintQuantity) return
 
     setIsMintLoading(true)
-    const response = await mint(mintQuantity)
+    const response = await (referralCre8orNumber
+      ? mintAffiliate(address, parseInt(referralCre8orNumber, 10), mintQuantity)
+      : mint(mintQuantity))
     if (!response.err) {
       await getTotalSupply()
       const cre8orNumber = await getCre8orNumber()
@@ -54,7 +60,6 @@ const MintV2Page = () => {
       })
       setOpenSuccessModal(true)
     }
-
     setIsMintLoading(false)
   }
 
