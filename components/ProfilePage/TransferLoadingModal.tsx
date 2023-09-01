@@ -27,7 +27,7 @@ const TransferLoadingModal: FC<Props> = ({ status }) => (
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
       >
-        {status || "Sending...."}
+        {status ? `${status}...` : "Sending...."}
       </div>
       <Media
         type="image"
