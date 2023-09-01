@@ -1,8 +1,14 @@
 /* eslint-disable no-nested-ternary */
+import { FC } from "react"
 import Modal from "../../shared/Modal"
 import Media from "../../shared/Media"
+import { TxSTATUS } from "../../hooks/useERC721Transfer"
 
-const TransferLoadingModal = () => (
+interface Props {
+  status?: string
+}
+
+const TransferLoadingModal: FC<Props> = ({ status }) => (
   <Modal
     id="train_modal"
     isVisible
@@ -22,7 +28,7 @@ const TransferLoadingModal = () => (
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
       >
-        Sending....
+        {status ? `${status}...` : "Sending...."}
       </div>
       <Media
         type="image"
@@ -37,7 +43,9 @@ const TransferLoadingModal = () => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`sign to send an item to \nyour smart wallet.`}
+        {`sign to send an item to \nyour smart wallet.\n${
+          status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""
+        }`}
       </pre>
     </div>
   </Modal>
