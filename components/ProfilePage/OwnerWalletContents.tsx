@@ -1,14 +1,14 @@
+import { useCallback, useState } from "react"
+import { useAccount } from "wagmi"
+import { useDrop } from "react-dnd"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import Media from "../../shared/Media"
 import { CRE8OR } from "./types"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import ProfileToken from "./ProfileToken"
-import { useCallback, useState } from "react"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import useERC721Transfer from "../../hooks/useERC721Transfer"
 import { useUserProvider } from "../../providers/UserProvider"
-import { useAccount } from "wagmi"
-import { useDrop } from 'react-dnd'
 import { ItemTypes } from "./ItemTypes"
 import TransferLoadingModal from "./TransferLoadingModal"
 
@@ -75,7 +75,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
         {ownedNfts.map((data, i) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={i} className="flex flex-col items-center gap-y-[5px]">
-            <ProfileToken token={data} inOwnedWallet/>
+            <ProfileToken token={data} inOwnedWallet />
             <div
               className="text-[6px] samsungS8:text-[7px] xs:text-[8px] lg:text-[12px] font-quicksand font-bold text-white
                                 w-[30px] samsungS8:w-[40px] lg:!w-[90px] text-center
