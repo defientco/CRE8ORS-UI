@@ -16,7 +16,7 @@ interface ProfileTokenProps {
 }
 const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWallet }) => {
   const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
-  const { getUserData } = useUserProvider()
+  const { getUserData, cre8orNumber } = useUserProvider()
 
   const { address } = useAccount()
 
@@ -36,7 +36,7 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWall
       type: ItemTypes.ERC721,
       item: {
         ...token,
-        inSmartWallet,
+        inSmartWallet: inSmartWallet || token?.tokenId.toString() === cre8orNumber,
         inOwnedWallet,
       },
       end: () => {},
@@ -45,7 +45,7 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWall
         handlerId: monitor.getHandlerId(),
       }),
     }),
-    [token, inSmartWallet],
+    [token, inSmartWallet, cre8orNumber],
   )
 
   const opacity = isDragging ? 0.4 : 1
