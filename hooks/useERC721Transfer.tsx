@@ -4,7 +4,7 @@ import handleTxError from "../lib/handleTxError"
 import cre8orAbi from "../lib/abi-cre8ors.json"
 import erc6551AccountAbi from "../lib/abi-ERC6551-account.json"
 
-enum TxSTATUS {
+export enum TxSTATUS {
   INITIALIZING = "INITIALIZING",
   SENDING = "SENDING",
 }
