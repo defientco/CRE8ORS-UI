@@ -14,16 +14,19 @@ import TransferLoadingModal from "./TransferLoadingModal"
 
 const OwnerWalletContents = ({ setOpenTrainModal }) => {
   const { isEditable, isHiddenEditable } = useProfileProvider()
-  const { ownedNfts, setSelectedTrainTokenData } = useWalletCollectionProvider()
+  const { ownedNfts, setSelectedTrainTokenData, getDNABySmartWallet } =
+    useWalletCollectionProvider()
   const { smartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const [isTransferring, setIsTransferring] = useState(false)
   const { transferERC721FromERC6551Account } = useERC721Transfer()
   const { address } = useAccount()
   const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
+  const [txStatus, setTxStatus] = useState()
 
   const afterTransfer = async () => {
     await toggleProfileFormattedCollection()
+    await getDNABySmartWallet()
   }
 
   const dropToSmartWallet = useCallback(
@@ -36,10 +39,10 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
       await transferERC721FromERC6551Account(
         smartWalletAddress,
         item?.contractAddress,
-        smartWalletAddress,
         address,
         item?.tokenId,
         afterTransfer,
+        setTxStatus,
       )
 
       setIsTransferring(false)
@@ -121,7 +124,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
           </div>
         ))}
       </div>
-      {isTransferring && <TransferLoadingModal />}
+      {isTransferring && <TransferLoadingModal status={txStatus} />}
     </>
   )
 }

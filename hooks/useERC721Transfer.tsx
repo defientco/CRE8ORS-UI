@@ -4,6 +4,11 @@ import handleTxError from "../lib/handleTxError"
 import cre8orAbi from "../lib/abi-cre8ors.json"
 import erc6551AccountAbi from "../lib/abi-ERC6551-account.json"
 
+enum TxSTATUS {
+  INITIALIZING = "INITIALIZING",
+  SENDING = "SENDING",
+}
+
 const useERC721Transfer = () => {
   const signer = useEthersSigner()
 
@@ -30,13 +35,14 @@ const useERC721Transfer = () => {
   const transferERC721FromERC6551Account = async (
     tokenBoundAccount: string,
     erc721Address: string,
-    from: string,
     to: string,
     tokenId: number,
     afterTransfer: Function,
+    updateTxStatus: any,
   ) => {
     if (!signer) return { err: "missing signer" }
     try {
+      updateTxStatus(TxSTATUS.INITIALIZING)
       const contract = new Contract(tokenBoundAccount, erc6551AccountAbi, signer)
       const iface = new utils.Interface(cre8orAbi)
       const data = iface.encodeFunctionData("transferFrom", [tokenBoundAccount, to, tokenId])
@@ -45,6 +51,7 @@ const useERC721Transfer = () => {
       let tx = await contract.initialize()
       await tx.wait()
 
+      updateTxStatus(TxSTATUS.SENDING)
       tx = await contract.executeCall(erc721Address, 0, data)
       const receipt = await tx.wait()
 

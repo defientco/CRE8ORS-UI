@@ -1,8 +1,13 @@
 /* eslint-disable no-nested-ternary */
+import { FC } from "react"
 import Modal from "../../shared/Modal"
 import Media from "../../shared/Media"
 
-const TransferLoadingModal = () => (
+interface Props {
+  status?: boolean
+}
+
+const TransferLoadingModal: FC<Props> = ({ status }) => (
   <Modal
     id="train_modal"
     isVisible
@@ -22,7 +27,7 @@ const TransferLoadingModal = () => (
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
       >
-        Sending....
+        {status || "Sending...."}
       </div>
       <Media
         type="image"
@@ -37,7 +42,7 @@ const TransferLoadingModal = () => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`sign to send an item to \nyour smart wallet.`}
+        {`sign to send an item to \nyour smart wallet.\n${status ? "# of 2" : ""}`}
       </pre>
     </div>
   </Modal>

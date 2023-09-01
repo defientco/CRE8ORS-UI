@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useDrop } from "react-dnd"
 import { useAccount } from "wagmi"
 import _ from "lodash"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
@@ -17,18 +16,13 @@ import TransferLoadingModal from "./TransferLoadingModal"
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
   const { metaData, cre8orNumber, smartWalletAddress } = useUserProvider()
-  const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
+  const { toggleProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
+    useWalletCollectionProvider()
 
-  const [ownedNfts, setOwnedNfts] = useState([])
   const { address } = useAccount()
   const { checkNetwork } = useCheckNetwork()
 
   const [isTransferring, setIsTransferring] = useState(false)
-
-  const getDNABySmartWallet = useCallback(async () => {
-    const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
-    setOwnedNfts(nftResponse)
-  }, [smartWalletAddress])
 
   const { transferERC721 } = useERC721Transfer()
 
@@ -72,10 +66,6 @@ const SmartWalletContents = () => {
     [dropToSmartWallet],
   )
 
-  useEffect(() => {
-    getDNABySmartWallet()
-  }, [getDNABySmartWallet])
-
   return (
     <>
       <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
@@ -116,7 +106,7 @@ const SmartWalletContents = () => {
                 relative !z-[5]
                 gap-[5px]"
           >
-            {ownedNfts?.map((nft) => (
+            {nftsSmartWallet?.map((nft) => (
               <ProfileToken token={nft} key={nft?.tokenId} inSmartWallet />
             ))}
           </div>
