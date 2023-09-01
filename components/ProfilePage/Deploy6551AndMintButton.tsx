@@ -5,14 +5,9 @@ import useCheckNetwork from "../../hooks/useCheckNetwork"
 import useCreateTBA from "../../hooks/useCreateTBA"
 import { useUserProvider } from "../../providers/UserProvider"
 
-interface Deploy6551AndMintDNAButtonProps {
-  getDNABySmartWallet: any
-}
-
-const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
-  getDNABySmartWallet,
+const Deploy6551AndMintDNAButton = ({
 }) => {
-  const { cre8orNumber } = useUserProvider()
+  const { cre8orNumber, getSmartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const { createTbaAndMintDna } = useCreateTBA()
   const [openLoadingModal, setOpenLoadingModal] = useState(false)
@@ -22,7 +17,7 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
 
     setOpenLoadingModal(true)
     await createTbaAndMintDna(cre8orNumber)
-    await getDNABySmartWallet()
+    await getSmartWalletAddress()
     setOpenLoadingModal(false)
   }
 
