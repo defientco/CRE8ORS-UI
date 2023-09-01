@@ -4,14 +4,14 @@ import { Button } from "../../shared/Button"
 import Checkbox from "../../shared/Checkbox"
 
 const CheckSmartWalletButton = () => {
-  const { hasSmartWallet } = useUserProvider()
+  const { smartWalletAddress } = useUserProvider()
 
   return (
     <div className="flex gap-x-[15px] w-[280px]">
       <Button
         id="set_smart_wallet"
         onClick={() => {
-          if (hasSmartWallet) {
+          if (smartWalletAddress) {
             toast.info("Smart wallet is already setup.")
             return
           }
@@ -23,7 +23,7 @@ const CheckSmartWalletButton = () => {
       >
         Setup Smart Wallet
       </Button>
-      <Checkbox id="checked_smart_wallet" checked={hasSmartWallet} readOnly />
+      <Checkbox id="checked_smart_wallet" checked={smartWalletAddress} readOnly />
     </div>
   )
 }
