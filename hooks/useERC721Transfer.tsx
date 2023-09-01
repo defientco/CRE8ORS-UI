@@ -3,6 +3,7 @@ import { useEthersSigner } from "./useEthersSigner"
 import handleTxError from "../lib/handleTxError"
 import cre8orAbi from "../lib/abi-cre8ors.json"
 import erc6551AccountAbi from "../lib/abi-ERC6551-account.json"
+import getImplementationAddress from "../lib/getImplementationAddress"
 
 export enum TxSTATUS {
   INITIALIZING = "INITIALIZING",
@@ -47,9 +48,12 @@ const useERC721Transfer = () => {
       const iface = new utils.Interface(cre8orAbi)
       const data = iface.encodeFunctionData("transferFrom", [tokenBoundAccount, to, tokenId])
 
-      // TODO: find a way to only do this if `initialize` has not been called
-      let tx = await contract.initialize()
-      await tx.wait()
+      const implementation = await getImplementationAddress(tokenBoundAccount)
+      let tx
+      if (!implementation) {
+        tx = await contract.initialize()
+        await tx.wait()
+      }
 
       updateTxStatus(TxSTATUS.SENDING)
       tx = await contract.executeCall(erc721Address, 0, data)
