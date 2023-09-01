@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import Media from "../../../shared/Media"
 import Tooltip from "../../../shared/Tooltip"
 import { useUserProvider } from "../../../providers/UserProvider"
@@ -40,22 +41,24 @@ const TwitterLocation = () => {
             value={editedTwitterHandle}
           />
         ) : (
-          <p
-            className="font-quicksand font-bold text-[22px] leading-[99.3%] text-white
-          drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)]"
-          >
-            <a
-              href={`https://twitter.com/${userInfo?.twitterHandle}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {userInfo?.twitterHandle ? (
-                `@${userInfo?.twitterHandle}`
-              ) : (
-                <Skeleton className="w-[150px] h-[30px]" />
-              )}
-            </a>
-          </p>
+          <>
+            {userInfo?.twitterHandle ? (
+              <p
+                className="font-quicksand font-bold text-[22px] leading-[99.3%] text-white
+              drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)]"
+              >
+                <a
+                  href={`https://twitter.com/${userInfo?.twitterHandle}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {`@${userInfo?.twitterHandle}`}
+                </a>{" "}
+              </p>
+            ) : (
+              <Skeleton className="w-[150px] h-[30px]" />
+            )}
+          </>
         )}
       </div>
       <div className="flex items-center gap-x-[5px]">
@@ -80,12 +83,19 @@ const TwitterLocation = () => {
             value={editedLocation}
           />
         ) : (
-          <p
-            className="font-quicksand font-bold text-[22px] leading-[99.3%]
-          drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)] text-white"
-          >
-            {userInfo?.location ? userInfo?.location : <Skeleton className="w-[100px] h-[30px]" />}
-          </p>
+          <>
+            {userInfo?.location ? (
+              <p
+                className="font-quicksand font-bold text-[22px] leading-[99.3%]
+              drop-shadow-[0_4px_4px_rgba(0,0,0,0.55)] text-white"
+              >
+                {" "}
+                {userInfo?.location}{" "}
+              </p>
+            ) : (
+              <Skeleton className="w-[100px] h-[30px]" />
+            )}
+          </>
         )}
       </div>
       {!isHiddenEditable && !isEditable && (
