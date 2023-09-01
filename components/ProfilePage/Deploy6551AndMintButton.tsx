@@ -1,12 +1,11 @@
-import { FC, useState } from "react"
+import { useState } from "react"
 import { Button } from "../../shared/Button"
 import SettingSmartWalletModal from "./SettingSmartWalletModal"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import useCreateTBA from "../../hooks/useCreateTBA"
 import { useUserProvider } from "../../providers/UserProvider"
 
-const Deploy6551AndMintDNAButton = ({
-}) => {
+const Deploy6551AndMintDNAButton = () => {
   const { cre8orNumber, getSmartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const { createTbaAndMintDna } = useCreateTBA()

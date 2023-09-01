@@ -17,10 +17,10 @@ const DesktopProfileView = () => {
   const { isEditable, editedUserName, setEditedUserName } = useProfileProvider()
 
   const environment = metaData?.attributes
-  .filter((attr) => attr.trait_type === "Environment")[0]
-  .value.toUpperCase()
-  .trim()
-  .replaceAll(" ", "_")
+    .filter((attr) => attr.trait_type === "Environment")[0]
+    .value.toUpperCase()
+    .trim()
+    .replaceAll(" ", "_")
 
   return (
     <div

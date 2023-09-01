@@ -139,7 +139,15 @@ export const UserProvider: FC<Props> = ({ children }) => {
       metaData,
       cre8orNumber,
     }),
-    [smartWalletAddress, similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles, getSmartWalletAddress],
+    [
+      smartWalletAddress,
+      similarProfiles,
+      userInfo,
+      metaData,
+      getUserData,
+      getUserSimilarProfiles,
+      getSmartWalletAddress,
+    ],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>
