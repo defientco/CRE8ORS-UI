@@ -13,6 +13,8 @@ import { useRouter } from "next/router"
 import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import getMetadata from "../lib/getMetadata"
 import isSmartWalletRegistered from "../lib/isSmartWalletRegistered"
+import getSmartWallet from "../lib/getSmartWallet"
+import { getDefaultProvider } from "ethers"
 
 interface attribute {
   value?: string
@@ -27,12 +29,14 @@ interface metadata {
 }
 
 interface userProps {
+  getSmartWalletAddress: () => Promise<void>
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
   similarProfiles: any
   metaData: metadata
   cre8orNumber: any
+  smartWalletAddress: any
 }
 
 interface Props {
@@ -52,6 +56,18 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
   const [cre8orNumber, setCre8orNumber] = useState("")
+  const [smartWalletAddress, setSmartWalletAddress] = useState(null)
+  const chainProvider = useMemo(
+    () => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
+    [],
+  )
+
+  const getSmartWalletAddress = useCallback(async () => {
+    if (!chainProvider || !cre8orNumber) return
+    const walletAddress = await getSmartWallet(cre8orNumber)
+    const code = await chainProvider.getCode(walletAddress)
+    setSmartWalletAddress(code !== "0x" ? walletAddress : "")
+  }, [cre8orNumber, chainProvider])
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -108,16 +124,30 @@ export const UserProvider: FC<Props> = ({ children }) => {
     if (!routerAddress) getUserData()
   }, [getUserData, routerAddress])
 
+  useEffect(() => {
+    getSmartWalletAddress()
+  }, [getSmartWalletAddress])
+
   const provider = useMemo(
     () => ({
+      smartWalletAddress,
       similarProfiles,
       userInfo,
       getUserData,
       getUserSimilarProfiles,
+      getSmartWalletAddress,
       metaData,
       cre8orNumber,
     }),
-    [similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
+    [
+      smartWalletAddress,
+      similarProfiles,
+      userInfo,
+      metaData,
+      getUserData,
+      getUserSimilarProfiles,
+      getSmartWalletAddress,
+    ],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>

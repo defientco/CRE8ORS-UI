@@ -1,5 +1,5 @@
 import { useDrag } from "react-dnd"
-import { useRef } from "react"
+import { FC, useRef } from "react"
 import { useAccount } from "wagmi"
 import Media from "../../shared/Media"
 import { ItemTypes } from "./ItemTypes"
@@ -9,9 +9,14 @@ import { updateUserCre8orNumber } from "../../lib/userInfo"
 import { useUserProvider } from "../../providers/UserProvider"
 import { CRE8OR } from "./types"
 
-const ProfileToken = ({ token }) => {
+interface ProfileTokenProps {
+  token: any
+  inSmartWallet?: boolean
+  inOwnedWallet?: boolean
+}
+const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWallet }) => {
   const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
-  const { getUserData } = useUserProvider()
+  const { getUserData, cre8orNumber } = useUserProvider()
 
   const { address } = useAccount()
 
@@ -26,15 +31,22 @@ const ProfileToken = ({ token }) => {
     ? "https://testnets.opensea.io/assets/goerli"
     : "https://opensea.io/assets/ethereum"
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CRE8OR,
-    item: { token },
-    end: () => {},
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.ERC721,
+      item: {
+        ...token,
+        inSmartWallet: inSmartWallet || token?.tokenId.toString() === cre8orNumber,
+        inOwnedWallet,
+      },
+      end: () => {},
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+        handlerId: monitor.getHandlerId(),
+      }),
     }),
-  }))
+    [token, inSmartWallet, cre8orNumber],
+  )
 
   const opacity = isDragging ? 0.4 : 1
 
@@ -57,7 +69,7 @@ const ProfileToken = ({ token }) => {
   return (
     <div
       ref={tokenRef}
-      className="rounded-[5px] lg:rounded-[15px] overflow-hidden
+      className="flex justify-center items-center
     z-[10]"
     >
       <button

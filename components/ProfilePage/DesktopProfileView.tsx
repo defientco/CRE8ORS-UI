@@ -16,6 +16,12 @@ const DesktopProfileView = () => {
 
   const { isEditable, editedUserName, setEditedUserName } = useProfileProvider()
 
+  const environment = metaData?.attributes
+    .filter((attr) => attr.trait_type === "Environment")[0]
+    .value.toUpperCase()
+    .trim()
+    .replaceAll(" ", "_")
+
   return (
     <div
       className="relative w-full
@@ -24,10 +30,7 @@ const DesktopProfileView = () => {
         bg-center
         overflow-hidden"
       style={{
-        backgroundImage: `url("/assets/Profile/DESKTOP PROFILE BGS/${metaData?.attributes
-          .filter((attr) => attr.trait_type === "Environment")[0]
-          .value.toUpperCase()
-          .replaceAll(" ", "_")}_DESKTOP.png")`,
+        backgroundImage: `url("/assets/Profile/DESKTOP PROFILE BGS/${environment}_DESKTOP.png")`,
       }}
     >
       <div

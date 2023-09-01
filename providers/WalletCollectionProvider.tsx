@@ -15,6 +15,7 @@ import getProfileFormattedCollection, {
 import { useRouter } from "next/router"
 import { useAccount } from "wagmi"
 import _ from "lodash"
+import { useUserProvider } from "./UserProvider"
 
 interface Props {
   children: ReactNode
@@ -26,14 +27,14 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
 
   const [selectedTrainTokenData, setSelectedTrainTokenData] = useState<any>(null)
-
+  const { smartWalletAddress } = useUserProvider()
   const [shouldSelectNewPFP, setShouldSelectNewPFP] = useState(false)
   const [isViewAll, setIsViewAll] = useState(null)
   const [walletNfts, setWalletNfts] = useState(null)
   const [cre8ors, setCre8ors] = useState(null)
+  const [nftsSmartWallet, setNftsSmartWallet] = useState(null)
   const [ownedNfts, setOwnedNfts] = useState([])
   const { address } = useAccount()
-  const [nftsMovedToSmartWallet, setNftsMovedToSmartWallet] = useState([])
 
   const routerAddress = router.query.address as string
 
@@ -58,6 +59,11 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isViewAll, address])
 
+  const getDNABySmartWallet = useCallback(async () => {
+    const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
+    setNftsSmartWallet(nftResponse)
+  }, [smartWalletAddress])
+
   const refetchProfileFormattedCollection = async () => {
     const walletResponse = await getProfileFormattedCollection(routerAddress || address, ALLNFTS)
     setWalletNfts(walletResponse)
@@ -74,11 +80,12 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   }, [toggleProfileFormattedCollection])
 
   useEffect(() => {
-    setOwnedNfts(_.difference(isViewAll ? walletNfts : cre8ors, nftsMovedToSmartWallet))
-  }, [nftsMovedToSmartWallet])
+    getDNABySmartWallet()
+  }, [getDNABySmartWallet])
 
   const provider = useMemo(
     () => ({
+      nftsSmartWallet,
       ownedNfts,
       isViewAll,
       shouldSelectNewPFP,
@@ -89,12 +96,12 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setSelectedTrainTokenData,
       selectedTrainTokenData,
       toggleProfileFormattedCollection,
+      getDNABySmartWallet,
       refetchProfileFormattedCollection,
-      setNftsMovedToSmartWallet,
-      nftsMovedToSmartWallet,
       setShouldSelectNewPFP,
     }),
     [
+      nftsSmartWallet,
       ownedNfts,
       isViewAll,
       shouldSelectNewPFP,
@@ -105,9 +112,8 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setSelectedTrainTokenData,
       selectedTrainTokenData,
       toggleProfileFormattedCollection,
+      getDNABySmartWallet,
       refetchProfileFormattedCollection,
-      setNftsMovedToSmartWallet,
-      nftsMovedToSmartWallet,
       setShouldSelectNewPFP,
     ],
   )
