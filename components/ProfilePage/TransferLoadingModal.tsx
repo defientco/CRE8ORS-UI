@@ -6,9 +6,10 @@ import { TxSTATUS } from "../../hooks/useERC721Transfer"
 
 interface Props {
   status?: string
+  reverted?: boolean
 }
 
-const TransferLoadingModal: FC<Props> = ({ status }) => (
+const TransferLoadingModal: FC<Props> = ({ status, reverted }) => (
   <Modal
     id="train_modal"
     isVisible
@@ -43,9 +44,11 @@ const TransferLoadingModal: FC<Props> = ({ status }) => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`sign to send an item to \nyour smart wallet.\n${
-          status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""
-        }`}
+        {`${
+          reverted
+            ? "sign to remove an item from\nyour smart wallet"
+            : "sign to send an item to\nyour smart wallet"
+        }\n${status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""}`}
       </pre>
     </div>
   </Modal>

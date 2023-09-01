@@ -124,7 +124,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
           </div>
         ))}
       </div>
-      {isTransferring && <TransferLoadingModal status={txStatus} />}
+      {isTransferring && <TransferLoadingModal status={txStatus} reverted />}
     </>
   )
 }
