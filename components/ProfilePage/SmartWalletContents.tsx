@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useDrop } from "react-dnd"
 import { useAccount } from "wagmi"
+import _ from "lodash"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import getSmartWallet from "../../lib/getSmartWallet"
 import getProfileFormattedCollection, { ALLNFTS } from "../../lib/getProfileFormattedCollection"
-import getDefaultProvider from "../../lib/getDefaultProvider"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
 import { useUserProvider } from "../../providers/UserProvider"
@@ -17,38 +16,30 @@ import TransferLoadingModal from "./TransferLoadingModal"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber } = useUserProvider()
+  const { metaData, cre8orNumber, smartWalletAddress } = useUserProvider()
   const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
 
   const [ownedNfts, setOwnedNfts] = useState([])
-  const [hasSmartWallet, setHasSmartWallet] = useState(true)
-  const [smartWalletAddress, setSmartWalletAddress] = useState("")
-  const provider = useMemo(() => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1), [])
   const { address } = useAccount()
   const { checkNetwork } = useCheckNetwork()
 
   const [isTransferring, setIsTransferring] = useState(false)
 
-  const getDNAByCre8orNumber = useCallback(async () => {
-    if (!provider || !cre8orNumber) return
-    const walletAddress = await getSmartWallet(cre8orNumber)
-    const code = await provider.getCode(walletAddress)
-    setHasSmartWallet(code !== "0x")
-    setSmartWalletAddress(code !== "0x" ? walletAddress : "")
-    const nftResponse = await getProfileFormattedCollection(walletAddress, ALLNFTS)
+  const getDNABySmartWallet = useCallback(async () => {
+    const nftResponse = await getProfileFormattedCollection(smartWalletAddress, ALLNFTS)
     setOwnedNfts(nftResponse)
-  }, [cre8orNumber, provider])
+  }, [smartWalletAddress])
 
   const { transferERC721 } = useERC721Transfer()
 
   const afterTransfer = async () => {
     await toggleProfileFormattedCollection()
-    await getDNAByCre8orNumber()
+    await getDNABySmartWallet()
   }
 
   const dropToSmartWallet = useCallback(
     async (item) => {
-      if (!hasSmartWallet || isHiddenEditable || !cre8orNumber || item?.inSmartWallet) return
+      if (!smartWalletAddress || isHiddenEditable || !cre8orNumber || item?.inSmartWallet) return
       if (!checkNetwork()) return
 
       setIsTransferring(true)
@@ -67,10 +58,6 @@ const SmartWalletContents = () => {
     [cre8orNumber, transferERC721, checkNetwork, smartWalletAddress],
   )
 
-  useEffect(() => {
-    getDNAByCre8orNumber()
-  }, [getDNAByCre8orNumber])
-
   const [, drop] = useDrop(
     () => ({
       accept: ItemTypes.ERC721,
@@ -84,6 +71,10 @@ const SmartWalletContents = () => {
     }),
     [dropToSmartWallet],
   )
+
+  useEffect(() => {
+    getDNABySmartWallet()
+  }, [getDNABySmartWallet])
 
   return (
     <>
@@ -107,8 +98,8 @@ const SmartWalletContents = () => {
                       after:top-0 
                       after:z-[4]"
         >
-          {!hasSmartWallet && !isHiddenEditable && (
-            <Deploy6551AndMintDNAButton getDNAByCre8orNumber={getDNAByCre8orNumber} />
+          {!smartWalletAddress && !_.isNull(smartWalletAddress) && !isHiddenEditable && (
+            <Deploy6551AndMintDNAButton getDNABySmartWallet={getDNABySmartWallet} />
           )}
           <div
             className="absolute w-full h-full left-0 top-0 z-[2]
@@ -126,7 +117,7 @@ const SmartWalletContents = () => {
                 gap-[5px]"
           >
             {ownedNfts?.map((nft) => (
-              <ProfileToken token={nft} key={nft.label} inSmartWallet />
+              <ProfileToken token={nft} key={nft?.tokenId} inSmartWallet />
             ))}
           </div>
         </div>

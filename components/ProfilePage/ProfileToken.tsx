@@ -12,8 +12,9 @@ import { CRE8OR } from "./types"
 interface ProfileTokenProps {
   token: any
   inSmartWallet?: boolean
+  inOwnedWallet?: boolean
 }
-const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet }) => {
+const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWallet }) => {
   const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
   const { getUserData } = useUserProvider()
 
@@ -36,6 +37,7 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet }) => {
       item: {
         ...token,
         inSmartWallet,
+        inOwnedWallet,
       },
       end: () => {},
       collect: (monitor) => ({

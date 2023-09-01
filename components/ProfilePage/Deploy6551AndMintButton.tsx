@@ -6,11 +6,11 @@ import useCreateTBA from "../../hooks/useCreateTBA"
 import { useUserProvider } from "../../providers/UserProvider"
 
 interface Deploy6551AndMintDNAButtonProps {
-  getDNAByCre8orNumber: any
+  getDNABySmartWallet: any
 }
 
 const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
-  getDNAByCre8orNumber,
+  getDNABySmartWallet,
 }) => {
   const { cre8orNumber } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
@@ -22,7 +22,7 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
 
     setOpenLoadingModal(true)
     await createTbaAndMintDna(cre8orNumber)
-    await getDNAByCre8orNumber()
+    await getDNABySmartWallet()
     setOpenLoadingModal(false)
   }
 
