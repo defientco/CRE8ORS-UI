@@ -99,7 +99,7 @@ const SmartWalletContents = () => {
                       after:z-[4]"
         >
           {!smartWalletAddress && !_.isNull(smartWalletAddress) && !isHiddenEditable && (
-            <Deploy6551AndMintDNAButton getDNABySmartWallet={getDNABySmartWallet} />
+            <Deploy6551AndMintDNAButton />
           )}
           <div
             className="absolute w-full h-full left-0 top-0 z-[2]
