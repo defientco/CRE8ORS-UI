@@ -18,7 +18,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
   const { smartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const [isTransferring, setIsTransferring] = useState(false)
-  const { transferERC721 } = useERC721Transfer()
+  const { transferERC721FromERC6551Account } = useERC721Transfer()
   const { address } = useAccount()
   const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
 
@@ -33,7 +33,8 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
 
       setIsTransferring(true)
 
-      await transferERC721(
+      await transferERC721FromERC6551Account(
+        smartWalletAddress,
         item?.contractAddress,
         smartWalletAddress,
         address,
@@ -44,7 +45,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
       setIsTransferring(false)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [transferERC721, checkNetwork],
+    [transferERC721FromERC6551Account, checkNetwork],
   )
 
   const [, drop] = useDrop(
