@@ -29,6 +29,7 @@ interface metadata {
 }
 
 interface userProps {
+  getSmartWalletAddress: () => Promise<void>
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
@@ -134,10 +135,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
       userInfo,
       getUserData,
       getUserSimilarProfiles,
+      getSmartWalletAddress,
       metaData,
       cre8orNumber,
     }),
-    [smartWalletAddress, similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles],
+    [smartWalletAddress, similarProfiles, userInfo, metaData, getUserData, getUserSimilarProfiles, getSmartWalletAddress],
   )
 
   return <UserContext.Provider value={provider}>{children}</UserContext.Provider>
