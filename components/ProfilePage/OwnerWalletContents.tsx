@@ -13,7 +13,7 @@ import { ItemTypes } from "./ItemTypes"
 import TransferLoadingModal from "./TransferLoadingModal"
 
 const OwnerWalletContents = ({ setOpenTrainModal }) => {
-  const { isEditable } = useProfileProvider()
+  const { isEditable, isHiddenEditable } = useProfileProvider()
   const { ownedNfts, setSelectedTrainTokenData } = useWalletCollectionProvider()
   const { smartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
@@ -28,7 +28,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
 
   const dropToSmartWallet = useCallback(
     async (item) => {
-      if (item?.inOwnedWallet) return
+      if (item?.inOwnedWallet || isHiddenEditable) return
       if (!checkNetwork()) return
 
       setIsTransferring(true)
