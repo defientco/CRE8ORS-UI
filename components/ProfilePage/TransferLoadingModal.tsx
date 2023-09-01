@@ -43,7 +43,9 @@ const TransferLoadingModal: FC<Props> = ({ status }) => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`sign to send an item to \nyour smart wallet.\n${status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""}`}
+        {`sign to send an item to \nyour smart wallet.\n${
+          status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""
+        }`}
       </pre>
     </div>
   </Modal>
