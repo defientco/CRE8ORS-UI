@@ -1,9 +1,8 @@
-import { Contract } from "ethers"
+import { Contract, utils } from "ethers"
 import { useEthersSigner } from "./useEthersSigner"
 import handleTxError from "../lib/handleTxError"
 import cre8orAbi from "../lib/abi-cre8ors.json"
-import erc6551AccountAbi from "../lib/abi-ERC6551-account.json.json"
-import { utils } from "ethers"
+import erc6551AccountAbi from "../lib/abi-ERC6551-account.json"
 
 const useERC721Transfer = () => {
   const signer = useEthersSigner()
@@ -40,10 +39,13 @@ const useERC721Transfer = () => {
     try {
       const contract = new Contract(tokenBoundAccount, erc6551AccountAbi, signer)
       const iface = new utils.Interface(cre8orAbi)
-      const data = iface.encodeFunctionData("transferFrom", [from, to, tokenId])
+      const data = iface.encodeFunctionData("transferFrom", [tokenBoundAccount, to, tokenId])
 
-      const tx = await contract.executeCall(erc721Address, 0, data)
+      // TODO: find a way to only do this if `initialize` has not been called
+      let tx = await contract.initialize()
+      await tx.wait()
 
+      tx = await contract.executeCall(erc721Address, 0, data)
       const receipt = await tx.wait()
 
       await afterTransfer()
