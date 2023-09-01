@@ -29,7 +29,7 @@ const Deploy6551AndMintDNAButton: FC<Deploy6551AndMintDNAButtonProps> = ({
   return (
     <>
       <div
-        className="absolute left-0 top-0 z-[5]
+        className="absolute left-0 top-0 z-[6]
       w-full h-full
       flex items-center justify-center"
       >
