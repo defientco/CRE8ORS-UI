@@ -1,3 +1,3 @@
 export const ItemTypes = {
-  CRE8OR: "cre8or",
+  ERC721: "ERC721",
 }
