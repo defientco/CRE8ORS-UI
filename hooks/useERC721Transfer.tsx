@@ -38,10 +38,8 @@ const useERC721Transfer = () => {
   ) => {
     if (!signer) return { err: "missing signer" }
     try {
-      const abi = ["function transferFrom(address from, address to, uint256 tokenId)"]
-
       const contract = new Contract(tokenBoundAccount, erc6551AccountAbi, signer)
-      const iface = new utils.Interface(abi)
+      const iface = new utils.Interface(cre8orAbi)
       const data = iface.encodeFunctionData("transferFrom", [from, to, tokenId])
 
       const tx = await contract.executeCall(erc721Address, 0, data)
