@@ -1,7 +1,6 @@
 import axios from "axios"
 import getAlchemyBaseUrl from "./getAlchemyBaseUrl"
 
-// eslint-disable-next-line camelcase
 export const ethGetLogs = async (chainId, contractAddress, topics) => {
   const endpoint = `${getAlchemyBaseUrl(chainId)}v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
 
@@ -11,7 +10,7 @@ export const ethGetLogs = async (chainId, contractAddress, topics) => {
     method: "eth_getLogs",
     params: [
       {
-        fromBlock: "0x1", // Change this if you want to start from a specific block
+        fromBlock: "0x1",
         toBlock: "latest",
         address: contractAddress,
         topics,
