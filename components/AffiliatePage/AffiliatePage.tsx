@@ -9,12 +9,13 @@ import balanceOfAddress from "../../lib/balanceOfAddress"
 
 const AffiliatePage = ({ origin }) => {
   const { isConnected } = useAccount()
-  const [hasCre8or, setHasCre8or] = useState(false)
+  const [hasCre8or, setHasCre8or] = useState(null)
   const { address } = useAccount()
 
   const checkIsOwnedCre8ors = useCallback(async () => {
     const response = await balanceOfAddress(address)
     if (parseInt(response.toString(), 10)) setHasCre8or(true)
+    else setHasCre8or(false)
   }, [address])
 
   useEffect(() => {

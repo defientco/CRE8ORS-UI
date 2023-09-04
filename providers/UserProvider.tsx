@@ -55,7 +55,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<any>(null)
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
-  const [cre8orNumber, setCre8orNumber] = useState("")
+  const [cre8orNumber, setCre8orNumber] = useState(null)
   const [smartWalletAddress, setSmartWalletAddress] = useState(null)
   const chainProvider = useMemo(
     () => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
@@ -96,7 +96,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
         }
 
         if (info?.doc.cre8orNumber) setCre8orNumber(info?.doc.cre8orNumber)
-        else setCre8orNumber("")
+        else {
+          setCre8orNumber("")
+          setSmartWalletAddress("")
+        }
 
         return setUserInfo(info.doc)
       }

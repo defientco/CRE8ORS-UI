@@ -2,17 +2,19 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { useAccount } from "wagmi"
+import _ from "lodash"
 import { useUserProvider } from "../../providers/UserProvider"
 import { Button } from "../../shared/Button"
 import Checkbox from "../../shared/Checkbox"
 import balanceOfAddress from "../../lib/balanceOfAddress"
 import useCre8orNumber from "../../hooks/mintDay/useCre8orNumber"
 import { updateUserCre8orNumber } from "../../lib/userInfo"
+import Media from "../../shared/Media"
 
 const CopyLinkButton = ({ origin }) => {
   const { address } = useAccount()
 
-  const { cre8orNumber, getUserData } = useUserProvider()
+  const { cre8orNumber, getUserData, smartWalletAddress } = useUserProvider()
   const { getCre8orNumber } = useCre8orNumber({ address })
   const [isCopiedLink, setIsCopiedLink] = useState(false)
   const [hasCre8or, setHasCre8or] = useState(false)
@@ -50,24 +52,34 @@ const CopyLinkButton = ({ origin }) => {
   }, [setCre8orNumber])
 
   return (
-    <div className="flex gap-x-[15px] w-[280px]">
+    <div className="flex gap-x-[15px] w-[280px] items-center">
       <CopyToClipboard text={cre8orNumber ? `${origin}/mint?referral=${cre8orNumber}` : ""}>
         <Button
           id="copy_link"
           className={`!p-0
           w-[240px] h-[46px]
-           ${cre8orNumber ? "cursor-copy" : "!bg-[gray] cursor-not-allowed"}`}
+           ${cre8orNumber && smartWalletAddress ? "cursor-copy" : "!bg-[gray] cursor-not-allowed"}`}
           onClick={() => {
             if (cre8orNumber) {
               toast.success("Copied to clipboard")
               setIsCopiedLink(true)
             }
           }}
+          disabled={!smartWalletAddress || !cre8orNumber}
         >
           copy affiliate link
         </Button>
       </CopyToClipboard>
-      <Checkbox id="copied_link" checked={isCopiedLink} readOnly />
+      {_.isNull(cre8orNumber) ? (
+        <Media
+          type="image"
+          link="/assets/Common/loading.svg"
+          blurLink="/assets/Common/loading.svg"
+          containerClasses="w-[25px] h-[25px]"
+        />
+      ) : (
+        <Checkbox id="copied_link" checked={isCopiedLink} readOnly />
+      )}
     </div>
   )
 }

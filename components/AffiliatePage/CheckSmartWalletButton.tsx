@@ -24,7 +24,9 @@ const CheckSmartWalletButton = ({ hasCre8or }) => {
         }}
         className={`!p-0
                 w-[240px] h-[46px]
-                ${!smartWalletAddress ? "cursor-not-allowed !bg-[gray]" : ""}`}
+                ${
+                  _.isNull(smartWalletAddress) || !hasCre8or ? "cursor-not-allowed !bg-[gray]" : ""
+                }`}
         disabled={_.isNull(smartWalletAddress) || !hasCre8or}
       >
         Setup Smart Wallet
