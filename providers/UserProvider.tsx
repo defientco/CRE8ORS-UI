@@ -91,6 +91,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
         if (!info?.doc) {
           setUserInfo(null)
+          setSmartWalletAddress("")
           if (isProfilePage) router.push("/save-profile")
           return null
         }
