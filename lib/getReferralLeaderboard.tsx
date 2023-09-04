@@ -27,7 +27,6 @@ const getReferralLeaderboard = async () => {
       return 0 // a and b are equal
     })
 
-  console.log("SWEETS sorted", results)
   return results
 }
 
