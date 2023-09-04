@@ -2,7 +2,7 @@ import { getAffiliateMintEvents } from "./getAffiliateMintEvents"
 
 const getReferralLeaderboard = async () => {
   const data = await getAffiliateMintEvents()
-
+  console.log("SWEETS  getAffiliateMintEvents", data)
   // Specify the accumulator type
   const groupedData = data.reduce((acc, curr) => {
     if (!acc[curr.cre8orsNumber]) {
