@@ -1,12 +1,25 @@
+import { useCallback, useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import Layout from "../Layout"
 import BuyCre8orButton from "./BuyCre8orButton"
 import CheckSmartWalletButton from "./CheckSmartWalletButton"
 import CopyLinkButton from "./CopyLinkButton"
 import WalletConnectButton from "../WalletConnectButton"
+import balanceOfAddress from "../../lib/balanceOfAddress"
 
 const AffiliatePage = ({ origin }) => {
   const { isConnected } = useAccount()
+  const [hasCre8or, setHasCre8or] = useState(false)
+  const { address } = useAccount()
+
+  const checkIsOwnedCre8ors = useCallback(async () => {
+    const response = await balanceOfAddress(address)
+    if (parseInt(response.toString(), 10)) setHasCre8or(true)
+  }, [address])
+
+  useEffect(() => {
+    checkIsOwnedCre8ors()
+  }, [checkIsOwnedCre8ors])
 
   return (
     <Layout type="contained">
@@ -17,8 +30,8 @@ const AffiliatePage = ({ origin }) => {
       >
         {isConnected ? (
           <>
-            <BuyCre8orButton />
-            <CheckSmartWalletButton />
+            <BuyCre8orButton hasCre8or={hasCre8or} />
+            <CheckSmartWalletButton hasCre8or={hasCre8or} />
             <CopyLinkButton origin={origin} />
           </>
         ) : (
