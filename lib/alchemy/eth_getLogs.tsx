@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import axios from "axios"
 import getAlchemyBaseUrl from "./getAlchemyBaseUrl"
 
@@ -25,6 +24,7 @@ export const ethGetLogs = async (chainId, contractAddress, topics) => {
 
     return logs
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching logs:", err)
     return []
   }

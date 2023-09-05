@@ -10,7 +10,7 @@ const LeaderboardPage = () => {
   const [collectors, setCollectors] = useState([])
 
   useEffect(() => {
-    const fetchTopCollectors = async () => {
+    const fetchLeaderboard = async () => {
       let referralData = await getReferralLeaderboard()
       const referralCre8ors = referralData.map((data) => parseInt(data.cre8orsNumber, 10))
       const walletAddresses = await getOwnersofCre8ors(referralCre8ors)
@@ -28,7 +28,7 @@ const LeaderboardPage = () => {
 
       setCollectors(referralData)
     }
-    fetchTopCollectors()
+    fetchLeaderboard()
   }, [])
 
   return (
@@ -88,7 +88,7 @@ const LeaderboardPage = () => {
                     text-[8px] xs:text-[11px] md:text-[18px]
                     w-[100px] xs:!w-[130px] md:!w-[200px]"
                   >
-                    # of Cre8or
+                    Cre8or
                   </th>
                   <th
                     className="p-[5px] md:p-4 
