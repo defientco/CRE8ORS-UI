@@ -131,14 +131,16 @@ const WalletCollection = () => {
             <OwnerWalletContents setOpenTrainModal={setOpenTrainModal} />
           </div>
         </div>
-        <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
-          <p
-            className="font-quicksand text-white py-[5px]
+        {cre8orNumber && (
+          <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
+            <p
+              className="font-quicksand text-white py-[5px]
           text-[7px] lg:text-[16px] cursor-copy"
-          >
-            {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
-          </p>
-        </CopyToClipboard>
+            >
+              {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
+            </p>
+          </CopyToClipboard>
+        )}
       </div>
       <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
     </DndProvider>
