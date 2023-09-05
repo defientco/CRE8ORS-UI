@@ -33,7 +33,7 @@ const LeaderboardPage = () => {
 
   return (
     <Layout type="contained">
-      <div className="w-full pt-24 mx-auto">
+      <div className="w-full pt-24 mx-auto min-h-screen">
         <div
           className="
           font-[eigerdals] 
@@ -60,7 +60,7 @@ const LeaderboardPage = () => {
           <div
             className="w-[310px] xs:w-[370px] md:w-full 
             border-[2px] border-[black] border-solid
-            h-[470px] rounded-lg 
+            max-h-[470px] rounded-lg 
             overflow-auto 
             shadow-[4px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[4px_4px_4px_rgb(255,255,255,0.25)]
             scrollbar scrollbar-thumb-[black] 
