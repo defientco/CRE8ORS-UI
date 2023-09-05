@@ -3,6 +3,7 @@ import { useMediaQuery } from "usehooks-ts"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import { toast } from "react-toastify"
 import Media from "../../shared/Media"
 import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
@@ -133,12 +134,16 @@ const WalletCollection = () => {
         </div>
         {cre8orNumber && (
           <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
-            <p
+            <button
+              type="button"
               className="font-quicksand text-white py-[5px]
           text-[7px] lg:text-[16px] cursor-copy"
+              onClick={() => {
+                toast.success("Link copied to clipboard")
+              }}
             >
               {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
-            </p>
+            </button>
           </CopyToClipboard>
         )}
       </div>
