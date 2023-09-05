@@ -15,7 +15,7 @@ import { useUserProvider } from "../../providers/UserProvider"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { cre8orNumber } = useUserProvider()
+  const { cre8orNumber, smartWalletAddress } = useUserProvider()
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
@@ -23,6 +23,17 @@ const WalletCollection = () => {
 
   const toggleTraninModal = () => {
     setOpenTrainModal(!openTraninModal)
+  }
+
+  const copyReferralLink = () => {
+    if (!smartWalletAddress) {
+      toast.error(
+        isHiddenEditable ? "Smart wallet has not been set up yet" : "Setup smart wallet first",
+      )
+      return
+    }
+
+    toast.success("Link copied to clipboard")
   }
 
   return (
@@ -138,9 +149,7 @@ const WalletCollection = () => {
               type="button"
               className="font-quicksand text-white py-[5px]
           text-[7px] lg:text-[16px] cursor-copy"
-              onClick={() => {
-                toast.success("Link copied to clipboard")
-              }}
+              onClick={copyReferralLink}
             >
               {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
             </button>
