@@ -5,7 +5,7 @@ import retryGetEns from "../../lib/retryGetEns"
 import truncateEthAddress from "../../lib/truncateEthAddress"
 import PFP from "../PFP"
 
-const LeaderboardRow = ({ address, numberOwned, rank, twitterHandle }) => {
+const LeaderboardRow = ({ address, cre8orNumber, rank, twitterHandle }) => {
   const [ensName, setEnsName] = useState(null as string)
 
   const isMobile = useMediaQuery("(max-width: 768px)")
@@ -34,7 +34,7 @@ const LeaderboardRow = ({ address, numberOwned, rank, twitterHandle }) => {
         className="text-[8px] text-[11px] md:text-[16px]
         p-[5px] md:px-4 md:py-2 border-r-2 border-black"
       >
-        {numberOwned}
+        {cre8orNumber}
       </td>
       <td
         className="flex md:items-center gap-[2px] md:gap-3 

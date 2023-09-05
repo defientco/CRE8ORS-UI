@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from "react"
-import * as _ from "lodash"
-import { useMediaQuery } from "usehooks-ts"
-import getOwnersForCollection from "../../lib/alchemy/getOwnersForCollection"
-import getParticipants from "../../lib/getParticipants"
 import LeaderboardRow from "./LeaderboardRow"
 import SkeletonTableBody from "./SkeletonTableBody"
 import Layout from "../Layout"
+import getReferralLeaderboard from "../../lib/getReferralLeaderboard"
+import { getOwnersofCre8ors } from "../../lib/cre8or"
+import getTwitterHandleByAddress from "../../lib/getTwitterHandleByAddress"
 
 const LeaderboardPage = () => {
   const [collectors, setCollectors] = useState([])
-  const isMobile = useMediaQuery("(max-width: 768px)")
 
   useEffect(() => {
     const fetchTopCollectors = async () => {
-      const { ownerAddresses } = await getOwnersForCollection()
-      const newCollectors = _.orderBy(ownerAddresses, ["tokenBalances[0].balance"], ["desc"])
-      const addressToTwitter = await getParticipants()
-      const mappedData = newCollectors.map((collector) => ({
-        walletAddress: collector.ownerAddress,
-        nftsOwned: collector.tokenBalances[0].balance,
-      }))
-      const tableData = mappedData.map((item) => ({
-        ...item,
-        twitterHandle: addressToTwitter[item.walletAddress.toString()],
-      }))
-      setCollectors(tableData)
+      let referralData = await getReferralLeaderboard()
+      const referralCre8ors = referralData.map((data) => parseInt(data.cre8orsNumber, 10))
+      const walletAddresses = await getOwnersofCre8ors(referralCre8ors)
+
+      referralData = await Promise.all(
+        referralData.map(async (data, i) => {
+          const twitterHandle = await getTwitterHandleByAddress(walletAddresses[i])
+          return {
+            ...data,
+            walletAddress: walletAddresses[i],
+            twitterHandle,
+          }
+        }),
+      )
+
+      setCollectors(referralData)
     }
     fetchTopCollectors()
   }, [])
@@ -86,7 +88,7 @@ const LeaderboardPage = () => {
                     text-[8px] xs:text-[11px] md:text-[18px]
                     w-[100px] xs:!w-[130px] md:!w-[200px]"
                   >
-                    # of NFTs {!isMobile ? "Owned" : ""}
+                    # of Cre8or
                   </th>
                   <th
                     className="p-[5px] md:p-4 
@@ -113,7 +115,7 @@ const LeaderboardPage = () => {
                     <LeaderboardRow
                       key={collector.walletAddress}
                       address={collector.walletAddress}
-                      numberOwned={collector.nftsOwned}
+                      cre8orNumber={collector.cre8orsNumber}
                       twitterHandle={collector.twitterHandle}
                       rank={index + 1}
                     />
