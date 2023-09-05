@@ -53,7 +53,8 @@ const LeaderboardPage = () => {
             drop-shadow-[0_2px_2px_rgba(0,0,0,0.45)] 
             font-[500]"
           >
-            Currently Tracking: Divine Ancestral Pendants Collect and burn 88 to redeem a Passport
+            Currently Tracking: Affiliate Rewards
+            <br /> Mint with your referral link to join the leaderboard
           </div>
         </div>
         <div className="md:px-4 w-full flex justify-center">
@@ -97,7 +98,7 @@ const LeaderboardPage = () => {
                     uppercase 
                     text-[8px] xs:text-[11px] md:text-[18px]"
                   >
-                    Address
+                    Earned
                   </th>
                   <th
                     className="p-[5px] md:p-4 
@@ -117,6 +118,7 @@ const LeaderboardPage = () => {
                       address={collector.walletAddress}
                       cre8orNumber={collector.cre8orsNumber}
                       twitterHandle={collector.twitterHandle}
+                      totalReferralFeeEarned={collector.totalReferralFeeEarned}
                       rank={index + 1}
                     />
                   ))}
