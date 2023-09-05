@@ -126,7 +126,6 @@ export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
     throw new Error(e)
   }
 }
-
 export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
@@ -177,5 +176,17 @@ export const getSimilarProfiles = async (walletAddress: string) => {
     return { success: true, similarProfiles: doc }
   } catch(e) {
     throw new Error(e)  
+  }
+}
+
+export const getTwitterHandle = async (walletAddress: string) => {
+  try {
+    await dbConnect()
+
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
+
+    return doc
+  } catch (e) {
+    throw new Error(e)
   }
 }

@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react"
-import * as _ from "lodash"
-import { useMediaQuery } from "usehooks-ts"
-import getOwnersForCollection from "../../lib/alchemy/getOwnersForCollection"
-import getParticipants from "../../lib/getParticipants"
 import LeaderboardRow from "./LeaderboardRow"
 import SkeletonTableBody from "./SkeletonTableBody"
 import Layout from "../Layout"
+import getReferralLeaderboard from "../../lib/getReferralLeaderboard"
+import { getOwnersofCre8ors } from "../../lib/cre8or"
+import getTwitterHandleByAddress from "../../lib/getTwitterHandleByAddress"
 
 const LeaderboardPage = () => {
   const [collectors, setCollectors] = useState([])
-  const isMobile = useMediaQuery("(max-width: 768px)")
 
   useEffect(() => {
-    const fetchTopCollectors = async () => {
-      const { ownerAddresses } = await getOwnersForCollection()
-      const newCollectors = _.orderBy(ownerAddresses, ["tokenBalances[0].balance"], ["desc"])
-      const addressToTwitter = await getParticipants()
-      const mappedData = newCollectors.map((collector) => ({
-        walletAddress: collector.ownerAddress,
-        nftsOwned: collector.tokenBalances[0].balance,
-      }))
-      const tableData = mappedData.map((item) => ({
-        ...item,
-        twitterHandle: addressToTwitter[item.walletAddress.toString()],
-      }))
-      setCollectors(tableData)
+    const fetchLeaderboard = async () => {
+      let referralData = await getReferralLeaderboard()
+      const referralCre8ors = referralData.map((data) => parseInt(data.cre8orsNumber, 10))
+      const walletAddresses = await getOwnersofCre8ors(referralCre8ors)
+
+      referralData = await Promise.all(
+        referralData.map(async (data, i) => {
+          const twitterHandle = await getTwitterHandleByAddress(walletAddresses[i])
+          return {
+            ...data,
+            walletAddress: walletAddresses[i],
+            twitterHandle,
+          }
+        }),
+      )
+
+      setCollectors(referralData)
     }
-    fetchTopCollectors()
+    fetchLeaderboard()
   }, [])
 
   return (
     <Layout type="contained">
-      <div className="w-full pt-24 mx-auto">
+      <div className="w-full pt-24 mx-auto min-h-screen">
         <div
           className="
           font-[eigerdals] 
@@ -51,14 +53,15 @@ const LeaderboardPage = () => {
             drop-shadow-[0_2px_2px_rgba(0,0,0,0.45)] 
             font-[500]"
           >
-            Currently Tracking: Divine Ancestral Pendants Collect and burn 88 to redeem a Passport
+            Currently Tracking: Affiliate Rewards
+            <br /> Mint with your referral link to join the leaderboard
           </div>
         </div>
         <div className="md:px-4 w-full flex justify-center">
           <div
             className="w-[310px] xs:w-[370px] md:w-full 
             border-[2px] border-[black] border-solid
-            h-[470px] rounded-lg 
+            max-h-[470px] rounded-lg 
             overflow-auto 
             shadow-[4px_4px_4px_rgb(0,0,0,0.25)] dark:shadow-[4px_4px_4px_rgb(255,255,255,0.25)]
             scrollbar scrollbar-thumb-[black] 
@@ -86,7 +89,7 @@ const LeaderboardPage = () => {
                     text-[8px] xs:text-[11px] md:text-[18px]
                     w-[100px] xs:!w-[130px] md:!w-[200px]"
                   >
-                    # of NFTs {!isMobile ? "Owned" : ""}
+                    Cre8or
                   </th>
                   <th
                     className="p-[5px] md:p-4 
@@ -95,7 +98,7 @@ const LeaderboardPage = () => {
                     uppercase 
                     text-[8px] xs:text-[11px] md:text-[18px]"
                   >
-                    Address
+                    Earned
                   </th>
                   <th
                     className="p-[5px] md:p-4 
@@ -113,8 +116,9 @@ const LeaderboardPage = () => {
                     <LeaderboardRow
                       key={collector.walletAddress}
                       address={collector.walletAddress}
-                      numberOwned={collector.nftsOwned}
+                      cre8orNumber={collector.cre8orsNumber}
                       twitterHandle={collector.twitterHandle}
+                      totalReferralFeeEarned={collector.totalReferralFeeEarned}
                       rank={index + 1}
                     />
                   ))}
