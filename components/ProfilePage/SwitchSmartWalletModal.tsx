@@ -18,7 +18,7 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
   toggleIsVisible,
 }) => {
   const { setIsViewAll, setShouldSelectNewPFP } = useWalletCollectionProvider()
-  const { metaData, smartWalletAddress } = useUserProvider()
+  const { metaData, smartWalletAddress, smartWalletBalance } = useUserProvider()
   const [isCopied, setIsCopied] = useState(false)
 
   useEffect(() => {
@@ -33,22 +33,23 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
       id="switch_smart_wallet"
       isVisible={isModalVisible}
       onClose={toggleIsVisible}
-      containerClassName="!rounded-[20px] md:!rounded-[30px] overflow-hidden 
+      containerClassName="!rounded-[15px] md:!rounded-[30px] overflow-hidden 
         !bg-[#f1eeee]
         drop-shadow-[2px_3px_2px_rgba(0,0,0,0.25)]"
       modalClassName="!z-[110]"
       showCloseButton
     >
       <div
-        className="!p-[16px]
+        className="p-[10px] xs:p-[16px]
             flex-col flex justify-center items-center
-            gap-y-[20px]
-            md:w-[360px] md:h-[239px]
+            gap-y-[5px] xs:gap-y-[20px]
+            w-[300px] h-[195px]
+            xs:w-[360px] xs:h-[239px]
             bg-[#f1eeee]"
       >
         <div
           className="flex flex-col items-center
-        gap-y-[5px]"
+        xs:gap-y-[5px]"
         >
           <Media
             type="image"
@@ -64,17 +65,21 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
                 )}`
               : ""}
           </p>
+          {smartWalletBalance > 0 && (
+            <p className="text-[gray] font-quicksand text-[14px]">{smartWalletBalance} ETH</p>
+          )}
         </div>
         <div className="flex items-center gap-x-[10px]">
           <CopyToClipboard text={smartWalletAddress}>
             <Button
               id="copy_address_btn"
-              className="!w-[158px] !h-[50px]
-                  md:!w-[158px] md:!h-[53px]
+              className="w-[130px] !h-[45px]
+                  xs:!w-[158px] xs:!h-[53px]
                   !p-0 !rounded-[10px]
                   flex !flex-col !gap-y-[2px]
                   !bg-[white] !capitalize
-                  !text-black !text-[12px]"
+                  !text-black !text-[12px]
+                  !shadow-none"
               onClick={() => setIsCopied(true)}
             >
               <Icon name={isCopied ? "check" : "copy"} size={20} color="black" raw />
@@ -83,12 +88,13 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
           </CopyToClipboard>
           <Button
             id="swith_smart_wallet_btn"
-            className="!w-[158px] !h-[50px]
-                md:!w-[158px] md:!h-[53px]
+            className="w-[130px] !h-[45px]
+                xs:!w-[158px] xs:!h-[53px]
                 !p-0 !rounded-[10px]
                 flex !flex-col !gap-y-[2px]
                 !bg-[white] !capitalize
-                !text-black !text-[12px]"
+                !text-black !text-[12px]
+                !shadow-none"
             onClick={() => {
               setIsViewAll(false)
               setShouldSelectNewPFP(true)

@@ -16,7 +16,7 @@ import SwitchingLoadingModal from "./SwitchingLoadingModal"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { cre8orNumber, smartWalletAddress } = useUserProvider()
+  const { cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
@@ -44,21 +44,23 @@ const WalletCollection = () => {
           !expandedMore
             ? `${
                 isMobile ? "mobile_un_expand_more" : "un_expand_more"
-              } h-[55px] lg:h-[70px] overflow-hidden bg-black`
-            : `${isMobile ? "mobile_expand_more" : "expand_more"} h-[225px] lg:h-[415px]
+              } h-[35px] lg:h-[55px] overflow-hidden bg-black`
+            : `${
+                isMobile ? "mobile_expand_more" : "expand_more"
+              } h-[215px] samsungS8:h-[220px] lg:h-[415px]
               bg-black`
         } 
           rounded-t-[10px] lg:rounded-t-[20px]
           w-full
           lg:px-10
-          px-2 pt-[20px]
+          px-2 pt-[10px]
           mt-[20px]`}
       >
         <div
           className="w-full flex justify-between items-start
         samsungS8:gap-x-[10px]"
         >
-          <div>
+          <div className="flex flex-col">
             <div className="flex items-center gap-x-[5px] md:gap-x-[10px]">
               {!isHiddenEditable && <SmartWalletButtons />}
               <p
@@ -81,6 +83,30 @@ const WalletCollection = () => {
                 />
               </button>
             </div>
+            {smartWalletBalance > 0 && (
+              <div
+                className="flex items-center bg-white w-fit
+            mt-[10px] lg:mt-[15px] gap-x-[5px]
+            p-1 rounded-[5px]"
+              >
+                <Media
+                  type="image"
+                  link="/assets/Profile/eth.svg"
+                  blurLink="/assets/Profile/eth.svg"
+                  containerClasses="lg:w-[18px] lg:h-[18px]
+                  w-[10px] h-[10px]
+                  rounded-full"
+                />
+                <p className="text-[9px] lg:text-[14px] font-quicksand font-bold">
+                  {smartWalletAddress
+                    ? `${smartWalletAddress.slice(0, 4)}...${smartWalletAddress.slice(
+                        smartWalletAddress.length - 4,
+                        smartWalletAddress.length,
+                      )}(${smartWalletBalance})`
+                    : ""}
+                </p>
+              </div>
+            )}
             <SmartWalletContents />
           </div>
           <div>
@@ -148,7 +174,7 @@ const WalletCollection = () => {
           <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
             <button
               type="button"
-              className="font-quicksand text-white py-[5px]
+              className="font-quicksand text-white samsungS8:py-[5px]
           text-[5px] lg:text-[12px] cursor-copy"
               onClick={copyReferralLink}
             >
