@@ -148,10 +148,10 @@ const WalletCollection = () => {
             <button
               type="button"
               className="font-quicksand text-white py-[5px]
-          text-[7px] lg:text-[16px] cursor-copy"
+          text-[5px] lg:text-[12px] cursor-copy"
               onClick={copyReferralLink}
             >
-              {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
+              Affiliate Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
             </button>
           </CopyToClipboard>
         )}
