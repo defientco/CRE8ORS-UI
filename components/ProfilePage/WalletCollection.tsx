@@ -12,6 +12,7 @@ import OwnerWalletContents from "./OwnerWalletContents"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import SmartWalletButtons from "./SmartWalletButtons"
 import { useUserProvider } from "../../providers/UserProvider"
+import SwitchingLoadingModal from "./SwitchingLoadingModal"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
@@ -19,7 +20,7 @@ const WalletCollection = () => {
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
-  const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
+  const { isViewAll, setIsViewAll, isUpdatingSmartWallet } = useWalletCollectionProvider()
 
   const toggleTraninModal = () => {
     setOpenTrainModal(!openTraninModal)
@@ -157,6 +158,7 @@ const WalletCollection = () => {
         )}
       </div>
       <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
+      {isUpdatingSmartWallet && <SwitchingLoadingModal />}
     </DndProvider>
   )
 }
