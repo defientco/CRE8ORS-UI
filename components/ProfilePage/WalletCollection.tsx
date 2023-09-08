@@ -47,7 +47,7 @@ const WalletCollection = () => {
               } h-[35px] lg:h-[55px] overflow-hidden bg-black`
             : `${
                 isMobile ? "mobile_expand_more" : "expand_more"
-              } h-[215px] samsungS8:h-[220px] lg:h-[415px]
+              } h-[215px] samsungS8:h-[223px] lg:h-[425px]
               bg-black`
         } 
           rounded-t-[10px] lg:rounded-t-[20px]
@@ -174,11 +174,20 @@ const WalletCollection = () => {
           <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
             <button
               type="button"
-              className="font-quicksand text-white samsungS8:py-[5px]
-          text-[5px] lg:text-[12px] cursor-copy"
+              className="font-quicksand samsungS8:py-[5px]
+              mt-[5px] md:mt-[10px]
+              lg:h-[27px] lg:w-[287px]
+              w-[120px]
+              samsungS8:w-[130px] h-[15px]
+              bg-[white]
+              hover:scale-[1.03] scale-[1] transition duration-[300ms]
+              rounded-[5px]
+              text-black
+              font-bold
+              text-[4px] samsungS8:text-[4.5px] lg:text-[10px] cursor-copy"
               onClick={copyReferralLink}
             >
-              Affiliate Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
+              Referral Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
             </button>
           </CopyToClipboard>
         )}

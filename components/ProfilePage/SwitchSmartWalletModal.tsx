@@ -39,7 +39,6 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
     setOpenLoadingModal(false)
   }
 
-
   useEffect(() => {
     if (isCopied)
       setTimeout(() => {
@@ -77,8 +76,12 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
               blurLink={getIpfsLink(metaData?.image)}
               containerClasses="w-[74px] h-[74px] rounded-full overflow-hidden"
             />
-            <p className="uppercase text-[#232323] text-[18px]
-            font-quicksand font-bold">Smart Wallet</p>
+            <p
+              className="uppercase text-[#232323] text-[18px]
+            font-quicksand font-bold"
+            >
+              Smart Wallet
+            </p>
             <p className="font-quicksand font-bold text-[18px]">
               {smartWalletAddress
                 ? `${smartWalletAddress.slice(0, 4)}...${smartWalletAddress.slice(
@@ -92,22 +95,25 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
             )}
           </div>
           <div className="flex items-center gap-x-[10px]">
-            {smartWalletAddress ? <CopyToClipboard text={smartWalletAddress}>
-              <Button
-                id="copy_address_btn"
-                className="w-[130px] !h-[45px]
+            {smartWalletAddress ? (
+              <CopyToClipboard text={smartWalletAddress}>
+                <Button
+                  id="copy_address_btn"
+                  className="w-[130px] !h-[45px]
                     xs:!w-[158px] xs:!h-[53px]
                     !p-0 !rounded-[10px]
                     flex !flex-col !gap-y-[2px]
                     !bg-[white] !capitalize
                     !text-black !text-[12px]
                     !shadow-none"
-                onClick={() => setIsCopied(true)}
-              >
-                <Icon name={isCopied ? "check" : "copy"} size={20} color="black" raw />
-                {isCopied ? "Copied!" : "Copy Address"}
-              </Button>
-            </CopyToClipboard> : <Button
+                  onClick={() => setIsCopied(true)}
+                >
+                  <Icon name={isCopied ? "check" : "copy"} size={20} color="black" raw />
+                  {isCopied ? "Copied!" : "Copy Address"}
+                </Button>
+              </CopyToClipboard>
+            ) : (
+              <Button
                 id="deploy-wallet-modal"
                 className="w-[130px] !h-[45px]
                     xs:!w-[158px] xs:!h-[53px]
@@ -120,7 +126,8 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
               >
                 <Icon name="setting" size={20} color="black" raw />
                 Setup Smart Wallet
-              </Button>}
+              </Button>
+            )}
             <Button
               id="swith_smart_wallet_btn"
               className="w-[130px] !h-[45px]
