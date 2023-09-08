@@ -53,8 +53,8 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
         id="switch_smart_wallet"
         isVisible={isModalVisible}
         onClose={toggleIsVisible}
-        containerClassName="!rounded-[15px] md:!rounded-[30px] overflow-hidden 
-          !bg-[#f1eeee]
+        containerClassName="!rounded-[15px] overflow-hidden 
+          !bg-[transparent]
           drop-shadow-[2px_3px_2px_rgba(0,0,0,0.25)]"
         modalClassName="!z-[110]"
         showCloseButton
@@ -65,7 +65,7 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
               gap-y-[5px] xs:gap-y-[20px]
               w-[300px]
               xs:w-[360px]
-              bg-[#f1eeee]"
+              bg-[#ffffffe0]"
         >
           <div
             className="flex flex-col items-center
@@ -77,6 +77,8 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
               blurLink={getIpfsLink(metaData?.image)}
               containerClasses="w-[74px] h-[74px] rounded-full overflow-hidden"
             />
+            <p className="uppercase text-[#232323] text-[18px]
+            font-quicksand font-bold">Smart Wallet</p>
             <p className="font-quicksand font-bold text-[18px]">
               {smartWalletAddress
                 ? `${smartWalletAddress.slice(0, 4)}...${smartWalletAddress.slice(
