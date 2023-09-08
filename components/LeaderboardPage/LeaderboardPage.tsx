@@ -5,6 +5,8 @@ import Layout from "../Layout"
 import getReferralLeaderboard from "../../lib/getReferralLeaderboard"
 import { getOwnersofCre8ors } from "../../lib/cre8or"
 import getTwitterHandleByAddress from "../../lib/getTwitterHandleByAddress"
+import getMetadata from "../../lib/getMetadata"
+import getIpfsLink from "../../lib/getIpfsLink"
 
 const LeaderboardPage = () => {
   const [collectors, setCollectors] = useState([])
@@ -18,10 +20,13 @@ const LeaderboardPage = () => {
       referralData = await Promise.all(
         referralData.map(async (data, i) => {
           const twitterHandle = await getTwitterHandleByAddress(walletAddresses[i])
+          const metaData = getMetadata(parseInt(data.cre8orsNumber, 10), true)
+
           return {
             ...data,
             walletAddress: walletAddresses[i],
             twitterHandle,
+            pfpImage: getIpfsLink(metaData?.image),
           }
         }),
       )
@@ -119,6 +124,7 @@ const LeaderboardPage = () => {
                       cre8orNumber={collector.cre8orsNumber}
                       twitterHandle={collector.twitterHandle}
                       totalReferralFeeEarned={collector.totalReferralFeeEarned}
+                      pfpImage={collector.pfpImage}
                       rank={index + 1}
                     />
                   ))}

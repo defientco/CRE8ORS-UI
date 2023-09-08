@@ -1,17 +1,17 @@
 import { useState } from "react"
 import Media from "../../shared/Media"
 import HelpModal from "./HelpModal"
-import OpenSeaNewPFP from "./OpenSeaNewPFP"
+import SwitchSmartWalletModal from "./SwitchSmartWalletModal"
 
 const SmartWalletButtons = () => {
   const [openHelpModal, setOpenHelpModal] = useState(false)
-  const [openSeaNewPFP, setOpenSeaNewPFP] = useState(false)
+  const [openSwitchSmartWalletModal, setOpenSwitchSmartWalletModal] = useState(false)
   return (
     <>
       <button
         type="button"
         className="hover:scale-[1.2] scale-[1] transition duration-[300ms]"
-        onClick={() => setOpenSeaNewPFP(true)}
+        onClick={() => setOpenSwitchSmartWalletModal(true)}
       >
         <Media
           type="image"
@@ -36,9 +36,9 @@ const SmartWalletButtons = () => {
         isModalVisible={openHelpModal}
         toggleIsVisible={() => setOpenHelpModal(!openHelpModal)}
       />
-      <OpenSeaNewPFP
-        isModalVisible={openSeaNewPFP}
-        toggleIsVisible={() => setOpenSeaNewPFP(!openSeaNewPFP)}
+      <SwitchSmartWalletModal
+        isModalVisible={openSwitchSmartWalletModal}
+        toggleIsVisible={() => setOpenSwitchSmartWalletModal(!openSwitchSmartWalletModal)}
       />
     </>
   )

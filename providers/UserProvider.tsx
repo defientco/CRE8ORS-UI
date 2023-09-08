@@ -14,7 +14,7 @@ import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import getMetadata from "../lib/getMetadata"
 import isSmartWalletRegistered from "../lib/isSmartWalletRegistered"
 import getSmartWallet from "../lib/getSmartWallet"
-import { getDefaultProvider } from "ethers"
+import { ethers, getDefaultProvider } from "ethers"
 
 interface attribute {
   value?: string
@@ -37,6 +37,7 @@ interface userProps {
   metaData: metadata
   cre8orNumber: any
   smartWalletAddress: any
+  smartWalletBalance: any
 }
 
 interface Props {
@@ -52,6 +53,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const isProfilePage = router.pathname.includes("/profile")
 
   const { address } = useAccount()
+  const [smartWalletBalance, setSmartWalletBalance] = useState(0)
   const [userInfo, setUserInfo] = useState<any>(null)
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
@@ -67,6 +69,10 @@ export const UserProvider: FC<Props> = ({ children }) => {
     const walletAddress = await getSmartWallet(cre8orNumber)
     const code = await chainProvider.getCode(walletAddress)
     setSmartWalletAddress(code !== "0x" ? walletAddress : "")
+    if (code !== "0x") {
+      const balance = await chainProvider.getBalance(walletAddress)
+      setSmartWalletBalance(parseFloat(ethers.utils.formatEther(balance)))
+    }
   }, [cre8orNumber, chainProvider])
 
   const getUserSimilarProfiles = useCallback(
@@ -137,6 +143,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      smartWalletBalance,
       smartWalletAddress,
       similarProfiles,
       userInfo,
@@ -147,6 +154,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       cre8orNumber,
     }),
     [
+      smartWalletBalance,
       smartWalletAddress,
       similarProfiles,
       userInfo,

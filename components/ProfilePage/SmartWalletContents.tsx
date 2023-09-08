@@ -15,7 +15,7 @@ import TransferLoadingModal from "./TransferLoadingModal"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber, smartWalletAddress } = useUserProvider()
+  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
   const { toggleProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
@@ -68,25 +68,29 @@ const SmartWalletContents = () => {
 
   return (
     <>
-      <div className="border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
+      <div
+        className={`${
+          smartWalletBalance > 0 ? "mt-[5px]" : "mt-[25px]"
+        } border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]`}
+        ref={drop}
+      >
         <div
-          className="mt-[35px]
-                      relative
-                      flex items-center justify-center
-                      lg:px-2 lg:py-3 p-2
-                      rounded-[8px] lg:rounded-[15px]
-                      overflow-hidden
-                      lg:w-[287px] lg:h-[287px]
-                      samsungS8:w-[130px] samsungS8:h-[130px]
-                      w-[120px] h-[120px]
-                      after:content-[''] 
-                      after:bg-[black] 
-                      after:opacity-[0.2]
-                      after:w-full after:h-full
-                      after:absolute
-                      after:left-0 
-                      after:top-0 
-                      after:z-[4]"
+          className={`relative
+          flex items-center justify-center
+          lg:px-2 lg:py-3 p-2
+          rounded-[8px] lg:rounded-[15px]
+          overflow-hidden
+          lg:w-[287px] lg:h-[287px]
+          samsungS8:w-[130px] samsungS8:h-[130px]
+          w-[120px] h-[120px]
+          after:content-[''] 
+          after:bg-[black] 
+          after:opacity-[0.2]
+          after:w-full after:h-full
+          after:absolute
+          after:left-0 
+          after:top-0 
+          after:z-[4]`}
         >
           {!smartWalletAddress && !_.isNull(smartWalletAddress) && !isHiddenEditable && (
             <Deploy6551AndMintDNAButton />
