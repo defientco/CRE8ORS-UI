@@ -16,7 +16,7 @@ import TransferLoadingModal from "./TransferLoadingModal"
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
   const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
-  const { toggleProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
+  const { refetchProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
   const { address } = useAccount()
@@ -27,7 +27,7 @@ const SmartWalletContents = () => {
   const { transferERC721 } = useERC721Transfer()
 
   const afterTransfer = async () => {
-    await toggleProfileFormattedCollection()
+    await refetchProfileFormattedCollection()
     await getDNABySmartWallet()
   }
 

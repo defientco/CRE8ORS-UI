@@ -21,11 +21,11 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
   const [isTransferring, setIsTransferring] = useState(false)
   const { transferERC721FromERC6551Account } = useERC721Transfer()
   const { address } = useAccount()
-  const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
+  const { refetchProfileFormattedCollection } = useWalletCollectionProvider()
   const [txStatus, setTxStatus] = useState()
 
   const afterTransfer = async () => {
-    await toggleProfileFormattedCollection()
+    await refetchProfileFormattedCollection()
     await getDNABySmartWallet()
   }
 
