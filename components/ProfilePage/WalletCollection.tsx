@@ -184,10 +184,10 @@ const WalletCollection = () => {
               rounded-[5px]
               text-black
               font-bold
-              text-[4px] samsungS8:text-[4.5px] lg:text-[10px] cursor-copy"
+              text-[4px] lg:text-[9px] cursor-copy"
               onClick={copyReferralLink}
             >
-              Referral Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
+              Your Referral Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
             </button>
           </CopyToClipboard>
         )}
