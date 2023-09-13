@@ -14,16 +14,16 @@ import TransferLoadingModal from "./TransferLoadingModal"
 const OwnerWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
   const { ownedNfts, getDNABySmartWallet } = useWalletCollectionProvider()
-  const { smartWalletAddress, smartWalletBalance } = useUserProvider()
+  const { smartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const [isTransferring, setIsTransferring] = useState(false)
   const { transferERC721FromERC6551Account } = useERC721Transfer()
   const { address } = useAccount()
-  const { toggleProfileFormattedCollection } = useWalletCollectionProvider()
+  const { refetchProfileFormattedCollection } = useWalletCollectionProvider()
   const [txStatus, setTxStatus] = useState()
 
   const afterTransfer = async () => {
-    await toggleProfileFormattedCollection()
+    await refetchProfileFormattedCollection()
     await getDNABySmartWallet()
   }
 
@@ -66,14 +66,11 @@ const OwnerWalletContents = () => {
   return (
     <>
       <div
-        className={`${
-          smartWalletBalance > 0 ? "mt-[20px] lg:mt-[30px]" : "mt-[10px] lg:mt-[10px]"
-        } grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 
+        className="mt-[15px] grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 
         gap-x-[5px] lg:gap-x-[15px] gap-y-[5px] 
-        pt-[15px] 
-        h-[140px] lg:h-[287px] 
+        h-[120px] lg:h-[290px] 
         overflow-y-auto overflow-x-hidden
-        pr-2`}
+        pr-2"
         ref={drop}
       >
         {ownedNfts.map((data, i) => (

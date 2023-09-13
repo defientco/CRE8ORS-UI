@@ -14,7 +14,7 @@ import SwitchingLoadingModal from "./SwitchingLoadingModal"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
+  const { cre8orNumber, smartWalletAddress } = useUserProvider()
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
 
   const { isViewAll, setIsViewAll, isUpdatingSmartWallet } = useWalletCollectionProvider()
@@ -40,7 +40,7 @@ const WalletCollection = () => {
               } h-[35px] lg:h-[55px] overflow-hidden bg-black`
             : `${
                 isMobile ? "mobile_expand_more" : "expand_more"
-              } h-[215px] samsungS8:h-[220px] lg:h-[415px]
+              } h-[190px] samsungS8:h-[200px] lg:h-[400px]
               bg-black`
         } 
           rounded-t-[10px] lg:rounded-t-[20px]
@@ -76,30 +76,6 @@ const WalletCollection = () => {
                 />
               </button>
             </div>
-            {smartWalletBalance > 0 && (
-              <div
-                className="flex items-center bg-white w-fit
-            mt-[10px] lg:mt-[15px] gap-x-[5px]
-            p-1 rounded-[5px]"
-              >
-                <Media
-                  type="image"
-                  link="/assets/Profile/eth.svg"
-                  blurLink="/assets/Profile/eth.svg"
-                  containerClasses="lg:w-[18px] lg:h-[18px]
-                  w-[10px] h-[10px]
-                  rounded-full"
-                />
-                <p className="text-[9px] lg:text-[14px] font-quicksand font-bold">
-                  {smartWalletAddress
-                    ? `${smartWalletAddress.slice(0, 4)}...${smartWalletAddress.slice(
-                        smartWalletAddress.length - 4,
-                        smartWalletAddress.length,
-                      )}(${smartWalletBalance})`
-                    : ""}
-                </p>
-              </div>
-            )}
             <SmartWalletContents />
           </div>
           <div>
@@ -167,11 +143,20 @@ const WalletCollection = () => {
           <CopyToClipboard text={`https://cre8ors.com/mint?referral=${cre8orNumber}`}>
             <button
               type="button"
-              className="font-quicksand text-white samsungS8:py-[5px]
-          text-[5px] lg:text-[12px] cursor-copy"
+              className="font-quicksand samsungS8:py-[5px]
+              mt-[5px] md:mt-[10px]
+              lg:h-[27px] lg:w-[287px]
+              w-[120px]
+              samsungS8:w-[130px] h-[15px]
+              bg-[white]
+              hover:scale-[1.03] scale-[1] transition duration-[300ms]
+              rounded-[5px]
+              text-black
+              font-bold
+              text-[4px] lg:text-[9px] cursor-copy"
               onClick={copyReferralLink}
             >
-              Affiliate Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
+              Your Referral Link: {`https://cre8ors.com/mint?referral=${cre8orNumber}`}
             </button>
           </CopyToClipboard>
         )}

@@ -1,4 +1,4 @@
-import { AiOutlineMail } from "react-icons/ai"
+import { AiOutlineMail, AiOutlineClose, AiOutlineSetting } from "react-icons/ai"
 import { FaArrowUp } from "react-icons/fa"
 import { BsTwitter, BsCheckLg } from "react-icons/bs"
 import { BiCopy } from "react-icons/bi"
@@ -10,5 +10,7 @@ export const Icons = {
   twitter: BsTwitter,
   copy: BiCopy,
   switch: TbArrowsExchange,
-  check: BsCheckLg
+  check: BsCheckLg,
+  close: AiOutlineClose,
+  setting: AiOutlineSetting
 }

@@ -12,22 +12,28 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 import useERC721Transfer from "../../hooks/useERC721Transfer"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import TransferLoadingModal from "./TransferLoadingModal"
+import Media from "../../shared/Media"
+import useEthTransfer from "../../hooks/useEthTransfer"
+import WithdrawLoadingModal from "./WithdrawLoadingModal"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
-  const { toggleProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
+  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance, getSmartWalletBalance } =
+    useUserProvider()
+  const { refetchProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
   const { address } = useAccount()
   const { checkNetwork } = useCheckNetwork()
 
   const [isTransferring, setIsTransferring] = useState(false)
+  const [isWithdrawing, setIsWithdrawing] = useState(false)
 
   const { transferERC721 } = useERC721Transfer()
+  const { transferEthFromERC6551Account } = useEthTransfer()
 
   const afterTransfer = async () => {
-    await toggleProfileFormattedCollection()
+    await refetchProfileFormattedCollection()
     await getDNABySmartWallet()
   }
 
@@ -66,14 +72,19 @@ const SmartWalletContents = () => {
     [dropToSmartWallet],
   )
 
+  const withdrawEth = async () => {
+    if (!checkNetwork()) return
+    if (!address || !smartWalletAddress) return
+
+    setIsWithdrawing(true)
+    await transferEthFromERC6551Account(smartWalletAddress, address, smartWalletBalance)
+    await getSmartWalletBalance()
+    setIsWithdrawing(false)
+  }
+
   return (
     <>
-      <div
-        className={`${
-          smartWalletBalance > 0 ? "mt-[5px]" : "mt-[25px]"
-        } border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]`}
-        ref={drop}
-      >
+      <div className="mt-[15px] border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
         <div
           className={`relative
           flex items-center justify-center
@@ -110,6 +121,30 @@ const SmartWalletContents = () => {
                 relative !z-[5]
                 gap-[5px]"
           >
+            {smartWalletBalance > 0 && (
+              <div className="flex justify-start items-center col-span-3">
+                <button
+                  type="button"
+                  className="w-[30px] h-[30px] 
+              samsungS8:w-[35px] samsungS8:h-[35px] 
+              lg:w-[85px] lg:h-[85px] 
+              bg-white
+              drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]
+              opacity-[0.8] rounded-[5px] lg:rounded-[15px]
+              flex flex-col items-center justify-center
+              gap-y-[5px] z-[10]"
+                  onClick={withdrawEth}
+                >
+                  <Media
+                    type="image"
+                    containerClasses="w-[30px] h-[36px]"
+                    link="/assets/Profile/ethereum.svg"
+                    blurLink="/assets/Profile/ethereum.png"
+                  />
+                  <p className="font-quicksand font-medium text-[10px]">{smartWalletBalance} ETH</p>
+                </button>
+              </div>
+            )}
             {nftsSmartWallet?.map((nft) => (
               <ProfileToken token={nft} key={nft?.tokenId} inSmartWallet />
             ))}
@@ -117,6 +152,7 @@ const SmartWalletContents = () => {
         </div>
       </div>
       {isTransferring && <TransferLoadingModal />}
+      {isWithdrawing && <WithdrawLoadingModal />}
     </>
   )
 }
