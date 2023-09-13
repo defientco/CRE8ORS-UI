@@ -74,8 +74,8 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWall
   return (
     <div
       ref={tokenRef}
-      className="flex justify-center items-center
-    z-[10]"
+      className={`flex justify-center items-center
+      z-[10] ${inSmartWallet ? "opacity-[0.8]" : ""}`}
     >
       <button
         type="button"

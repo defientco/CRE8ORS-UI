@@ -15,7 +15,7 @@ import TransferLoadingModal from "./TransferLoadingModal"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
+  const { metaData, cre8orNumber, smartWalletAddress } = useUserProvider()
   const { refetchProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
@@ -68,12 +68,7 @@ const SmartWalletContents = () => {
 
   return (
     <>
-      <div
-        className={`${
-          smartWalletBalance > 0 ? "mt-[5px]" : "mt-[25px]"
-        } border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]`}
-        ref={drop}
-      >
+      <div className="mt-[15px] border-r-[2px] pr-[20px] lg:pr-[50px] border-r-[white]" ref={drop}>
         <div
           className={`relative
           flex items-center justify-center

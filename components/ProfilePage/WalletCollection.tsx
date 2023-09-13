@@ -16,7 +16,7 @@ import SwitchingLoadingModal from "./SwitchingLoadingModal"
 
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
-  const { cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
+  const { cre8orNumber, smartWalletAddress } = useUserProvider()
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
   const [openTraninModal, setOpenTrainModal] = useState(false)
 
@@ -47,7 +47,7 @@ const WalletCollection = () => {
               } h-[35px] lg:h-[55px] overflow-hidden bg-black`
             : `${
                 isMobile ? "mobile_expand_more" : "expand_more"
-              } h-[215px] samsungS8:h-[223px] lg:h-[425px]
+              } h-[190px] samsungS8:h-[200px] lg:h-[400px]
               bg-black`
         } 
           rounded-t-[10px] lg:rounded-t-[20px]
@@ -83,30 +83,6 @@ const WalletCollection = () => {
                 />
               </button>
             </div>
-            {smartWalletBalance > 0 && (
-              <div
-                className="flex items-center bg-white w-fit
-            mt-[10px] lg:mt-[15px] gap-x-[5px]
-            p-1 rounded-[5px]"
-              >
-                <Media
-                  type="image"
-                  link="/assets/Profile/eth.svg"
-                  blurLink="/assets/Profile/eth.svg"
-                  containerClasses="lg:w-[18px] lg:h-[18px]
-                  w-[10px] h-[10px]
-                  rounded-full"
-                />
-                <p className="text-[9px] lg:text-[14px] font-quicksand font-bold">
-                  {smartWalletAddress
-                    ? `${smartWalletAddress.slice(0, 4)}...${smartWalletAddress.slice(
-                        smartWalletAddress.length - 4,
-                        smartWalletAddress.length,
-                      )}(${smartWalletBalance})`
-                    : ""}
-                </p>
-              </div>
-            )}
             <SmartWalletContents />
           </div>
           <div>

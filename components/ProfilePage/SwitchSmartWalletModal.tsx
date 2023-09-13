@@ -103,7 +103,7 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
                     xs:!w-[158px] xs:!h-[53px]
                     !p-0 !rounded-[10px]
                     flex !flex-col !gap-y-[2px]
-                    !bg-[white] !capitalize
+                    !bg-[#ffffff94] !capitalize
                     !text-black !text-[12px]
                     !shadow-none"
                   onClick={() => setIsCopied(true)}
@@ -119,7 +119,7 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
                     xs:!w-[158px] xs:!h-[53px]
                     !p-0 !rounded-[10px]
                     flex !flex-col !gap-y-[2px]
-                    !bg-[white] !capitalize
+                    !bg-[#ffffff94] !capitalize
                     !text-black !text-[12px]
                     !shadow-none"
                 onClick={onClick}
@@ -134,7 +134,7 @@ const SwitchSmartWalletModal: FC<SwitchSmartWalletModalProps> = ({
                   xs:!w-[158px] xs:!h-[53px]
                   !p-0 !rounded-[10px]
                   flex !flex-col !gap-y-[2px]
-                  !bg-[white] !capitalize
+                  !bg-[#ffffff94] !capitalize
                   !text-black !text-[12px]
                   !shadow-none"
               onClick={() => {
