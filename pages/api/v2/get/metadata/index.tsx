@@ -21,7 +21,7 @@ class GetMetadata {
         error: "Token not Minted Yet",
       }
     }
-    const hasTBA = await isSmartWalletRegistered(tokenId)
+    const hasTBA = tokenId !== "660" && (await isSmartWalletRegistered(tokenId))
     return getMetadata(tokenId, hasTBA)
   }
 }
