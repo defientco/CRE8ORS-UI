@@ -1,7 +1,12 @@
+import { FC } from "react"
 import Modal from "../../shared/Modal"
 import Media from "../../shared/Media"
+import { TxSTATUS } from "../../hooks/useEthTransfer"
 
-const WithdrawLoadingModal = () => (
+interface WithdrawLoadingModalProps {
+  status?: string
+}
+const WithdrawLoadingModal: FC<WithdrawLoadingModalProps> = ({ status }) => (
   <Modal
     id="train_modal"
     isVisible
@@ -21,7 +26,7 @@ const WithdrawLoadingModal = () => (
         text-[30px] md:text-[65px] text-white uppercase
         text-white uppercase"
       >
-        Sending....
+        {status ? `${status}...` : "Sending...."}
       </div>
       <Media
         type="image"
@@ -36,7 +41,9 @@ const WithdrawLoadingModal = () => (
             text-center leading-[99.3%]
             w-[260px] md:w-full"
       >
-        {`sign to send ETH to\nyour wallet`}
+        {`sign to send ETH to\nyour wallet\n${
+          status ? `#${status === TxSTATUS.INITIALIZING ? "1" : "2"} of 2` : ""
+        }`}
       </pre>
     </div>
   </Modal>
