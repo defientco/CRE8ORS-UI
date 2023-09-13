@@ -2,7 +2,6 @@ import { useCallback, useState } from "react"
 import { useAccount } from "wagmi"
 import { useDrop } from "react-dnd"
 import { useProfileProvider } from "../../providers/ProfileContext"
-import Media from "../../shared/Media"
 import { CRE8OR } from "./types"
 import { useWalletCollectionProvider } from "../../providers/WalletCollectionProvider"
 import ProfileToken from "./ProfileToken"
@@ -12,10 +11,9 @@ import { useUserProvider } from "../../providers/UserProvider"
 import { ItemTypes } from "./ItemTypes"
 import TransferLoadingModal from "./TransferLoadingModal"
 
-const OwnerWalletContents = ({ setOpenTrainModal }) => {
-  const { isEditable, isHiddenEditable } = useProfileProvider()
-  const { ownedNfts, setSelectedTrainTokenData, getDNABySmartWallet } =
-    useWalletCollectionProvider()
+const OwnerWalletContents = () => {
+  const { isHiddenEditable } = useProfileProvider()
+  const { ownedNfts, getDNABySmartWallet } = useWalletCollectionProvider()
   const { smartWalletAddress } = useUserProvider()
   const { checkNetwork } = useCheckNetwork()
   const [isTransferring, setIsTransferring] = useState(false)
@@ -89,37 +87,6 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
                 {data.type === CRE8OR ? "CRE8ORS" : data.label}
                 {data.type === CRE8OR ? ` #${data.tokenId}` : ""}
               </div>
-              {isEditable && data.type === CRE8OR && data.getCre8ingStarted !== undefined && (
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedTrainTokenData({
-                        id: data.tokenId,
-                        isStake: !data.getCre8ingStarted,
-                      })
-                      setOpenTrainModal(true)
-                    }}
-                  >
-                    <Media
-                      type="image"
-                      containerClasses={
-                        data.getCre8ingStarted ? "w-[13.54px] h-[16.83px]" : "w-[14.8px] h-[17px]"
-                      }
-                      link={
-                        data.getCre8ingStarted
-                          ? "/assets/Profile/locked.svg"
-                          : "/assets/Profile/unlocked.svg"
-                      }
-                      blurLink={
-                        data.getCre8ingStarted
-                          ? "/assets/Profile/locked.png"
-                          : "/assets/Profile/unlocked.png"
-                      }
-                    />
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         ))}

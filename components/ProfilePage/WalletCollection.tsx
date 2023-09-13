@@ -1,9 +1,7 @@
-import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import Media from "../../shared/Media"
-import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import SmartWalletContents from "./SmartWalletContents"
 import OwnerWalletContents from "./OwnerWalletContents"
@@ -13,13 +11,8 @@ import SmartWalletButtons from "./SmartWalletButtons"
 const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
-  const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const { isViewAll, setIsViewAll } = useWalletCollectionProvider()
-
-  const toggleTraninModal = () => {
-    setOpenTrainModal(!openTraninModal)
-  }
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -118,10 +111,9 @@ const WalletCollection = () => {
               </button>
             </div>
           </div>
-          <OwnerWalletContents setOpenTrainModal={setOpenTrainModal} />
+          <OwnerWalletContents />
         </div>
       </div>
-      <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
     </DndProvider>
   )
 }
