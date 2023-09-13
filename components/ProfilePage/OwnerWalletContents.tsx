@@ -70,7 +70,7 @@ const OwnerWalletContents = ({ setOpenTrainModal }) => {
       <div
         className="mt-[15px] grid grid-cols-3 xs:grid-cols-4 lg:grid-cols-6 
         gap-x-[5px] lg:gap-x-[15px] gap-y-[5px] 
-        h-[120px] lg:h-[237px] 
+        h-[120px] lg:h-[290px] 
         overflow-y-auto overflow-x-hidden
         pr-2"
         ref={drop}

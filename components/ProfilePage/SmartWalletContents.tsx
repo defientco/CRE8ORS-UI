@@ -12,10 +12,11 @@ import { useWalletCollectionProvider } from "../../providers/WalletCollectionPro
 import useERC721Transfer from "../../hooks/useERC721Transfer"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import TransferLoadingModal from "./TransferLoadingModal"
+import Media from "../../shared/Media"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber, smartWalletAddress } = useUserProvider()
+  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
   const { refetchProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
@@ -105,6 +106,29 @@ const SmartWalletContents = () => {
                 relative !z-[5]
                 gap-[5px]"
           >
+            {smartWalletBalance > 0 && (
+              <div className="flex justify-start items-center col-span-3">
+                <div
+                  className="w-[30px] h-[30px] 
+              samsungS8:w-[35px] samsungS8:h-[35px] 
+              lg:w-[85px] lg:h-[85px] 
+              bg-white
+              drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]
+              opacity-[0.8] rounded-[5px] lg:rounded-[15px]
+              flex flex-col items-center justify-center
+              gap-y-[5px] z-[10]
+              "
+                >
+                  <Media
+                    type="image"
+                    containerClasses="w-[30px] h-[36px]"
+                    link="/assets/Profile/ethereum.svg"
+                    blurLink="/assets/Profile/ethereum.png"
+                  />
+                  <p className="font-quicksand font-medium text-[10px]">{smartWalletBalance} ETH</p>
+                </div>
+              </div>
+            )}
             {nftsSmartWallet?.map((nft) => (
               <ProfileToken token={nft} key={nft?.tokenId} inSmartWallet />
             ))}
