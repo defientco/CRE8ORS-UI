@@ -30,6 +30,7 @@ interface metadata {
 
 interface userProps {
   getSmartWalletAddress: () => Promise<void>
+  getSmartWalletBalance: () => Promise<void>
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
@@ -74,6 +75,12 @@ export const UserProvider: FC<Props> = ({ children }) => {
       setSmartWalletBalance(parseFloat(ethers.utils.formatEther(balance)))
     }
   }, [cre8orNumber, chainProvider])
+
+  const getSmartWalletBalance = useCallback(async () => {
+    if (!chainProvider || !smartWalletAddress) return
+    const balance = await chainProvider.getBalance(smartWalletAddress)
+    setSmartWalletBalance(parseFloat(ethers.utils.formatEther(balance)))
+  }, [smartWalletAddress])
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -150,6 +157,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       getUserData,
       getUserSimilarProfiles,
       getSmartWalletAddress,
+      getSmartWalletBalance,
       metaData,
       cre8orNumber,
     }),
@@ -162,6 +170,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       getUserData,
       getUserSimilarProfiles,
       getSmartWalletAddress,
+      getSmartWalletBalance,
     ],
   )
 

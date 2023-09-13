@@ -13,10 +13,13 @@ import useERC721Transfer from "../../hooks/useERC721Transfer"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import TransferLoadingModal from "./TransferLoadingModal"
 import Media from "../../shared/Media"
+import useEthTransfer from "../../hooks/useEthTransfer"
+import WithdrawLoadingModal from "./WithdrawLoadingModal"
 
 const SmartWalletContents = () => {
   const { isHiddenEditable } = useProfileProvider()
-  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance } = useUserProvider()
+  const { metaData, cre8orNumber, smartWalletAddress, smartWalletBalance, getSmartWalletBalance } =
+    useUserProvider()
   const { refetchProfileFormattedCollection, nftsSmartWallet, getDNABySmartWallet } =
     useWalletCollectionProvider()
 
@@ -24,8 +27,10 @@ const SmartWalletContents = () => {
   const { checkNetwork } = useCheckNetwork()
 
   const [isTransferring, setIsTransferring] = useState(false)
+  const [isWithdrawing, setIsWithdrawing] = useState(false)
 
   const { transferERC721 } = useERC721Transfer()
+  const { transferEthFromERC6551Account } = useEthTransfer()
 
   const afterTransfer = async () => {
     await refetchProfileFormattedCollection()
@@ -66,6 +71,16 @@ const SmartWalletContents = () => {
     }),
     [dropToSmartWallet],
   )
+
+  const withdrawEth = async () => {
+    if (!checkNetwork()) return
+    if (!address || !smartWalletAddress) return
+
+    setIsWithdrawing(true)
+    await transferEthFromERC6551Account(smartWalletAddress, address, smartWalletBalance)
+    await getSmartWalletBalance()
+    setIsWithdrawing(false)
+  }
 
   return (
     <>
@@ -108,7 +123,8 @@ const SmartWalletContents = () => {
           >
             {smartWalletBalance > 0 && (
               <div className="flex justify-start items-center col-span-3">
-                <div
+                <button
+                  type="button"
                   className="w-[30px] h-[30px] 
               samsungS8:w-[35px] samsungS8:h-[35px] 
               lg:w-[85px] lg:h-[85px] 
@@ -116,8 +132,8 @@ const SmartWalletContents = () => {
               drop-shadow-[0_4px_4px_rgba(0,0,0,0.45)]
               opacity-[0.8] rounded-[5px] lg:rounded-[15px]
               flex flex-col items-center justify-center
-              gap-y-[5px] z-[10]
-              "
+              gap-y-[5px] z-[10]"
+                  onClick={withdrawEth}
                 >
                   <Media
                     type="image"
@@ -126,7 +142,7 @@ const SmartWalletContents = () => {
                     blurLink="/assets/Profile/ethereum.png"
                   />
                   <p className="font-quicksand font-medium text-[10px]">{smartWalletBalance} ETH</p>
-                </div>
+                </button>
               </div>
             )}
             {nftsSmartWallet?.map((nft) => (
@@ -136,6 +152,7 @@ const SmartWalletContents = () => {
         </div>
       </div>
       {isTransferring && <TransferLoadingModal />}
+      {isWithdrawing && <WithdrawLoadingModal />}
     </>
   )
 }
