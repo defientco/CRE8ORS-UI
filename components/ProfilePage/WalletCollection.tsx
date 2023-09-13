@@ -1,11 +1,9 @@
-import { useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { toast } from "react-toastify"
 import Media from "../../shared/Media"
-import TrainModal from "./TrainModal"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import SmartWalletContents from "./SmartWalletContents"
 import OwnerWalletContents from "./OwnerWalletContents"
@@ -18,13 +16,8 @@ const WalletCollection = () => {
   const isMobile = useMediaQuery("(max-width: 1024px)")
   const { cre8orNumber, smartWalletAddress } = useUserProvider()
   const { expandedMore, setExpandedMore, isHiddenEditable } = useProfileProvider()
-  const [openTraninModal, setOpenTrainModal] = useState(false)
 
   const { isViewAll, setIsViewAll, isUpdatingSmartWallet } = useWalletCollectionProvider()
-
-  const toggleTraninModal = () => {
-    setOpenTrainModal(!openTraninModal)
-  }
 
   const copyReferralLink = () => {
     if (!smartWalletAddress) {
@@ -143,7 +136,7 @@ const WalletCollection = () => {
                 </button>
               </div>
             </div>
-            <OwnerWalletContents setOpenTrainModal={setOpenTrainModal} />
+            <OwnerWalletContents />
           </div>
         </div>
         {cre8orNumber && (
@@ -168,7 +161,6 @@ const WalletCollection = () => {
           </CopyToClipboard>
         )}
       </div>
-      <TrainModal isModalVisible={openTraninModal} toggleIsVisible={toggleTraninModal} />
       {isUpdatingSmartWallet && <SwitchingLoadingModal />}
     </DndProvider>
   )
