@@ -28,6 +28,7 @@ const SmartWalletContents = () => {
 
   const [isTransferring, setIsTransferring] = useState(false)
   const [isWithdrawing, setIsWithdrawing] = useState(false)
+  const [txStatus, setTxStatus] = useState()
 
   const { transferERC721 } = useERC721Transfer()
   const { transferEthFromERC6551Account } = useEthTransfer()
@@ -77,7 +78,12 @@ const SmartWalletContents = () => {
     if (!address || !smartWalletAddress) return
 
     setIsWithdrawing(true)
-    await transferEthFromERC6551Account(smartWalletAddress, address, smartWalletBalance)
+    await transferEthFromERC6551Account(
+      smartWalletAddress,
+      address,
+      smartWalletBalance,
+      setTxStatus,
+    )
     await getSmartWalletBalance()
     setIsWithdrawing(false)
   }
@@ -152,7 +158,7 @@ const SmartWalletContents = () => {
         </div>
       </div>
       {isTransferring && <TransferLoadingModal />}
-      {isWithdrawing && <WithdrawLoadingModal />}
+      {isWithdrawing && <WithdrawLoadingModal status={txStatus} />}
     </>
   )
 }
