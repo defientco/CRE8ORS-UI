@@ -1,8 +1,7 @@
 import { useMediaQuery } from "usehooks-ts"
 import { useAccount } from "wagmi"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import _ from "lodash"
+import { useEffect } from "react"
 import Layout from "../Layout"
 import DesktopProfileView from "./DesktopProfileView"
 import MobileProfileView from "./MobileProfileView"
@@ -10,17 +9,14 @@ import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
 import { WallectCollectionProvider } from "../../providers/WalletCollectionProvider"
-import NewCre8orNumberModal from "./NewCre8orNumberModal"
 
 const ProfilePage = () => {
   const routerAddress = useRouter().query.address as string
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
-  const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable, isHiddenEditable } =
-    useProfileProvider()
-  const [openNewCre8orNumberModal, setOpenNewCre8orNumberModal] = useState(false)
+  const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable } = useProfileProvider()
 
-  const { getUserData, getUserSimilarProfiles, cre8orNumber } = useUserProvider()
+  const { getUserData, getUserSimilarProfiles } = useUserProvider()
 
   const { address } = useAccount()
 
@@ -36,12 +32,6 @@ const ProfilePage = () => {
     setIsHiddenEditable(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routerAddress, getUserData, getUserSimilarProfiles])
-
-  useEffect(() => {
-    if (!_.isNull(cre8orNumber) && !cre8orNumber) {
-      if (!isHiddenEditable) setOpenNewCre8orNumberModal(true)
-    }
-  }, [cre8orNumber, isHiddenEditable])
 
   return (
     <Layout type="contained">
@@ -98,10 +88,6 @@ const ProfilePage = () => {
           </WallectCollectionProvider>
         </div>
       </div>
-      <NewCre8orNumberModal
-        isModalVisible={openNewCre8orNumberModal}
-        toggleVisible={() => setOpenNewCre8orNumberModal(false)}
-      />
     </Layout>
   )
 }
