@@ -1,7 +1,7 @@
 import { useMediaQuery } from "usehooks-ts"
 import { useAccount } from "wagmi"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Layout from "../Layout"
 import DesktopProfileView from "./DesktopProfileView"
 import MobileProfileView from "./MobileProfileView"
@@ -9,12 +9,14 @@ import { Button } from "../../shared/Button"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import { useUserProvider } from "../../providers/UserProvider"
 import { WallectCollectionProvider } from "../../providers/WalletCollectionProvider"
+import NewCre8orNumberModal from "./NewCre8orNumberModal"
 
 const ProfilePage = () => {
   const routerAddress = useRouter().query.address as string
   const isMobile = useMediaQuery("(max-width: 1024px)")
 
   const { isEditable, saveProfile, setIsEditable, setIsHiddenEditable } = useProfileProvider()
+  const [openNewCre8orNumberModal, setOpenNewCre8orNumberModal] = useState(false)
 
   const { getUserData, getUserSimilarProfiles } = useUserProvider()
 
@@ -30,6 +32,7 @@ const ProfilePage = () => {
     }
 
     setIsHiddenEditable(false)
+    setOpenNewCre8orNumberModal(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routerAddress, getUserData, getUserSimilarProfiles])
 
@@ -88,6 +91,10 @@ const ProfilePage = () => {
           </WallectCollectionProvider>
         </div>
       </div>
+      <NewCre8orNumberModal
+        isModalVisible={openNewCre8orNumberModal}
+        toggleVisible={() => setOpenNewCre8orNumberModal(false)}
+      />
     </Layout>
   )
 }

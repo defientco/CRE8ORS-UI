@@ -12,7 +12,7 @@ export const ProfileProvider = ({ children }) => {
   const { userInfo, getUserData, getUserSimilarProfiles } = useUserProvider()
   const { address } = useAccount()
 
-  const [isHiddenEditable, setIsHiddenEditable] = useState(false)
+  const [isHiddenEditable, setIsHiddenEditable] = useState(null)
   const [expandedMore, setExpandedMore] = useState<boolean>(false)
   const [isEditable, setIsEditable] = useState<boolean>(false)
   const [editedUserName, setEditedUserName] = useState("")
