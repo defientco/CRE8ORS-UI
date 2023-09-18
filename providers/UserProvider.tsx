@@ -118,6 +118,8 @@ export const UserProvider: FC<Props> = ({ children }) => {
           setSmartWalletAddress("")
           setUserInfo(null)
         }
+
+        return
       }
 
       return setUserInfo(null)

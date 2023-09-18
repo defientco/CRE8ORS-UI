@@ -23,17 +23,22 @@ const getFilterObject = (value) => ({
   $options: "i"
 })
 
-const updateAvailableCre8orNumber = async (walletAddress: string, _id: string) => {
+const updateAvailableCre8orNumber = async (walletAddress: string, _id: string, avatarUrl: string) => {
   let availableCre8orNumber: any = "";
+  let newAvatarUrl = avatarUrl;
 
   const cre8ors = await getNFTs(
     walletAddress,
     process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
     process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
   )
-  if (cre8ors.ownedNfts.length) availableCre8orNumber = parseInt(cre8ors.ownedNfts[0].id.tokenId, 16)
+  if (cre8ors.ownedNfts.length) {
+    availableCre8orNumber = parseInt(cre8ors.ownedNfts[cre8ors.ownedNfts.length - 1].id.tokenId, 16)
+    const metadata = getMetadata(availableCre8orNumber, false)
+    newAvatarUrl = getIpfsLink(metadata.image)
+  }
 
-  const doc = await UserProfile.findOneAndUpdate({_id}, { $set: { cre8orNumber: availableCre8orNumber } }) 
+  const doc = await UserProfile.findOneAndUpdate({_id}, { $set: { cre8orNumber: availableCre8orNumber, avatarUrl: newAvatarUrl } }) 
 
   return doc
 }
@@ -154,14 +159,12 @@ export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
-    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
 
-    doc = await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { cre8orNumber: "" } })
-    
-    // if (doc?.cre8orNumber) {
-    //   const owner = await ownerOf(doc.cre8orNumber)
-    //   if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id)
-    // } doc = await updateAvailableCre8orNumber(walletAddress, doc._id)
+    if (doc?.cre8orNumber) {
+      const owner = await ownerOf(doc.cre8orNumber)
+      if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+    } doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
 
     return { success: true, doc }
   } catch (e) {
