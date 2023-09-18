@@ -108,7 +108,7 @@ const SmartWalletContents = () => {
           after:top-0 
           after:z-[4]`}
         >
-          {smartWalletAddress && !isHiddenEditable && <Deploy6551AndMintDNAButton />}
+          {!smartWalletAddress && !isHiddenEditable && <Deploy6551AndMintDNAButton />}
           <div
             className="absolute w-full h-full left-0 top-0 z-[2]
                 bg-cover"
