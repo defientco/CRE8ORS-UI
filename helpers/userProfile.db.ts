@@ -1,8 +1,11 @@
 import { UpdateCre8orNumberDTO } from "../DTO/updateCre8orNumber.dto"
 import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
-import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
+import getIpfsLink from "../lib/getIpfsLink"
+import getMetadata from "../lib/getMetadata"
 import dbConnect from "../utils/db"
+import ownerOf from "../lib/ownerOf"
+import { isMatchAddress } from "../lib/isMatchAddress"
 
 export interface UserProfile {
   walletAddress: string
@@ -19,11 +22,12 @@ const getFilterObject = (value) => ({
   $options: "i"
 })
 
-const getUserAvatar = async (walletAddress: string, twitterHandle: string) => {
+const getUserAvatar = async (walletAddress: string, cre8orNumber: string) => {
   const ensImageURL = await getEnsImageURL(walletAddress)
-  const twitterImageURL = await getAvatarByTwitterHandle(twitterHandle)
+  const metadata = getMetadata(parseInt(cre8orNumber, 10), false)
+  const avatarUrl = getIpfsLink(metadata.image)
 
-  return twitterImageURL || ensImageURL || ""
+  return avatarUrl || ensImageURL || ""
 }
 
 export const userNameExists = async (username: string) => {
@@ -115,8 +119,12 @@ export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
       throw new Error("No user found")
     }
     
+    const metadata = getMetadata(parseInt(cre8orNumber, 10), false)
+    const avatarUrl = getIpfsLink(metadata.image)
+
     const newProfile = {
-      cre8orNumber
+      cre8orNumber,
+      avatarUrl
     }
 
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(walletAddress) }, newProfile)
@@ -132,10 +140,10 @@ export const getUserProfile = async (walletAddress: string) => {
 
     let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
 
-    if(doc) {
-      const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
-
-      if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
+    if (doc?.cre8orNumber) {
+      const owner = await ownerOf(doc.cre8orNumber)
+      if (!isMatchAddress(owner, walletAddress)) 
+        doc = await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { cre8orNumber: "" } })
     }
 
     return { success: true, doc }
