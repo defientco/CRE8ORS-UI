@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react"
 import { useDrop } from "react-dnd"
 import { useAccount } from "wagmi"
-import _ from "lodash"
 import { useProfileProvider } from "../../providers/ProfileContext"
 import Deploy6551AndMintDNAButton from "./Deploy6551AndMintButton"
 import ProfileToken from "./ProfileToken"
@@ -109,7 +108,7 @@ const SmartWalletContents = () => {
           after:top-0 
           after:z-[4]`}
         >
-          {!smartWalletAddress && !_.isNull(smartWalletAddress) && !isHiddenEditable && (
+          {cre8orNumber && !smartWalletAddress && !isHiddenEditable && (
             <Deploy6551AndMintDNAButton />
           )}
           <div

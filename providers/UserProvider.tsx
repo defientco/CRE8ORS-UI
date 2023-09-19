@@ -110,13 +110,16 @@ export const UserProvider: FC<Props> = ({ children }) => {
           return null
         }
 
-        if (info?.doc.cre8orNumber) setCre8orNumber(info?.doc.cre8orNumber)
-        else {
+        if (info?.doc.cre8orNumber) {
+          setCre8orNumber(info?.doc.cre8orNumber)
+          setUserInfo(info.doc)
+        } else {
           setCre8orNumber("")
           setSmartWalletAddress("")
+          setUserInfo(null)
         }
 
-        return setUserInfo(info.doc)
+        return
       }
 
       return setUserInfo(null)

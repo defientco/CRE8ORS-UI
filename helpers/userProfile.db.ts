@@ -1,8 +1,12 @@
 import { UpdateCre8orNumberDTO } from "../DTO/updateCre8orNumber.dto"
 import UserProfile from "../Models/UserProfile"
 import { getEnsImageURL } from "../lib/getEnsImageURL"
-import { getAvatarByTwitterHandle } from "../lib/getTwitterAvatarByHandle"
+import getIpfsLink from "../lib/getIpfsLink"
+import getMetadata from "../lib/getMetadata"
 import dbConnect from "../utils/db"
+import ownerOf from "../lib/ownerOf"
+import { isMatchAddress } from "../lib/isMatchAddress"
+import getNFTs from "../lib/alchemy/getNFTs"
 
 export interface UserProfile {
   walletAddress: string
@@ -19,11 +23,32 @@ const getFilterObject = (value) => ({
   $options: "i"
 })
 
-const getUserAvatar = async (walletAddress: string, twitterHandle: string) => {
-  const ensImageURL = await getEnsImageURL(walletAddress)
-  const twitterImageURL = await getAvatarByTwitterHandle(twitterHandle)
+const updateAvailableCre8orNumber = async (walletAddress: string, _id: string, avatarUrl: string) => {
+  let availableCre8orNumber: any = "";
+  let newAvatarUrl = avatarUrl;
 
-  return twitterImageURL || ensImageURL || ""
+  const cre8ors = await getNFTs(
+    walletAddress,
+    process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS,
+    process.env.NEXT_PUBLIC_TESTNET ? 5 : 1,
+  )
+  if (cre8ors.ownedNfts.length) {
+    availableCre8orNumber = parseInt(cre8ors.ownedNfts[cre8ors.ownedNfts.length - 1].id.tokenId, 16)
+    const metadata = getMetadata(availableCre8orNumber, false)
+    newAvatarUrl = getIpfsLink(metadata.image)
+  }
+
+  const doc = await UserProfile.findOneAndUpdate({_id}, { $set: { cre8orNumber: availableCre8orNumber, avatarUrl: newAvatarUrl } }) 
+
+  return doc
+}
+
+const getUserAvatar = async (walletAddress: string, cre8orNumber: string) => {
+  const ensImageURL = await getEnsImageURL(walletAddress)
+  const metadata = getMetadata(parseInt(cre8orNumber, 10), false)
+  const avatarUrl = getIpfsLink(metadata.image)
+
+  return avatarUrl || ensImageURL || ""
 }
 
 export const userNameExists = async (username: string) => {
@@ -115,8 +140,12 @@ export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
       throw new Error("No user found")
     }
     
+    const metadata = getMetadata(parseInt(cre8orNumber, 10), false)
+    const avatarUrl = getIpfsLink(metadata.image)
+
     const newProfile = {
-      cre8orNumber
+      cre8orNumber,
+      avatarUrl
     }
 
     const results = await UserProfile.findOneAndUpdate({ walletAddress: getFilterObject(walletAddress) }, newProfile)
@@ -130,13 +159,12 @@ export const getUserProfile = async (walletAddress: string) => {
   try {
     await dbConnect()
 
-    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean() 
+    let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
 
-    if(doc) {
-      const avatarUrl = await getUserAvatar(doc.walletAddress, doc.twitterHandle)
-
-      if(avatarUrl) await UserProfile.findOneAndUpdate({_id: doc._id}, { $set: { avatarUrl } })
-    }
+    if (doc?.cre8orNumber) {
+      const owner = await ownerOf(doc.cre8orNumber)
+      if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+    } doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
 
     return { success: true, doc }
   } catch (e) {
