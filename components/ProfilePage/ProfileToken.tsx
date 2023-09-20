@@ -15,7 +15,8 @@ interface ProfileTokenProps {
   inOwnedWallet?: boolean
 }
 const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWallet }) => {
-  const { shouldSelectNewPFP, setShouldSelectNewPFP } = useWalletCollectionProvider()
+  const { shouldSelectNewPFP, setShouldSelectNewPFP, setIsUpdatingSmartWallet } =
+    useWalletCollectionProvider()
   const { getUserData, cre8orNumber } = useUserProvider()
 
   const { address } = useAccount()
@@ -58,19 +59,23 @@ const ProfileToken: FC<ProfileTokenProps> = ({ token, inSmartWallet, inOwnedWall
 
     setShouldSelectNewPFP(false)
 
+    setIsUpdatingSmartWallet(true)
+
     await updateUserCre8orNumber({
       walletAddress: address,
       cre8orNumber: token?.tokenId,
     })
 
     await getUserData(address)
+
+    setIsUpdatingSmartWallet(false)
   }
 
   return (
     <div
       ref={tokenRef}
-      className="flex justify-center items-center
-    z-[10]"
+      className={`flex justify-center items-center
+      z-[10] ${inSmartWallet ? "opacity-[0.8]" : ""}`}
     >
       <button
         type="button"

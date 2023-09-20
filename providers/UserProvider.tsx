@@ -14,7 +14,7 @@ import { getSimilarProfiles, getUserInfo } from "../lib/userInfo"
 import getMetadata from "../lib/getMetadata"
 import isSmartWalletRegistered from "../lib/isSmartWalletRegistered"
 import getSmartWallet from "../lib/getSmartWallet"
-import { getDefaultProvider } from "ethers"
+import { ethers, getDefaultProvider } from "ethers"
 
 interface attribute {
   value?: string
@@ -30,6 +30,7 @@ interface metadata {
 
 interface userProps {
   getSmartWalletAddress: () => Promise<void>
+  getSmartWalletBalance: () => Promise<void>
   getUserData: (address?: string) => Promise<void>
   getUserSimilarProfiles: (address?: string) => Promise<void>
   userInfo: any
@@ -37,6 +38,7 @@ interface userProps {
   metaData: metadata
   cre8orNumber: any
   smartWalletAddress: any
+  smartWalletBalance: any
 }
 
 interface Props {
@@ -52,10 +54,11 @@ export const UserProvider: FC<Props> = ({ children }) => {
   const isProfilePage = router.pathname.includes("/profile")
 
   const { address } = useAccount()
+  const [smartWalletBalance, setSmartWalletBalance] = useState(0)
   const [userInfo, setUserInfo] = useState<any>(null)
   const [metaData, setMetaData] = useState<any>(null)
   const [similarProfiles, setSimilarProfiles] = useState<any>([])
-  const [cre8orNumber, setCre8orNumber] = useState("")
+  const [cre8orNumber, setCre8orNumber] = useState(null)
   const [smartWalletAddress, setSmartWalletAddress] = useState(null)
   const chainProvider = useMemo(
     () => getDefaultProvider(process.env.NEXT_PUBLIC_TESTNET ? 5 : 1),
@@ -67,7 +70,17 @@ export const UserProvider: FC<Props> = ({ children }) => {
     const walletAddress = await getSmartWallet(cre8orNumber)
     const code = await chainProvider.getCode(walletAddress)
     setSmartWalletAddress(code !== "0x" ? walletAddress : "")
+    if (code !== "0x") {
+      const balance = await chainProvider.getBalance(walletAddress)
+      setSmartWalletBalance(parseFloat(ethers.utils.formatEther(balance)))
+    }
   }, [cre8orNumber, chainProvider])
+
+  const getSmartWalletBalance = useCallback(async () => {
+    if (!chainProvider || !smartWalletAddress) return
+    const balance = await chainProvider.getBalance(smartWalletAddress)
+    setSmartWalletBalance(parseFloat(ethers.utils.formatEther(balance)))
+  }, [smartWalletAddress])
 
   const getUserSimilarProfiles = useCallback(
     async (walletAddress?: string) => {
@@ -91,14 +104,22 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
         if (!info?.doc) {
           setUserInfo(null)
+          setCre8orNumber("")
+          setSmartWalletAddress("")
           if (isProfilePage) router.push("/save-profile")
           return null
         }
 
-        if (info?.doc.cre8orNumber) setCre8orNumber(info?.doc.cre8orNumber)
-        else setCre8orNumber("")
+        if (info?.doc.cre8orNumber) {
+          setCre8orNumber(info?.doc.cre8orNumber)
+          setUserInfo(info.doc)
+        } else {
+          setCre8orNumber("")
+          setSmartWalletAddress("")
+          setUserInfo(null)
+        }
 
-        return setUserInfo(info.doc)
+        return
       }
 
       return setUserInfo(null)
@@ -121,7 +142,9 @@ export const UserProvider: FC<Props> = ({ children }) => {
   }, [getUserMetaData])
 
   useEffect(() => {
-    if (!routerAddress) getUserData()
+    if (!routerAddress) {
+      getUserData()
+    }
   }, [getUserData, routerAddress])
 
   useEffect(() => {
@@ -130,16 +153,19 @@ export const UserProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      smartWalletBalance,
       smartWalletAddress,
       similarProfiles,
       userInfo,
       getUserData,
       getUserSimilarProfiles,
       getSmartWalletAddress,
+      getSmartWalletBalance,
       metaData,
       cre8orNumber,
     }),
     [
+      smartWalletBalance,
       smartWalletAddress,
       similarProfiles,
       userInfo,
@@ -147,6 +173,7 @@ export const UserProvider: FC<Props> = ({ children }) => {
       getUserData,
       getUserSimilarProfiles,
       getSmartWalletAddress,
+      getSmartWalletBalance,
     ],
   )
 

@@ -29,6 +29,7 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
   const [selectedTrainTokenData, setSelectedTrainTokenData] = useState<any>(null)
   const { smartWalletAddress } = useUserProvider()
   const [shouldSelectNewPFP, setShouldSelectNewPFP] = useState(false)
+  const [isUpdatingSmartWallet, setIsUpdatingSmartWallet] = useState(false)
   const [isViewAll, setIsViewAll] = useState(null)
   const [walletNfts, setWalletNfts] = useState(null)
   const [cre8ors, setCre8ors] = useState(null)
@@ -85,11 +86,13 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
 
   const provider = useMemo(
     () => ({
+      isUpdatingSmartWallet,
       nftsSmartWallet,
       ownedNfts,
       isViewAll,
       shouldSelectNewPFP,
       setIsViewAll,
+      setIsUpdatingSmartWallet,
       setWalletNfts,
       setCre8ors,
       setOwnedNfts,
@@ -101,10 +104,12 @@ export const WallectCollectionProvider: FC<Props> = ({ children }) => {
       setShouldSelectNewPFP,
     }),
     [
+      isUpdatingSmartWallet,
       nftsSmartWallet,
       ownedNfts,
       isViewAll,
       shouldSelectNewPFP,
+      setIsUpdatingSmartWallet,
       setIsViewAll,
       setWalletNfts,
       setCre8ors,
