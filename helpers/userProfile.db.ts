@@ -38,7 +38,7 @@ const updateAvailableCre8orNumber = async (walletAddress: string, _id: string, a
     newAvatarUrl = getIpfsLink(metadata.image)
   }
 
-  const doc = await UserProfile.findOneAndUpdate({_id}, { $set: { cre8orNumber: availableCre8orNumber, avatarUrl: newAvatarUrl } }) 
+  const doc = await UserProfile.findOneAndUpdate({_id}, { cre8orNumber: availableCre8orNumber, avatarUrl: newAvatarUrl }) 
 
   return doc
 }
@@ -136,6 +136,7 @@ export const updateUserCre8orNumber = async (body: UpdateCre8orNumberDTO) => {
     await dbConnect()
 
     const doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
+    
     if (!doc) {
       throw new Error("No user found")
     }
@@ -164,7 +165,7 @@ export const getUserProfile = async (walletAddress: string) => {
     if (doc?.cre8orNumber) {
       const owner = await ownerOf(doc.cre8orNumber)
       if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
-    } doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+    } else doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
 
     return { success: true, doc }
   } catch (e) {
