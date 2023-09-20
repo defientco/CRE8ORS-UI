@@ -1184,6 +1184,195 @@ const TermsPage = () => {
         </>
       ),
     },
+    {
+      id: "terms_17",
+      content: (
+        <>
+          <div className="pb-[1.5rem]">17. Cre8ors Affiliate Program Terms and Conditions.</div>
+          <div className="pb-[1.5rem]">
+            *By participating in the Cre8ors Affiliate Program{" "}
+            {`("Program"), affiliates ("you" or
+            "Affiliate")`}{" "}
+            agree to abide by the following terms and conditions:*
+          </div>
+          <ul className="pl-4">
+            <li>
+              1. **Eligibility and Registration**: Only users who own a Cre8ors NFT are eligible to
+              participate in the Program. To join the Program, you must set up an ERC-6551 smart
+              wallet associated with your Cre8ors NFT.
+            </li>
+            <li>
+              2. **Referral Links**: Once registered, you can generate a referral link associated
+              with your smart wallet. This link is the tool you will use to promote Cre8ors NFTs.
+            </li>
+            <li>
+              3. **Promotion**: Anyone can promote any referral link. It is the responsibility of
+              the Affiliate to ensure the promotion of the referral link is conducted ethically,
+              legally, and without spam or harassment.
+            </li>
+            <li>
+              4. **Commissions**: For every Cre8ors NFT that is minted using your referral link,
+              your associated smart wallet will receive 20% of the sale in Ethereum (ETH) via the
+              smart contract.
+            </li>
+            <li>
+              5. **Withdrawals**: As long as you remain the owner of the Cre8ors NFT bound to the
+              smart wallet associated with the referral link used to mint a new Cre8ors NFT, you may
+              withdraw funds from your smart wallet at any time.
+            </li>
+            <li>
+              6. **Liability Disclaimer**:
+              <ul className="pl-4">
+                <li>
+                  - **6.1** Defi Entertainment LLC {`("Company")`} and its affiliated entities are
+                  not responsible for any unauthorized access to, or use of, your smart wallet or
+                  any losses or damages arising from such unauthorized access or use.
+                </li>
+                <li>
+                  - **6.2** The Company is not responsible for any technical issues, including those
+                  that might prevent or delay the minting of NFTs or the transfer of ETH.
+                </li>
+                <li>
+                  - **6.3** The Company shall not be held liable for any misrepresentation, fraud,
+                  or any misleading activities conducted by the Affiliate.
+                </li>
+                <li>
+                  - **6.4** The Company is not responsible for any tax liabilities or financial
+                  responsibilities arising from the commissions or any other transactions related to
+                  the Program. It is the Affiliate&apos;s responsibility to report and pay taxes in
+                  accordance with their jurisdiction.
+                </li>
+              </ul>
+            </li>
+            <li>
+              7. **Termination**: The Company reserves the right to terminate or suspend any
+              Affiliate&apos;s access to the Program for any reason, including but not limited to,
+              breach of these terms, fraud, or misuse of the Program. Upon termination, any
+              remaining funds in the Affiliate&apos;s smart wallet will remain accessible per the
+              conditions stated in clause 5.
+            </li>
+            <li>
+              8. **Amendments**: The Company may, at its sole discretion, revise or amend these
+              terms and conditions at any time without prior notice. Continued participation in the
+              Program following any such changes constitutes your acceptance of the revised terms.
+            </li>
+            <li>
+              9. **Governing Law**: These terms and conditions are governed by the laws of the
+              jurisdiction in which Defi Entertainment LLC is registered. Any disputes arising out
+              of or in connection with these terms shall be subject to the exclusive jurisdiction of
+              the courts of that jurisdiction.
+            </li>
+            <li>
+              10. **Indemnity**: You agree to indemnify, defend, and hold harmless Defi
+              Entertainment LLC, its officers, directors, employees, agents, licensors, and
+              suppliers from and against all losses, liabilities, expenses, damages, and costs,
+              including reasonable attorneys&apos; fees, resulting from any violation of these terms
+              and conditions or any activity related to your smart wallet (including negligent or
+              wrongful conduct).
+            </li>
+            <li>
+              11. **Miscellaneous**: If any provision of these terms and conditions is found to be
+              unlawful, void, or for any reason unenforceable, then that provision shall be deemed
+              severable and shall not affect the validity and enforceability of any remaining
+              provisions.
+            </li>
+          </ul>
+        </>
+      ),
+      mobile_content: (
+        <>
+          <div className="pb-[1.5rem]">17. Cre8ors Affiliate Program Terms and Conditions.</div>
+          <div className="pb-[1.5rem]">
+            *By participating in the Cre8ors Affiliate Program{" "}
+            {`("Program"), affiliates ("you" or
+            "Affiliate")`}{" "}
+            agree to abide by the following terms and conditions:*
+          </div>
+          <ul className="pl-4">
+            <li>
+              1. **Eligibility and Registration**: Only users who own a Cre8ors NFT are eligible to
+              participate in the Program. To join the Program, you must set up an ERC-6551 smart
+              wallet associated with your Cre8ors NFT.
+            </li>
+            <li>
+              2. **Referral Links**: Once registered, you can generate a referral link associated
+              with your smart wallet. This link is the tool you will use to promote Cre8ors NFTs.
+            </li>
+            <li>
+              3. **Promotion**: Anyone can promote any referral link. It is the responsibility of
+              the Affiliate to ensure the promotion of the referral link is conducted ethically,
+              legally, and without spam or harassment.
+            </li>
+            <li>
+              4. **Commissions**: For every Cre8ors NFT that is minted using your referral link,
+              your associated smart wallet will receive 20% of the sale in Ethereum (ETH) via the
+              smart contract.
+            </li>
+            <li>
+              5. **Withdrawals**: As long as you remain the owner of the Cre8ors NFT bound to the
+              smart wallet associated with the referral link used to mint a new Cre8ors NFT, you may
+              withdraw funds from your smart wallet at any time.
+            </li>
+            <li>
+              6. **Liability Disclaimer**:
+              <ul className="pl-4">
+                <li>
+                  - **6.1** Defi Entertainment LLC {`("Company")`} and its affiliated entities are
+                  not responsible for any unauthorized access to, or use of, your smart wallet or
+                  any losses or damages arising from such unauthorized access or use.
+                </li>
+                <li>
+                  - **6.2** The Company is not responsible for any technical issues, including those
+                  that might prevent or delay the minting of NFTs or the transfer of ETH.
+                </li>
+                <li>
+                  - **6.3** The Company shall not be held liable for any misrepresentation, fraud,
+                  or any misleading activities conducted by the Affiliate.
+                </li>
+                <li>
+                  - **6.4** The Company is not responsible for any tax liabilities or financial
+                  responsibilities arising from the commissions or any other transactions related to
+                  the Program. It is the Affiliate&apos;s responsibility to report and pay taxes in
+                  accordance with their jurisdiction.
+                </li>
+              </ul>
+            </li>
+            <li>
+              7. **Termination**: The Company reserves the right to terminate or suspend any
+              Affiliate&apos;s access to the Program for any reason, including but not limited to,
+              breach of these terms, fraud, or misuse of the Program. Upon termination, any
+              remaining funds in the Affiliate&apos;s smart wallet will remain accessible per the
+              conditions stated in clause 5.
+            </li>
+            <li>
+              8. **Amendments**: The Company may, at its sole discretion, revise or amend these
+              terms and conditions at any time without prior notice. Continued participation in the
+              Program following any such changes constitutes your acceptance of the revised terms.
+            </li>
+            <li>
+              9. **Governing Law**: These terms and conditions are governed by the laws of the
+              jurisdiction in which Defi Entertainment LLC is registered. Any disputes arising out
+              of or in connection with these terms shall be subject to the exclusive jurisdiction of
+              the courts of that jurisdiction.
+            </li>
+            <li>
+              10. **Indemnity**: You agree to indemnify, defend, and hold harmless Defi
+              Entertainment LLC, its officers, directors, employees, agents, licensors, and
+              suppliers from and against all losses, liabilities, expenses, damages, and costs,
+              including reasonable attorneys&apos; fees, resulting from any violation of these terms
+              and conditions or any activity related to your smart wallet (including negligent or
+              wrongful conduct).
+            </li>
+            <li>
+              11. **Miscellaneous**: If any provision of these terms and conditions is found to be
+              unlawful, void, or for any reason unenforceable, then that provision shall be deemed
+              severable and shall not affect the validity and enforceability of any remaining
+              provisions.
+            </li>
+          </ul>
+        </>
+      ),
+    },
   ]
 
   const containerRef = useRef<any>()
@@ -1199,7 +1388,10 @@ const TermsPage = () => {
 
   return (
     <Layout type="contained">
-      <div className="relative pb-[2rem] w-[100vw] overflow-y-scroll" ref={containerRef}>
+      <div
+        className="relative pb-[2rem] w-[100vw] overflow-y-scroll no-scrollbar"
+        ref={containerRef}
+      >
         {!isScrollEnded && (
           <div
             className="fixed 
