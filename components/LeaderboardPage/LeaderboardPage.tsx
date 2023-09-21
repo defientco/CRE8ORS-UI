@@ -58,7 +58,7 @@ const LeaderboardPage = () => {
             drop-shadow-[0_2px_2px_rgba(0,0,0,0.45)] 
             font-[500]"
           >
-            Currently Tracking: Affiliate Rewards
+            Currently Tracking: Referral Program Rewards
             <br /> Mint with your referral link to join the leaderboard
           </div>
         </div>

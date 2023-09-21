@@ -162,10 +162,12 @@ export const getUserProfile = async (walletAddress: string) => {
 
     let doc = await UserProfile.findOne({ walletAddress: getFilterObject(walletAddress) }).lean()
 
-    if (doc?.cre8orNumber) {
-      const owner = await ownerOf(doc.cre8orNumber)
-      if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
-    } else doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+    if (doc) {
+      if (doc?.cre8orNumber) {
+        const owner = await ownerOf(doc.cre8orNumber)
+        if (!isMatchAddress(owner, walletAddress)) doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+      } else doc = await updateAvailableCre8orNumber(walletAddress, doc._id, doc.avatarUrl)
+    }
 
     return { success: true, doc }
   } catch (e) {
