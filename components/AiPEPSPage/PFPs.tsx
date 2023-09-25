@@ -3,6 +3,7 @@ import SectionContainer from "./SectionContainer"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
 import Media from "../../shared/Media"
+import { Button } from "../../shared/Button"
 
 const PFPs = () => {
   const isXl = useMediaQuery("(max-width: 1150px)")
@@ -40,6 +41,17 @@ const PFPs = () => {
                             text-center xl:text-left
                             !text-[10px] samsungS8:!text-[11px] xs:!text-[12px] xl:!text-[19px]"
             />
+            <div className="flex justify-center md:justify-start mt-[30px]">
+              <Button
+                id="mint_now_cre8ors"
+                className="!px-0 !py-0
+                md:!w-[242px] md:!h-[48px]
+                !w-[150px] !h-[35px]
+                !bg-white !text-black"
+              >
+                Mint Now
+              </Button>
+            </div>
           </div>
           <div className="xl:block hidden">
             <Media

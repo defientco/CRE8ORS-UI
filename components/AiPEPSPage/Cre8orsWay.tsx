@@ -3,6 +3,7 @@ import SectionContainer from "./SectionContainer"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
 import Media from "../../shared/Media"
+import { Button } from "../../shared/Button"
 
 const Cre8orsWay = () => {
   const avatarList = [
@@ -48,7 +49,7 @@ const Cre8orsWay = () => {
 
   return (
     <SectionContainer>
-      <div className="relative w-full h-[550px] xl:h-screen flex justify-center items-center">
+      <div className="relative mt-[40px] md:mt-0 w-full h-[550px] xl:h-screen flex justify-center items-center">
         <div
           className="grid 
                 grid-cols-1 xl:grid-cols-2 
@@ -92,6 +93,17 @@ const Cre8orsWay = () => {
                             text-center xl:text-right
                             !text-[10px] samsungS8:!text-[11px] xs:!text-[12px] xl:!text-[19px]"
             />
+            <div className="flex justify-center md:justify-end mt-[20px]">
+              <Button
+                id="mint_now_cre8ors"
+                className="!px-0 !py-0
+                md:!w-[242px] md:!h-[48px]
+                !w-[150px] !h-[35px]
+                !bg-white !text-black"
+              >
+                Mint Now
+              </Button>
+            </div>
           </div>
         </div>
       </div>

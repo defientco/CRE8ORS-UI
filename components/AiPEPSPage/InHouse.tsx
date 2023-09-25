@@ -3,13 +3,14 @@ import SectionContainer from "./SectionContainer"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
 import Media from "../../shared/Media"
+import { Button } from "../../shared/Button"
 
 const InHouse = () => {
   const isXl = useMediaQuery("(max-width: 1150px)")
 
   return (
     <SectionContainer>
-      <div className="relative w-full h-[550px] xl:h-[960px] flex justify-center items-center">
+      <div className="relative w-full h-[650px] xl:h-[960px] flex justify-center items-center">
         <div
           className="grid  
                 grid-cols-1 xl:grid-cols-2 
@@ -46,7 +47,7 @@ const InHouse = () => {
             <Content
               content={
                 isXl
-                  ? `We believe IP is one of the most valuable utilities for NFT\nholders, so why stop at just the artwork? Our dedicated IP\nmanagment department will help you license your Cre8ors IP.\nFrom the PFP artwork to all the co-creations you make with\nthe community, Cre8ors mission is to unleash the creative\npotential and unlock financial freedom for our members.`
+                  ? `We believe IP is one of the most valuable utilities for\nNFT holders, so why stop at just the artwork? Our in-\nhouse IP management and licensing department can\nhelp you license your Cre8ors IP. From the artwork to\nthe co-creations you make with the community,\nCre8ors mission is to unleash your creative potential\nand unlock financial freedom for our members.`
                   : `We believe IP is one of the most valuable utilities for NFT\nholders, so why stop at just the artwork? Our in-house IP\nmanagement and licensing department can help you license\nyour Cre8ors IP. From the artwork to the co-creations you make\nwith the community, Cre8ors mission is to unleash your creative\npotential and unlock financial freedom for our members.`
               }
               className="leading-[103.3%]
@@ -54,6 +55,17 @@ const InHouse = () => {
               text-center xl:text-right
               !text-[10px] samsungS8:!text-[11px] xs:!text-[12px] xl:!text-[19px]"
             />
+            <div className="flex justify-center md:justify-end mt-[20px]">
+              <Button
+                id="mint_now_cre8ors"
+                className="!px-0 !py-0
+                md:!w-[242px] md:!h-[48px]
+                !w-[150px] !h-[35px]
+                !bg-white !text-black"
+              >
+                Mint Now
+              </Button>
+            </div>
           </div>
         </div>
       </div>
