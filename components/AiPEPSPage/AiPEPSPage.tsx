@@ -8,7 +8,10 @@ import Footer from "../Footer"
 
 const AiPEPSPage = () => (
   <Layout type="base">
-    <div className="relative h-screen overflow-y-auto overflow-x-hidden">
+    <div
+      className="relative h-screen overflow-y-auto overflow-x-hidden
+    no-scrollbar"
+    >
       <Cre8orsWay />
       <PFPs />
       <Archetypes />

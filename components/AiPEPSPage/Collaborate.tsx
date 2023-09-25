@@ -9,14 +9,16 @@ const Collaborate = () => {
 
   return (
     <SectionContainer>
-      <div className="relative w-full h-[600px] xl:h-[960px] flex justify-center items-center">
+      <div className="relative w-full h-[400px] xl:h-[960px] flex justify-center items-center">
         <div className="grid grid-cols-1 xl:grid-cols-2">
           <div className="block xl:hidden pb-[33px]">
             <Media
-              link="/assets/AiPEPS/Collaborate/mobile_graphic.png"
-              blurLink="/assets/AiPEPS/Collaborate/mobile_graphic.png"
-              type="image"
-              containerClasses="w-[300px] h-[285.6px] xs:w-[379.12px] xs:h-[361px]"
+              posterLink="/assets/AiPEPS/Collaborate/thumbnail.png"
+              type="video"
+              containerClasses="w-[280px] h-[158px] 
+              xs:w-[304px] xs:h-[171px]
+              cursor-pointer rounded-[10px] overflow-hidden"
+              link="/assets/AiPEPS/Collaborate/protocol_demo.MOV"
             />
           </div>
           <div className="flex flex-col justify-center">
@@ -44,10 +46,10 @@ const Collaborate = () => {
           </div>
           <div className="hidden xl:block">
             <Media
-              link="/assets/AiPEPS/Collaborate/graphic.png"
-              blurLink="/assets/AiPEPS/Collaborate/graphic.png"
-              type="image"
-              containerClasses="w-[685px] h-[653px]"
+              posterLink="/assets/AiPEPS/Collaborate/thumbnail.png"
+              type="video"
+              containerClasses="w-[561px] h-[316px] cursor-pointer rounded-[20px] overflow-hidden"
+              link="/assets/AiPEPS/Collaborate/protocol_demo.MOV"
             />
           </div>
         </div>

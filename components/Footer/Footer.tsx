@@ -65,15 +65,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
   const router = useRouter()
 
   const isMintPage = router.pathname.includes("/mint")
+  const isHomePage = router.pathname.includes("/home")
   const { themeMode } = useTheme()
 
   return (
     <div
-      className={`${
-        !isMintPage && "dark:bg-[black]"
-      } bg-transparent pt-[250px] md:pt-6 pb-6 w-full flex justify-center ${
-        className || ""
-      } footer`}
+      className={`${!isMintPage && "dark:bg-[black]"} bg-transparent ${
+        isHomePage ? "pt-[250px]" : ""
+      } md:pt-6 pb-6 w-full flex justify-center ${className || ""} footer`}
     >
       <div className="w-[90%] xl:w-[1280px]">
         <div className="justify-start items-start flex md:hidden pt-6 pr-6">

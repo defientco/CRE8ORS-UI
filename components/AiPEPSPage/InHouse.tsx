@@ -35,7 +35,9 @@ const InHouse = () => {
           <div className="flex flex-col justify-center">
             <Title
               text={
-                isXl ? `IP Management and\nLicensing` : `Not Just a JPEG.\nThink, PFP’s as a\nService (PaaS)`
+                isXl
+                  ? `IP Management and\nLicensing`
+                  : `Not Just a JPEG.\nThink, PFP’s as a\nService (PaaS)`
               }
               className="leading-[103.3%] 
               text-center xl:text-right

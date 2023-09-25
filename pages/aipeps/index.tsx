@@ -1,3 +1,3 @@
-import AiPEPSPage from "../../components/AiPEPSPage";
+import AiPEPSPage from "../../components/AiPEPSPage"
 
 export default AiPEPSPage
