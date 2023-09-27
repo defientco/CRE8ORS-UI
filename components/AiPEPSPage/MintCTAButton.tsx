@@ -10,7 +10,8 @@ const MintCTAButton = () => {
       className="!px-0 !py-0
                 md:!w-[242px] md:!h-[48px]
                 !w-[150px] !h-[35px]
-                !bg-white !text-black"
+                !bg-black !text-white
+                dark:!bg-white dark:!text-black"
       onClick={() => push("/mint")}
     >
       Mint Now

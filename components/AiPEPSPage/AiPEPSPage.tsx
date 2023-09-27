@@ -10,7 +10,9 @@ const AiPEPSPage = () => (
   <Layout type="base">
     <div
       className="relative h-screen overflow-y-auto overflow-x-hidden
-    no-scrollbar"
+    no-scrollbar
+    bg-[url('/assets/Layout/whitepaper.svg')] bg-cover bg-[center_center]
+    dark:bg-[black] dark:bg-none"
     >
       <Cre8orsWay />
       <PFPs />
