@@ -3,7 +3,7 @@ import SectionContainer from "./SectionContainer"
 import Title from "../Common/Title"
 import Content from "../Common/Content"
 import Media from "../../shared/Media"
-import { Button } from "../../shared/Button"
+import MintCTAButton from "./MintCTAButton"
 
 const Cre8orsWay = () => {
   const avatarList = [
@@ -94,15 +94,7 @@ const Cre8orsWay = () => {
                             !text-[10px] samsungS8:!text-[11px] xs:!text-[12px] xl:!text-[19px]"
             />
             <div className="flex justify-center md:justify-end mt-[20px]">
-              <Button
-                id="mint_now_cre8ors"
-                className="!px-0 !py-0
-                md:!w-[242px] md:!h-[48px]
-                !w-[150px] !h-[35px]
-                !bg-white !text-black"
-              >
-                Mint Now
-              </Button>
+              <MintCTAButton />
             </div>
           </div>
         </div>
