@@ -5,6 +5,7 @@ import { Button } from "../../shared/Button"
 import { useEthersSigner } from "../../hooks/useEthersSigner"
 import useCheckNetwork from "../../hooks/useCheckNetwork"
 import getDepositTransactionData from "./getDepositTransactionData"
+import handleTxError from "../../lib/handleTxError"
 
 const ZoraV3PrototypeButton = () => {
   const mySmartWallet = "0xdA88a6f8Cb3a278c1cfd6a988077435ACcbbF43C"
@@ -21,7 +22,7 @@ const ZoraV3PrototypeButton = () => {
       const tx = await tbaContract.execute(OP_PORTAL_PROXY_ADDRESS, 0, data, operation)
       await tx.wait()
     } catch (err) {
-      console.error("SWEETS ERROR", err)
+      handleTxError(err)
     }
   }
 
