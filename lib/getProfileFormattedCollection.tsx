@@ -1,6 +1,5 @@
-import { CRE8OR } from "../components/ProfilePage/types"
 import getNFTs from "./alchemy/getNFTs"
-import { isMatchAddress } from "./isMatchAddress"
+import getFormattedCollection from "./getFormattedCollection"
 
 export const SPECIALNFTS = "special"
 export const ALLNFTS = "all"
@@ -33,15 +32,7 @@ const getProfileFormattedCollection = async (address, type) => {
     collection.push(...response.ownedNfts)
   }
 
-  const formattedData = collection.map((nft) => ({
-    label: nft.metadata.name,
-    type: isMatchAddress(nft.contract.address, process.env.NEXT_PUBLIC_CRE8ORS_ADDRESS)
-      ? CRE8OR
-      : undefined,
-    image: nft.media[0].gateway,
-    tokenId: parseInt(nft.id.tokenId, 16),
-    contractAddress: nft.contract.address,
-  }))
+  const formattedData = getFormattedCollection(collection)
 
   return formattedData
 }

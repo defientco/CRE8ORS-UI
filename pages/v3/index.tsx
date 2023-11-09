@@ -1,15 +1,10 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit"
-import ZoraV3PrototypeButton from "../../components/ZoraV3PrototypeButton"
-import { useEthersSigner } from "../../hooks/useEthersSigner"
+import { V3Provider } from "../../providers/V3Provider"
+import V3Page from "../../components/V3Page"
 
-const V3 = () => {
-  const signer = useEthersSigner()
-
-  return (
-    <div className="w-[100vw] h-[100vh] flex flex-col items-center border justify-center text-center text-white">
-      {signer ? <ZoraV3PrototypeButton /> : <ConnectButton />}
-    </div>
-  )
-}
+const V3 = () => (
+  <V3Provider>
+    <V3Page />
+  </V3Provider>
+)
 
 export default V3

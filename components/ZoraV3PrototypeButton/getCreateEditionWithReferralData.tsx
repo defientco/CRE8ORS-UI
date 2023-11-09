@@ -3,9 +3,9 @@ import abi from "../../lib/abi-ZoraNFTCreatorProxy.json"
 
 const getCreateEditionWithReferralData = (smartWalletAddress) => {
   const zoraFactoryIface = new Interface(abi)
-  const imageCid = ""
-  const name = "my smart wallet IP"
-  const symbol = "MW3"
+  const imageCid = "bafybeiembmaq73xwazw6otn4hcke5vkga25ppmui2gw3o2ihnnljdu3k3i"
+  const name = "Beach Tunes"
+  const symbol = "CRE8ORS"
   const salesConfig = {
     publicSalePrice: 0,
     maxSalePurchasePerAddress: 100,
@@ -17,8 +17,8 @@ const getCreateEditionWithReferralData = (smartWalletAddress) => {
   }
   const editionSize = "18446744073709551615"
   const royaltyBps = "500"
-  const description = "HELLO WORLD"
-  const animationUri = ""
+  const description = "I made this song on a beach in brazil."
+  const animationUri = "ipfs://bafybeiboiacnl4tjexzvp5jtkzr2mwagrevwt5rv4326pmb4eclcso6ham"
   const imageUri = `ipfs://${imageCid}`
   const fundsRecipient = smartWalletAddress
   const defaultAdmin = smartWalletAddress
