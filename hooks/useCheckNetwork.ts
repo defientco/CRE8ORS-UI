@@ -1,7 +1,7 @@
 import { toast } from "react-toastify"
 import { useNetwork, useSwitchNetwork } from "wagmi"
 import { mainnet, polygon, goerli, polygonMumbai } from "@wagmi/core/chains"
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
 
 function useCheckNetwork() {
   const { chain: activeChain } = useNetwork()

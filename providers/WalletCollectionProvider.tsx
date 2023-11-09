@@ -8,13 +8,12 @@ import {
   useCallback,
   useEffect,
 } from "react"
+import { useRouter } from "next/router"
+import { useAccount } from "wagmi"
 import getProfileFormattedCollection, {
   ALLNFTS,
   SPECIALNFTS,
 } from "../lib/getProfileFormattedCollection"
-import { useRouter } from "next/router"
-import { useAccount } from "wagmi"
-import _ from "lodash"
 import { useUserProvider } from "./UserProvider"
 
 interface Props {
