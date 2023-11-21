@@ -68,12 +68,7 @@ const ZoraV3PrototypeButton = () => {
   }
 
   return (
-    <Button
-      id="zora"
-      disabled={!tbaAddress}
-      onClick={handleClick}
-      className="w-[777px] bg-white text-black"
-    >
+    <Button id="zora" disabled={!tbaAddress} onClick={handleClick} className="w-[777px]">
       click me for v3
     </Button>
   )
