@@ -1,12 +1,14 @@
 import { Interface } from "ethers/lib/utils"
+import { baseGoerli } from "@wagmi/core/chains"
 import abi from "../../lib/abi-ERC6551-account-v3.json"
 import getCreateEditionWithReferralData from "./getCreateEditionWithReferralData"
+import getZoraCreatorProxyAddress from "./getZoraCreatorProxyAddress"
 
 const getExecuteData = (smartWalletAddress) => {
   const smartWalletIface = new Interface(abi)
 
   const zoraDropData = getCreateEditionWithReferralData(smartWalletAddress)
-  const zoraCreatorProxyOPGoerli = "0x3C1ebcF36Ca9DD9371c9aA99c274e4988906c6E3"
+  const zoraCreatorProxyOPGoerli = getZoraCreatorProxyAddress(baseGoerli.id)
   const value = 0
 
   return smartWalletIface.encodeFunctionData("execute", [
