@@ -1,3 +1,5 @@
+import { formatBytes32String } from "ethers/lib/utils"
+
 export const ACCEPTED_IMAGE_URIS = {
   musician: "ipfs://bafybeifzlnqz5nflw2lgjtb3lbfcda7k4sxtckq4pts3lo6n2j3n2zkpbe",
   engineer: "ipfs://bafybeieqbvlptzoelvsvtgetxfh7tozbjtjstffnlvykilcgmhknda2ocy",
@@ -8,3 +10,13 @@ export const ACCEPTED_IMAGE_URIS = {
   photographer: "ipfs://bafybeigwpo35pu7v7fp4cwhsb3yc2v6a4uvdxuihlrjcao4ecnnqhrqkpu",
   designer: "ipfs://bafybeifqkjeqe6ciqwmz2lrisirbpkfilloktf4jce5jehcvyxkgmotahq",
 }
+
+// ERC6551
+export const REGISTRY_ADDRESS_V3 = "0x000000006551c19487814612e58FE06813775758"
+export const ACCOUNT_IMPLEMENTATION_V3 = "0x41C8f39463A868d3A88af00cd0fe7102F30E44eC"
+export const REGISTRY_ADDRESS_V2 = "0x02101dfB77FDE026414827Fdc604ddAF224F0921"
+export const ACCOUNT_IMPLEMENTATION_V2 = "0x2d25602551487c3f3354dd80d76d54383a243358"
+export const CHAIN_ID = process.env.NEXT_PUBLIC_TESTNET ? 5 : 1
+export const SALT_V3 = formatBytes32String("0");
+export const SALT_V2 = 0
+

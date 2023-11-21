@@ -27,7 +27,7 @@ const ZoraV3PrototypeButton = () => {
   }
 
   return (
-    <Button id="zora" onClick={handleClick} className="w-[777px]">
+    <Button id="zora" onClick={handleClick} className="w-[777px] bg-white text-black">
       click me for v3
     </Button>
   )
