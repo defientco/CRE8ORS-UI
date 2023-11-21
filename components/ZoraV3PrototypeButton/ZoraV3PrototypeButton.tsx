@@ -26,11 +26,8 @@ const ZoraV3PrototypeButton = () => {
 
     try {
       console.log("SWEETS isRegistered goerli", isRegistered)
-      if (!isRegistered) {
-        if (!checkNetwork()) return
-        const response = await createAccount(cre8or.tokenId)
-        if (!response) return
-      }
+
+      // BASE
       const isDeployedOnBase = await isDeployedContract(tbaAddress, layer2Network.id)
       console.log("SWEETS isDeployedOnBase", isDeployedOnBase)
       let isInitialized
@@ -48,7 +45,13 @@ const ZoraV3PrototypeButton = () => {
         if (!response) return
       }
 
+      // MAINNET
       if (!checkNetwork()) return
+      if (!isRegistered) {
+        if (!checkNetwork()) return
+        const response = await createAccount(cre8or.tokenId)
+        if (!response) return
+      }
       isInitialized = await getImplementationAddress(tbaAddress)
       console.log("SWEETS isInitialized", isInitialized)
       if (!isInitialized) {
