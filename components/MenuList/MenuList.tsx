@@ -79,9 +79,6 @@ const MenuList = ({ toggleMenu }) => {
       ) : (
         <div className="ml-4 text-gray-400 cursor-not-allowed">Profiles</div>
       )}
-      <Link href="/aipeps" target="_blank" rel="noreferrer">
-        <div className={`${menuItemClassName} capitalize`}>AiPEPs</div>
-      </Link>
       <a
         href="https://mirror.xyz/sweetman.eth/gKpHCW-6wviwbQn_zzG7vQDZ-TxoV9GwWFdXaT_QzC4"
         target="_blank"
